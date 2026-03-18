@@ -1,0 +1,21 @@
+id,nombre,apellido,edad,email,ciudad,departamento,salario
+1,Paula,López,55,paula.lópez@yahoo.com,Caracas,Soporte,28056.99
+2,Pedro,Gutiérrez,62,pedro.gutiérrez@gmail.com,San José,Soporte,69931.51
+3,Jorge,Rodríguez,41,jorge.rodríguez@yahoo.com,Santiago,Ingeniería,43138.54
+4,Isabella,Rivera,40,isabella.rivera@gmail.com,San José,Ingeniería,69319.91
+5,Carlos,Sánchez,23,carlos.sánchez@yahoo.com,Buenos Aires,Ventas,66144.61
+6,Ricardo,Díaz,48,ricardo.díaz@empresa.com,San José,Ingeniería,50150.1
+7,Miguel,Ramírez,55,miguel.ramírez@yahoo.com,Quito,Operaciones,113042.47
+8,Jorge,Ramírez,36,jorge.ramírez@outlook.com,Santiago,Recursos Humanos,95753.81
+9,Ana,Rodríguez,35,ana.rodríguez@gmail.com,Bogotá,Marketing,47259.44
+10,Daniela,Flores,35,daniela.flores@outlook.com,Quito,Ingeniería,63701.88
+11,Paula,Reyes,30,paula.reyes@gmail.com,Buenos Aires,Finanzas,97628.92
+12,Miguel,Sánchez,59,miguel.sánchez@gmail.com,Montevideo,Ingeniería,102979.1
+13,Andrés,Ramos,47,andrés.ramos@yahoo.com,Ciudad de México,Ingeniería,38269.19
+14,Ana,González,33,ana.gonzález@yahoo.com,Santiago,Finanzas,103287.96
+15,Valentina,Reyes,49,valentina.reyes@yahoo.com,Montevideo,Legal,46410.74
+16,Andrés,Cruz,60,andrés.cruz@empresa.com,Ciudad de México,Recursos Humanos,46331.09
+17,Luis,Ramírez,48,luis.ramírez@empresa.com,Buenos Aires,Ingeniería,84764.89
+18,Daniela,Rodríguez,65,daniela.rodríguez@yahoo.com,Montevideo,Finanzas,26026.84
+19,Fernando,Morales,39,fernando.morales@yahoo.com,San José,Recursos Humanos,63884.34
+20,Laura,Flores,53,laura.flores@yahoo.com,San José,Ventas,37724.47
