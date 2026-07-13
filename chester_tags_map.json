@@ -1,0 +1,2176 @@
+[
+ {
+  "nivel": "L1",
+  "departamento": "Bebé & Maternidad",
+  "categoria": null,
+  "subcategoria": null,
+  "handle_coleccion": "bebe-maternidad",
+  "type": "Bebé & Maternidad",
+  "tags": "bebe-maternidad",
+  "key_terms": [
+   "bebe & maternidad"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Bebé & Maternidad",
+  "categoria": "Accesorios",
+  "subcategoria": null,
+  "handle_coleccion": "bebe-accesorios",
+  "type": "Accesorios",
+  "tags": "bebe-maternidad, bebe-accesorios",
+  "key_terms": [
+   "bebe & maternidad",
+   "accesorios"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Bebé & Maternidad",
+  "categoria": "Baño del Bebé",
+  "subcategoria": null,
+  "handle_coleccion": "bano-del-bebe",
+  "type": "Baño del Bebé",
+  "tags": "bebe-maternidad, bano-del-bebe",
+  "key_terms": [
+   "bebe & maternidad",
+   "bano del bebe"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Bebé & Maternidad",
+  "categoria": "Chupetes & Mordillos",
+  "subcategoria": null,
+  "handle_coleccion": "chupetes-mordillos",
+  "type": "Chupetes & Mordillos",
+  "tags": "bebe-maternidad, chupetes-mordillos",
+  "key_terms": [
+   "bebe & maternidad",
+   "chupetes & mordillos"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Bebé & Maternidad",
+  "categoria": "Fragancias",
+  "subcategoria": null,
+  "handle_coleccion": "bebe-fragancias",
+  "type": "Fragancias",
+  "tags": "bebe-maternidad, bebe-fragancias",
+  "key_terms": [
+   "bebe & maternidad",
+   "fragancias"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Bebé & Maternidad",
+  "categoria": "Mamaderas & Tetinas",
+  "subcategoria": null,
+  "handle_coleccion": "mamaderas-tetinas",
+  "type": "Mamaderas & Tetinas",
+  "tags": "bebe-maternidad, mamaderas-tetinas",
+  "key_terms": [
+   "bebe & maternidad",
+   "mamaderas & tetinas"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Bebé & Maternidad",
+  "categoria": "Mamás",
+  "subcategoria": null,
+  "handle_coleccion": "mamas",
+  "type": "Mamás",
+  "tags": "bebe-maternidad, mamas",
+  "key_terms": [
+   "bebe & maternidad",
+   "mamas"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Bebé & Maternidad",
+  "categoria": "Toallas Húmedas",
+  "subcategoria": null,
+  "handle_coleccion": "toallas-humedas",
+  "type": "Toallas Húmedas",
+  "tags": "bebe-maternidad, toallas-humedas",
+  "key_terms": [
+   "bebe & maternidad",
+   "toallas humedas"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Bebé & Maternidad",
+  "categoria": "Leche y Alimentos",
+  "subcategoria": null,
+  "handle_coleccion": "leche-y-alimentos",
+  "type": "Leche y Alimentos",
+  "tags": "bebe-maternidad, leche-y-alimentos",
+  "key_terms": [
+   "bebe & maternidad",
+   "leche y alimentos"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Bebé & Maternidad",
+  "categoria": "Pañales para Bebé",
+  "subcategoria": null,
+  "handle_coleccion": "panales-para-bebe",
+  "type": "Pañales para Bebé",
+  "tags": "bebe-maternidad, panales-para-bebe",
+  "key_terms": [
+   "bebe & maternidad",
+   "panales para bebe"
+  ]
+ },
+ {
+  "nivel": "L1",
+  "departamento": "Cuidado de la Salud",
+  "categoria": null,
+  "subcategoria": null,
+  "handle_coleccion": "cuidado-salud",
+  "type": "Cuidado de la Salud",
+  "tags": "cuidado-salud",
+  "key_terms": [
+   "cuidado de la salud"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado de la Salud",
+  "categoria": "Indumentaria",
+  "subcategoria": null,
+  "handle_coleccion": "indumentaria",
+  "type": "Indumentaria",
+  "tags": "cuidado-salud, indumentaria",
+  "key_terms": [
+   "cuidado de la salud",
+   "indumentaria"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado de la Salud",
+  "categoria": "Ortopedia",
+  "subcategoria": null,
+  "handle_coleccion": "ortopedia",
+  "type": "Ortopedia",
+  "tags": "cuidado-salud, ortopedia",
+  "key_terms": [
+   "cuidado de la salud",
+   "ortopedia"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado de la Salud",
+  "categoria": "Primeros Auxilios",
+  "subcategoria": null,
+  "handle_coleccion": "primeros-auxilios",
+  "type": "Primeros Auxilios",
+  "tags": "cuidado-salud, primeros-auxilios",
+  "key_terms": [
+   "cuidado de la salud",
+   "primeros auxilios"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado de la Salud",
+  "categoria": "Bienestar Sexual",
+  "subcategoria": null,
+  "handle_coleccion": "bienestar-sexual",
+  "type": "Bienestar Sexual",
+  "tags": "cuidado-salud, bienestar-sexual",
+  "key_terms": [
+   "cuidado de la salud",
+   "bienestar sexual"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado de la Salud",
+  "categoria": "Complementos de Farmacia",
+  "subcategoria": null,
+  "handle_coleccion": "complementos-de-farmacia",
+  "type": "Complementos de Farmacia",
+  "tags": "cuidado-salud, complementos-de-farmacia",
+  "key_terms": [
+   "cuidado de la salud",
+   "complementos de farmacia"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado de la Salud",
+  "categoria": "Cuidado del Adulto",
+  "subcategoria": null,
+  "handle_coleccion": "cuidado-del-adulto",
+  "type": "Cuidado del Adulto",
+  "tags": "cuidado-salud, cuidado-del-adulto",
+  "key_terms": [
+   "cuidado de la salud",
+   "cuidado del adulto"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado de la Salud",
+  "categoria": "Diabetes",
+  "subcategoria": null,
+  "handle_coleccion": "diabetes",
+  "type": "Diabetes",
+  "tags": "cuidado-salud, diabetes",
+  "key_terms": [
+   "cuidado de la salud",
+   "diabetes"
+  ]
+ },
+ {
+  "nivel": "L1",
+  "departamento": "Cuidado Personal",
+  "categoria": null,
+  "subcategoria": null,
+  "handle_coleccion": "cuidado-personal",
+  "type": "Cuidado Personal",
+  "tags": "cuidado-personal",
+  "key_terms": [
+   "cuidado personal"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado Personal",
+  "categoria": "Accesorios de Belleza",
+  "subcategoria": null,
+  "handle_coleccion": "accesorios-de-belleza",
+  "type": "Accesorios de Belleza",
+  "tags": "cuidado-personal, accesorios-de-belleza",
+  "key_terms": [
+   "cuidado personal",
+   "accesorios de belleza"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Accesorios de Belleza",
+  "subcategoria": "Cabello",
+  "handle_coleccion": "accesorios-belleza-cabello",
+  "type": "Cabello",
+  "tags": "cuidado-personal, accesorios-de-belleza, accesorios-belleza-cabello",
+  "key_terms": [
+   "cuidado personal",
+   "accesorios de belleza",
+   "cabello"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Accesorios de Belleza",
+  "subcategoria": "Cuerpo y Manos",
+  "handle_coleccion": "accesorios-belleza-cuerpo-manos",
+  "type": "Cuerpo y Manos",
+  "tags": "cuidado-personal, accesorios-de-belleza, accesorios-belleza-cuerpo-manos",
+  "key_terms": [
+   "cuidado personal",
+   "accesorios de belleza",
+   "cuerpo y manos"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Accesorios de Belleza",
+  "subcategoria": "Espejos",
+  "handle_coleccion": "espejos",
+  "type": "Espejos",
+  "tags": "cuidado-personal, accesorios-de-belleza, espejos",
+  "key_terms": [
+   "cuidado personal",
+   "accesorios de belleza",
+   "espejos"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Accesorios de Belleza",
+  "subcategoria": "Pinzas",
+  "handle_coleccion": "pinzas",
+  "type": "Pinzas",
+  "tags": "cuidado-personal, accesorios-de-belleza, pinzas",
+  "key_terms": [
+   "cuidado personal",
+   "accesorios de belleza",
+   "pinzas"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Accesorios de Belleza",
+  "subcategoria": "Rostro",
+  "handle_coleccion": "accesorios-belleza-rostro",
+  "type": "Rostro",
+  "tags": "cuidado-personal, accesorios-de-belleza, accesorios-belleza-rostro",
+  "key_terms": [
+   "cuidado personal",
+   "accesorios de belleza",
+   "rostro"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Accesorios de Belleza",
+  "subcategoria": "Uñas",
+  "handle_coleccion": "accesorios-belleza-unas",
+  "type": "Uñas",
+  "tags": "cuidado-personal, accesorios-de-belleza, accesorios-belleza-unas",
+  "key_terms": [
+   "cuidado personal",
+   "accesorios de belleza",
+   "unas"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Accesorios de Belleza",
+  "subcategoria": "Varios",
+  "handle_coleccion": "accesorios-belleza-varios",
+  "type": "Varios",
+  "tags": "cuidado-personal, accesorios-de-belleza, accesorios-belleza-varios",
+  "key_terms": [
+   "cuidado personal",
+   "accesorios de belleza",
+   "varios"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado Capilar",
+  "subcategoria": null,
+  "handle_coleccion": "cuidado-capilar",
+  "type": "Cuidado Capilar",
+  "tags": "cuidado-personal, cuidado-capilar",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado capilar"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado Capilar",
+  "subcategoria": "Acondicionador",
+  "handle_coleccion": "acondicionador",
+  "type": "Acondicionador",
+  "tags": "cuidado-personal, cuidado-capilar, acondicionador",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado capilar",
+   "acondicionador"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado Capilar",
+  "subcategoria": "Shampoo",
+  "handle_coleccion": "shampoo",
+  "type": "Shampoo",
+  "tags": "cuidado-personal, cuidado-capilar, shampoo",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado capilar",
+   "shampoo"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado Capilar",
+  "subcategoria": "Tinturas & Coloración",
+  "handle_coleccion": "tinturas-coloracion",
+  "type": "Tinturas & Coloración",
+  "tags": "cuidado-personal, cuidado-capilar, tinturas-coloracion",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado capilar",
+   "tinturas & coloracion"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado Capilar",
+  "subcategoria": "Anti-Caídas",
+  "handle_coleccion": "anti-caidas",
+  "type": "Anti-Caídas",
+  "tags": "cuidado-personal, cuidado-capilar, anti-caidas",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado capilar",
+   "anti-caidas"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado Capilar",
+  "subcategoria": "Combos capilares",
+  "handle_coleccion": "combos-capilares",
+  "type": "Combos capilares",
+  "tags": "cuidado-personal, cuidado-capilar, combos-capilares",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado capilar",
+   "combos capilares"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado Capilar",
+  "subcategoria": "Modelado & Peinado",
+  "handle_coleccion": "modelado-peinado",
+  "type": "Modelado & Peinado",
+  "tags": "cuidado-personal, cuidado-capilar, modelado-peinado",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado capilar",
+   "modelado & peinado"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado Capilar",
+  "subcategoria": "Reparación & Nutrición",
+  "handle_coleccion": "reparacion-nutricion",
+  "type": "Reparación & Nutrición",
+  "tags": "cuidado-personal, cuidado-capilar, reparacion-nutricion",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado capilar",
+   "reparacion & nutricion"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado de la Piel",
+  "subcategoria": null,
+  "handle_coleccion": "cuidado-de-la-piel",
+  "type": "Cuidado de la Piel",
+  "tags": "cuidado-personal, cuidado-de-la-piel",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado de la piel"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado de la Piel",
+  "subcategoria": "Corporales",
+  "handle_coleccion": "cuidado-piel-corporales",
+  "type": "Corporales",
+  "tags": "cuidado-personal, cuidado-de-la-piel, cuidado-piel-corporales",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado de la piel",
+   "corporales"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado de la Piel",
+  "subcategoria": "Faciales",
+  "handle_coleccion": "cuidado-piel-faciales",
+  "type": "Faciales",
+  "tags": "cuidado-personal, cuidado-de-la-piel, cuidado-piel-faciales",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado de la piel",
+   "faciales"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado de la Piel",
+  "subcategoria": "Limpieza",
+  "handle_coleccion": "cuidado-piel-limpieza",
+  "type": "Limpieza",
+  "tags": "cuidado-personal, cuidado-de-la-piel, cuidado-piel-limpieza",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado de la piel",
+   "limpieza"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado de la Piel",
+  "subcategoria": "Repelentes",
+  "handle_coleccion": "repelentes",
+  "type": "Repelentes",
+  "tags": "cuidado-personal, cuidado-de-la-piel, repelentes",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado de la piel",
+   "repelentes"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado de la Piel",
+  "subcategoria": "Solares",
+  "handle_coleccion": "cuidado-piel-solares",
+  "type": "Solares",
+  "tags": "cuidado-personal, cuidado-de-la-piel, cuidado-piel-solares",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado de la piel",
+   "solares"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado de la Piel",
+  "subcategoria": "Combos Corporales",
+  "handle_coleccion": "combos-corporales",
+  "type": "Combos Corporales",
+  "tags": "cuidado-personal, cuidado-de-la-piel, combos-corporales",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado de la piel",
+   "combos corporales"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado de la Piel",
+  "subcategoria": "Contorno de Ojos",
+  "handle_coleccion": "cuidado-piel-contorno-ojos",
+  "type": "Contorno de Ojos",
+  "tags": "cuidado-personal, cuidado-de-la-piel, cuidado-piel-contorno-ojos",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado de la piel",
+   "contorno de ojos"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Cuidado de la Piel",
+  "subcategoria": "Serum y Boosters",
+  "handle_coleccion": "serum-y-boosters",
+  "type": "Serum y Boosters",
+  "tags": "cuidado-personal, cuidado-de-la-piel, serum-y-boosters",
+  "key_terms": [
+   "cuidado personal",
+   "cuidado de la piel",
+   "serum y boosters"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Corporal",
+  "subcategoria": null,
+  "handle_coleccion": "higiene-corporal",
+  "type": "Higiene Corporal",
+  "tags": "cuidado-personal, higiene-corporal",
+  "key_terms": [
+   "cuidado personal",
+   "higiene corporal"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Corporal",
+  "subcategoria": "Barba y Afeitado",
+  "handle_coleccion": "barba-y-afeitado",
+  "type": "Barba y Afeitado",
+  "tags": "cuidado-personal, higiene-corporal, barba-y-afeitado",
+  "key_terms": [
+   "cuidado personal",
+   "higiene corporal",
+   "barba y afeitado"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Corporal",
+  "subcategoria": "Depilación",
+  "handle_coleccion": "depilacion",
+  "type": "Depilación",
+  "tags": "cuidado-personal, higiene-corporal, depilacion",
+  "key_terms": [
+   "cuidado personal",
+   "higiene corporal",
+   "depilacion"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Corporal",
+  "subcategoria": "Desodorantes y Antitranspirante",
+  "handle_coleccion": "desodorantes-antitranspirante",
+  "type": "Desodorantes y Antitranspirante",
+  "tags": "cuidado-personal, higiene-corporal, desodorantes-antitranspirante",
+  "key_terms": [
+   "cuidado personal",
+   "higiene corporal",
+   "desodorantes y antitranspirante"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Corporal",
+  "subcategoria": "Jabones & Geles",
+  "handle_coleccion": "jabones-geles",
+  "type": "Jabones & Geles",
+  "tags": "cuidado-personal, higiene-corporal, jabones-geles",
+  "key_terms": [
+   "cuidado personal",
+   "higiene corporal",
+   "jabones & geles"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Corporal",
+  "subcategoria": "Accesorios de Baño",
+  "handle_coleccion": "accesorios-de-bano",
+  "type": "Accesorios de Baño",
+  "tags": "cuidado-personal, higiene-corporal, accesorios-de-bano",
+  "key_terms": [
+   "cuidado personal",
+   "higiene corporal",
+   "accesorios de bano"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Corporal",
+  "subcategoria": "Hisopos",
+  "handle_coleccion": "hisopos",
+  "type": "Hisopos",
+  "tags": "cuidado-personal, higiene-corporal, hisopos",
+  "key_terms": [
+   "cuidado personal",
+   "higiene corporal",
+   "hisopos"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Oral",
+  "subcategoria": null,
+  "handle_coleccion": "higiene-oral",
+  "type": "Higiene Oral",
+  "tags": "cuidado-personal, higiene-oral",
+  "key_terms": [
+   "cuidado personal",
+   "higiene oral"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Oral",
+  "subcategoria": "Accesorio Bucal",
+  "handle_coleccion": "accesorio-bucal",
+  "type": "Accesorio Bucal",
+  "tags": "cuidado-personal, higiene-oral, accesorio-bucal",
+  "key_terms": [
+   "cuidado personal",
+   "higiene oral",
+   "accesorio bucal"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Oral",
+  "subcategoria": "Cepillos & Hilos Dentales",
+  "handle_coleccion": "cepillos-hilos-dentales",
+  "type": "Cepillos & Hilos Dentales",
+  "tags": "cuidado-personal, higiene-oral, cepillos-hilos-dentales",
+  "key_terms": [
+   "cuidado personal",
+   "higiene oral",
+   "cepillos & hilos dentales"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Oral",
+  "subcategoria": "Enjuague Bucal",
+  "handle_coleccion": "enjuague-bucal",
+  "type": "Enjuague Bucal",
+  "tags": "cuidado-personal, higiene-oral, enjuague-bucal",
+  "key_terms": [
+   "cuidado personal",
+   "higiene oral",
+   "enjuague bucal"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Oral",
+  "subcategoria": "Ortodoncia y Prótesis",
+  "handle_coleccion": "ortodoncia-protesis",
+  "type": "Ortodoncia y Prótesis",
+  "tags": "cuidado-personal, higiene-oral, ortodoncia-protesis",
+  "key_terms": [
+   "cuidado personal",
+   "higiene oral",
+   "ortodoncia y protesis"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Oral",
+  "subcategoria": "Pastas & Geles Dentales",
+  "handle_coleccion": "pastas-geles-dentales",
+  "type": "Pastas & Geles Dentales",
+  "tags": "cuidado-personal, higiene-oral, pastas-geles-dentales",
+  "key_terms": [
+   "cuidado personal",
+   "higiene oral",
+   "pastas & geles dentales"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Oral",
+  "subcategoria": "Combos de higiene Oral",
+  "handle_coleccion": "combos-higiene-oral",
+  "type": "Combos de higiene Oral",
+  "tags": "cuidado-personal, higiene-oral, combos-higiene-oral",
+  "key_terms": [
+   "cuidado personal",
+   "higiene oral",
+   "combos de higiene oral"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Oral",
+  "subcategoria": "Cuidado Oral Infantil",
+  "handle_coleccion": "cuidado-oral-infantil",
+  "type": "Cuidado Oral Infantil",
+  "tags": "cuidado-personal, higiene-oral, cuidado-oral-infantil",
+  "key_terms": [
+   "cuidado personal",
+   "higiene oral",
+   "cuidado oral infantil"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Higiene Oral",
+  "subcategoria": "Spray Oral",
+  "handle_coleccion": "spray-oral",
+  "type": "Spray Oral",
+  "tags": "cuidado-personal, higiene-oral, spray-oral",
+  "key_terms": [
+   "cuidado personal",
+   "higiene oral",
+   "spray oral"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado Personal",
+  "categoria": "Protección Femenina",
+  "subcategoria": null,
+  "handle_coleccion": "proteccion-femenina",
+  "type": "Protección Femenina",
+  "tags": "cuidado-personal, proteccion-femenina",
+  "key_terms": [
+   "cuidado personal",
+   "proteccion femenina"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Protección Femenina",
+  "subcategoria": "Cuidado Íntimo",
+  "handle_coleccion": "cuidado-intimo",
+  "type": "Cuidado Íntimo",
+  "tags": "cuidado-personal, proteccion-femenina, cuidado-intimo",
+  "key_terms": [
+   "cuidado personal",
+   "proteccion femenina",
+   "cuidado intimo"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Protección Femenina",
+  "subcategoria": "Protectores Diarios",
+  "handle_coleccion": "protectores-diarios",
+  "type": "Protectores Diarios",
+  "tags": "cuidado-personal, proteccion-femenina, protectores-diarios",
+  "key_terms": [
+   "cuidado personal",
+   "proteccion femenina",
+   "protectores diarios"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Protección Femenina",
+  "subcategoria": "Toallas Con y Sin Alas",
+  "handle_coleccion": "toallas-con-sin-alas",
+  "type": "Toallas Con y Sin Alas",
+  "tags": "cuidado-personal, proteccion-femenina, toallas-con-sin-alas",
+  "key_terms": [
+   "cuidado personal",
+   "proteccion femenina",
+   "toallas con y sin alas"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Protección Femenina",
+  "subcategoria": "Copas Menstruales",
+  "handle_coleccion": "copas-menstruales",
+  "type": "Copas Menstruales",
+  "tags": "cuidado-personal, proteccion-femenina, copas-menstruales",
+  "key_terms": [
+   "cuidado personal",
+   "proteccion femenina",
+   "copas menstruales"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Protección Femenina",
+  "subcategoria": "Protectores Mamarios",
+  "handle_coleccion": "protectores-mamarios",
+  "type": "Protectores Mamarios",
+  "tags": "cuidado-personal, proteccion-femenina, protectores-mamarios",
+  "key_terms": [
+   "cuidado personal",
+   "proteccion femenina",
+   "protectores mamarios"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Protección Femenina",
+  "subcategoria": "Tampones",
+  "handle_coleccion": "tampones",
+  "type": "Tampones",
+  "tags": "cuidado-personal, proteccion-femenina, tampones",
+  "key_terms": [
+   "cuidado personal",
+   "proteccion femenina",
+   "tampones"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Cuidado Personal",
+  "categoria": "Talcos & Polvos Pédicos",
+  "subcategoria": null,
+  "handle_coleccion": "talcos-polvos-pedicos",
+  "type": "Talcos & Polvos Pédicos",
+  "tags": "cuidado-personal, talcos-polvos-pedicos",
+  "key_terms": [
+   "cuidado personal",
+   "talcos & polvos pedicos"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Talcos & Polvos Pédicos",
+  "subcategoria": "Aerosol Pédico",
+  "handle_coleccion": "aerosol-pedico",
+  "type": "Aerosol Pédico",
+  "tags": "cuidado-personal, talcos-polvos-pedicos, aerosol-pedico",
+  "key_terms": [
+   "cuidado personal",
+   "talcos & polvos pedicos",
+   "aerosol pedico"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Talcos & Polvos Pédicos",
+  "subcategoria": "Polvo Pédico",
+  "handle_coleccion": "polvo-pedico",
+  "type": "Polvo Pédico",
+  "tags": "cuidado-personal, talcos-polvos-pedicos, polvo-pedico",
+  "key_terms": [
+   "cuidado personal",
+   "talcos & polvos pedicos",
+   "polvo pedico"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Cuidado Personal",
+  "categoria": "Talcos & Polvos Pédicos",
+  "subcategoria": "Talcos Corporales",
+  "handle_coleccion": "talcos-corporales",
+  "type": "Talcos Corporales",
+  "tags": "cuidado-personal, talcos-polvos-pedicos, talcos-corporales",
+  "key_terms": [
+   "cuidado personal",
+   "talcos & polvos pedicos",
+   "talcos corporales"
+  ]
+ },
+ {
+  "nivel": "L1",
+  "departamento": "Dermocosmética",
+  "categoria": null,
+  "subcategoria": null,
+  "handle_coleccion": "dermocosmetica",
+  "type": "Dermocosmética",
+  "tags": "dermocosmetica",
+  "key_terms": [
+   "dermocosmetica"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Dermocosmética",
+  "categoria": "Capilares",
+  "subcategoria": null,
+  "handle_coleccion": "capilares-dermo",
+  "type": "Capilares",
+  "tags": "dermocosmetica, capilares-dermo",
+  "key_terms": [
+   "dermocosmetica",
+   "capilares"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Capilares",
+  "subcategoria": "Anti-Caída",
+  "handle_coleccion": "anti-caida",
+  "type": "Anti-Caída",
+  "tags": "dermocosmetica, capilares-dermo, anti-caida",
+  "key_terms": [
+   "dermocosmetica",
+   "capilares",
+   "anti-caida"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Capilares",
+  "subcategoria": "Anti-Caspa",
+  "handle_coleccion": "anti-caspa",
+  "type": "Anti-Caspa",
+  "tags": "dermocosmetica, capilares-dermo, anti-caspa",
+  "key_terms": [
+   "dermocosmetica",
+   "capilares",
+   "anti-caspa"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Capilares",
+  "subcategoria": "Bálsamos",
+  "handle_coleccion": "balsamos",
+  "type": "Bálsamos",
+  "tags": "dermocosmetica, capilares-dermo, balsamos",
+  "key_terms": [
+   "dermocosmetica",
+   "capilares",
+   "balsamos"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Capilares",
+  "subcategoria": "Shampoo",
+  "handle_coleccion": "shampoo-dermo",
+  "type": "Shampoo",
+  "tags": "dermocosmetica, capilares-dermo, shampoo-dermo",
+  "key_terms": [
+   "dermocosmetica",
+   "capilares",
+   "shampoo"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Capilares",
+  "subcategoria": "Tratamiento",
+  "handle_coleccion": "tratamiento-capilar",
+  "type": "Tratamiento",
+  "tags": "dermocosmetica, capilares-dermo, tratamiento-capilar",
+  "key_terms": [
+   "dermocosmetica",
+   "capilares",
+   "tratamiento"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Dermocosmética",
+  "categoria": "Corporal",
+  "subcategoria": null,
+  "handle_coleccion": "corporal-dermo",
+  "type": "Corporal",
+  "tags": "dermocosmetica, corporal-dermo",
+  "key_terms": [
+   "dermocosmetica",
+   "corporal"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Corporal",
+  "subcategoria": "Celulitis",
+  "handle_coleccion": "celulitis",
+  "type": "Celulitis",
+  "tags": "dermocosmetica, corporal-dermo, celulitis",
+  "key_terms": [
+   "dermocosmetica",
+   "corporal",
+   "celulitis"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Corporal",
+  "subcategoria": "Cicatrizantes",
+  "handle_coleccion": "cicatrizantes",
+  "type": "Cicatrizantes",
+  "tags": "dermocosmetica, corporal-dermo, cicatrizantes",
+  "key_terms": [
+   "dermocosmetica",
+   "corporal",
+   "cicatrizantes"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Corporal",
+  "subcategoria": "Hidratación",
+  "handle_coleccion": "corporal-hidratacion",
+  "type": "Hidratación",
+  "tags": "dermocosmetica, corporal-dermo, corporal-hidratacion",
+  "key_terms": [
+   "dermocosmetica",
+   "corporal",
+   "hidratacion"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Corporal",
+  "subcategoria": "Higiene",
+  "handle_coleccion": "corporal-higiene",
+  "type": "Higiene",
+  "tags": "dermocosmetica, corporal-dermo, corporal-higiene",
+  "key_terms": [
+   "dermocosmetica",
+   "corporal",
+   "higiene"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Corporal",
+  "subcategoria": "Manos y Pies",
+  "handle_coleccion": "manos-y-pies",
+  "type": "Manos y Pies",
+  "tags": "dermocosmetica, corporal-dermo, manos-y-pies",
+  "key_terms": [
+   "dermocosmetica",
+   "corporal",
+   "manos y pies"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Dermocosmética",
+  "categoria": "Protección Solar",
+  "subcategoria": null,
+  "handle_coleccion": "proteccion-solar",
+  "type": "Protección Solar",
+  "tags": "dermocosmetica, proteccion-solar",
+  "key_terms": [
+   "dermocosmetica",
+   "proteccion solar"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Protección Solar",
+  "subcategoria": "Autobronceante",
+  "handle_coleccion": "autobronceante",
+  "type": "Autobronceante",
+  "tags": "dermocosmetica, proteccion-solar, autobronceante",
+  "key_terms": [
+   "dermocosmetica",
+   "proteccion solar",
+   "autobronceante"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Protección Solar",
+  "subcategoria": "Cuerpo",
+  "handle_coleccion": "solar-cuerpo",
+  "type": "Cuerpo",
+  "tags": "dermocosmetica, proteccion-solar, solar-cuerpo",
+  "key_terms": [
+   "dermocosmetica",
+   "proteccion solar",
+   "cuerpo"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Protección Solar",
+  "subcategoria": "Labios",
+  "handle_coleccion": "solar-labios",
+  "type": "Labios",
+  "tags": "dermocosmetica, proteccion-solar, solar-labios",
+  "key_terms": [
+   "dermocosmetica",
+   "proteccion solar",
+   "labios"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Protección Solar",
+  "subcategoria": "Niños",
+  "handle_coleccion": "solar-ninos",
+  "type": "Niños",
+  "tags": "dermocosmetica, proteccion-solar, solar-ninos",
+  "key_terms": [
+   "dermocosmetica",
+   "proteccion solar",
+   "ninos"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Protección Solar",
+  "subcategoria": "Post-Solar",
+  "handle_coleccion": "post-solar",
+  "type": "Post-Solar",
+  "tags": "dermocosmetica, proteccion-solar, post-solar",
+  "key_terms": [
+   "dermocosmetica",
+   "proteccion solar",
+   "post-solar"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Protección Solar",
+  "subcategoria": "Rostro",
+  "handle_coleccion": "solar-rostro",
+  "type": "Rostro",
+  "tags": "dermocosmetica, proteccion-solar, solar-rostro",
+  "key_terms": [
+   "dermocosmetica",
+   "proteccion solar",
+   "rostro"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": null,
+  "handle_coleccion": "skin-care",
+  "type": "Skin Care",
+  "tags": "dermocosmetica, skin-care",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": "Aguas Termales & Anti-Rojeces",
+  "handle_coleccion": "aguas-termales-anti-rojeces",
+  "type": "Aguas Termales & Anti-Rojeces",
+  "tags": "dermocosmetica, skin-care, aguas-termales-anti-rojeces",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care",
+   "aguas termales & anti-rojeces"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": "Anti-Acné",
+  "handle_coleccion": "anti-acne",
+  "type": "Anti-Acné",
+  "tags": "dermocosmetica, skin-care, anti-acne",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care",
+   "anti-acne"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": "Anti-Edad",
+  "handle_coleccion": "anti-edad",
+  "type": "Anti-Edad",
+  "tags": "dermocosmetica, skin-care, anti-edad",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care",
+   "anti-edad"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": "Anti-Manchas",
+  "handle_coleccion": "anti-manchas",
+  "type": "Anti-Manchas",
+  "tags": "dermocosmetica, skin-care, anti-manchas",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care",
+   "anti-manchas"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": "Barba",
+  "handle_coleccion": "barba",
+  "type": "Barba",
+  "tags": "dermocosmetica, skin-care, barba",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care",
+   "barba"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": "Contorno de Ojos",
+  "handle_coleccion": "contorno-de-ojos",
+  "type": "Contorno de Ojos",
+  "tags": "dermocosmetica, skin-care, contorno-de-ojos",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care",
+   "contorno de ojos"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": "Hidratación",
+  "handle_coleccion": "skincare-hidratacion",
+  "type": "Hidratación",
+  "tags": "dermocosmetica, skin-care, skincare-hidratacion",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care",
+   "hidratacion"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": "Labios",
+  "handle_coleccion": "skincare-labios",
+  "type": "Labios",
+  "tags": "dermocosmetica, skin-care, skincare-labios",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care",
+   "labios"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": "Limpieza",
+  "handle_coleccion": "skincare-limpieza",
+  "type": "Limpieza",
+  "tags": "dermocosmetica, skin-care, skincare-limpieza",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care",
+   "limpieza"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": "Recuperación",
+  "handle_coleccion": "recuperacion",
+  "type": "Recuperación",
+  "tags": "dermocosmetica, skin-care, recuperacion",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care",
+   "recuperacion"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Dermocosmética",
+  "categoria": "Skin Care",
+  "subcategoria": "Serum",
+  "handle_coleccion": "serum",
+  "type": "Serum",
+  "tags": "dermocosmetica, skin-care, serum",
+  "key_terms": [
+   "dermocosmetica",
+   "skin care",
+   "serum"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Dermocosmética",
+  "categoria": "Combos faciales",
+  "subcategoria": null,
+  "handle_coleccion": "combos-faciales",
+  "type": "Combos faciales",
+  "tags": "dermocosmetica, combos-faciales",
+  "key_terms": [
+   "dermocosmetica",
+   "combos faciales"
+  ]
+ },
+ {
+  "nivel": "L1",
+  "departamento": "Electro",
+  "categoria": null,
+  "subcategoria": null,
+  "handle_coleccion": "electro",
+  "type": "Electro",
+  "tags": "electro",
+  "key_terms": [
+   "electro"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Electro",
+  "categoria": "Belleza",
+  "subcategoria": null,
+  "handle_coleccion": "electro-belleza",
+  "type": "Belleza",
+  "tags": "electro, electro-belleza",
+  "key_terms": [
+   "electro",
+   "belleza"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Electro",
+  "categoria": "Salud",
+  "subcategoria": null,
+  "handle_coleccion": "electro-salud",
+  "type": "Salud",
+  "tags": "electro, electro-salud",
+  "key_terms": [
+   "electro",
+   "salud"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Electro",
+  "categoria": "Tecnología",
+  "subcategoria": null,
+  "handle_coleccion": "tecnologia",
+  "type": "Tecnología",
+  "tags": "electro, tecnologia",
+  "key_terms": [
+   "electro",
+   "tecnologia"
+  ]
+ },
+ {
+  "nivel": "L1",
+  "departamento": "Infantiles",
+  "categoria": null,
+  "subcategoria": null,
+  "handle_coleccion": "infantiles",
+  "type": "Infantiles",
+  "tags": "infantiles",
+  "key_terms": [
+   "infantiles"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Infantiles",
+  "categoria": "Accesorios",
+  "subcategoria": null,
+  "handle_coleccion": "infantiles-accesorios",
+  "type": "Accesorios",
+  "tags": "infantiles, infantiles-accesorios",
+  "key_terms": [
+   "infantiles",
+   "accesorios"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Infantiles",
+  "categoria": "Fragancias",
+  "subcategoria": null,
+  "handle_coleccion": "infantiles-fragancias",
+  "type": "Fragancias",
+  "tags": "infantiles, infantiles-fragancias",
+  "key_terms": [
+   "infantiles",
+   "fragancias"
+  ]
+ },
+ {
+  "nivel": "L1",
+  "departamento": "Maquillaje",
+  "categoria": null,
+  "subcategoria": null,
+  "handle_coleccion": "maquillaje",
+  "type": "Maquillaje",
+  "tags": "maquillaje",
+  "key_terms": [
+   "maquillaje"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Maquillaje",
+  "categoria": "Brochas & Pinceles",
+  "subcategoria": null,
+  "handle_coleccion": "brochas-pinceles",
+  "type": "Brochas & Pinceles",
+  "tags": "maquillaje, brochas-pinceles",
+  "key_terms": [
+   "maquillaje",
+   "brochas & pinceles"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Maquillaje",
+  "categoria": "Labios",
+  "subcategoria": null,
+  "handle_coleccion": "maquillaje-labios",
+  "type": "Labios",
+  "tags": "maquillaje, maquillaje-labios",
+  "key_terms": [
+   "maquillaje",
+   "labios"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Labios",
+  "subcategoria": "Balsamos Labiales",
+  "handle_coleccion": "balsamos-labiales",
+  "type": "Balsamos Labiales",
+  "tags": "maquillaje, maquillaje-labios, balsamos-labiales",
+  "key_terms": [
+   "maquillaje",
+   "labios",
+   "balsamos labiales"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Labios",
+  "subcategoria": "Brillos Labiales",
+  "handle_coleccion": "brillos-labiales",
+  "type": "Brillos Labiales",
+  "tags": "maquillaje, maquillaje-labios, brillos-labiales",
+  "key_terms": [
+   "maquillaje",
+   "labios",
+   "brillos labiales"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Labios",
+  "subcategoria": "Delineadores",
+  "handle_coleccion": "delineadores-labios",
+  "type": "Delineadores",
+  "tags": "maquillaje, maquillaje-labios, delineadores-labios",
+  "key_terms": [
+   "maquillaje",
+   "labios",
+   "delineadores"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Labios",
+  "subcategoria": "Labiales Líquidos",
+  "handle_coleccion": "labiales-liquidos",
+  "type": "Labiales Líquidos",
+  "tags": "maquillaje, maquillaje-labios, labiales-liquidos",
+  "key_terms": [
+   "maquillaje",
+   "labios",
+   "labiales liquidos"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Labios",
+  "subcategoria": "Lápices Labiales",
+  "handle_coleccion": "lapices-labiales",
+  "type": "Lápices Labiales",
+  "tags": "maquillaje, maquillaje-labios, lapices-labiales",
+  "key_terms": [
+   "maquillaje",
+   "labios",
+   "lapices labiales"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Maquillaje",
+  "categoria": "Ojos",
+  "subcategoria": null,
+  "handle_coleccion": "maquillaje-ojos",
+  "type": "Ojos",
+  "tags": "maquillaje, maquillaje-ojos",
+  "key_terms": [
+   "maquillaje",
+   "ojos"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Ojos",
+  "subcategoria": "Cejas",
+  "handle_coleccion": "cejas",
+  "type": "Cejas",
+  "tags": "maquillaje, maquillaje-ojos, cejas",
+  "key_terms": [
+   "maquillaje",
+   "ojos",
+   "cejas"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Ojos",
+  "subcategoria": "Delineadores",
+  "handle_coleccion": "delineadores-ojos",
+  "type": "Delineadores",
+  "tags": "maquillaje, maquillaje-ojos, delineadores-ojos",
+  "key_terms": [
+   "maquillaje",
+   "ojos",
+   "delineadores"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Ojos",
+  "subcategoria": "Máscaras de Pestañas",
+  "handle_coleccion": "mascaras-de-pestanas",
+  "type": "Máscaras de Pestañas",
+  "tags": "maquillaje, maquillaje-ojos, mascaras-de-pestanas",
+  "key_terms": [
+   "maquillaje",
+   "ojos",
+   "mascaras de pestanas"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Ojos",
+  "subcategoria": "Sombras",
+  "handle_coleccion": "sombras",
+  "type": "Sombras",
+  "tags": "maquillaje, maquillaje-ojos, sombras",
+  "key_terms": [
+   "maquillaje",
+   "ojos",
+   "sombras"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Maquillaje",
+  "categoria": "Rostro",
+  "subcategoria": null,
+  "handle_coleccion": "maquillaje-rostro",
+  "type": "Rostro",
+  "tags": "maquillaje, maquillaje-rostro",
+  "key_terms": [
+   "maquillaje",
+   "rostro"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Rostro",
+  "subcategoria": "Bases",
+  "handle_coleccion": "bases",
+  "type": "Bases",
+  "tags": "maquillaje, maquillaje-rostro, bases",
+  "key_terms": [
+   "maquillaje",
+   "rostro",
+   "bases"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Rostro",
+  "subcategoria": "Correctores",
+  "handle_coleccion": "correctores",
+  "type": "Correctores",
+  "tags": "maquillaje, maquillaje-rostro, correctores",
+  "key_terms": [
+   "maquillaje",
+   "rostro",
+   "correctores"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Rostro",
+  "subcategoria": "Iluminadores",
+  "handle_coleccion": "iluminadores",
+  "type": "Iluminadores",
+  "tags": "maquillaje, maquillaje-rostro, iluminadores",
+  "key_terms": [
+   "maquillaje",
+   "rostro",
+   "iluminadores"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Rostro",
+  "subcategoria": "Polvos Compactos",
+  "handle_coleccion": "polvos-compactos",
+  "type": "Polvos Compactos",
+  "tags": "maquillaje, maquillaje-rostro, polvos-compactos",
+  "key_terms": [
+   "maquillaje",
+   "rostro",
+   "polvos compactos"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Rostro",
+  "subcategoria": "Primer y fijadores",
+  "handle_coleccion": "primer-fijadores",
+  "type": "Primer y fijadores",
+  "tags": "maquillaje, maquillaje-rostro, primer-fijadores",
+  "key_terms": [
+   "maquillaje",
+   "rostro",
+   "primer y fijadores"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Rostro",
+  "subcategoria": "Rubores",
+  "handle_coleccion": "rubores",
+  "type": "Rubores",
+  "tags": "maquillaje, maquillaje-rostro, rubores",
+  "key_terms": [
+   "maquillaje",
+   "rostro",
+   "rubores"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Maquillaje",
+  "categoria": "Uñas",
+  "subcategoria": null,
+  "handle_coleccion": "maquillaje-unas",
+  "type": "Uñas",
+  "tags": "maquillaje, maquillaje-unas",
+  "key_terms": [
+   "maquillaje",
+   "unas"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Uñas",
+  "subcategoria": "Esmaltes",
+  "handle_coleccion": "esmaltes",
+  "type": "Esmaltes",
+  "tags": "maquillaje, maquillaje-unas, esmaltes",
+  "key_terms": [
+   "maquillaje",
+   "unas",
+   "esmaltes"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Uñas",
+  "subcategoria": "Quitaesmalte",
+  "handle_coleccion": "quitaesmalte",
+  "type": "Quitaesmalte",
+  "tags": "maquillaje, maquillaje-unas, quitaesmalte",
+  "key_terms": [
+   "maquillaje",
+   "unas",
+   "quitaesmalte"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Maquillaje",
+  "categoria": "Uñas",
+  "subcategoria": "Tratamientos",
+  "handle_coleccion": "unas-tratamientos",
+  "type": "Tratamientos",
+  "tags": "maquillaje, maquillaje-unas, unas-tratamientos",
+  "key_terms": [
+   "maquillaje",
+   "unas",
+   "tratamientos"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Maquillaje",
+  "categoria": "Combos",
+  "subcategoria": null,
+  "handle_coleccion": "combos-maquillaje",
+  "type": "Combos",
+  "tags": "maquillaje, combos-maquillaje",
+  "key_terms": [
+   "maquillaje",
+   "combos"
+  ]
+ },
+ {
+  "nivel": "L1",
+  "departamento": "Nutrición y Deporte",
+  "categoria": null,
+  "subcategoria": null,
+  "handle_coleccion": "nutricion-deporte",
+  "type": "Nutrición y Deporte",
+  "tags": "nutricion-deporte",
+  "key_terms": [
+   "nutricion y deporte"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Nutrición y Deporte",
+  "categoria": "Suplemento Deportivo",
+  "subcategoria": null,
+  "handle_coleccion": "suplemento-deportivo",
+  "type": "Suplemento Deportivo",
+  "tags": "nutricion-deporte, suplemento-deportivo",
+  "key_terms": [
+   "nutricion y deporte",
+   "suplemento deportivo"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Nutrición y Deporte",
+  "categoria": "Suplemento Dietario",
+  "subcategoria": null,
+  "handle_coleccion": "suplemento-dietario",
+  "type": "Suplemento Dietario",
+  "tags": "nutricion-deporte, suplemento-dietario",
+  "key_terms": [
+   "nutricion y deporte",
+   "suplemento dietario"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Nutrición y Deporte",
+  "categoria": "Suplemento Nutricional",
+  "subcategoria": null,
+  "handle_coleccion": "suplemento-nutricional",
+  "type": "Suplemento Nutricional",
+  "tags": "nutricion-deporte, suplemento-nutricional",
+  "key_terms": [
+   "nutricion y deporte",
+   "suplemento nutricional"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Nutrición y Deporte",
+  "categoria": "Accesorios",
+  "subcategoria": null,
+  "handle_coleccion": "nutricion-accesorios",
+  "type": "Accesorios",
+  "tags": "nutricion-deporte, nutricion-accesorios",
+  "key_terms": [
+   "nutricion y deporte",
+   "accesorios"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Nutrición y Deporte",
+  "categoria": "Combos Suplementos",
+  "subcategoria": null,
+  "handle_coleccion": "combos-suplementos",
+  "type": "Combos Suplementos",
+  "tags": "nutricion-deporte, combos-suplementos",
+  "key_terms": [
+   "nutricion y deporte",
+   "combos suplementos"
+  ]
+ },
+ {
+  "nivel": "L1",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": null,
+  "subcategoria": null,
+  "handle_coleccion": "perfumes-fragancias",
+  "type": "Perfumes & Fragancias",
+  "tags": "perfumes-fragancias",
+  "key_terms": [
+   "perfumes & fragancias"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Mujer",
+  "subcategoria": null,
+  "handle_coleccion": "perfumes-mujer",
+  "type": "Mujer",
+  "tags": "perfumes-fragancias, perfumes-mujer",
+  "key_terms": [
+   "perfumes & fragancias",
+   "mujer"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Mujer",
+  "subcategoria": "Cofres y Set",
+  "handle_coleccion": "mujer-cofres-set",
+  "type": "Cofres y Set",
+  "tags": "perfumes-fragancias, perfumes-mujer, mujer-cofres-set",
+  "key_terms": [
+   "perfumes & fragancias",
+   "mujer",
+   "cofres y set"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Mujer",
+  "subcategoria": "Colonias y Body Splash",
+  "handle_coleccion": "mujer-colonias-body-splash",
+  "type": "Colonias y Body Splash",
+  "tags": "perfumes-fragancias, perfumes-mujer, mujer-colonias-body-splash",
+  "key_terms": [
+   "perfumes & fragancias",
+   "mujer",
+   "colonias y body splash"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Mujer",
+  "subcategoria": "Importado",
+  "handle_coleccion": "mujer-importado",
+  "type": "Importado",
+  "tags": "perfumes-fragancias, perfumes-mujer, mujer-importado",
+  "key_terms": [
+   "perfumes & fragancias",
+   "mujer",
+   "importado"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Mujer",
+  "subcategoria": "Nacionales",
+  "handle_coleccion": "mujer-nacionales",
+  "type": "Nacionales",
+  "tags": "perfumes-fragancias, perfumes-mujer, mujer-nacionales",
+  "key_terms": [
+   "perfumes & fragancias",
+   "mujer",
+   "nacionales"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Hombre",
+  "subcategoria": null,
+  "handle_coleccion": "perfumes-hombre",
+  "type": "Hombre",
+  "tags": "perfumes-fragancias, perfumes-hombre",
+  "key_terms": [
+   "perfumes & fragancias",
+   "hombre"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Hombre",
+  "subcategoria": "Cofres y Set",
+  "handle_coleccion": "hombre-cofres-set",
+  "type": "Cofres y Set",
+  "tags": "perfumes-fragancias, perfumes-hombre, hombre-cofres-set",
+  "key_terms": [
+   "perfumes & fragancias",
+   "hombre",
+   "cofres y set"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Hombre",
+  "subcategoria": "Colonias",
+  "handle_coleccion": "hombre-colonias",
+  "type": "Colonias",
+  "tags": "perfumes-fragancias, perfumes-hombre, hombre-colonias",
+  "key_terms": [
+   "perfumes & fragancias",
+   "hombre",
+   "colonias"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Hombre",
+  "subcategoria": "Importado",
+  "handle_coleccion": "hombre-importado",
+  "type": "Importado",
+  "tags": "perfumes-fragancias, perfumes-hombre, hombre-importado",
+  "key_terms": [
+   "perfumes & fragancias",
+   "hombre",
+   "importado"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Hombre",
+  "subcategoria": "Nacionales",
+  "handle_coleccion": "hombre-nacionales",
+  "type": "Nacionales",
+  "tags": "perfumes-fragancias, perfumes-hombre, hombre-nacionales",
+  "key_terms": [
+   "perfumes & fragancias",
+   "hombre",
+   "nacionales"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Juvenil",
+  "subcategoria": null,
+  "handle_coleccion": "perfumes-juvenil",
+  "type": "Juvenil",
+  "tags": "perfumes-fragancias, perfumes-juvenil",
+  "key_terms": [
+   "perfumes & fragancias",
+   "juvenil"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Juvenil",
+  "subcategoria": "Cofres y Set",
+  "handle_coleccion": "juvenil-cofres-set",
+  "type": "Cofres y Set",
+  "tags": "perfumes-fragancias, perfumes-juvenil, juvenil-cofres-set",
+  "key_terms": [
+   "perfumes & fragancias",
+   "juvenil",
+   "cofres y set"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Juvenil",
+  "subcategoria": "Colonias y Body Splash",
+  "handle_coleccion": "juvenil-colonias-body-splash",
+  "type": "Colonias y Body Splash",
+  "tags": "perfumes-fragancias, perfumes-juvenil, juvenil-colonias-body-splash",
+  "key_terms": [
+   "perfumes & fragancias",
+   "juvenil",
+   "colonias y body splash"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Juvenil",
+  "subcategoria": "Nacionales",
+  "handle_coleccion": "juvenil-nacionales",
+  "type": "Nacionales",
+  "tags": "perfumes-fragancias, perfumes-juvenil, juvenil-nacionales",
+  "key_terms": [
+   "perfumes & fragancias",
+   "juvenil",
+   "nacionales"
+  ]
+ },
+ {
+  "nivel": "L2",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Unisex",
+  "subcategoria": null,
+  "handle_coleccion": "perfumes-unisex",
+  "type": "Unisex",
+  "tags": "perfumes-fragancias, perfumes-unisex",
+  "key_terms": [
+   "perfumes & fragancias",
+   "unisex"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Unisex",
+  "subcategoria": "Importados",
+  "handle_coleccion": "unisex-importados",
+  "type": "Importados",
+  "tags": "perfumes-fragancias, perfumes-unisex, unisex-importados",
+  "key_terms": [
+   "perfumes & fragancias",
+   "unisex",
+   "importados"
+  ]
+ },
+ {
+  "nivel": "L3",
+  "departamento": "Perfumes & Fragancias",
+  "categoria": "Unisex",
+  "subcategoria": "Nacionales",
+  "handle_coleccion": "unisex-nacionales",
+  "type": "Nacionales",
+  "tags": "perfumes-fragancias, perfumes-unisex, unisex-nacionales",
+  "key_terms": [
+   "perfumes & fragancias",
+   "unisex",
+   "nacionales"
+  ]
+ }
+]
