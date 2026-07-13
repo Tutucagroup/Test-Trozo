@@ -1,0 +1,9 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Scratch / generated outputs
+_smoke.xlsx
+_test.xlsx
+_*.sh
