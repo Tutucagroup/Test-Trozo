@@ -8,9 +8,19 @@ Parte del template original (conserva hojas Instrucciones y Tags por categoría)
 limpia las filas de ejemplo y escribe todos los productos.
 """
 import os
+import re
 import sys
 import json
 import openpyxl
+
+# caracteres de control no permitidos en XML/openpyxl
+_ILLEGAL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
+
+
+def sanitize(v):
+    if isinstance(v, str):
+        return _ILLEGAL.sub("", v)
+    return v
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE, "scraper"))
@@ -25,7 +35,10 @@ SHEET = "Products (Matrixify)"
 
 
 def load_products():
-    prods, seen = [], set()
+    """Dedup por WS (id único). Handles se hacen únicos: cuando un slug se repite
+    entre productos distintos (variantes de color/talle que el sitio publica por
+    separado), se le agrega el número de WS para no pisarse con MERGE en Shopify."""
+    prods, seen_ws = [], set()
     for line in open(PRODUCTS, encoding="utf-8"):
         try:
             rec = json.loads(line)
@@ -33,11 +46,23 @@ def load_products():
             continue
         if not rec.get("ok"):
             continue
-        h = rec.get("handle") or rec.get("ws_code")
-        if h in seen:
+        ws = rec.get("ws_code")
+        if not ws or ws in seen_ws:
             continue
-        seen.add(h)
+        seen_ws.add(ws)
         prods.append(rec)
+
+    # contar slugs para detectar colisiones
+    from collections import Counter
+    counts = Counter(p.get("handle") for p in prods)
+    used = set()
+    for p in prods:
+        h = p.get("handle") or (p.get("ws_code") or "").lower()
+        if counts[h] > 1 or h in used:
+            num = re.sub(r"\D", "", p.get("ws_code") or "")
+            h = f"{h}-{num}"
+        used.add(h)
+        p["handle"] = h
     return prods
 
 
@@ -61,7 +86,7 @@ def main():
 
     def put(row, colname, val):
         if colname in ci and val is not None and val != "":
-            ws.cell(row, ci[colname], val)
+            ws.cell(row, ci[colname], sanitize(val))
 
     r = 2
     stats = {"con_tags": 0, "sin_tags": 0, "con_oferta": 0, "sin_stock": 0, "imgs": 0}
