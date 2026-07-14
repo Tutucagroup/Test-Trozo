@@ -1,0 +1,1484 @@
+{
+ "23285": {
+  "slug": "suplemento-dietario",
+  "path": [
+   "Nutrición y Deportes",
+   "Suplemento Dietario"
+  ]
+ },
+ "38607": {
+  "slug": "chupetes-mordillos",
+  "path": [
+   "Bebé & Maternidad",
+   "Chupetes & Mordillos"
+  ]
+ },
+ "23308": {
+  "slug": "bases",
+  "path": [
+   "Maquillaje",
+   "Rostro",
+   "Bases"
+  ]
+ },
+ "55500": {
+  "slug": "mujer",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Corporal",
+   "Desodorantes y Antitranspirante",
+   "Mujer"
+  ]
+ },
+ "23284": {
+  "slug": "jabones-geles",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Corporal",
+   "Jabones & Geles"
+  ]
+ },
+ "50684": {
+  "slug": "desodorantes-y-antitranspirante",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Corporal",
+   "Desodorantes y Antitranspirante"
+  ]
+ },
+ "23294": {
+  "slug": "sombras",
+  "path": [
+   "Maquillaje",
+   "Ojos",
+   "Sombras"
+  ]
+ },
+ "23262": {
+  "slug": "esmaltes",
+  "path": [
+   "Maquillaje",
+   "Uñas",
+   "Esmaltes"
+  ]
+ },
+ "22939": {
+  "slug": "skin-care",
+  "path": [
+   "Dermocosmética",
+   "Skin Care"
+  ]
+ },
+ "55506": {
+  "slug": "accesorios-de-bano",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Corporal",
+   "Accesorios de Baño"
+  ]
+ },
+ "22943": {
+  "slug": "corporales",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Corporales"
+  ]
+ },
+ "23355": {
+  "slug": "suplemento-deportivo",
+  "path": [
+   "Nutrición y Deportes",
+   "Suplemento Deportivo"
+  ]
+ },
+ "23261": {
+  "slug": "unas",
+  "path": [
+   "Maquillaje",
+   "Uñas"
+  ]
+ },
+ "23289": {
+  "slug": "acondicionador",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado Capilar",
+   "Acondicionador"
+  ]
+ },
+ "65794": {
+  "slug": "geles-y-lubricantes",
+  "path": [
+   "Cuidado de la Salud",
+   "Bienestar Sexual",
+   "Geles y Lubricantes"
+  ]
+ },
+ "23723": {
+  "slug": "pastas-geles-dentales",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Oral",
+   "Pastas & Geles Dentales"
+  ]
+ },
+ "65778": {
+  "slug": "algodones",
+  "path": [
+   "Cuidado de la Salud",
+   "Primeros Auxilios",
+   "Algodones"
+  ]
+ },
+ "29702": {
+  "slug": "toallas-humedas",
+  "path": [
+   "Bebé & Maternidad",
+   "Toallas húmedas"
+  ]
+ },
+ "69947": {
+  "slug": "nacionales",
+  "path": [
+   "Perfumes & Fragancias",
+   "Hombres",
+   "Nacionales"
+  ]
+ },
+ "47221": {
+  "slug": "salud",
+  "path": [
+   "Electro",
+   "Salud"
+  ]
+ },
+ "69946": {
+  "slug": "importado",
+  "path": [
+   "Perfumes & Fragancias",
+   "Hombres",
+   "Importado"
+  ]
+ },
+ "65853": {
+  "slug": "rostro",
+  "path": [
+   "Dermocosmética",
+   "Protección Solar",
+   "Rostro"
+  ]
+ },
+ "69944": {
+  "slug": "colonias-y-body-splash",
+  "path": [
+   "Perfumes & Fragancias",
+   "Mujer",
+   "Colonias y Body Splash"
+  ]
+ },
+ "65786": {
+  "slug": "antiinflamatorio",
+  "path": [
+   "Cuidado de la Salud",
+   "Complementos de Farmacia",
+   "Antiinflamatorio"
+  ]
+ },
+ "69943": {
+  "slug": "nacionales",
+  "path": [
+   "Perfumes & Fragancias",
+   "Mujer",
+   "Nacionales"
+  ]
+ },
+ "23274": {
+  "slug": "lapices-labiales",
+  "path": [
+   "Maquillaje",
+   "Labios",
+   "Lápices Labiales"
+  ]
+ },
+ "23291": {
+  "slug": "cepillos-hilos-dentales",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Oral",
+   "Cepillos & Hilos Dentales"
+  ]
+ },
+ "23264": {
+  "slug": "suplemento-nutricional",
+  "path": [
+   "Nutrición y Deportes",
+   "Suplemento Nutricional"
+  ]
+ },
+ "23312": {
+  "slug": "labiales-liquidos",
+  "path": [
+   "Maquillaje",
+   "Labios",
+   "Labiales Líquidos"
+  ]
+ },
+ "50640": {
+  "slug": "secadores",
+  "path": [
+   "Electro",
+   "Belleza",
+   "Secadores"
+  ]
+ },
+ "69942": {
+  "slug": "importado",
+  "path": [
+   "Perfumes & Fragancias",
+   "Mujer",
+   "Importado"
+  ]
+ },
+ "23302": {
+  "slug": "correctores",
+  "path": [
+   "Maquillaje",
+   "Rostro",
+   "Correctores"
+  ]
+ },
+ "69945": {
+  "slug": "cofres-y-set",
+  "path": [
+   "Perfumes & Fragancias",
+   "Mujer",
+   "Cofres y Set"
+  ]
+ },
+ "65826": {
+  "slug": "accesorios",
+  "path": [
+   "Infantiles",
+   "Accesorios"
+  ]
+ },
+ "55820": {
+  "slug": "botiquin",
+  "path": [
+   "Cuidado de la Salud",
+   "Primeros Auxilios",
+   "Botiquin"
+  ]
+ },
+ "48593": {
+  "slug": "cortadoras-y-afeitadoras",
+  "path": [
+   "Electro",
+   "Belleza",
+   "Cortadoras y Afeitadoras"
+  ]
+ },
+ "23287": {
+  "slug": "repelentes",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Repelentes"
+  ]
+ },
+ "55501": {
+  "slug": "hombre",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Corporal",
+   "Desodorantes y Antitranspirante",
+   "Hombre"
+  ]
+ },
+ "23185": {
+  "slug": "shampoo",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado Capilar",
+   "Shampoo"
+  ]
+ },
+ "23277": {
+  "slug": "tinturas-coloracion",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado Capilar",
+   "Tinturas & Coloración"
+  ]
+ },
+ "65846": {
+  "slug": "hidratacion",
+  "path": [
+   "Dermocosmética",
+   "Skin Care",
+   "Hidratación"
+  ]
+ },
+ "65843": {
+  "slug": "serum",
+  "path": [
+   "Dermocosmética",
+   "Skin Care",
+   "Serum"
+  ]
+ },
+ "65787": {
+  "slug": "diabetes",
+  "path": [
+   "Cuidado de la Salud",
+   "Diabetes"
+  ]
+ },
+ "23258": {
+  "slug": "delineadores",
+  "path": [
+   "Maquillaje",
+   "Ojos",
+   "Delineadores"
+  ]
+ },
+ "55809": {
+  "slug": "apositos",
+  "path": [
+   "Cuidado de la Salud",
+   "Primeros Auxilios",
+   "Apósitos"
+  ]
+ },
+ "23377": {
+  "slug": "iluminadores",
+  "path": [
+   "Maquillaje",
+   "Rostro",
+   "Iluminadores"
+  ]
+ },
+ "23378": {
+  "slug": "quitaesmalte",
+  "path": [
+   "Maquillaje",
+   "Uñas",
+   "Quitaesmalte"
+  ]
+ },
+ "65546": {
+  "slug": "incienso",
+  "path": [
+   "Hogar",
+   "Incienso"
+  ]
+ },
+ "23301": {
+  "slug": "rostro",
+  "path": [
+   "Maquillaje",
+   "Rostro"
+  ]
+ },
+ "65822": {
+  "slug": "insecticidas",
+  "path": [
+   "Hogar",
+   "Insecticidas"
+  ]
+ },
+ "29708": {
+  "slug": "bano-del-bebe",
+  "path": [
+   "Bebé & Maternidad",
+   "Baño del Bebé"
+  ]
+ },
+ "55323": {
+  "slug": "fragancias",
+  "path": [
+   "Bebé & Maternidad",
+   "Fragancias"
+  ]
+ },
+ "23347": {
+  "slug": "rubores",
+  "path": [
+   "Maquillaje",
+   "Rostro",
+   "Rubores"
+  ]
+ },
+ "69949": {
+  "slug": "cofres-y-set",
+  "path": [
+   "Perfumes & Fragancias",
+   "Hombres",
+   "Cofres y Set"
+  ]
+ },
+ "22938": {
+  "slug": "solares",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Solares"
+  ]
+ },
+ "47212": {
+  "slug": "limpieza",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Limpieza"
+  ]
+ },
+ "23286": {
+  "slug": "depilacion",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Corporal",
+   "Depilación"
+  ]
+ },
+ "23265": {
+  "slug": "proteccion-femenina",
+  "path": [
+   "Cuidado Personal",
+   "Protección Femenina"
+  ]
+ },
+ "65790": {
+  "slug": "accesorios",
+  "path": [
+   "Cuidado de la Salud",
+   "Diabetes",
+   "Accesorios"
+  ]
+ },
+ "69950": {
+  "slug": "nacionales",
+  "path": [
+   "Perfumes & Fragancias",
+   "Juvenil",
+   "Nacionales"
+  ]
+ },
+ "23318": {
+  "slug": "accesorios-de-belleza",
+  "path": [
+   "Cuidado Personal",
+   "Accesorios de Belleza"
+  ]
+ },
+ "51975": {
+  "slug": "accesorios",
+  "path": [
+   "Bebé & Maternidad",
+   "Accesorios"
+  ]
+ },
+ "69951": {
+  "slug": "colonias-y-body-splash",
+  "path": [
+   "Perfumes & Fragancias",
+   "Juvenil",
+   "Colonias y Body Splash"
+  ]
+ },
+ "22942": {
+  "slug": "mascaras-de-pestanas",
+  "path": [
+   "Maquillaje",
+   "Ojos",
+   "Máscaras de Pestañas"
+  ]
+ },
+ "69952": {
+  "slug": "cofres-y-set",
+  "path": [
+   "Perfumes & Fragancias",
+   "Juvenil",
+   "Cofres y Set"
+  ]
+ },
+ "65829": {
+  "slug": "serum-y-boosters",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Serum y Boosters"
+  ]
+ },
+ "23348": {
+  "slug": "tratamientos",
+  "path": [
+   "Maquillaje",
+   "Uñas",
+   "Tratamientos"
+  ]
+ },
+ "23276": {
+  "slug": "corporal",
+  "path": [
+   "Dermocosmética",
+   "Corporal"
+  ]
+ },
+ "23283": {
+  "slug": "higiene-corporal",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Corporal"
+  ]
+ },
+ "65805": {
+  "slug": "reparacion-nutricion",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado Capilar",
+   "Reparación & Nutrición"
+  ]
+ },
+ "23358": {
+  "slug": "unas",
+  "path": [
+   "Cuidado Personal",
+   "Accesorios de Belleza",
+   "Uñas"
+  ]
+ },
+ "65850": {
+  "slug": "manos-y-pies",
+  "path": [
+   "Dermocosmética",
+   "Corporal",
+   "Manos y Pies"
+  ]
+ },
+ "48320": {
+  "slug": "nebulizadores",
+  "path": [
+   "Electro",
+   "Salud",
+   "Nebulizadores"
+  ]
+ },
+ "23282": {
+  "slug": "enjuague-bucal",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Oral",
+   "Enjuague Bucal"
+  ]
+ },
+ "29730": {
+  "slug": "brillos-labiales",
+  "path": [
+   "Maquillaje",
+   "Labios",
+   "Brillos Labiales"
+  ]
+ },
+ "23305": {
+  "slug": "cejas",
+  "path": [
+   "Maquillaje",
+   "Ojos",
+   "Cejas"
+  ]
+ },
+ "65784": {
+  "slug": "remeras",
+  "path": [
+   "Cuidado de la Salud",
+   "Indumentaria",
+   "Remeras"
+  ]
+ },
+ "33041": {
+  "slug": "mamas",
+  "path": [
+   "Bebé & Maternidad",
+   "Mamás"
+  ]
+ },
+ "23379": {
+  "slug": "ortopedia",
+  "path": [
+   "Cuidado de la Salud",
+   "Ortopedia"
+  ]
+ },
+ "56544": {
+  "slug": "toallas-con-y-sin-alas",
+  "path": [
+   "Cuidado Personal",
+   "Protección Femenina",
+   "Toallas Con y Sin Alas"
+  ]
+ },
+ "22935": {
+  "slug": "proteccion-solar",
+  "path": [
+   "Dermocosmética",
+   "Protección Solar"
+  ]
+ },
+ "34506": {
+  "slug": "mamaderas-tetinas",
+  "path": [
+   "Bebé & Maternidad",
+   "Mamaderas & Tetinas"
+  ]
+ },
+ "23719": {
+  "slug": "balsamos-labiales",
+  "path": [
+   "Maquillaje",
+   "Labios",
+   "Balsamos Labiales"
+  ]
+ },
+ "59846": {
+  "slug": "pierna-y-pie",
+  "path": [
+   "Cuidado de la Salud",
+   "Ortopedia",
+   "Pierna y Pie"
+  ]
+ },
+ "23333": {
+  "slug": "varios",
+  "path": [
+   "Cuidado Personal",
+   "Accesorios de Belleza",
+   "Varios"
+  ]
+ },
+ "22944": {
+  "slug": "faciales",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Faciales"
+  ]
+ },
+ "23319": {
+  "slug": "brochas-pinceles",
+  "path": [
+   "Maquillaje",
+   "Brochas & Pinceles"
+  ]
+ },
+ "65828": {
+  "slug": "fragancias",
+  "path": [
+   "Infantiles",
+   "Fragancias"
+  ]
+ },
+ "59632": {
+  "slug": "brazo-y-muneca",
+  "path": [
+   "Cuidado de la Salud",
+   "Ortopedia",
+   "Brazo y muñeca"
+  ]
+ },
+ "65776": {
+  "slug": "optica",
+  "path": [
+   "Cuidado de la Salud",
+   "Complementos de Farmacia",
+   "Optica"
+  ]
+ },
+ "69954": {
+  "slug": "importados",
+  "path": [
+   "Perfumes & Fragancias",
+   "Unisex",
+   "Importados"
+  ]
+ },
+ "47222": {
+  "slug": "tensiometros-y-medicion",
+  "path": [
+   "Electro",
+   "Salud",
+   "Tensiómetros y Medición"
+  ]
+ },
+ "56925": {
+  "slug": "cuidado-intimo",
+  "path": [
+   "Cuidado Personal",
+   "Protección Femenina",
+   "Cuidado Intimo"
+  ]
+ },
+ "23390": {
+  "slug": "leche-y-alimentos",
+  "path": [
+   "Bebé & Maternidad",
+   "Leche y Alimentos"
+  ]
+ },
+ "65771": {
+  "slug": "panales-para-bebe",
+  "path": [
+   "Bebé & Maternidad",
+   "Pañales para Bebé"
+  ]
+ },
+ "69924": {
+  "slug": "combos-faciales",
+  "path": [
+   "Dermocosmética",
+   "Combos faciales"
+  ]
+ },
+ "22934": {
+  "slug": "dermocosmetica",
+  "path": [
+   "Dermocosmética"
+  ]
+ },
+ "56960": {
+  "slug": "barba-y-afeitado",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Corporal",
+   "Barba y Afeitado"
+  ]
+ },
+ "65820": {
+  "slug": "accesorios",
+  "path": [
+   "Nutrición y Deportes",
+   "Accesorios"
+  ]
+ },
+ "65847": {
+  "slug": "limpieza",
+  "path": [
+   "Dermocosmética",
+   "Skin Care",
+   "Limpieza"
+  ]
+ },
+ "77930": {
+  "slug": "combos-corporales",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Combos Corporales"
+  ]
+ },
+ "65848": {
+  "slug": "hidratacion",
+  "path": [
+   "Dermocosmética",
+   "Corporal",
+   "Hidratación"
+  ]
+ },
+ "65773": {
+  "slug": "antibacterial",
+  "path": [
+   "Cuidado de la Salud",
+   "Complementos de Farmacia",
+   "Antibacterial"
+  ]
+ },
+ "65774": {
+  "slug": "test-de-embarazo",
+  "path": [
+   "Cuidado de la Salud",
+   "Complementos de Farmacia",
+   "Test de Embarazo"
+  ]
+ },
+ "29733": {
+  "slug": "pinzas",
+  "path": [
+   "Cuidado Personal",
+   "Accesorios de Belleza",
+   "Pinzas"
+  ]
+ },
+ "65793": {
+  "slug": "juguetes-sexuales",
+  "path": [
+   "Cuidado de la Salud",
+   "Bienestar Sexual",
+   "Juguetes  Sexuales"
+  ]
+ },
+ "23273": {
+  "slug": "labios",
+  "path": [
+   "Maquillaje",
+   "Labios"
+  ]
+ },
+ "29739": {
+  "slug": "delineadores",
+  "path": [
+   "Maquillaje",
+   "Labios",
+   "Delineadores"
+  ]
+ },
+ "69948": {
+  "slug": "colonias",
+  "path": [
+   "Perfumes & Fragancias",
+   "Hombres",
+   "Colonias"
+  ]
+ },
+ "23320": {
+  "slug": "accesorio-bucal",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Oral",
+   "Accesorio Bucal"
+  ]
+ },
+ "48592": {
+  "slug": "planchitas-y-rizadores",
+  "path": [
+   "Electro",
+   "Belleza",
+   "Planchitas y Rizadores"
+  ]
+ },
+ "65780": {
+  "slug": "soportes",
+  "path": [
+   "Cuidado de la Salud",
+   "Ortopedia",
+   "Soportes"
+  ]
+ },
+ "65781": {
+  "slug": "inmovilizadores",
+  "path": [
+   "Cuidado de la Salud",
+   "Ortopedia",
+   "Inmovilizadores"
+  ]
+ },
+ "65782": {
+  "slug": "fajas",
+  "path": [
+   "Cuidado de la Salud",
+   "Ortopedia",
+   "Fajas"
+  ]
+ },
+ "65779": {
+  "slug": "compresas",
+  "path": [
+   "Cuidado de la Salud",
+   "Primeros Auxilios",
+   "Compresas"
+  ]
+ },
+ "65830": {
+  "slug": "contorno-de-ojos",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Contorno de Ojos"
+  ]
+ },
+ "67370": {
+  "slug": "barba",
+  "path": [
+   "Dermocosmética",
+   "Skin Care",
+   "Barba"
+  ]
+ },
+ "22937": {
+  "slug": "cuidado-de-la-piel",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel"
+  ]
+ },
+ "75455": {
+  "slug": "rodilla",
+  "path": [
+   "Cuidado de la Salud",
+   "Ortopedia",
+   "Rodilla"
+  ]
+ },
+ "73301": {
+  "slug": "vendas-y-cintas",
+  "path": [
+   "Cuidado de la Salud",
+   "Ortopedia",
+   "Vendas y Cintas"
+  ]
+ },
+ "23722": {
+  "slug": "higiene-oral",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Oral"
+  ]
+ },
+ "65815": {
+  "slug": "incontinencia",
+  "path": [
+   "Cuidado de la Salud",
+   "Cuidado del Adulto",
+   "Incontinencia"
+  ]
+ },
+ "78068": {
+  "slug": "combos-suplementos",
+  "path": [
+   "Nutrición y Deportes",
+   "Combos Suplementos"
+  ]
+ },
+ "77929": {
+  "slug": "combos-capilares",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado Capilar",
+   "Combos capilares"
+  ]
+ },
+ "65844": {
+  "slug": "anti-edad",
+  "path": [
+   "Dermocosmética",
+   "Skin Care",
+   "Anti-Edad"
+  ]
+ },
+ "23376": {
+  "slug": "cabello",
+  "path": [
+   "Cuidado Personal",
+   "Accesorios de Belleza",
+   "Cabello"
+  ]
+ },
+ "78755": {
+  "slug": "spray-oral",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Oral",
+   "Spray Oral"
+  ]
+ },
+ "29701": {
+  "slug": "bebe-maternidad",
+  "path": [
+   "Bebé & Maternidad"
+  ]
+ },
+ "69819": {
+  "slug": "barbijos",
+  "path": [
+   "Cuidado de la Salud",
+   "Ortopedia",
+   "Barbijos"
+  ]
+ },
+ "23314": {
+  "slug": "capilares",
+  "path": [
+   "Dermocosmética",
+   "Capilares"
+  ]
+ },
+ "29731": {
+  "slug": "rostro",
+  "path": [
+   "Cuidado Personal",
+   "Accesorios de Belleza",
+   "Rostro"
+  ]
+ },
+ "65854": {
+  "slug": "cuerpo",
+  "path": [
+   "Dermocosmética",
+   "Protección Solar",
+   "Cuerpo"
+  ]
+ },
+ "67369": {
+  "slug": "recuperacion",
+  "path": [
+   "Dermocosmética",
+   "Skin Care",
+   "Recuperación"
+  ]
+ },
+ "65792": {
+  "slug": "preservativos",
+  "path": [
+   "Cuidado de la Salud",
+   "Bienestar Sexual",
+   "Preservativos"
+  ]
+ },
+ "67364": {
+  "slug": "tratamiento",
+  "path": [
+   "Dermocosmética",
+   "Capilares",
+   "Tratamiento"
+  ]
+ },
+ "22941": {
+  "slug": "ojos",
+  "path": [
+   "Maquillaje",
+   "Ojos"
+  ]
+ },
+ "23323": {
+  "slug": "ortodoncia-y-protesis",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Oral",
+   "Ortodoncia y Prótesis"
+  ]
+ },
+ "65834": {
+  "slug": "tampones",
+  "path": [
+   "Cuidado Personal",
+   "Protección Femenina",
+   "Tampones"
+  ]
+ },
+ "65837": {
+  "slug": "polvo-pedico",
+  "path": [
+   "Cuidado Personal",
+   "Talcos & Polvos Pédicos",
+   "Polvo Pédico"
+  ]
+ },
+ "65802": {
+  "slug": "modelado-peinado",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado Capilar",
+   "Modelado & Peinado"
+  ]
+ },
+ "47191": {
+  "slug": "mujer",
+  "path": [
+   "Perfumes & Fragancias",
+   "Mujer"
+  ]
+ },
+ "65838": {
+  "slug": "talcos-corporales",
+  "path": [
+   "Cuidado Personal",
+   "Talcos & Polvos Pédicos",
+   "Talcos Corporales"
+  ]
+ },
+ "29738": {
+  "slug": "polvos-compactos",
+  "path": [
+   "Maquillaje",
+   "Rostro",
+   "Polvos Compactos"
+  ]
+ },
+ "65841": {
+  "slug": "aguas-termales-anti-rojeces",
+  "path": [
+   "Dermocosmética",
+   "Skin Care",
+   "Aguas Termales & Anti-Rojeces"
+  ]
+ },
+ "23134": {
+  "slug": "cuidado-capilar",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado Capilar"
+  ]
+ },
+ "48591": {
+  "slug": "belleza",
+  "path": [
+   "Electro",
+   "Belleza"
+  ]
+ },
+ "23263": {
+  "slug": "nutricion-y-deportes",
+  "path": [
+   "Nutrición y Deportes"
+  ]
+ },
+ "22940": {
+  "slug": "maquillaje",
+  "path": [
+   "Maquillaje"
+  ]
+ },
+ "67367": {
+  "slug": "shampoo",
+  "path": [
+   "Dermocosmética",
+   "Capilares",
+   "Shampoo"
+  ]
+ },
+ "65856": {
+  "slug": "ninos",
+  "path": [
+   "Dermocosmética",
+   "Protección Solar",
+   "Niños"
+  ]
+ },
+ "65842": {
+  "slug": "anti-acne",
+  "path": [
+   "Dermocosmética",
+   "Skin Care",
+   "Anti-Acné"
+  ]
+ },
+ "65821": {
+  "slug": "aromatizadores",
+  "path": [
+   "Hogar",
+   "Aromatizadores"
+  ]
+ },
+ "65840": {
+  "slug": "contorno-de-ojos",
+  "path": [
+   "Dermocosmética",
+   "Skin Care",
+   "Contorno de Ojos"
+  ]
+ },
+ "65772": {
+  "slug": "complementos-de-farmacia",
+  "path": [
+   "Cuidado de la Salud",
+   "Complementos de Farmacia"
+  ]
+ },
+ "65818": {
+  "slug": "otros",
+  "path": [
+   "Cuidado de la Salud",
+   "Cuidado del Adulto",
+   "Otros"
+  ]
+ },
+ "65783": {
+  "slug": "cuidado-del-pie",
+  "path": [
+   "Cuidado de la Salud",
+   "Ortopedia",
+   "Cuidado del Pie"
+  ]
+ },
+ "65785": {
+  "slug": "calzas",
+  "path": [
+   "Cuidado de la Salud",
+   "Indumentaria",
+   "Calzas"
+  ]
+ },
+ "23373": {
+  "slug": "cuerpo-y-manos",
+  "path": [
+   "Cuidado Personal",
+   "Accesorios de Belleza",
+   "Cuerpo y Manos"
+  ]
+ },
+ "67368": {
+  "slug": "balsamos",
+  "path": [
+   "Dermocosmética",
+   "Capilares",
+   "Bálsamos"
+  ]
+ },
+ "55334": {
+  "slug": "almohadillas",
+  "path": [
+   "Electro",
+   "Salud",
+   "Almohadillas"
+  ]
+ },
+ "51936": {
+  "slug": "depiladoras",
+  "path": [
+   "Electro",
+   "Belleza",
+   "Depiladoras"
+  ]
+ },
+ "65816": {
+  "slug": "panales",
+  "path": [
+   "Cuidado de la Salud",
+   "Cuidado del Adulto",
+   "Pañales"
+  ]
+ },
+ "54982": {
+  "slug": "juvenil",
+  "path": [
+   "Perfumes & Fragancias",
+   "Juvenil"
+  ]
+ },
+ "23292": {
+  "slug": "cuidado-de-la-salud",
+  "path": [
+   "Cuidado de la Salud"
+  ]
+ },
+ "57263": {
+  "slug": "protectores-diarios",
+  "path": [
+   "Cuidado Personal",
+   "Protección Femenina",
+   "Protectores Diarios"
+  ]
+ },
+ "65817": {
+  "slug": "suplementos",
+  "path": [
+   "Cuidado de la Salud",
+   "Cuidado del Adulto",
+   "Suplementos"
+  ]
+ },
+ "23352": {
+  "slug": "primeros-auxilios",
+  "path": [
+   "Cuidado de la Salud",
+   "Primeros Auxilios"
+  ]
+ },
+ "71472": {
+  "slug": "labios",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Solares",
+   "Labios"
+  ]
+ },
+ "71471": {
+  "slug": "bronceado",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Solares",
+   "Bronceado"
+  ]
+ },
+ "56145": {
+  "slug": "talcos-polvos-pedicos",
+  "path": [
+   "Cuidado Personal",
+   "Talcos & Polvos Pédicos"
+  ]
+ },
+ "65852": {
+  "slug": "celulitis",
+  "path": [
+   "Dermocosmética",
+   "Corporal",
+   "Celulitis"
+  ]
+ },
+ "65859": {
+  "slug": "autobronceante",
+  "path": [
+   "Dermocosmética",
+   "Protección Solar",
+   "Autobronceante"
+  ]
+ },
+ "29744": {
+  "slug": "primmer-y-fijadores-de-maquillaje",
+  "path": [
+   "Maquillaje",
+   "Rostro",
+   "Primmer y fijadores de Maquillaje"
+  ]
+ },
+ "65824": {
+  "slug": "tecnologia",
+  "path": [
+   "Electro",
+   "Tecnología"
+  ]
+ },
+ "65845": {
+  "slug": "anti-manchas",
+  "path": [
+   "Dermocosmética",
+   "Skin Care",
+   "Anti-Manchas"
+  ]
+ },
+ "29732": {
+  "slug": "espejos",
+  "path": [
+   "Cuidado Personal",
+   "Accesorios de Belleza",
+   "Espejos"
+  ]
+ },
+ "71469": {
+  "slug": "facial",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Solares",
+   "Facial"
+  ]
+ },
+ "57105": {
+  "slug": "hogar",
+  "path": [
+   "Hogar"
+  ]
+ },
+ "47210": {
+  "slug": "hombres",
+  "path": [
+   "Perfumes & Fragancias",
+   "Hombres"
+  ]
+ },
+ "65806": {
+  "slug": "anti-caidas",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado Capilar",
+   "Anti-Caídas"
+  ]
+ },
+ "65855": {
+  "slug": "labios",
+  "path": [
+   "Dermocosmética",
+   "Protección Solar",
+   "Labios"
+  ]
+ },
+ "77928": {
+  "slug": "combos-de-higiene-oral",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Oral",
+   "Combos de higiene Oral"
+  ]
+ },
+ "65839": {
+  "slug": "labios",
+  "path": [
+   "Dermocosmética",
+   "Skin Care",
+   "Labios"
+  ]
+ },
+ "69953": {
+  "slug": "nacionales",
+  "path": [
+   "Perfumes & Fragancias",
+   "Unisex",
+   "Nacionales"
+  ]
+ },
+ "65836": {
+  "slug": "aerosol-pedico",
+  "path": [
+   "Cuidado Personal",
+   "Talcos & Polvos Pédicos",
+   "Aerosol Pédico"
+  ]
+ },
+ "71470": {
+  "slug": "corporal",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Solares",
+   "Corporal"
+  ]
+ },
+ "78060": {
+  "slug": "combos",
+  "path": [
+   "Maquillaje",
+   "Combos"
+  ]
+ },
+ "65819": {
+  "slug": "balanzas",
+  "path": [
+   "Electro",
+   "Salud",
+   "Balanzas"
+  ]
+ },
+ "77674": {
+  "slug": "antifaces",
+  "path": [
+   "Cuidado de la Salud",
+   "Ortopedia",
+   "Antifaces"
+  ]
+ },
+ "67365": {
+  "slug": "anti-caida",
+  "path": [
+   "Dermocosmética",
+   "Capilares",
+   "Anti-Caída"
+  ]
+ },
+ "68184": {
+  "slug": "unisex",
+  "path": [
+   "Perfumes & Fragancias",
+   "Unisex"
+  ]
+ },
+ "55502": {
+  "slug": "hisopos",
+  "path": [
+   "Cuidado Personal",
+   "Higiene Corporal",
+   "Hisopos"
+  ]
+ }
+}
