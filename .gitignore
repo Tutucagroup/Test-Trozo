@@ -1,0 +1,5 @@
+# Intermedios del scraper (se regeneran corriendo scraper/)
+data/products.jsonl
+data/*.log
+scraper/sample_html/
+scraper/*.html
