@@ -3,3 +3,5 @@ data/products.jsonl
 data/*.log
 scraper/sample_html/
 scraper/*.html
+scraper/__pycache__/
+scraper/sample_urls.txt
