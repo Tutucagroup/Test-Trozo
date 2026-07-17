@@ -5,3 +5,5 @@ scraper/sample_html/
 scraper/*.html
 scraper/__pycache__/
 scraper/sample_urls.txt
+data/zero_img_urls.json
+data/resolve*.log
