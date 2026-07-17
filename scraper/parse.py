@@ -138,7 +138,8 @@ def parse_product(url, html):
         if (h, n) in seen:
             continue
         seen.add((h, n))
-        imgs.append(f"https://cdn.batitienda.com/baticloud/images/product_picture_{h}_{n}_0_f.jpg")
+        # _l = mayor tamaño accesible en el CDN; _f/_s devuelven 403
+        imgs.append(f"https://cdn.batitienda.com/baticloud/images/product_picture_{h}_{n}_0_l.jpg")
     d["images"] = imgs
     return d
 

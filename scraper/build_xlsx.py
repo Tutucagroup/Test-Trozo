@@ -28,6 +28,7 @@ from tree import TreeMatcher
 
 PRODUCTS = os.path.join(BASE, "data", "products.jsonl")
 CATEGORIES = os.path.join(BASE, "data", "categories.json")
+IMAGES = os.path.join(BASE, "data", "images_resolved.json")
 TEMPLATE = "/root/.claude/uploads/f4677800-7e33-5d4e-ab81-cb54e5e95596/bc350482-chesterproductosmatrixifytemplate_1.xlsx"
 OUT = os.path.join(BASE, "chester_productos_matrixify.xlsx")
 
@@ -72,6 +73,8 @@ def col_index(ws):
 
 def main():
     cats = json.load(open(CATEGORIES, encoding="utf-8"))
+    # mapa de imagen original(_f) -> URL accesible (_l/_m) o None (muerta)
+    img_map = json.load(open(IMAGES, encoding="utf-8")) if os.path.exists(IMAGES) else {}
     tm = TreeMatcher()
     prods = load_products()
     prods.sort(key=lambda r: (r.get("vendor") or "", r.get("title") or ""))
@@ -130,7 +133,12 @@ def main():
         put(r, "Variant Inventory Tracker", "shopify")
         put(r, "Variant Requires Shipping", "TRUE")
         put(r, "Variant Taxable", "TRUE")
-        imgs = p.get("images") or []
+        # resolver imágenes al tamaño accesible y descartar muertas
+        imgs = []
+        for im in (p.get("images") or []):
+            resolved = img_map.get(im, im)  # si no está en el mapa, dejar original
+            if resolved:
+                imgs.append(resolved)
         if imgs:
             put(r, "Image Src", imgs[0])
             put(r, "Image Position", 1)
