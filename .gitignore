@@ -7,3 +7,6 @@ scraper/__pycache__/
 scraper/sample_urls.txt
 data/zero_img_urls.json
 data/resolve*.log
+node_modules/
+package-lock.json
+package.json
