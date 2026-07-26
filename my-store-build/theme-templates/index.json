@@ -1,0 +1,501 @@
+{
+  "sections": {
+    "hero_main": {
+      "type": "hero",
+      "blocks": {
+        "eyebrow": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>SKINCARE CONSCIENTE</p>",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h6",
+            "font": "var(--font-accent--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "text_color": "#8A8172"
+          },
+          "blocks": {}
+        },
+        "heading": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<h1>Tu piel, en su mejor versión</h1>",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h1",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "text_color": "#3A342C"
+          },
+          "blocks": {}
+        },
+        "subtext": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Fórmulas limpias y efectivas para una rutina diaria simple. Cuidado real, resultados visibles.</p>",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 32,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "text_color": "#3A342C"
+          },
+          "blocks": {}
+        },
+        "cta": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Descubrir la colección",
+            "link": "shopify://collections/cuidado-facial",
+            "open_in_new_tab": false,
+            "style_class": "button-custom",
+            "custom_button_background": "#3A342C",
+            "custom_button_text": "#F7F3EC",
+            "custom_button_border": "#3A342C",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "eyebrow",
+        "heading",
+        "subtext",
+        "cta"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shopify_images/hero-bg.png",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 8,
+        "section_width": "page-width",
+        "section_height": "large",
+        "section_height_custom": 60,
+        "background_color": "#F7F3EC",
+        "toggle_overlay": false,
+        "overlay_color": "#12121226",
+        "overlay_style": "solid",
+        "gradient_direction": "to bottom",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      }
+    },
+    "featured_products": {
+      "type": "product-list",
+      "blocks": {
+        "static-header": {
+          "type": "_product-list-content",
+          "name": "t:names.header",
+          "static": true,
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "flex-end",
+            "align_baseline": true,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "pl_title": {
+              "type": "text",
+              "name": "t:names.collection_title",
+              "settings": {
+                "text": "<h3>Nuestros esenciales</h3>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h4",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "text_color": "#3A342C"
+              },
+              "blocks": {}
+            },
+            "pl_button": {
+              "type": "_product-list-button",
+              "name": "t:names.product_list_button",
+              "settings": {
+                "label": "Ver todo",
+                "open_in_new_tab": false,
+                "style_class": "link",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "pl_title",
+            "pl_button"
+          ]
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "pc_gallery": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "portrait",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "pc_title": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 8,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "pc_price": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "padding-block-start": 2,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "pc_gallery",
+            "pc_title",
+            "pc_price"
+          ]
+        }
+      },
+      "name": "t:names.product_list",
+      "settings": {
+        "collection": "cuidado-facial",
+        "layout_type": "grid",
+        "carousel_on_mobile": true,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 16,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "horizontal_alignment": "flex-start",
+        "gap": 32,
+        "background_color": "#F7F3EC",
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      }
+    },
+    "testimonials": {
+      "type": "section",
+      "blocks": {
+        "t_heading": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<h3>Lo que dicen nuestras clientas</h3>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h3",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "text_color": "#3A342C"
+          },
+          "blocks": {}
+        },
+        "t_row": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "flex-start",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 32,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 8,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "q1": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>“Mi piel nunca se sintió tan hidratada y luminosa. La rutina es súper simple.”</p><p><strong>Camila R.</strong></p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "text_color": "#3A342C"
+              },
+              "blocks": {}
+            },
+            "q2": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>“El sérum de Vitamina C es mi favorito. Noté el cambio en dos semanas.”</p><p><strong>Julieta M.</strong></p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "text_color": "#3A342C"
+              },
+              "blocks": {}
+            },
+            "q3": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>“Texturas livianas, sin olor fuerte y muy efectivas. Volví a comprar todo.”</p><p><strong>Sofía L.</strong></p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "text_color": "#3A342C"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "q1",
+            "q2",
+            "q3"
+          ]
+        }
+      },
+      "block_order": [
+        "t_heading",
+        "t_row"
+      ],
+      "name": "t:names.section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "flex-start",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 24,
+        "section_width": "page-width",
+        "background_color": "#EDE6DA",
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      }
+    }
+  },
+  "order": [
+    "hero_main",
+    "featured_products",
+    "testimonials"
+  ]
+}
