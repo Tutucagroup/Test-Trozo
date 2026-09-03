@@ -76,7 +76,7 @@
     {% elsif section.settings.image != blank %}
       background-image: url('{{ section.settings.image | image_url: width: 1400 }}');
     {% endif %}
-    background-size: cover;
+    background-size: {{ section.settings.background_size_mobile }};
     background-position: {{ section.settings.focal_mobile }};
     background-repeat: no-repeat;
     font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -236,6 +236,7 @@
     .vhr--{{ sid }} {
       min-height: {{ section.settings.min_height_desktop }}px;
       padding: 15px 10px;
+      background-size: {{ section.settings.background_size_desktop }};
       background-position: {{ section.settings.focal_desktop }};
       {% if section.settings.image != blank %}
         background-image: url('{{ section.settings.image | image_url: width: 2400 }}');
@@ -282,6 +283,20 @@
     { "type": "header", "content": "Imágenes de fondo" },
     { "type": "image_picker", "id": "image", "label": "Imagen escritorio" },
     { "type": "image_picker", "id": "image_mobile", "label": "Imagen móvil" },
+    {
+      "type": "select", "id": "background_size_desktop", "label": "Ajuste de la imagen (escritorio)", "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Recortar para llenar" },
+        { "value": "contain", "label": "Mostrar completa" }
+      ]
+    },
+    {
+      "type": "select", "id": "background_size_mobile", "label": "Ajuste de la imagen (móvil)", "info": "Usá \"Mostrar completa\" cuando la foto ya trae producto o texto que no se debe recortar.", "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Recortar para llenar" },
+        { "value": "contain", "label": "Mostrar completa" }
+      ]
+    },
     {
       "type": "select", "id": "focal_desktop", "label": "Encuadre escritorio", "default": "center center",
       "options": [
@@ -370,7 +385,7 @@
     { "type": "range", "id": "content_width", "label": "Ancho del bloque de contenido (px)", "min": 300, "max": 700, "step": 10, "default": 430 },
     { "type": "range", "id": "max_width", "label": "Ancho máximo del contenedor (px)", "min": 1000, "max": 1800, "step": 20, "default": 1400 },
     { "type": "range", "id": "min_height_mobile", "label": "Altura mínima móvil (px)", "min": 320, "max": 800, "step": 5, "default": 575 },
-    { "type": "range", "id": "min_height_desktop", "label": "Altura mínima escritorio (px)", "min": 360, "max": 900, "step": 5, "default": 550 },
+    { "type": "range", "id": "min_height_desktop", "label": "Altura mínima escritorio (px)", "min": 360, "max": 900, "step": 10, "default": 550 },
     { "type": "header", "content": "Accesibilidad" },
     { "type": "text", "id": "aria_label", "label": "Etiqueta accesible", "default": "Destacado principal" }
   ],

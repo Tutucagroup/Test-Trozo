@@ -168,6 +168,9 @@
     width: 118px;
     color: {{ section.settings.note_color }};
     transform: rotate(-4deg);
+    /* En móvil la nota se apoya sobre la foto: un halo claro la mantiene legible
+       sea cual sea la imagen que cargue el comercio. */
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
   }
   .vst--{{ sid }} .vst__note-text {
     display: block;
@@ -275,6 +278,7 @@
       top: 30%;
       right: 4px;
       width: 138px;
+      filter: none;
     }
     .vst--{{ sid }} .vst__note-text { font-size: 26px; }
     .vst--{{ sid }} .vst__note-arrow { width: 90px; height: 60px; }

@@ -36,11 +36,13 @@
         "text_align_mobile": "left",
         "content_width": 430,
         "max_width": 1400,
-        "min_height_mobile": 660,
+        "min_height_mobile": 700,
         "min_height_desktop": 550,
         "aria_label": "Destacado principal",
-        "scrim_mobile": 45,
-        "scrim_desktop": false
+        "scrim_mobile": 20,
+        "scrim_desktop": false,
+        "background_size_desktop": "cover",
+        "background_size_mobile": "contain"
       }
     },
     "combos": {
@@ -152,7 +154,7 @@
         "title_color": "#202020",
         "title_size": 14,
         "title_weight": 500,
-        "title_tracking": 0.02,
+        "title_tracking": 2,
         "title_uppercase": false,
         "title_gap": 22,
         "duration": 40,
@@ -689,7 +691,7 @@
         "image_radius": 4,
         "border_width": 0,
         "border_color": "#DDDDDD",
-        "grid_max_width": 600,
+        "grid_max_width": 900,
         "follow_label": "Seguinos en",
         "follow_handle": "@latinologia__",
         "follow_link": "https://www.instagram.com/latinologia__/",

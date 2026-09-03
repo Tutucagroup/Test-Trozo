@@ -1,2 +1,7 @@
 out/
 node_modules/
+
+# Destinos de subida firmados por Shopify: son credenciales efímeras.
+tools/staged_targets.json
+tools/staged_input.json
+tools/upsert_input.json
