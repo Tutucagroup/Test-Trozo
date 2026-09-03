@@ -99,6 +99,21 @@
   }
   {%- endif -%}
 
+  {%- if section.settings.scrim_mobile > 0 -%}
+  .vhr--{{ sid }}::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, {{ section.settings.scrim_mobile | divided_by: 100.0 }}) 0%,
+      rgba(0, 0, 0, 0) 62%
+    );
+    pointer-events: none;
+  }
+  {%- endif -%}
+
   .vhr--{{ sid }} .vhr__container {
     position: relative;
     z-index: 2;
@@ -214,6 +229,10 @@
 
   /* ---- Escritorio ---- */
   @media screen and (min-width: 769px) {
+    {%- unless section.settings.scrim_desktop -%}
+    .vhr--{{ sid }}::after { display: none; }
+    {%- endunless -%}
+
     .vhr--{{ sid }} {
       min-height: {{ section.settings.min_height_desktop }}px;
       padding: 15px 10px;
@@ -284,6 +303,8 @@
     { "type": "color", "id": "fallback_color", "label": "Color de respaldo", "default": "#0F1113" },
     { "type": "color", "id": "overlay_color", "label": "Color de superposición", "default": "#000000" },
     { "type": "range", "id": "overlay_opacity", "label": "Opacidad de superposición (%)", "min": 0, "max": 80, "step": 5, "default": 0 },
+    { "type": "range", "id": "scrim_mobile", "label": "Degradado inferior en móvil (%)", "info": "Oscurece la parte baja para que el texto se lea sobre la foto.", "min": 0, "max": 90, "step": 5, "default": 45 },
+    { "type": "checkbox", "id": "scrim_desktop", "label": "Usar también el degradado en escritorio", "default": false },
     { "type": "header", "content": "Valoración" },
     { "type": "checkbox", "id": "show_rating", "label": "Mostrar valoración", "default": true },
     { "type": "richtext", "id": "rating_text", "label": "Texto de valoración", "default": "<p><strong>+40.000 latinas confían en nosotros</strong></p>" },

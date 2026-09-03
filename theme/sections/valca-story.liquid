@@ -162,10 +162,10 @@
 
   .vst--{{ sid }} .vst__note {
     position: absolute;
-    top: 25%;
-    right: -20px;
+    top: 24%;
+    right: 0;
     z-index: 2;
-    width: 110px;
+    width: 118px;
     color: {{ section.settings.note_color }};
     transform: rotate(-4deg);
   }
@@ -256,7 +256,8 @@
     .vst--{{ sid }} .vst__media {
       max-width: none;
       margin: 0;
-      padding: 50px 60px 60px 30px;
+      /* El margen derecho deja sitio para la nota manuscrita sin taparla imagen. */
+      padding: 50px 150px 60px 20px;
     }
     .vst--{{ sid }} .vst__tape {
       top: -18px;
@@ -272,8 +273,8 @@
     }
     .vst--{{ sid }} .vst__note {
       top: 30%;
-      right: -10px;
-      width: 140px;
+      right: 4px;
+      width: 138px;
     }
     .vst--{{ sid }} .vst__note-text { font-size: 26px; }
     .vst--{{ sid }} .vst__note-arrow { width: 90px; height: 60px; }

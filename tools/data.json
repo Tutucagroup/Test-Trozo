@@ -247,6 +247,17 @@
    "images": [
     "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/6251_1_a0f1bd1d-c076-4518-97fc-9c3ef3604b6c.jpg?v=1788217222"
    ]
+  },
+  "scalpshield": {
+   "handle": "scalpshield",
+   "title": "ScalpShieldX: Serum Anticaspa",
+   "price": 11500000,
+   "compare_at_price": null,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/6565_1_7be41851-dfac-4086-9aaf-0ee613232852.jpg?v=1788218076"
+   ]
   }
  },
  "collections": {
@@ -282,6 +293,7 @@
    "title": "Capilar",
    "products": [
     "shampoo",
+    "scalpshield",
     "kit-capilar-advanced",
     "kit-rutina-basica-de-cuidado-capilar"
    ]
@@ -312,7 +324,8 @@
     "hidratante-facial",
     "acn-shield-limpiador-facial-seborregulador",
     "acn-shield-am-serum-corrector-y-unificador-de-tono",
-    "shampoo"
+    "shampoo",
+    "scalpshield"
    ]
   },
   "manchas": {
@@ -350,7 +363,13 @@
   "MELACONTROL_AM_1_e7961ccb-c764-477d-abe8-7cfbdb9e8ca2.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/MELACONTROL_AM_1_e7961ccb-c764-477d-abe8-7cfbdb9e8ca2.jpg?v=1759847304",
   "MELACONTROL_pM_1.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/MELACONTROL_pM_1.jpg?v=1759847252",
   "PROTECTOR_SOLAR_1.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/PROTECTOR_SOLAR_1.jpg?v=1759847432",
-  "KIT_FOLIGROW.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_FOLIGROW.jpg?v=1759269891"
+  "KIT_FOLIGROW.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_FOLIGROW.jpg?v=1759269891",
+  "latinologia-logo-negro-header.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/latinologia-logo-negro-header.png?v=1788448678",
+  "01_melacontrolx_am_serum_unificador_de_tono_modelo_beneficio_d7377d5a-adf4-4666-8492-19fb4f1406ad.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_melacontrolx_am_serum_unificador_de_tono_modelo_beneficio_d7377d5a-adf4-4666-8492-19fb4f1406ad.png?v=1788219056",
+  "01_hidratante_facial_piel_mixta_a_grasa_modelo_beneficio_d3d31b4e-417c-4f6e-b43d-60ed212b8d59.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_hidratante_facial_piel_mixta_a_grasa_modelo_beneficio_d3d31b4e-417c-4f6e-b43d-60ed212b8d59.png?v=1788219127",
+  "01_sun_shield_spf_50_con_color_modelo_beneficio_448163bb-2afd-4bce-91a9-37adf7765e82.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_sun_shield_spf_50_con_color_modelo_beneficio_448163bb-2afd-4bce-91a9-37adf7765e82.png?v=1788219143",
+  "ACN.SHIELD_AM_1_c1e75e71-1bd0-4caf-bdc6-b7413723da2d.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/ACN.SHIELD_AM_1_c1e75e71-1bd0-4caf-bdc6-b7413723da2d.jpg?v=1759847376",
+  "21_FOLIGROW_TONICO_2.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/21_FOLIGROW_TONICO_2.jpg?v=1759251293"
  },
  "menus": {
   "main-menu": {

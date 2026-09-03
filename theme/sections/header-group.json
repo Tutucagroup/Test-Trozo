@@ -5,11 +5,30 @@
     "valca_announcement": {
       "type": "valca-announcement",
       "blocks": {
-        "s1": { "type": "slide", "settings": { "text": "<p>Envío <strong>gratis</strong> en compras superiores a $150.000</p>" } },
-        "s2": { "type": "slide", "settings": { "text": "<p>Paga hasta en <strong>3 cuotas sin interés</strong></p>" } },
-        "s3": { "type": "slide", "settings": { "text": "<p><strong>Dermocosmética formulada por dermatólogos</strong></p>" } }
+        "s1": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>Envío <strong>gratis</strong> en compras superiores a $150.000</p>"
+          }
+        },
+        "s2": {
+          "type": "slide",
+          "settings": {
+            "text": "<p>Paga hasta en <strong>3 cuotas sin interés</strong></p>"
+          }
+        },
+        "s3": {
+          "type": "slide",
+          "settings": {
+            "text": "<p><strong>Dermocosmética formulada por dermatólogos</strong></p>"
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3"],
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
       "settings": {
         "bg_color": "#0194A8",
         "text_color": "#FFFFFF",
@@ -27,8 +46,8 @@
     "valca_header": {
       "type": "valca-header",
       "settings": {
-        "logo": "shopify://shop_images/Logo_Latinolog_a.png",
-        "logo_width": 150,
+        "logo": "shopify://shop_images/latinologia-logo-negro-header.png",
+        "logo_width": 170,
         "menu": "main-menu",
         "show_search": true,
         "show_account": true,
@@ -46,5 +65,8 @@
       }
     }
   },
-  "order": ["valca_announcement", "valca_header"]
+  "order": [
+    "valca_announcement",
+    "valca_header"
+  ]
 }

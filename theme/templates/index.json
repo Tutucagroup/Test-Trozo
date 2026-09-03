@@ -11,7 +11,7 @@
         "overlay_color": "#000000",
         "overlay_opacity": 0,
         "show_rating": true,
-        "rating_text": "<p><strong>Recomendado por dermatólogos en toda Colombia</strong></p>",
+        "rating_text": "<p><strong>Recomendado por dermatólogos</strong></p>",
         "rating_color": "#FFFFFF",
         "rating_border_color": "#FFFFFF",
         "rating_bg_color": "rgba(0,0,0,0)",
@@ -36,9 +36,11 @@
         "text_align_mobile": "left",
         "content_width": 430,
         "max_width": 1400,
-        "min_height_mobile": 575,
+        "min_height_mobile": 660,
         "min_height_desktop": 550,
-        "aria_label": "Destacado principal"
+        "aria_label": "Destacado principal",
+        "scrim_mobile": 45,
+        "scrim_desktop": false
       }
     },
     "combos": {
@@ -88,14 +90,63 @@
     "doctors": {
       "type": "valca-logos-marquee",
       "blocks": {
-        "d1": { "type": "logo", "settings": { "image": "shopify://shop_images/Dra._Dalia_Cuervo_Mesa_de_trabajo_1.jpg", "name": "Dra. Dalia Cuervo", "caption": "Dermatóloga" } },
-        "d2": { "type": "logo", "settings": { "image": "shopify://shop_images/Dra._Angela_Marino.jpg", "name": "Dra. Ángela Marino", "caption": "Dermatóloga" } },
-        "d3": { "type": "logo", "settings": { "image": "shopify://shop_images/Dr._Jonathan_Arguello_Mesa_de_trabajo_1.jpg", "name": "Dr. Jonathan Arguello", "caption": "Dermatólogo" } },
-        "d4": { "type": "logo", "settings": { "image": "shopify://shop_images/Dra._Maria_Manuela_Echavarria.jpg", "name": "Dra. María Manuela Echavarría", "caption": "Dermatóloga" } },
-        "d5": { "type": "logo", "settings": { "image": "shopify://shop_images/Dra._Daissy_Munoz.jpg", "name": "Dra. Daissy Muñoz", "caption": "Dermatóloga" } },
-        "d6": { "type": "logo", "settings": { "image": "shopify://shop_images/Bojanini_Mesa_de_trabajo_1.jpg", "name": "Dr. Bojanini", "caption": "Dermatólogo" } }
+        "d1": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Dra._Dalia_Cuervo_Mesa_de_trabajo_1.jpg",
+            "name": "Dra. Dalia Cuervo",
+            "caption": "Dra. Dalia Cuervo"
+          }
+        },
+        "d2": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Dra._Angela_Marino.jpg",
+            "name": "Dra. Ángela Marino",
+            "caption": "Dra. Ángela Marino"
+          }
+        },
+        "d3": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Dr._Jonathan_Arguello_Mesa_de_trabajo_1.jpg",
+            "name": "Dr. Jonathan Arguello",
+            "caption": "Dr. Jonathan Arguello"
+          }
+        },
+        "d4": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Dra._Maria_Manuela_Echavarria.jpg",
+            "name": "Dra. María Manuela Echavarría",
+            "caption": "Dra. M. Manuela Echavarría"
+          }
+        },
+        "d5": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Dra._Daissy_Munoz.jpg",
+            "name": "Dra. Daissy Muñoz",
+            "caption": "Dra. Daissy Muñoz"
+          }
+        },
+        "d6": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Bojanini_Mesa_de_trabajo_1.jpg",
+            "name": "Dr. Bojanini",
+            "caption": "Dr. Bojanini"
+          }
+        }
       },
-      "block_order": ["d1", "d2", "d3", "d4", "d5", "d6"],
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5",
+        "d6"
+      ],
       "settings": {
         "title": "<p><strong>Respaldado y recomendado por dermatólogos</strong></p>",
         "title_color": "#202020",
@@ -130,7 +181,8 @@
           "settings": {
             "collection": "facial",
             "title": "Cuidado facial",
-            "description": "Limpieza, hidratación, manchas e imperfecciones con activos dermatológicos."
+            "description": "Limpieza, hidratación, manchas e imperfecciones con activos dermatológicos.",
+            "image": "shopify://shop_images/MELACONTROL_AM_1_e7961ccb-c764-477d-abe8-7cfbdb9e8ca2.jpg"
           }
         },
         "c2": {
@@ -138,7 +190,8 @@
           "settings": {
             "collection": "capilar",
             "title": "Cuidado capilar",
-            "description": "Anticaída y anticaspa para recuperar densidad y calmar el cuero cabelludo."
+            "description": "Anticaída y anticaspa para recuperar densidad y calmar el cuero cabelludo.",
+            "image": "shopify://shop_images/KIT_FOLIGROW.jpg"
           }
         },
         "c3": {
@@ -146,11 +199,16 @@
           "settings": {
             "collection": "proteccion-solar",
             "title": "Protección solar",
-            "description": "Fluidos ultraligeros de uso diario, con y sin color, para piel latina."
+            "description": "Fluidos ultraligeros de uso diario, con y sin color, para piel latina.",
+            "image": "shopify://shop_images/PROTECTOR_SOLAR_1.jpg"
           }
         }
       },
-      "block_order": ["c1", "c2", "c3"],
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
       "settings": {
         "eyebrow": "Nuestras líneas",
         "title": "Tres líneas, una misma piel cuidada",
@@ -214,12 +272,45 @@
     "benefits": {
       "type": "valca-benefits",
       "blocks": {
-        "b1": { "type": "benefit", "settings": { "icon": "doctor", "title": "Formulado por dermatólogos", "text": "Cada fórmula nace y se valida en la consulta dermatológica." } },
-        "b2": { "type": "benefit", "settings": { "icon": "shield", "title": "Apto para piel latina", "text": "Concentraciones ajustadas a la tolerancia de los fototipos latinos." } },
-        "b3": { "type": "benefit", "settings": { "icon": "flask", "title": "Activos de alto rendimiento", "text": "Ingredientes con evidencia, en dosis que sí hacen diferencia." } },
-        "b4": { "type": "benefit", "settings": { "icon": "eye", "title": "Resultados que se ven", "text": "Piel más pareja, calmada e hidratada con uso constante." } }
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "doctor",
+            "title": "Formulado por dermatólogos",
+            "text": "Cada fórmula nace y se valida en la consulta dermatológica."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shield",
+            "title": "Apto para piel latina",
+            "text": "Concentraciones ajustadas a la tolerancia de los fototipos latinos."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "flask",
+            "title": "Activos de alto rendimiento",
+            "text": "Ingredientes con evidencia, en dosis que sí hacen diferencia."
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "eye",
+            "title": "Resultados que se ven",
+            "text": "Piel más pareja, calmada e hidratada con uso constante."
+          }
+        }
       },
-      "block_order": ["b1", "b2", "b3", "b4"],
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
       "settings": {
         "heading": "Lo que nos hace",
         "heading_accent": "distintos",
@@ -298,55 +389,61 @@
         "v1": {
           "type": "video_card",
           "settings": {
-            "mp4_url": "https://cdn.shopify.com/videos/c/vp/229352ffebf847b7905e9efbae444c70/229352ffebf847b7905e9efbae444c70.HD-720p-4.5Mbps-35729987.mp4",
-            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/229352ffebf847b7905e9efbae444c70.thumbnail.0000000000.jpg?v=1727891405",
+            "mp4_url": "https://cdn.shopify.com/videos/c/vp/732041785d5540fdb6df43e69caba0a9/732041785d5540fdb6df43e69caba0a9.HD-720p-1.6Mbps-35729626.mp4",
+            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/732041785d5540fdb6df43e69caba0a9.thumbnail.0000000000.jpg?v=1727891125",
             "muted": false,
-            "product": "kit-melacontrolx",
+            "product": "kit-rutina-basica-de-cuidado-facial",
             "strip_color": "#0194A8"
           }
         },
         "v2": {
           "type": "video_card",
           "settings": {
-            "mp4_url": "https://cdn.shopify.com/videos/c/vp/4c9a3add689b4beb90f37e1b23598d01/4c9a3add689b4beb90f37e1b23598d01.HD-720p-4.5Mbps-35730324.mp4",
-            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/4c9a3add689b4beb90f37e1b23598d01.thumbnail.0000000000.jpg?v=1727891842",
+            "mp4_url": "https://cdn.shopify.com/videos/c/vp/229352ffebf847b7905e9efbae444c70/229352ffebf847b7905e9efbae444c70.HD-720p-4.5Mbps-35729987.mp4",
+            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/229352ffebf847b7905e9efbae444c70.thumbnail.0000000000.jpg?v=1727891405",
             "muted": false,
-            "product": "kit-acn-shield",
+            "product": "kit-melacontrolx",
             "strip_color": "#3BAFBF"
           }
         },
         "v3": {
           "type": "video_card",
           "settings": {
-            "mp4_url": "https://cdn.shopify.com/videos/c/vp/06f76dcc1121404380bd33ab0dc50855/06f76dcc1121404380bd33ab0dc50855.HD-720p-4.5Mbps-35730368.mp4",
-            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/06f76dcc1121404380bd33ab0dc50855.thumbnail.0000000000.jpg?v=1727891823",
+            "mp4_url": "https://cdn.shopify.com/videos/c/vp/644df4b0d2c4489db58da47c1e6f5502/644df4b0d2c4489db58da47c1e6f5502.HD-720p-4.5Mbps-35744060.mp4",
+            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/644df4b0d2c4489db58da47c1e6f5502.thumbnail.0000000000.jpg?v=1727909347",
             "muted": false,
-            "product": "kit-capilar-advanced",
+            "product": "kit-acn-shield",
             "strip_color": "#185C67"
           }
         },
         "v4": {
           "type": "video_card",
           "settings": {
-            "mp4_url": "https://cdn.shopify.com/videos/c/vp/34b3fe3ffa6d49d38b0f603caaa9006d/34b3fe3ffa6d49d38b0f603caaa9006d.HD-720p-4.5Mbps-35730503.mp4",
-            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/34b3fe3ffa6d49d38b0f603caaa9006d.thumbnail.0000000000.jpg?v=1727892032",
+            "mp4_url": "https://cdn.shopify.com/videos/c/vp/0f35ce20d5ed49b585c15c2cb828c40d/0f35ce20d5ed49b585c15c2cb828c40d.HD-720p-4.5Mbps-35745463.mp4",
+            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/0f35ce20d5ed49b585c15c2cb828c40d.thumbnail.0000000000.jpg?v=1727912025",
             "muted": false,
-            "product": "kit-rutina-basica-de-cuidado-facial",
+            "product": "kit-parches",
             "strip_color": "#0194A8"
           }
         },
         "v5": {
           "type": "video_card",
           "settings": {
-            "mp4_url": "https://cdn.shopify.com/videos/c/vp/e89cc909b9df4fd9a38aad305ef5ea96/e89cc909b9df4fd9a38aad305ef5ea96.HD-720p-4.5Mbps-35731111.mp4",
-            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/e89cc909b9df4fd9a38aad305ef5ea96.thumbnail.0000000000.jpg?v=1727892593",
+            "mp4_url": "https://cdn.shopify.com/videos/c/vp/7cbfd472a82947daaa0b4010b84d93ab/7cbfd472a82947daaa0b4010b84d93ab.HD-720p-1.6Mbps-35763414.mp4",
+            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/7cbfd472a82947daaa0b4010b84d93ab.thumbnail.0000000000.jpg?v=1727950463",
             "muted": false,
-            "product": "kit-parches",
+            "product": "kit-capilar-advanced",
             "strip_color": "#3BAFBF"
           }
         }
       },
-      "block_order": ["v1", "v2", "v3", "v4", "v5"],
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
       "settings": {
         "heading": "Miles de latinas ya eligieron Latinologia",
         "show_rating": true,
@@ -379,8 +476,8 @@
           "type": "testimonial",
           "settings": {
             "image_before": "shopify://shop_images/Danney_g_mobile.webp",
-            "review": "Mis imperfecciones no desaparecieron de un día para otro, pero con la rutina completa la piel se fue calmando y hoy la veo mucho más pareja.",
-            "author": "Paciente de la Dra. Danney Gómez",
+            "review": "Caso clínico compartido por la Dra. Danney Gómez: rutina completa Acn.Shield en piel joven con imperfecciones leves. Comparativa a los 3 meses.",
+            "author": "Dra. Danney Gómez · Dermatóloga",
             "product": "kit-acn-shield",
             "dot_color": "#0194A8"
           }
@@ -389,9 +486,9 @@
           "type": "testimonial",
           "settings": {
             "image_before": "shopify://shop_images/Caro_solorzano_mobile.webp",
-            "review": "Venía con manchas desde el embarazo. Con uso constante y protección solar diaria empecé a notar el tono mucho más uniforme.",
-            "author": "Paciente de la Dra. Carolina Solórzano",
-            "product": "kit-melacontrolx",
+            "review": "Caso clínico de la Dra. Carolina Solórzano con ScalpShield Serum en cuero cabelludo, en un paciente que ya había pasado por corticoides y otros champús. Comparativa a los 30 días.",
+            "author": "Dra. Carolina Solórzano · Dermatóloga",
+            "product": "scalpshield",
             "dot_color": "#3BAFBF"
           }
         },
@@ -399,9 +496,9 @@
           "type": "testimonial",
           "settings": {
             "image_before": "shopify://shop_images/Paola_T_mobile.webp",
-            "review": "Lo que más me sorprendió fue la textura: la piel dejó de sentirse tirante y la hidratación se mantiene todo el día.",
-            "author": "Paciente de la Dra. Paola Urquijo",
-            "product": "kit-rutina-basica-de-cuidado-facial",
+            "review": "Caso clínico del protocolo de la Dra. Paola Urquijo para caída capilar: mesoterapia combinada con FoliGrow shampoo y tónico de uso diario. Comparativa a los 6 meses.",
+            "author": "Dra. Paola Urquijo · Dermatóloga",
+            "product": "kit-capilar-advanced",
             "dot_color": "#185C67"
           }
         },
@@ -409,8 +506,8 @@
           "type": "testimonial",
           "settings": {
             "image_before": "shopify://shop_images/Acosta_mobile.webp",
-            "review": "Después de meses de tratamiento la mejoría es evidente. Es el resultado de constancia, no de un milagro.",
-            "author": "Paciente del Dr. Alejandro Acosta",
+            "review": "Caso clínico del Dr. Alejandro Acosta: MelaControlX como tratamiento de mantenimiento dentro de su protocolo de despigmentación. Comparativa a los 8 meses.",
+            "author": "Dr. Alejandro Acosta · Dermatólogo",
             "product": "kit-melacontrolx",
             "dot_color": "#0194A8"
           }
@@ -419,17 +516,23 @@
           "type": "testimonial",
           "settings": {
             "image_before": "shopify://shop_images/Naranjo_mobile.webp",
-            "review": "El cuero cabelludo dejó de picar y la caída se redujo bastante. Recuperé densidad en las zonas más despobladas.",
-            "author": "Paciente del Dr. Naranjo",
-            "product": "kit-capilar-advanced",
+            "review": "Caso clínico del Dr. Mario Naranjo: protocolo complementado con la rutina Acn.Shield, con mejoría visible en pocas semanas de uso.",
+            "author": "Dr. Mario Naranjo · Dermatólogo",
+            "product": "acn-shield-am-serum-corrector-y-unificador-de-tono",
             "dot_color": "#3BAFBF"
           }
         }
       },
-      "block_order": ["t1", "t2", "t3", "t4", "t5"],
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
       "settings": {
         "heading": "Transformaciones reales",
-        "subtitle": "<p>Cambios visibles con uso constante, respaldados por dermatólogos</p>",
+        "subtitle": "<p>Casos clínicos compartidos por dermatólogos que trabajan con nuestras fórmulas</p>",
         "label_before": "Antes",
         "label_after": "Después",
         "show_stars": true,
@@ -491,17 +594,90 @@
     "gallery": {
       "type": "valca-photo-grid",
       "blocks": {
-        "p1": { "type": "photo", "settings": { "image": "shopify://shop_images/RenovAOX_X__1.jpg", "alt": "Rutina Latinologia", "link": "shopify://collections/tienda" } },
-        "p2": { "type": "photo", "settings": { "image": "shopify://shop_images/RenovAOX_X__2.jpg", "alt": "Rutina Latinologia", "link": "shopify://collections/tienda" } },
-        "p3": { "type": "photo", "settings": { "image": "shopify://shop_images/RenovAOX_X__3.jpg", "alt": "Rutina Latinologia", "link": "shopify://collections/tienda" } },
-        "p4": { "type": "photo", "settings": { "image": "shopify://shop_images/RenovAOX_X__4.jpg", "alt": "Rutina Latinologia", "link": "shopify://collections/tienda" } },
-        "p5": { "type": "photo", "settings": { "image": "shopify://shop_images/RenovAOX_X__5.jpg", "alt": "Rutina Latinologia", "link": "shopify://collections/tienda" } },
-        "p6": { "type": "photo", "settings": { "image": "shopify://shop_images/MELACONTROL_AM_1_e7961ccb-c764-477d-abe8-7cfbdb9e8ca2.jpg", "alt": "MelaControlX AM", "link": "shopify://collections/manchas" } },
-        "p7": { "type": "photo", "settings": { "image": "shopify://shop_images/MELACONTROL_pM_1.jpg", "alt": "MelaControlX PM", "link": "shopify://collections/manchas" } },
-        "p8": { "type": "photo", "settings": { "image": "shopify://shop_images/PROTECTOR_SOLAR_1.jpg", "alt": "SunShield", "link": "shopify://collections/proteccion-solar" } },
-        "p9": { "type": "photo", "settings": { "image": "shopify://shop_images/KIT_FOLIGROW.jpg", "alt": "FoliGrow", "link": "shopify://collections/capilar" } }
+        "p1": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/RenovAOX_X__1.jpg",
+            "alt": "RenovAOX Serum",
+            "link": "shopify://collections/facial"
+          }
+        },
+        "p2": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/01_melacontrolx_am_serum_unificador_de_tono_modelo_beneficio_d7377d5a-adf4-4666-8492-19fb4f1406ad.png",
+            "alt": "Rutina antimanchas",
+            "link": "shopify://collections/manchas"
+          }
+        },
+        "p3": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/RenovAOX_X__2.jpg",
+            "alt": "RenovAOX en laboratorio",
+            "link": "shopify://collections/facial"
+          }
+        },
+        "p4": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/01_hidratante_facial_piel_mixta_a_grasa_modelo_beneficio_d3d31b4e-417c-4f6e-b43d-60ed212b8d59.png",
+            "alt": "Hidratación diaria",
+            "link": "shopify://collections/facial"
+          }
+        },
+        "p5": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/RenovAOX_X__4.jpg",
+            "alt": "Textura del serum",
+            "link": "shopify://collections/facial"
+          }
+        },
+        "p6": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/01_sun_shield_spf_50_con_color_modelo_beneficio_448163bb-2afd-4bce-91a9-37adf7765e82.png",
+            "alt": "Protección solar diaria",
+            "link": "shopify://collections/proteccion-solar"
+          }
+        },
+        "p7": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/ACN.SHIELD_AM_1_c1e75e71-1bd0-4caf-bdc6-b7413723da2d.jpg",
+            "alt": "Acn.Shield AM",
+            "link": "shopify://collections/facial"
+          }
+        },
+        "p8": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/21_FOLIGROW_TONICO_2.jpg",
+            "alt": "FoliGrow tónico",
+            "link": "shopify://collections/capilar"
+          }
+        },
+        "p9": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/MELACONTROL_pM_1.jpg",
+            "alt": "MelaControlX PM",
+            "link": "shopify://collections/manchas"
+          }
+        }
       },
-      "block_order": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"],
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "p7",
+        "p8",
+        "p9"
+      ],
       "settings": {
         "title": "Sé parte de",
         "title_accent": "Latinologia",
@@ -577,7 +753,14 @@
           }
         }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6"],
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
       "settings": {
         "eyebrow": "",
         "heading": "Preguntas frecuentes",

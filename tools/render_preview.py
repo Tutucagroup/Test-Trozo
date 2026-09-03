@@ -136,7 +136,7 @@ for handle, coll in DATA["collections"].items():
         "title": coll["title"],
         "url": f"/collections/{handle}",
         "products": prods,
-        "image": None,
+        "image": "",  # Shopify entrega nil; "" es lo que python-liquid trata como blank
         "all_products_count": len(prods),
     }
 
@@ -214,8 +214,19 @@ def resolve(value):
     return value
 
 
+class BlankDict(dict):
+    """Los ajustes sin valor deben comportarse como `blank`, igual que en Shopify.
+
+    python-liquid considera `nil != blank` verdadero, mientras que Shopify lo
+    considera falso; devolver "" para las claves ausentes replica el motor real.
+    """
+
+    def __missing__(self, key):  # noqa: D105
+        return ""
+
+
 def resolve_settings(settings: dict, section_type: str) -> dict:
-    out = {}
+    out = BlankDict()
     for key, val in settings.items():
         if key == "collection" and isinstance(val, str) and val:
             out[key] = val  # el Liquid hace collections[handle]
@@ -225,7 +236,7 @@ def resolve_settings(settings: dict, section_type: str) -> dict:
             out[key] = val
         else:
             out[key] = resolve(val)
-    return out
+    return BlankDict({k: ("" if v is None else v) for k, v in out.items()})
 
 
 # --------------------------------------------------------------------------- #

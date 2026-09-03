@@ -57,7 +57,7 @@
         "copyright": "<p>© [year] Latinologia · Todos los derechos reservados</p>",
         "payment_image": "shopify://shop_images/Pagos_1.webp",
         "show_payment_icons": true,
-        "payment_height": 26,
+        "payment_height": 44,
         "bg_color": "#202020",
         "text_color": "#A2A2A2",
         "heading_color": "#FFFFFF",

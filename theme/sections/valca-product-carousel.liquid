@@ -30,10 +30,7 @@
         <div class="vpc__track" data-vpc-track>
           {%- for product in items limit: product_limit -%}
             {%- liquid
-              assign strip = section.settings.strip_color
-              if product.metafields.custom.accent_color != blank
-                assign strip = product.metafields.custom.accent_color
-              endif
+              assign strip = product.metafields.custom.accent_color | default: section.settings.strip_color
 
               assign badge = ''
               if section.settings.badge_tag != blank
