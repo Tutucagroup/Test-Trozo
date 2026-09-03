@@ -1,0 +1,22 @@
+[
+ "sections/footer-group.json",
+ "sections/header-group.json",
+ "sections/valca-announcement.liquid",
+ "sections/valca-benefits.liquid",
+ "sections/valca-faq.liquid",
+ "sections/valca-featured-collections.liquid",
+ "sections/valca-footer.liquid",
+ "sections/valca-header.liquid",
+ "sections/valca-hero.liquid",
+ "sections/valca-image-banner.liquid",
+ "sections/valca-legal-bar.liquid",
+ "sections/valca-logos-marquee.liquid",
+ "sections/valca-newsletter.liquid",
+ "sections/valca-photo-grid.liquid",
+ "sections/valca-product-carousel.liquid",
+ "sections/valca-story.liquid",
+ "sections/valca-transformations.liquid",
+ "sections/valca-ugc-videos.liquid",
+ "snippets/valca-fonts.liquid",
+ "templates/index.json"
+]

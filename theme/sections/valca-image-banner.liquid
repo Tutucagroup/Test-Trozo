@@ -1,0 +1,261 @@
+{%- render 'valca-fonts' -%}
+{%- assign sid = section.id -%}
+
+<section class="vib vib--{{ sid }}" aria-label="{{ section.settings.heading | default: 'Banner' | escape }}">
+  {%- if section.settings.link != blank -%}
+    <a class="vib__link" href="{{ section.settings.link }}" aria-label="{{ section.settings.heading | default: 'Ver más' | escape }}"></a>
+  {%- endif -%}
+
+  <div class="vib__container">
+    <div class="vib__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="vib__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="vib__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <div class="vib__subheading">{{ section.settings.subheading }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="vib__button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+          {{ section.settings.button_label }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .vib--{{ sid }} {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: {{ section.settings.min_height_mobile }}px;
+    background-color: {{ section.settings.fallback_color }};
+    {% if section.settings.image_mobile != blank %}
+      background-image: url('{{ section.settings.image_mobile | image_url: width: 1200 }}');
+    {% elsif section.settings.image != blank %}
+      background-image: url('{{ section.settings.image | image_url: width: 1400 }}');
+    {% endif %}
+    background-size: {{ section.settings.background_size }};
+    background-position: {{ section.settings.focal_mobile }};
+    background-repeat: no-repeat;
+    overflow: hidden;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .vib--{{ sid }} *,
+  .vib--{{ sid }} *::before,
+  .vib--{{ sid }} *::after { box-sizing: border-box; }
+
+  {%- if section.settings.overlay_opacity > 0 -%}
+  .vib--{{ sid }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: {{ section.settings.overlay_color }};
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    pointer-events: none;
+  }
+  {%- endif -%}
+
+  .vib--{{ sid }} .vib__link {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+  }
+
+  .vib--{{ sid }} .vib__container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: {{ section.settings.valign_mobile }};
+    justify-content: {{ section.settings.halign_mobile }};
+    width: 100%;
+    max-width: {{ section.settings.max_width }}px;
+    min-height: {{ section.settings.min_height_mobile }}px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    pointer-events: none;
+  }
+
+  .vib--{{ sid }} .vib__content {
+    max-width: 520px;
+    text-align: {{ section.settings.text_align }};
+  }
+  .vib--{{ sid }} .vib__content > * { pointer-events: auto; }
+
+  .vib--{{ sid }} .vib__eyebrow {
+    margin: 0 0 10px;
+    color: {{ section.settings.eyebrow_color }};
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .vib--{{ sid }} .vib__heading {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    font-weight: {{ section.settings.heading_weight }};
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .vib--{{ sid }} .vib__subheading,
+  .vib--{{ sid }} .vib__subheading p {
+    margin: 0;
+    color: {{ section.settings.text_color }};
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .vib--{{ sid }} .vib__subheading { margin-top: 14px; }
+
+  .vib--{{ sid }} .vib__button {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 13px 26px;
+    border: 1px solid {{ section.settings.button_border }};
+    border-radius: {{ section.settings.button_radius }}px;
+    background: {{ section.settings.button_bg }};
+    color: {{ section.settings.button_text_color }};
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .vib--{{ sid }} .vib__button:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  @media screen and (min-width: 769px) {
+    .vib--{{ sid }} {
+      min-height: {{ section.settings.min_height_desktop }}px;
+      background-position: {{ section.settings.focal_desktop }};
+      {% if section.settings.image != blank %}
+        background-image: url('{{ section.settings.image | image_url: width: 2400 }}');
+      {% endif %}
+    }
+    .vib--{{ sid }} .vib__container {
+      align-items: {{ section.settings.valign_desktop }};
+      justify-content: {{ section.settings.halign_desktop }};
+      min-height: {{ section.settings.min_height_desktop }}px;
+      padding: 40px;
+    }
+    .vib--{{ sid }} .vib__heading { font-size: {{ section.settings.heading_size_desktop }}px; }
+    .vib--{{ sid }} .vib__subheading,
+    .vib--{{ sid }} .vib__subheading p { font-size: 17px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vib--{{ sid }} .vib__button { transition: none; }
+    .vib--{{ sid }} .vib__button:hover { transform: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Banner de imagen",
+  "tag": "section",
+  "class": "valca-image-banner-section",
+  "settings": [
+    { "type": "header", "content": "Imágenes" },
+    { "type": "image_picker", "id": "image", "label": "Imagen escritorio" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Imagen móvil" },
+    {
+      "type": "select", "id": "background_size", "label": "Ajuste del fondo", "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Recortar" },
+        { "value": "contain", "label": "Contener" }
+      ]
+    },
+    {
+      "type": "select", "id": "focal_desktop", "label": "Encuadre escritorio", "default": "center center",
+      "options": [
+        { "value": "center center", "label": "Centro" },
+        { "value": "left center", "label": "Izquierda" },
+        { "value": "right center", "label": "Derecha" },
+        { "value": "center top", "label": "Arriba" },
+        { "value": "center bottom", "label": "Abajo" }
+      ]
+    },
+    {
+      "type": "select", "id": "focal_mobile", "label": "Encuadre móvil", "default": "center center",
+      "options": [
+        { "value": "center center", "label": "Centro" },
+        { "value": "center top", "label": "Arriba" },
+        { "value": "center bottom", "label": "Abajo" }
+      ]
+    },
+    { "type": "color", "id": "fallback_color", "label": "Color de respaldo", "default": "#000000" },
+    { "type": "color", "id": "overlay_color", "label": "Superposición", "default": "#000000" },
+    { "type": "range", "id": "overlay_opacity", "label": "Opacidad de la superposición (%)", "min": 0, "max": 80, "step": 5, "default": 0 },
+    { "type": "url", "id": "link", "label": "Enlace de todo el banner (opcional)" },
+    { "type": "header", "content": "Contenido" },
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo" },
+    { "type": "text", "id": "heading", "label": "Título" },
+    { "type": "richtext", "id": "subheading", "label": "Texto" },
+    { "type": "range", "id": "heading_size_mobile", "label": "Tamaño del título móvil (px)", "min": 18, "max": 48, "step": 1, "default": 28 },
+    { "type": "range", "id": "heading_size_desktop", "label": "Tamaño del título escritorio (px)", "min": 24, "max": 72, "step": 1, "default": 44 },
+    { "type": "range", "id": "heading_weight", "label": "Grosor del título", "min": 400, "max": 800, "step": 100, "default": 700 },
+    { "type": "header", "content": "Botón" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón" },
+    { "type": "url", "id": "button_link", "label": "Enlace del botón" },
+    { "type": "color", "id": "button_bg", "label": "Fondo del botón", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_text_color", "label": "Texto del botón", "default": "#202020" },
+    { "type": "color", "id": "button_border", "label": "Borde del botón", "default": "#FFFFFF" },
+    { "type": "range", "id": "button_radius", "label": "Radio del botón (px)", "min": 0, "max": 40, "step": 1, "default": 6 },
+    { "type": "header", "content": "Colores de texto" },
+    { "type": "color", "id": "heading_color", "label": "Título", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#FFFFFF" },
+    { "type": "color", "id": "eyebrow_color", "label": "Antetítulo", "default": "#FFFFFF" },
+    { "type": "header", "content": "Disposición" },
+    {
+      "type": "select", "id": "halign_desktop", "label": "Posición horizontal (escritorio)", "default": "flex-start",
+      "options": [
+        { "value": "flex-start", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "flex-end", "label": "Derecha" }
+      ]
+    },
+    {
+      "type": "select", "id": "valign_desktop", "label": "Posición vertical (escritorio)", "default": "center",
+      "options": [
+        { "value": "flex-start", "label": "Arriba" },
+        { "value": "center", "label": "Centro" },
+        { "value": "flex-end", "label": "Abajo" }
+      ]
+    },
+    {
+      "type": "select", "id": "halign_mobile", "label": "Posición horizontal (móvil)", "default": "center",
+      "options": [
+        { "value": "flex-start", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "flex-end", "label": "Derecha" }
+      ]
+    },
+    {
+      "type": "select", "id": "valign_mobile", "label": "Posición vertical (móvil)", "default": "flex-end",
+      "options": [
+        { "value": "flex-start", "label": "Arriba" },
+        { "value": "center", "label": "Centro" },
+        { "value": "flex-end", "label": "Abajo" }
+      ]
+    },
+    {
+      "type": "select", "id": "text_align", "label": "Alineación del texto", "default": "left",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ]
+    },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo del contenido (px)", "min": 1000, "max": 1800, "step": 20, "default": 1400 },
+    { "type": "range", "id": "min_height_mobile", "label": "Altura mínima móvil (px)", "min": 200, "max": 800, "step": 10, "default": 420 },
+    { "type": "range", "id": "min_height_desktop", "label": "Altura mínima escritorio (px)", "min": 200, "max": 900, "step": 10, "default": 480 }
+  ],
+  "presets": [{ "name": "VALCA · Banner de imagen" }]
+}
+{% endschema %}

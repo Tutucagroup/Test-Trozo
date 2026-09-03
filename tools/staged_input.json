@@ -1,0 +1,142 @@
+[
+ {
+  "filename": "sections__footer-group.json.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "3183"
+ },
+ {
+  "filename": "sections__header-group.json.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "1728"
+ },
+ {
+  "filename": "sections__valca-announcement.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "10282"
+ },
+ {
+  "filename": "sections__valca-benefits.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "13021"
+ },
+ {
+  "filename": "sections__valca-faq.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "11565"
+ },
+ {
+  "filename": "sections__valca-featured-collections.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "14916"
+ },
+ {
+  "filename": "sections__valca-footer.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "16631"
+ },
+ {
+  "filename": "sections__valca-header.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "22732"
+ },
+ {
+  "filename": "sections__valca-hero.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "14407"
+ },
+ {
+  "filename": "sections__valca-image-banner.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "10805"
+ },
+ {
+  "filename": "sections__valca-legal-bar.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "3942"
+ },
+ {
+  "filename": "sections__valca-logos-marquee.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "9780"
+ },
+ {
+  "filename": "sections__valca-newsletter.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "10797"
+ },
+ {
+  "filename": "sections__valca-photo-grid.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "13952"
+ },
+ {
+  "filename": "sections__valca-product-carousel.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "26304"
+ },
+ {
+  "filename": "sections__valca-story.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "12197"
+ },
+ {
+  "filename": "sections__valca-transformations.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "20738"
+ },
+ {
+  "filename": "sections__valca-ugc-videos.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "23067"
+ },
+ {
+  "filename": "snippets__valca-fonts.liquid.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "490"
+ },
+ {
+  "filename": "templates__index.json.txt",
+  "mimeType": "text/plain",
+  "resource": "FILE",
+  "httpMethod": "POST",
+  "fileSize": "27698"
+ }
+]

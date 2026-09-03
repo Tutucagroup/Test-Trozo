@@ -1,0 +1,474 @@
+{
+ "shop": {
+  "name": "Latinologia",
+  "url": "https://latinologia.com",
+  "money_format": "${{amount_no_decimals}}"
+ },
+ "products": {
+  "kit-rutina-basica-de-cuidado-facial": {
+   "handle": "kit-rutina-basica-de-cuidado-facial",
+   "title": "Kit facial para Piel Grasa a Mixta",
+   "price": 27625000,
+   "compare_at_price": 32500000,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_PG_SINCOLOR_e8387b82-e1f6-47ff-affc-5400e63bbbe7.jpg?v=1788217333",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/PROTECTORSOLAR_2_7dec64ee-1912-45e8-96d6-e1473e728698.webp?v=1788186417",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Caja_hidratante_facial_4216001f-29ce-4a68-95b8-219d682c1df6.jpg?v=1788217341",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_limpiador_facial_piel_mixta_a_grasa_modelo_beneficio_a2c00b73-6d37-488a-b98c-5c70eb82fa4d.png?v=1788217349"
+   ]
+  },
+  "kit-melacontrolx": {
+   "handle": "kit-melacontrolx",
+   "title": "Kit Antimanchas",
+   "price": 38250000,
+   "compare_at_price": 45000000,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_MELACONTROL_e6ad4f97-4dd8-4491-b320-6ef57ea4b95f.jpg?v=1788216788",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Mela_ControlX_AM_1_bac90d8c-8cfa-4cbf-9218-20065b2194f1.jpg?v=1788216795",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Mela_ControlX_PM_1_3f36e8bc-8524-4d0c-921d-069a183466a8.jpg?v=1788216803",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_melacontrolx_am_serum_unificador_de_tono_modelo_beneficio_0ce88314-1521-4b83-accf-5f0e931192cc.png?v=1788216811"
+   ]
+  },
+  "kit-rutina-basica-de-cuidado-capilar": {
+   "handle": "kit-rutina-basica-de-cuidado-capilar",
+   "title": "Kit capilar - Shampoo y Acondicionador",
+   "price": 16000000,
+   "compare_at_price": 17500000,
+   "available": false,
+   "tags": [
+    "shampoo anticaída"
+   ],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_CAPILAR_1_6300b8a9-2b01-496a-933b-caf58d19b4ba.jpg?v=1788217428",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_CAPILAR_4_1_0a25f409-d660-47b5-9528-b022ac115e2c.jpg?v=1788217435",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/26_9eb95d4a-5776-4cee-9a18-11fbe08c72c2.jpg?v=1788217443",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/30_0d7347b2-0180-4adb-8b45-0ccb9ea07448.webp?v=1788187950"
+   ]
+  },
+  "kit-acn-shield": {
+   "handle": "kit-acn-shield",
+   "title": "Kit Antiimperfecciones",
+   "price": 38845000,
+   "compare_at_price": 45700000,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_ACN.SHIELD_d53cd8d7-f0ea-487d-88bf-0c18e9190737.jpg?v=1788218737",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/ACN_c4220199-031b-4a67-ae29-57e28e5e736e.webp?v=1788190292",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/AcnShield_AM05_f7cef231-a887-42f7-81cc-b6574d29f326.webp?v=1788190306",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/AcnShield_PM05_913abaa1-914d-4f29-aac8-e07e4e5140d6.webp?v=1788190321"
+   ]
+  },
+  "kit-parches": {
+   "handle": "kit-parches",
+   "title": "Kit Parches Hidrocoloides para Minimizar Imperfecciones (x2)",
+   "price": 9265000,
+   "compare_at_price": 10900000,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_PARCHES_68d74421-9c1a-413a-9e6d-266f3e711c51.jpg?v=1788218904",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Parches_2_1_0c6dd694-aeb0-49d5-a7cc-d3001c92fc1d.jpg?v=1788218912",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_parches_hidrocoloides_modelo_beneficio_fb065501-94b9-4589-9551-aa9b34005c3d.png?v=1788218920",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/02_parches_hidrocoloides_antes_y_despues_82a8b9ad-ccf6-41bf-8470-e218f9a97802.png?v=1788218927"
+   ]
+  },
+  "kit-capilar-advanced": {
+   "handle": "kit-capilar-advanced",
+   "title": "Kit Capilar Advanced",
+   "price": 30600000,
+   "compare_at_price": 36000000,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_ADVANCED_5f4a0312-1e9d-438a-b5af-a282185207c4.jpg?v=1788218389",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/SCALPSHIELD_2_8ecf4265-f368-4044-9aaa-a4209d88c7ec.webp?v=1788189674",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/FOLIGROW_SHAMPOO_2_b3df0b88-8dd2-4f47-9a0a-e6a3d11967df.webp?v=1788189686",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/FOLIGROW_TONICO_2_a1d095d9-696e-4a04-bc92-0b53d8f5c12e.webp?v=1788189699"
+   ]
+  },
+  "kit": {
+   "handle": "kit",
+   "title": "Kit Manchas de Imperfecciones",
+   "price": 18062500,
+   "compare_at_price": 21250000,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/84_KIT_PARCHES_ACN_AM_0263dc00-9726-4225-a68b-edc9f572cbfc.jpg?v=1788218982",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Parches_2_1_24905fe7-c906-4854-8b2d-237ffc0ac9e6.webp?v=1788190750",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/AcnShield_AM03_25852287-e23b-4ab6-b74f-ed860348aa0e.png?v=1788218991",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Parches_3_1_55caf817-4ac6-48c9-9530-4b742c81fb8c.jpg?v=1788218997"
+   ]
+  },
+  "kit-facial-para-piel-normal-a-seca": {
+   "handle": "kit-facial-para-piel-normal-a-seca",
+   "title": "Kit facial para Piel Normal a Seca",
+   "price": 27625000,
+   "compare_at_price": 31000000,
+   "available": false,
+   "tags": [
+    "Protector solar"
+   ],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_FACIAL_PN_1_ca14d1e7-cfb9-426a-ade6-00bc01274935.jpg?v=1788218061",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_FACIAL_PN_2_1ef72b7b-7fa8-453a-9e05-334379159794.webp?v=1788189090",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_FACIAL_PN_3_8ef0d26b-694e-4742-88ff-5dc4ce7747a2.webp?v=1788189103",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/PROTECTORSOLAR_3_d88f00b3-da47-4191-af18-1e09088b0905.jpg?v=1788218068"
+   ]
+  },
+  "protector-solar": {
+   "handle": "protector-solar",
+   "title": "SunShield Protector Solar Fluido Ultraligero (Sin Color)",
+   "price": 10500001,
+   "compare_at_price": 9500000,
+   "available": true,
+   "tags": [
+    "Protector solar"
+   ],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/6249_1_ffa3b35b-a786-43d8-8f2b-55e6d2d13dbc.jpg?v=1788217143",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/PROTECTORSOLAR_2_d08b037d-aa0e-41f0-9cdc-abb6332e913a.jpg?v=1788217150",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_sun_shield_spf_50_sin_color_modelo_beneficio_4631a0f4-e103-439d-9f49-2833f23157c3.png?v=1788217158",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/02_sun_shield_spf_50_sin_color_antes_y_despues_77cad605-1f84-46d1-ac78-424fd67f43aa.png?v=1788217166"
+   ]
+  },
+  "hidratante-facial-piel-mixta-a-grasa": {
+   "handle": "hidratante-facial-piel-mixta-a-grasa",
+   "title": "Hidratante facial (Piel Mixta a Grasa)",
+   "price": 11500000,
+   "compare_at_price": null,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/6246_1_8ac3bae3-9a44-45fb-bbc0-641b59dc392e.jpg?v=1788217866",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Caja_hidratante_facial_a8a97232-398f-4f0b-9ecd-e62154e9b28c.webp?v=1788188734",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_hidratante_facial_piel_mixta_a_grasa_modelo_beneficio_47de2a80-8d5f-467a-84d6-ae3c8677b927.png?v=1788217874",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/02_hidratante_facial_piel_mixta_a_grasa_antes_y_despues_829b5890-db5b-412f-aa1d-a9e27ae3eecb.png?v=1788217882"
+   ]
+  },
+  "limpiador-facial-para-piel-mixta-o-grasa": {
+   "handle": "limpiador-facial-para-piel-mixta-o-grasa",
+   "title": "Limpiador Facial (Piel Mixta a Grasa)",
+   "price": 10500000,
+   "compare_at_price": 9500000,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/6504_1_dd3674c1-1d07-4c9f-8f68-bac6953554f3.jpg?v=1788217606",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_limpiador_facial_piel_mixta_a_grasa_modelo_beneficio_6ca9269e-7f7a-441e-ab03-941d840ed7e2.png?v=1788217614",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/02_limpiador_facial_piel_mixta_a_grasa_antes_y_despues_dc36d851-c2e5-438a-a415-33a89cef8064.png?v=1788217622",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/03_limpiador_facial_piel_mixta_a_grasa_apto_para_pieles_bfe36de8-b0d5-4e89-a509-ab9b386e39e1.png?v=1788217630"
+   ]
+  },
+  "protector-solar-con-color": {
+   "handle": "protector-solar-con-color",
+   "title": "SunShield Protector Solar Fluido Ultraligero (Color)",
+   "price": 10500000,
+   "compare_at_price": 9500000,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/6250_1_39bd354e-3632-46e6-ac17-a5b51e93a962.jpg?v=1788217530",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/PROTECTORSOLAR_COLOR_2_caja_9c927dfe-ca14-4f0b-99e5-9f4fcbee4e98.jpg?v=1788217537",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_sun_shield_spf_50_con_color_modelo_beneficio_2347042a-c917-409c-b49b-7dba9a75efff.png?v=1788217545",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/02_sun_shield_spf_50_con_color_antes_y_despues_8463ae4c-ea45-44d9-be76-a404578442de.png?v=1788217553"
+   ]
+  },
+  "parches": {
+   "handle": "parches",
+   "title": "Parches Hidrocoloides para Minimizar Imperfecciones",
+   "price": 5450000,
+   "compare_at_price": null,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/6740_1_73299870-2a2c-4fd6-9b92-4c8d3f7c1fdc.jpg?v=1788218826",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Parches_2_0a9bf897-447b-4c91-bed0-0227a84b8ae7.jpg?v=1788218834",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_parches_hidrocoloides_modelo_beneficio_d2f94a93-2972-4ae1-8f14-c31db15899b9.png?v=1788218841",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/02_parches_hidrocoloides_antes_y_despues_f2489698-b594-4c09-9013-63aa6ef94ef6.png?v=1788218849"
+   ]
+  },
+  "hidratante-facial": {
+   "handle": "hidratante-facial",
+   "title": "Hidratante facial (Piel Normal o Seca)",
+   "price": 11500000,
+   "compare_at_price": null,
+   "available": false,
+   "tags": [
+    "Hidratante facial"
+   ],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/HIDRATANTEFACIAL_PN_1_3e691c2d-a50c-418f-872e-09117121b6a9.jpg?v=1788217077",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/12.1_0db75b17-eaf0-43c7-9ad2-0e9fa518f069.jpg?v=1788217092",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/10_e1cd7580-04d9-4c6e-8007-009012a945bc.jpg?v=1788217106",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/11_ce2b080b-f02c-4bab-8cb0-d0faeb46b898.jpg?v=1788217121"
+   ]
+  },
+  "acn-shield-limpiador-facial-seborregulador": {
+   "handle": "acn-shield-limpiador-facial-seborregulador",
+   "title": "Acn.Shield Limpiador Facial Seborregulador",
+   "price": 13500000,
+   "compare_at_price": null,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/6698_1_c58bea3a-691e-4fd1-96e9-9ae8c892331e.jpg?v=1788218493",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/ACN.SHIELD_LIMPIADOR_2_7f37658a-432e-47e3-9e05-8e06c293c334.jpg?v=1788218501",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_limpiador_facial_seborregulador_modelo_beneficio_2899824b-9662-4bdd-b199-3ccc16191ae7.png?v=1788218509",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/02_limpiador_facial_seborregulador_antes_y_despues_aa9ab392-a799-44c0-9772-eda0fc89791d.png?v=1788218517"
+   ]
+  },
+  "acn-shield-am-serum-corrector-y-unificador-de-tono": {
+   "handle": "acn-shield-am-serum-corrector-y-unificador-de-tono",
+   "title": "Acn.Shield Serum Corrector y Unificador de Tono",
+   "price": 15800000,
+   "compare_at_price": null,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/6699_1_385ff17c-97b5-4fd5-9f29-cb92f089f82c.jpg?v=1788218574",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/AcnShield_AM05_28ede8ba-97cf-4064-b0b8-4127b5517b3d.png?v=1788218582",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_acn_shield_serum_corrector_y_unificador_de_tono_am_modelo_beneficio_52c46880-4e38-4428-906a-c9eb5a306d53.png?v=1788218590",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/02_acn_shield_serum_corrector_y_unificador_de_tono_am_antes_y_despues_d7338c89-435a-41d2-ad6c-b023e745556b.png?v=1788218598"
+   ]
+  },
+  "shampoo": {
+   "handle": "shampoo",
+   "title": "Shampoo Anticaida & Anticaspa",
+   "price": 10500000,
+   "compare_at_price": 9500000,
+   "available": true,
+   "tags": [],
+   "images": [
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/6251_1_a0f1bd1d-c076-4518-97fc-9c3ef3604b6c.jpg?v=1788217222"
+   ]
+  }
+ },
+ "collections": {
+  "kits": {
+   "title": "kits",
+   "products": [
+    "kit-rutina-basica-de-cuidado-facial",
+    "kit-melacontrolx",
+    "kit-rutina-basica-de-cuidado-capilar",
+    "kit-acn-shield",
+    "kit-parches",
+    "kit-capilar-advanced",
+    "kit",
+    "kit-facial-para-piel-normal-a-seca"
+   ]
+  },
+  "facial": {
+   "title": "Facial",
+   "products": [
+    "protector-solar",
+    "hidratante-facial-piel-mixta-a-grasa",
+    "limpiador-facial-para-piel-mixta-o-grasa",
+    "kit-rutina-basica-de-cuidado-facial",
+    "protector-solar-con-color",
+    "kit-melacontrolx",
+    "parches",
+    "hidratante-facial",
+    "acn-shield-limpiador-facial-seborregulador",
+    "acn-shield-am-serum-corrector-y-unificador-de-tono"
+   ]
+  },
+  "capilar": {
+   "title": "Capilar",
+   "products": [
+    "shampoo",
+    "kit-capilar-advanced",
+    "kit-rutina-basica-de-cuidado-capilar"
+   ]
+  },
+  "proteccion-solar": {
+   "title": "Protección Solar",
+   "products": [
+    "protector-solar",
+    "protector-solar-con-color"
+   ]
+  },
+  "tienda": {
+   "title": "Todos",
+   "products": [
+    "kit-rutina-basica-de-cuidado-facial",
+    "kit-melacontrolx",
+    "kit-rutina-basica-de-cuidado-capilar",
+    "kit-acn-shield",
+    "kit-parches",
+    "kit-capilar-advanced",
+    "kit",
+    "kit-facial-para-piel-normal-a-seca",
+    "protector-solar",
+    "hidratante-facial-piel-mixta-a-grasa",
+    "limpiador-facial-para-piel-mixta-o-grasa",
+    "protector-solar-con-color",
+    "parches",
+    "hidratante-facial",
+    "acn-shield-limpiador-facial-seborregulador",
+    "acn-shield-am-serum-corrector-y-unificador-de-tono",
+    "shampoo"
+   ]
+  },
+  "manchas": {
+   "title": "Manchas",
+   "products": [
+    "kit-melacontrolx"
+   ]
+  }
+ },
+ "files": {
+  "Home_desktop.webp": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Home_desktop.webp?v=1788369319",
+  "Home_mobile.webp": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Home_mobile.webp?v=1788369319",
+  "Pieles_latinas.webp": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Pieles_latinas.webp?v=1788366433",
+  "Pieles_latinas_copy.webp": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Pieles_latinas_copy.webp?v=1788366433",
+  "Pagos_1.webp": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Pagos_1.webp?v=1788386561",
+  "Trust_badges_v2.webp": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Trust_badges_v2.webp?v=1788386562",
+  "Logo_Latinolog_a.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Logo_Latinolog_a.png?v=1779293214",
+  "Latinologia-Logo-Blanco.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Latinologia-Logo-Blanco.png?v=1755011068",
+  "Dra._Dalia_Cuervo_Mesa_de_trabajo_1.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Dra._Dalia_Cuervo_Mesa_de_trabajo_1.jpg?v=1764170233",
+  "Dra._Angela_Marino.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Dra._Angela_Marino.jpg?v=1788216326",
+  "Dr._Jonathan_Arguello_Mesa_de_trabajo_1.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Dr._Jonathan_Arguello_Mesa_de_trabajo_1.jpg?v=1788216320",
+  "Dra._Maria_Manuela_Echavarria.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Dra._Maria_Manuela_Echavarria.jpg?v=1788216323",
+  "Dra._Daissy_Munoz.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Dra._Daissy_Munoz.jpg?v=1788216311",
+  "Bojanini_Mesa_de_trabajo_1.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Bojanini_Mesa_de_trabajo_1.jpg?v=1788216314",
+  "Danney_g_mobile.webp": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Danney_g_mobile.webp?v=1788366794",
+  "Caro_solorzano_mobile.webp": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Caro_solorzano_mobile.webp?v=1788366761",
+  "Paola_T_mobile.webp": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Paola_T_mobile.webp?v=1788366716",
+  "Acosta_mobile.webp": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Acosta_mobile.webp?v=1788366683",
+  "Naranjo_mobile.webp": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/Naranjo_mobile.webp?v=1788366651",
+  "RenovAOX_X__1.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/RenovAOX_X__1.jpg?v=1763148970",
+  "RenovAOX_X__2.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/RenovAOX_X__2.jpg?v=1763148970",
+  "RenovAOX_X__3.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/RenovAOX_X__3.jpg?v=1763148970",
+  "RenovAOX_X__4.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/RenovAOX_X__4.jpg?v=1763148970",
+  "RenovAOX_X__5.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/RenovAOX_X__5.jpg?v=1763148970",
+  "MELACONTROL_AM_1_e7961ccb-c764-477d-abe8-7cfbdb9e8ca2.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/MELACONTROL_AM_1_e7961ccb-c764-477d-abe8-7cfbdb9e8ca2.jpg?v=1759847304",
+  "MELACONTROL_pM_1.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/MELACONTROL_pM_1.jpg?v=1759847252",
+  "PROTECTOR_SOLAR_1.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/PROTECTOR_SOLAR_1.jpg?v=1759847432",
+  "KIT_FOLIGROW.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_FOLIGROW.jpg?v=1759269891"
+ },
+ "menus": {
+  "main-menu": {
+   "title": "Menú principal",
+   "items": [
+    {
+     "title": "Tienda",
+     "url": "/collections/tienda",
+     "items": [
+      {
+       "title": "Kits",
+       "url": "/collections/kits"
+      },
+      {
+       "title": "Cuidado facial",
+       "url": "/collections/facial"
+      },
+      {
+       "title": "Cuidado capilar",
+       "url": "/collections/capilar"
+      },
+      {
+       "title": "Protección solar",
+       "url": "/collections/proteccion-solar"
+      }
+     ]
+    },
+    {
+     "title": "Best sellers",
+     "url": "/collections/best-selling-products",
+     "items": []
+    },
+    {
+     "title": "Sobre nosotros",
+     "url": "/pages/nosotros",
+     "items": []
+    },
+    {
+     "title": "Skin Academy",
+     "url": "/blogs/skin-academy",
+     "items": []
+    }
+   ]
+  },
+  "footer": {
+   "title": "Tienda",
+   "items": [
+    {
+     "title": "Cuidado Facial",
+     "url": "/collections/facial",
+     "items": []
+    },
+    {
+     "title": "Cuidado Capilar",
+     "url": "/collections/capilar",
+     "items": []
+    },
+    {
+     "title": "Masterclass Latinología",
+     "url": "#",
+     "items": []
+    },
+    {
+     "title": "Skin Academy",
+     "url": "/blogs/skin-academy",
+     "items": []
+    }
+   ]
+  },
+  "new-footer": {
+   "title": "New Footer",
+   "items": [
+    {
+     "title": "Sobre Nosotros",
+     "url": "/pages/nosotros",
+     "items": []
+    },
+    {
+     "title": "Contacto",
+     "url": "/pages/contact",
+     "items": []
+    },
+    {
+     "title": "Encuentra a un médico",
+     "url": "/pages/encuentra-un-medico",
+     "items": []
+    },
+    {
+     "title": "Bella Piel",
+     "url": "#",
+     "items": []
+    },
+    {
+     "title": "Pharmaskin",
+     "url": "#",
+     "items": []
+    }
+   ]
+  },
+  "legal-footer": {
+   "title": "Legal footer",
+   "items": [
+    {
+     "title": "Términos y Condiciones",
+     "url": "/pages/terminos",
+     "items": []
+    },
+    {
+     "title": "Tratamiento de datos",
+     "url": "/pages/nota-de-privacidad",
+     "items": []
+    },
+    {
+     "title": "Política de Devoluciones",
+     "url": "/policies/refund-policy",
+     "items": []
+    }
+   ]
+  }
+ }
+}

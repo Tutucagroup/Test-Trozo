@@ -1,0 +1,348 @@
+{%- render 'valca-fonts' -%}
+{%- liquid
+  assign sid = section.id
+  assign current_year = 'now' | date: '%Y'
+-%}
+
+<footer class="vft vft--{{ sid }}" role="contentinfo">
+  <div class="vft__container">
+    <div class="vft__cols">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'brand' -%}
+            <div class="vft__col vft__col--brand" {{ block.shopify_attributes }}>
+              {%- if block.settings.logo != blank -%}
+                {%- assign lw = block.settings.logo_width | times: 2 -%}
+                <a class="vft__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+                  <img
+                    src="{{ block.settings.logo | image_url: width: lw }}"
+                    alt="{{ shop.name | escape }}"
+                    width="{{ block.settings.logo_width }}"
+                    height="auto"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                </a>
+              {%- elsif block.settings.show_shop_name -%}
+                <a class="vft__logo-text" href="{{ routes.root_url }}">{{ shop.name }}</a>
+              {%- endif -%}
+
+              {%- if block.settings.text != blank -%}
+                <div class="vft__desc">{{ block.settings.text }}</div>
+              {%- endif -%}
+            </div>
+
+          {%- when 'menu' -%}
+            <div class="vft__col" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h3 class="vft__col-title">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              {%- if block.settings.menu != blank -%}
+                <ul class="vft__links">
+                  {%- for link in linklists[block.settings.menu].links -%}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+
+          {%- when 'text' -%}
+            <div class="vft__col" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h3 class="vft__col-title">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <div class="vft__desc">{{ block.settings.text }}</div>
+              {%- endif -%}
+            </div>
+
+          {%- when 'social' -%}
+            <div class="vft__col" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h3 class="vft__col-title">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              <ul class="vft__socials">
+                {%- if block.settings.instagram != blank -%}
+                  <li><a href="{{ block.settings.instagram }}" aria-label="Instagram" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M13.23 3.49c-.84-.04-1.1-.05-3.23-.05-2.14 0-2.39.01-3.24.06-.78.03-1.2.16-1.49.27a2.4 2.4 0 00-.91.6 2.5 2.5 0 00-.6.92c-.11.28-.24.7-.27 1.48-.05.85-.05 1.11-.05 3.24s.01 2.39.05 3.23c0 .5.1 1 .27 1.49.15.37.32.64.6.92.28.28.54.45.92.6.47.17.97.26 1.48.27.85.04 1.1.04 3.24.04s2.39 0 3.23-.05c.78-.03 1.2-.16 1.49-.27.37-.15.65-.32.92-.6.28-.28.44-.55.6-.92.17-.48.27-.98.27-1.49.04-.84.05-1.1.05-3.23s-.01-2.39-.06-3.23c-.02-.78-.16-1.2-.27-1.49a2.4 2.4 0 00-.59-.91 2.6 2.6 0 00-.92-.6c-.28-.11-.7-.24-1.49-.28ZM6.7 2.05C7.55 2.02 7.83 2 10 2a63 63 0 013.3.05c.67.01 1.33.14 1.95.37a4 4 0 011.4.92c.42.4.74.88.94 1.42.23.62.35 1.28.36 1.94C18 7.56 18 7.82 18 10c0 2.17-.01 2.44-.05 3.29-.03.86-.17 1.44-.37 1.94-.2.53-.48.98-.93 1.42a3.9 3.9 0 01-1.41.93c-.51.19-1.1.33-1.95.37-.85.03-1.12.04-3.3.04-2.17 0-2.44 0-3.3-.05-.85-.03-1.43-.17-1.94-.37a4.2 4.2 0 01-1.41-.92 4.1 4.1 0 01-.93-1.42c-.19-.51-.33-1.09-.37-1.95C2 12.45 2 12.17 2 10c0-2.16 0-2.43.06-3.3.02-.85.16-1.43.36-1.94a4.4 4.4 0 01.92-1.41 4.2 4.2 0 011.42-.93c.51-.18 1.09-.33 1.94-.37Zm.43 4.8a4.1 4.1 0 115.8 5.81 4.1 4.1 0 01-5.8-5.8Zm1.88 5.37a2.67 2.67 0 102.04-4.93 2.67 2.67 0 00-2.04 4.93Zm5.92-5.94a.96.96 0 11-1.35-1.36.96.96 0 011.35 1.36Z"/></svg>
+                  </a></li>
+                {%- endif -%}
+                {%- if block.settings.facebook != blank -%}
+                  <li><a href="{{ block.settings.facebook }}" aria-label="Facebook" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M18 10.05C18 5.6 14.42 2 10 2s-8 3.6-8 8.05C2 14.07 4.93 17.4 8.75 18v-5.62H6.72v-2.33h2.03V8.28c0-2.02 1.2-3.14 3.02-3.14.88 0 1.8.16 1.8.16v1.98h-1.02c-1 0-1.3.62-1.3 1.26v1.51h2.22l-.36 2.33h-1.86V18A8.04 8.04 0 0018 10.05Z"/></svg>
+                  </a></li>
+                {%- endif -%}
+                {%- if block.settings.tiktok != blank -%}
+                  <li><a href="{{ block.settings.tiktok }}" aria-label="TikTok" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10.51 1.7h2.74s-.16 3.52 3.8 3.78v2.71s-2.12.13-3.8-1.16l.03 5.6a5.07 5.07 0 11-5.07-5.08h.71v2.79a2.3 2.3 0 101.62 2.2V1.7Z"/></svg>
+                  </a></li>
+                {%- endif -%}
+                {%- if block.settings.youtube != blank -%}
+                  <li><a href="{{ block.settings.youtube }}" aria-label="YouTube" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M18.16 5.87a2.13 2.13 0 00-1.5-1.5C15.32 4 10 4 10 4s-5.32 0-6.66.37a2.13 2.13 0 00-1.5 1.5C1.47 7.2 1.47 10 1.47 10s0 2.8.37 4.13a2.13 2.13 0 001.5 1.5C4.68 16 10 16 10 16s5.32 0 6.66-.37a2.13 2.13 0 001.5-1.5c.37-1.33.37-4.13.37-4.13s0-2.8-.37-4.13ZM8.3 12.55v-5.1l4.42 2.55-4.42 2.55Z"/></svg>
+                  </a></li>
+                {%- endif -%}
+                {%- if block.settings.whatsapp != blank -%}
+                  <li><a href="{{ block.settings.whatsapp }}" aria-label="WhatsApp" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10.02 2A7.94 7.94 0 003.2 14.03L2 18l4.1-1.16A7.94 7.94 0 1010.02 2Zm0 1.5a6.44 6.44 0 013.2 12.03l-.28.16-2.5.7.7-2.4-.18-.3A6.44 6.44 0 0110.02 3.5Zm-2.9 3.3c-.14 0-.36.05-.55.26-.19.2-.72.7-.72 1.7s.74 1.97.84 2.1c.1.14 1.43 2.3 3.5 3.12 1.72.68 2.07.55 2.44.51.37-.03 1.2-.49 1.37-.96.17-.47.17-.88.12-.96-.05-.08-.19-.13-.4-.23-.2-.1-1.2-.6-1.39-.66-.19-.07-.32-.1-.46.1-.13.2-.52.67-.64.8-.11.14-.23.16-.42.06a5.2 5.2 0 01-1.53-.94 5.8 5.8 0 01-1.06-1.32c-.11-.2-.01-.3.09-.4.09-.1.23-.27.34-.4.11-.14.15-.24.23-.4.07-.13.03-.26-.02-.36-.05-.1-.5-1.22-.68-1.66-.14-.35-.28-.36-.4-.36h-.18Z"/></svg>
+                  </a></li>
+                {%- endif -%}
+              </ul>
+            </div>
+
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="vft__bottom">
+      {%- if section.settings.copyright != blank -%}
+        <div class="vft__copyright">
+          {{ section.settings.copyright | replace: '[year]', current_year }}
+        </div>
+      {%- else -%}
+        <div class="vft__copyright">&copy; {{ current_year }} {{ shop.name }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.payment_image != blank -%}
+        <div class="vft__payments">
+          <img
+            src="{{ section.settings.payment_image | image_url: width: 900 }}"
+            alt="Medios de pago"
+            width="360"
+            height="{{ section.settings.payment_height }}"
+            loading="lazy"
+            decoding="async"
+          >
+        </div>
+      {%- elsif section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+        <div class="vft__payments vft__payments--native">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'vft__payment-icon' }}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .vft--{{ sid }} {
+    --vft-cols: {{ section.settings.columns_desktop }};
+
+    box-sizing: border-box;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    {% if section.settings.show_top_border %}border-top: 1px solid {{ section.settings.border_color }};{% endif %}
+  }
+
+  .vft--{{ sid }} *,
+  .vft--{{ sid }} *::before,
+  .vft--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vft--{{ sid }} .vft__container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .vft--{{ sid }} .vft__cols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .vft--{{ sid }} .vft__logo { display: inline-block; margin-bottom: 16px; }
+  .vft--{{ sid }} .vft__logo img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+  }
+  .vft--{{ sid }} .vft__logo-text {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: {{ section.settings.heading_color }};
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .vft--{{ sid }} .vft__desc,
+  .vft--{{ sid }} .vft__desc p {
+    margin: 0;
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.text_size }}px;
+    line-height: 1.6;
+  }
+  .vft--{{ sid }} .vft__desc p + p { margin-top: 10px; }
+  .vft--{{ sid }} .vft__desc a { color: {{ section.settings.link_color }}; text-decoration: underline; }
+
+  .vft--{{ sid }} .vft__col-title {
+    margin: 0 0 14px;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size }}px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+  }
+
+  .vft--{{ sid }} .vft__links,
+  .vft--{{ sid }} .vft__socials {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .vft--{{ sid }} .vft__links li + li { margin-top: 9px; }
+  .vft--{{ sid }} .vft__links a {
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.text_size }}px;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .vft--{{ sid }} .vft__links a:hover { color: {{ section.settings.link_hover_color }}; }
+
+  .vft--{{ sid }} .vft__socials { display: flex; flex-wrap: wrap; gap: 14px; }
+  .vft--{{ sid }} .vft__socials a {
+    display: inline-flex;
+    color: {{ section.settings.social_color }};
+    transition: color 0.2s ease;
+  }
+  .vft--{{ sid }} .vft__socials a:hover { color: {{ section.settings.link_hover_color }}; }
+  .vft--{{ sid }} .vft__socials svg { width: 22px; height: 22px; fill: currentColor; }
+
+  .vft--{{ sid }} .vft__bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 36px;
+    padding-top: 22px;
+    border-top: 1px solid {{ section.settings.border_color }};
+    text-align: center;
+  }
+  .vft--{{ sid }} .vft__copyright {
+    color: {{ section.settings.text_color }};
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .vft--{{ sid }} .vft__copyright a { color: {{ section.settings.link_color }}; }
+
+  .vft--{{ sid }} .vft__payments {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .vft--{{ sid }} .vft__payments img {
+    display: block;
+    width: auto;
+    height: {{ section.settings.payment_height }}px;
+    max-width: 100%;
+  }
+  .vft--{{ sid }} .vft__payment-icon { height: 24px; width: auto; }
+
+  @media screen and (min-width: 750px) {
+    .vft--{{ sid }} { padding-top: {{ section.settings.padding_top_desktop }}px; padding-bottom: {{ section.settings.padding_bottom_desktop }}px; }
+    .vft--{{ sid }} .vft__cols {
+      grid-template-columns: repeat(var(--vft-cols), minmax(0, 1fr));
+      gap: 40px;
+    }
+    .vft--{{ sid }} .vft__col--brand { grid-column: span 1; }
+    .vft--{{ sid }} .vft__bottom {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Pie de página",
+  "tag": "footer",
+  "class": "valca-footer-section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "header", "content": "Barra inferior" },
+    { "type": "richtext", "id": "copyright", "label": "Aviso de copyright", "info": "Usá [year] para insertar el año actual.", "default": "<p>© [year] Latinologia · Todos los derechos reservados</p>" },
+    { "type": "image_picker", "id": "payment_image", "label": "Imagen de medios de pago" },
+    { "type": "checkbox", "id": "show_payment_icons", "label": "Mostrar iconos de pago de Shopify (si no hay imagen)", "default": true },
+    { "type": "range", "id": "payment_height", "label": "Alto de la imagen de pagos (px)", "min": 14, "max": 60, "step": 2, "default": 26 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#202020" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#A2A2A2" },
+    { "type": "color", "id": "heading_color", "label": "Títulos de columna", "default": "#FFFFFF" },
+    { "type": "color", "id": "link_color", "label": "Enlaces", "default": "#FFFFFF" },
+    { "type": "color", "id": "link_hover_color", "label": "Enlaces (hover)", "default": "#0194A8" },
+    { "type": "color", "id": "social_color", "label": "Redes sociales", "default": "#FFFFFF" },
+    { "type": "color", "id": "border_color", "label": "Bordes", "default": "#3A3A3A" },
+    { "type": "checkbox", "id": "show_top_border", "label": "Mostrar borde superior", "default": false },
+    { "type": "header", "content": "Tipografía y diseño" },
+    { "type": "range", "id": "heading_size", "label": "Tamaño de títulos (px)", "min": 11, "max": 22, "step": 1, "default": 14 },
+    { "type": "range", "id": "text_size", "label": "Tamaño de texto (px)", "min": 11, "max": 20, "step": 1, "default": 14 },
+    { "type": "range", "id": "columns_desktop", "label": "Columnas en escritorio", "min": 2, "max": 5, "step": 1, "default": 4 },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 900, "max": 1700, "step": 20, "default": 1300 },
+    { "type": "range", "id": "padding_top", "label": "Espaciado superior móvil (px)", "min": 0, "max": 120, "step": 4, "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaciado inferior móvil (px)", "min": 0, "max": 120, "step": 4, "default": 28 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Espaciado superior escritorio (px)", "min": 0, "max": 160, "step": 4, "default": 56 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Espaciado inferior escritorio (px)", "min": 0, "max": 160, "step": 4, "default": 36 }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Marca",
+      "limit": 1,
+      "settings": [
+        { "type": "image_picker", "id": "logo", "label": "Logo" },
+        { "type": "range", "id": "logo_width", "label": "Ancho del logo (px)", "min": 60, "max": 300, "step": 5, "default": 140 },
+        { "type": "checkbox", "id": "show_shop_name", "label": "Mostrar el nombre de la tienda si no hay logo", "default": true },
+        { "type": "richtext", "id": "text", "label": "Descripción" }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Menú",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Título", "default": "Tienda" },
+        { "type": "link_list", "id": "menu", "label": "Menú" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Texto",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Título" },
+        { "type": "richtext", "id": "text", "label": "Texto" }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Redes sociales",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Título", "default": "Seguinos" },
+        { "type": "url", "id": "instagram", "label": "Instagram" },
+        { "type": "url", "id": "facebook", "label": "Facebook" },
+        { "type": "url", "id": "tiktok", "label": "TikTok" },
+        { "type": "url", "id": "youtube", "label": "YouTube" },
+        { "type": "url", "id": "whatsapp", "label": "WhatsApp" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Pie de página",
+      "blocks": [
+        { "type": "brand" }, { "type": "menu" }, { "type": "menu" }, { "type": "social" }
+      ]
+    }
+  ]
+}
+{% endschema %}

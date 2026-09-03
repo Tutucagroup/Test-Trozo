@@ -1,0 +1,289 @@
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign items = section.blocks
+-%}
+
+<section class="vbn vbn--{{ sid }}" aria-label="{{ section.settings.heading | default: 'Beneficios' | escape }}">
+  <div class="vbn__container">
+    {%- if section.settings.heading != blank or section.settings.subtitle != blank -%}
+      <header class="vbn__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="vbn__heading">
+            {{ section.settings.heading }}{% if section.settings.heading_accent != blank %}
+              <span class="vbn__accent">{{ section.settings.heading_accent }}</span>
+            {% endif %}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <div class="vbn__subtitle">{{ section.settings.subtitle }}</div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    {%- if items.size > 0 -%}
+      <ul class="vbn__grid">
+        {%- for block in items -%}
+          <li class="vbn__item" {{ block.shopify_attributes }}>
+            <span class="vbn__icon" aria-hidden="true">
+              {%- if block.settings.custom_icon != blank -%}
+                <img src="{{ block.settings.custom_icon | image_url: width: 160 }}" alt="" width="44" height="44" loading="lazy">
+              {%- else -%}
+                {%- case block.settings.icon -%}
+                  {%- when 'flask' -%}
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="M9 3v6L4.5 18.5c-.6 1.2.3 2.5 1.6 2.5h11.8c1.3 0 2.2-1.3 1.6-2.5L15 9V3"/><path d="M8 3h8"/><path d="M7 14h10"/></svg>
+                  {%- when 'shield' -%}
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="M12 2L4 5v7c0 5.5 3.5 9.5 8 11 4.5-1.5 8-5.5 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+                  {%- when 'droplet' -%}
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="M12 3c-3 4-6 7-6 10a6 6 0 1012 0c0-3-3-6-6-10z"/><path d="M9.5 15.5a3 3 0 003 1.8"/></svg>
+                  {%- when 'eye' -%}
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                  {%- when 'leaf' -%}
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="M4 20c0-8 6-14 16-15 0 10-6 15-13 15H4z"/><path d="M4 20c4-4 8-6 12-7"/></svg>
+                  {%- when 'truck' -%}
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="M2 7h11v9H2z"/><path d="M13 10h4l3 3v3h-7z"/><circle cx="6" cy="18.5" r="1.7"/><circle cx="17" cy="18.5" r="1.7"/></svg>
+                  {%- when 'doctor' -%}
+                    <svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="7.5" r="3.3"/><path d="M5 21c0-3.6 3.1-5.8 7-5.8s7 2.2 7 5.8"/><path d="M12 15.5v3M10.5 17h3"/></svg>
+                  {%- when 'star' -%}
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="M12 3.6l2.5 5.2 5.6.8-4 4 .9 5.6-5-2.7-5 2.7.9-5.6-4-4 5.6-.8z"/></svg>
+                  {%- when 'heart' -%}
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="M12 20s-7-4.5-7-9.5A3.9 3.9 0 0112 8a3.9 3.9 0 017 2.5c0 5-7 9.5-7 9.5z"/></svg>
+                  {%- when 'clock' -%}
+                    <svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+                  {%- else -%}
+                    <svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="8.5"/><path d="M9 12l2 2 4-4"/></svg>
+                {%- endcase -%}
+              {%- endif -%}
+            </span>
+
+            {%- if block.settings.title != blank -%}
+              <h3 class="vbn__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="vbn__text">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .vbn--{{ sid }} {
+    --vbn-cols-mobile: {{ section.settings.columns_mobile }};
+    --vbn-cols: {{ section.settings.columns_desktop }};
+    --vbn-icon-mobile: {{ section.settings.icon_size_mobile }}px;
+    --vbn-icon-desktop: {{ section.settings.icon_size_desktop }}px;
+
+    box-sizing: border-box;
+    {% if section.settings.use_gradient %}
+      background: linear-gradient({{ section.settings.gradient_angle }}deg, {{ section.settings.bg_color }} 0%, {{ section.settings.bg_color_2 }} 100%);
+    {% else %}
+      background: {{ section.settings.bg_color }};
+    {% endif %}
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .vbn--{{ sid }} *,
+  .vbn--{{ sid }} *::before,
+  .vbn--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vbn--{{ sid }} .vbn__container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .vbn--{{ sid }} .vbn__header { text-align: center; margin-bottom: 32px; }
+  .vbn--{{ sid }} .vbn__heading {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .vbn--{{ sid }} .vbn__accent {
+    margin-left: 4px;
+    color: {{ section.settings.accent_color }};
+    {% if section.settings.accent_style == 'italic_serif' %}
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+    {% endif %}
+  }
+  .vbn--{{ sid }} .vbn__subtitle,
+  .vbn--{{ sid }} .vbn__subtitle p {
+    margin: 10px 0 0;
+    color: {{ section.settings.text_color }};
+    font-size: 14px;
+    line-height: 1.5;
+    opacity: 0.9;
+  }
+
+  .vbn--{{ sid }} .vbn__grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(var(--vbn-cols-mobile), minmax(0, 1fr));
+    gap: {{ section.settings.gap }}px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .vbn--{{ sid }} .vbn__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .vbn--{{ sid }} .vbn__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--vbn-icon-mobile) + 34px);
+    height: calc(var(--vbn-icon-mobile) + 34px);
+    margin-bottom: 14px;
+    border-radius: {% if section.settings.icon_shape == 'circle' %}50%{% else %}{{ section.settings.icon_radius }}px{% endif %};
+    background: {{ section.settings.icon_bg }};
+  }
+  .vbn--{{ sid }} .vbn__icon svg {
+    width: var(--vbn-icon-mobile);
+    height: var(--vbn-icon-mobile);
+    fill: none;
+    stroke: {{ section.settings.icon_color }};
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .vbn--{{ sid }} .vbn__icon img {
+    width: var(--vbn-icon-mobile);
+    height: var(--vbn-icon-mobile);
+    object-fit: contain;
+  }
+
+  .vbn--{{ sid }} .vbn__title {
+    margin: 0 0 6px;
+    color: {{ section.settings.title_color }};
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .vbn--{{ sid }} .vbn__text {
+    margin: 0;
+    color: {{ section.settings.text_color }};
+    font-size: 13px;
+    line-height: 1.5;
+    max-width: 26ch;
+  }
+
+  @media screen and (min-width: 768px) {
+    .vbn--{{ sid }} { padding: {{ section.settings.padding_top_desktop }}px 20px {{ section.settings.padding_bottom_desktop }}px; }
+    .vbn--{{ sid }} .vbn__heading { font-size: 32px; }
+    .vbn--{{ sid }} .vbn__subtitle,
+    .vbn--{{ sid }} .vbn__subtitle p { font-size: 16px; }
+    .vbn--{{ sid }} .vbn__grid { grid-template-columns: repeat(var(--vbn-cols), minmax(0, 1fr)); }
+    .vbn--{{ sid }} .vbn__icon {
+      width: calc(var(--vbn-icon-desktop) + 44px);
+      height: calc(var(--vbn-icon-desktop) + 44px);
+    }
+    .vbn--{{ sid }} .vbn__icon svg,
+    .vbn--{{ sid }} .vbn__icon img {
+      width: var(--vbn-icon-desktop);
+      height: var(--vbn-icon-desktop);
+    }
+    .vbn--{{ sid }} .vbn__title { font-size: 16px; }
+    .vbn--{{ sid }} .vbn__text { font-size: 14px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Beneficios",
+  "tag": "section",
+  "class": "valca-benefits-section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "header", "content": "Encabezado" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Lo que nos hace" },
+    { "type": "text", "id": "heading_accent", "label": "Palabra destacada", "default": "distintos" },
+    {
+      "type": "select", "id": "accent_style", "label": "Estilo del destacado", "default": "italic_serif",
+      "options": [
+        { "value": "bold", "label": "Igual al título" },
+        { "value": "italic_serif", "label": "Serif cursiva" }
+      ]
+    },
+    { "type": "richtext", "id": "subtitle", "label": "Subtítulo" },
+    { "type": "header", "content": "Fondo" },
+    { "type": "checkbox", "id": "use_gradient", "label": "Usar degradado", "default": true },
+    { "type": "color", "id": "bg_color", "label": "Color 1", "default": "#0194A8" },
+    { "type": "color", "id": "bg_color_2", "label": "Color 2 (degradado)", "default": "#185C67" },
+    { "type": "range", "id": "gradient_angle", "label": "Ángulo del degradado", "min": 0, "max": 360, "step": 15, "default": 135 },
+    { "type": "header", "content": "Iconos" },
+    {
+      "type": "select", "id": "icon_shape", "label": "Forma del icono", "default": "circle",
+      "options": [
+        { "value": "circle", "label": "Círculo" },
+        { "value": "rounded", "label": "Cuadrado redondeado" }
+      ]
+    },
+    { "type": "range", "id": "icon_radius", "label": "Radio (si es cuadrado)", "min": 0, "max": 30, "step": 1, "default": 12 },
+    { "type": "color", "id": "icon_bg", "label": "Fondo del icono", "default": "#FFFFFF" },
+    { "type": "color", "id": "icon_color", "label": "Color del icono", "default": "#0194A8" },
+    { "type": "range", "id": "icon_size_mobile", "label": "Tamaño en móvil (px)", "min": 20, "max": 60, "step": 2, "default": 36 },
+    { "type": "range", "id": "icon_size_desktop", "label": "Tamaño en escritorio (px)", "min": 20, "max": 72, "step": 2, "default": 44 },
+    { "type": "header", "content": "Colores de texto" },
+    { "type": "color", "id": "heading_color", "label": "Título", "default": "#FFFFFF" },
+    { "type": "color", "id": "accent_color", "label": "Palabra destacada", "default": "#FFFFFF" },
+    { "type": "color", "id": "title_color", "label": "Títulos de beneficios", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Textos", "default": "#E0F4F7" },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "columns_mobile", "label": "Columnas en móvil", "min": 1, "max": 4, "step": 1, "default": 2 },
+    { "type": "range", "id": "columns_desktop", "label": "Columnas en escritorio", "min": 2, "max": 6, "step": 1, "default": 4 },
+    { "type": "range", "id": "gap", "label": "Separación (px)", "min": 8, "max": 60, "step": 2, "default": 26 },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 800, "max": 1600, "step": 20, "default": 1200 },
+    { "type": "range", "id": "padding_top", "label": "Espaciado superior móvil (px)", "min": 0, "max": 120, "step": 4, "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaciado inferior móvil (px)", "min": 0, "max": 120, "step": 4, "default": 36 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Espaciado superior escritorio (px)", "min": 0, "max": 160, "step": 4, "default": 52 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Espaciado inferior escritorio (px)", "min": 0, "max": 160, "step": 4, "default": 52 }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icono", "default": "shield",
+          "options": [
+            { "value": "flask", "label": "Laboratorio" },
+            { "value": "shield", "label": "Escudo" },
+            { "value": "droplet", "label": "Gota" },
+            { "value": "eye", "label": "Ojo" },
+            { "value": "leaf", "label": "Hoja" },
+            { "value": "truck", "label": "Envío" },
+            { "value": "doctor", "label": "Dermatólogo" },
+            { "value": "star", "label": "Estrella" },
+            { "value": "heart", "label": "Corazón" },
+            { "value": "clock", "label": "Reloj" },
+            { "value": "check", "label": "Check" }
+          ]
+        },
+        { "type": "image_picker", "id": "custom_icon", "label": "Icono personalizado (opcional)" },
+        { "type": "text", "id": "title", "label": "Título", "default": "Beneficio" },
+        { "type": "textarea", "id": "text", "label": "Descripción" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Beneficios",
+      "blocks": [
+        { "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }
+      ]
+    }
+  ]
+}
+{% endschema %}

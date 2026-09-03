@@ -1,0 +1,300 @@
+{%- render 'valca-fonts' -%}
+{%- assign sid = section.id -%}
+
+<section class="vfq vfq--{{ sid }} vfq--{{ section.settings.layout }}" data-vfq-root aria-label="{{ section.settings.heading | default: 'Preguntas frecuentes' | escape }}">
+  <div class="vfq__container">
+    <div class="vfq__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="vfq__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="vfq__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <div class="vfq__subtitle">{{ section.settings.subtitle }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.layout == 'split' and section.settings.image != blank -%}
+        <div class="vfq__image">
+          <img
+            src="{{ section.settings.image | image_url: width: 900 }}"
+            alt="{{ section.settings.heading | escape }}"
+            width="900"
+            height="900"
+            loading="lazy"
+            decoding="async"
+          >
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="vfq__items" data-vfq-items>
+        {%- for block in section.blocks -%}
+          <div class="vfq__item" data-vfq-item {{ block.shopify_attributes }}>
+            <button
+              type="button"
+              class="vfq__question"
+              data-vfq-toggle
+              aria-expanded="false"
+              aria-controls="vfq-{{ sid }}-{{ forloop.index }}"
+            >
+              <span>{{ block.settings.question }}</span>
+              <span class="vfq__icon" aria-hidden="true">+</span>
+            </button>
+            <div class="vfq__answer" id="vfq-{{ sid }}-{{ forloop.index }}" data-vfq-answer role="region">
+              <div class="vfq__answer-inner">{{ block.settings.answer }}</div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="vfq__empty">Agregá preguntas desde la configuración de esta sección.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .vfq--{{ sid }} {
+    box-sizing: border-box;
+    background: {{ section.settings.bg_color }};
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .vfq--{{ sid }} *,
+  .vfq--{{ sid }} *::before,
+  .vfq--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vfq--{{ sid }} .vfq__container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .vfq--{{ sid }} .vfq__head { text-align: center; margin-bottom: 26px; }
+  .vfq--{{ sid }} .vfq__eyebrow {
+    margin: 0 0 10px;
+    color: {{ section.settings.accent_color }};
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .vfq--{{ sid }} .vfq__heading {
+    margin: 0 0 12px;
+    color: {{ section.settings.heading_color }};
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .vfq--{{ sid }} .vfq__subtitle,
+  .vfq--{{ sid }} .vfq__subtitle p {
+    margin: 0;
+    color: {{ section.settings.subtitle_color }};
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .vfq--{{ sid }} .vfq__image { margin-top: 22px; }
+  .vfq--{{ sid }} .vfq__image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .vfq--{{ sid }} .vfq__items {
+    max-width: {{ section.settings.items_max_width }}px;
+    margin: 0 auto;
+  }
+
+  .vfq--{{ sid }} .vfq__item {
+    overflow: hidden;
+    margin-bottom: {{ section.settings.item_gap }}px;
+    border: 1px solid {{ section.settings.border_color }};
+    border-radius: {{ section.settings.item_radius }}px;
+    background: {{ section.settings.item_bg }};
+  }
+  .vfq--{{ sid }} .vfq__item:last-child { margin-bottom: 0; }
+
+  .vfq--{{ sid }} .vfq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    width: 100%;
+    margin: 0;
+    padding: 18px 20px;
+    border: 0;
+    background: transparent;
+    color: {{ section.settings.question_color }};
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .vfq--{{ sid }} .vfq__icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: {{ section.settings.accent_color }};
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+    transition: transform 0.3s ease;
+  }
+  .vfq--{{ sid }} .vfq__item.is-open .vfq__icon { transform: rotate(45deg); }
+
+  .vfq--{{ sid }} .vfq__answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .vfq--{{ sid }} .vfq__answer-inner {
+    padding: 0 20px 20px;
+    color: {{ section.settings.answer_color }};
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .vfq--{{ sid }} .vfq__answer-inner p { margin: 0 0 12px; }
+  .vfq--{{ sid }} .vfq__answer-inner p:last-child { margin-bottom: 0; }
+  .vfq--{{ sid }} .vfq__answer-inner a { color: {{ section.settings.accent_color }}; }
+  .vfq--{{ sid }} .vfq__answer-inner strong { font-weight: 700; }
+
+  .vfq--{{ sid }} .vfq__empty { margin: 0; color: {{ section.settings.subtitle_color }}; text-align: center; }
+
+  @media screen and (min-width: 750px) {
+    .vfq--{{ sid }} { padding-top: {{ section.settings.padding_top_desktop }}px; padding-bottom: {{ section.settings.padding_bottom_desktop }}px; }
+    .vfq--{{ sid }} .vfq__heading { font-size: 32px; }
+    .vfq--{{ sid }} .vfq__subtitle,
+    .vfq--{{ sid }} .vfq__subtitle p { font-size: 16px; }
+    .vfq--{{ sid }} .vfq__head { margin-bottom: 36px; }
+    .vfq--{{ sid }} .vfq__question { font-size: 16px; padding: 20px 24px; }
+    .vfq--{{ sid }} .vfq__answer-inner { padding: 0 24px 24px; font-size: 15px; }
+
+    .vfq--{{ sid }}.vfq--split .vfq__container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .vfq--{{ sid }}.vfq--split .vfq__head { text-align: left; margin-bottom: 0; }
+    .vfq--{{ sid }}.vfq--split .vfq__items { margin: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vfq--{{ sid }} .vfq__answer,
+    .vfq--{{ sid }} .vfq__icon { transition: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('.vfq--{{ sid }}');
+    if (!root || root.dataset.vfqInit === '1') return;
+    root.dataset.vfqInit = '1';
+
+    var accordion = {{ section.settings.accordion | json }};
+    var items = Array.prototype.slice.call(root.querySelectorAll('[data-vfq-item]'));
+
+    function close(item) {
+      var answer = item.querySelector('[data-vfq-answer]');
+      var toggle = item.querySelector('[data-vfq-toggle]');
+      item.classList.remove('is-open');
+      if (answer) answer.style.maxHeight = '';
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function open(item) {
+      var answer = item.querySelector('[data-vfq-answer]');
+      var toggle = item.querySelector('[data-vfq-toggle]');
+      item.classList.add('is-open');
+      if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+      if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    items.forEach(function (item) {
+      var toggle = item.querySelector('[data-vfq-toggle]');
+      if (!toggle) return;
+
+      toggle.addEventListener('click', function () {
+        var isOpen = item.classList.contains('is-open');
+        if (accordion && !isOpen) {
+          items.forEach(function (other) { if (other !== item) close(other); });
+        }
+        if (isOpen) close(item); else open(item);
+      });
+    });
+
+    /* Recalcula la altura de los abiertos al cambiar el tamaño de la ventana. */
+    window.addEventListener('resize', function () {
+      items.forEach(function (item) {
+        if (!item.classList.contains('is-open')) return;
+        var answer = item.querySelector('[data-vfq-answer]');
+        if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VALCA · Preguntas frecuentes",
+  "tag": "section",
+  "class": "valca-faq-section",
+  "settings": [
+    { "type": "header", "content": "Encabezado" },
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Preguntas frecuentes" },
+    { "type": "richtext", "id": "subtitle", "label": "Subtítulo", "default": "<p>Lo que necesitás saber antes de elegir tu rutina</p>" },
+    {
+      "type": "select", "id": "layout", "label": "Disposición", "default": "center",
+      "options": [
+        { "value": "center", "label": "Centrada" },
+        { "value": "split", "label": "Dos columnas" }
+      ]
+    },
+    { "type": "image_picker", "id": "image", "label": "Imagen (solo en dos columnas)" },
+    { "type": "checkbox", "id": "accordion", "label": "Cerrar las demás al abrir una", "default": true },
+    { "type": "header", "content": "Estilo" },
+    { "type": "color", "id": "bg_color", "label": "Fondo de la sección", "default": "#FAFAF7" },
+    { "type": "color", "id": "item_bg", "label": "Fondo de cada pregunta", "default": "#FFFFFF" },
+    { "type": "color", "id": "border_color", "label": "Borde", "default": "#E5E5E5" },
+    { "type": "color", "id": "heading_color", "label": "Título", "default": "#202020" },
+    { "type": "color", "id": "subtitle_color", "label": "Subtítulo", "default": "#5F5E5A" },
+    { "type": "color", "id": "question_color", "label": "Preguntas", "default": "#202020" },
+    { "type": "color", "id": "answer_color", "label": "Respuestas", "default": "#5F5E5A" },
+    { "type": "color", "id": "accent_color", "label": "Acento", "default": "#0194A8" },
+    { "type": "range", "id": "item_radius", "label": "Radio (px)", "min": 0, "max": 24, "step": 1, "default": 8 },
+    { "type": "range", "id": "item_gap", "label": "Separación entre preguntas (px)", "min": 0, "max": 20, "step": 1, "default": 4 },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 600, "max": 1400, "step": 20, "default": 1200 },
+    { "type": "range", "id": "items_max_width", "label": "Ancho máximo de las preguntas (px)", "min": 500, "max": 1200, "step": 20, "default": 800 },
+    { "type": "range", "id": "padding_top", "label": "Espaciado superior móvil (px)", "min": 0, "max": 120, "step": 4, "default": 28 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaciado inferior móvil (px)", "min": 0, "max": 120, "step": 4, "default": 28 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Espaciado superior escritorio (px)", "min": 0, "max": 160, "step": 4, "default": 44 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Espaciado inferior escritorio (px)", "min": 0, "max": 160, "step": 4, "default": 44 }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Pregunta", "default": "¿Cuál es tu pregunta?" },
+        { "type": "richtext", "id": "answer", "label": "Respuesta", "default": "<p>Escribí acá la respuesta.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Preguntas frecuentes",
+      "blocks": [{ "type": "faq" }, { "type": "faq" }, { "type": "faq" }, { "type": "faq" }]
+    }
+  ]
+}
+{% endschema %}

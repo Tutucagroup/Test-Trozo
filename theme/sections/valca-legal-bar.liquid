@@ -1,0 +1,97 @@
+{%- render 'valca-fonts' -%}
+{%- assign sid = section.id -%}
+
+<section class="vlb vlb--{{ sid }}" aria-label="{{ section.settings.button_label | default: 'Aviso legal' | escape }}">
+  <div class="vlb__inner">
+    {%- if section.settings.button_label != blank -%}
+      <a class="vlb__button" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="vlb__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .vlb--{{ sid }} {
+    box-sizing: border-box;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding: {{ section.settings.padding_y }}px 20px;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .vlb--{{ sid }} *,
+  .vlb--{{ sid }} *::before,
+  .vlb--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vlb--{{ sid }} .vlb__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .vlb--{{ sid }} .vlb__button {
+    flex: 0 0 auto;
+    display: inline-block;
+    padding: 13px 24px;
+    border: 1.5px solid {{ section.settings.button_border }};
+    border-radius: 999px;
+    color: {{ section.settings.button_text_color }};
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .vlb--{{ sid }} .vlb__button:hover {
+    background: {{ section.settings.button_hover_bg }};
+    color: {{ section.settings.button_hover_text }};
+  }
+
+  .vlb--{{ sid }} .vlb__text,
+  .vlb--{{ sid }} .vlb__text p {
+    margin: 0;
+    flex: 1 1 320px;
+    color: {{ section.settings.text_color }};
+    font-size: 12px;
+    line-height: 1.55;
+    opacity: 0.85;
+  }
+  .vlb--{{ sid }} .vlb__text a { color: {{ section.settings.text_color }}; text-decoration: underline; }
+  .vlb--{{ sid }} .vlb__text strong { font-weight: 700; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vlb--{{ sid }} .vlb__button { transition: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Barra legal",
+  "tag": "section",
+  "class": "valca-legal-bar-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Barra para avisos legales como el derecho de retracto o reversión de pago. Revisá el texto y los plazos con tu equipo legal antes de publicar."
+    },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "↩ Botón de retracto" },
+    { "type": "url", "id": "button_link", "label": "Enlace del botón" },
+    { "type": "richtext", "id": "text", "label": "Texto legal", "default": "<p>Podés ejercer tu derecho de retracto según la normativa de protección al consumidor aplicable. Consultá los plazos y condiciones en nuestra política de devoluciones.</p>" },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#202020" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_text_color", "label": "Texto del botón", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_border", "label": "Borde del botón", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_hover_bg", "label": "Fondo del botón (hover)", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_hover_text", "label": "Texto del botón (hover)", "default": "#202020" },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 900, "max": 1700, "step": 20, "default": 1200 },
+    { "type": "range", "id": "padding_y", "label": "Espaciado vertical (px)", "min": 8, "max": 60, "step": 2, "default": 24 }
+  ],
+  "presets": [{ "name": "VALCA · Barra legal" }]
+}
+{% endschema %}

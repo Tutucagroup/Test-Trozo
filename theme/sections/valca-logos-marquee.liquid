@@ -1,0 +1,234 @@
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign logos = section.blocks
+-%}
+
+<section class="vmq vmq--{{ sid }}" aria-label="{{ section.settings.title | default: 'Aliados' | escape }}">
+  {%- if section.settings.title != blank -%}
+    <div class="vmq__title">{{ section.settings.title }}</div>
+  {%- endif -%}
+
+  {%- if logos.size > 0 -%}
+    <div class="vmq__viewport">
+      <div class="vmq__track" data-vmq-track>
+        {%- comment -%} Primera pasada visible + copia duplicada para el bucle continuo {%- endcomment -%}
+        {%- for pass in (1..2) -%}
+          {%- for block in logos -%}
+            {%- capture item -%}
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 500 }}"
+                  alt="{% if pass == 1 %}{{ block.settings.name | escape }}{% endif %}"
+                  width="240"
+                  height="120"
+                  loading="lazy"
+                  decoding="async"
+                >
+              {%- elsif block.settings.name != blank -%}
+                <span class="vmq__name">{{ block.settings.name }}</span>
+              {%- endif -%}
+              {%- if block.settings.caption != blank -%}
+                <span class="vmq__caption">{{ block.settings.caption }}</span>
+              {%- endif -%}
+            {%- endcapture -%}
+
+            {%- if block.settings.link != blank -%}
+              <a
+                class="vmq__item"
+                href="{{ block.settings.link }}"
+                {% if pass == 2 %}aria-hidden="true" tabindex="-1"{% endif %}
+                {% if pass == 1 %}{{ block.shopify_attributes }}{% endif %}
+              >{{ item }}</a>
+            {%- else -%}
+              <div
+                class="vmq__item"
+                {% if pass == 2 %}aria-hidden="true"{% endif %}
+                {% if pass == 1 %}{{ block.shopify_attributes }}{% endif %}
+              >{{ item }}</div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- else -%}
+    <p class="vmq__empty">Agregá logos desde la configuración de esta sección.</p>
+  {%- endif -%}
+</section>
+
+<style>
+  .vmq--{{ sid }} {
+    --vmq-gap: {{ section.settings.gap }}px;
+    --vmq-h: {{ section.settings.logo_height_mobile }}px;
+
+    box-sizing: border-box;
+    overflow: hidden;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    {% if section.settings.show_borders %}
+      border-top: 1px solid {{ section.settings.border_color }};
+      border-bottom: 1px solid {{ section.settings.border_color }};
+    {% endif %}
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .vmq--{{ sid }} *,
+  .vmq--{{ sid }} *::before,
+  .vmq--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vmq--{{ sid }} .vmq__title,
+  .vmq--{{ sid }} .vmq__title p {
+    margin: 0;
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.title_size }}px;
+    font-weight: {{ section.settings.title_weight }};
+    line-height: 1.35;
+    letter-spacing: {{ section.settings.title_tracking }}em;
+    text-align: center;
+    {% if section.settings.title_uppercase %}text-transform: uppercase;{% endif %}
+  }
+  .vmq--{{ sid }} .vmq__title { margin-bottom: {{ section.settings.title_gap }}px; padding: 0 20px; }
+  .vmq--{{ sid }} .vmq__title strong { font-weight: 700; }
+
+  .vmq--{{ sid }} .vmq__viewport {
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
+  }
+
+  .vmq--{{ sid }} .vmq__track {
+    display: flex;
+    align-items: center;
+    gap: var(--vmq-gap);
+    width: max-content;
+    animation: vmq-scroll-{{ sid }} {{ section.settings.duration }}s linear infinite;
+  }
+
+  {%- if section.settings.pause_on_hover -%}
+  .vmq--{{ sid }} .vmq__viewport:hover .vmq__track { animation-play-state: paused; }
+  {%- endif -%}
+
+  .vmq--{{ sid }} .vmq__item {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .vmq--{{ sid }} .vmq__item img {
+    display: block;
+    width: {% if section.settings.circular %}var(--vmq-h){% else %}auto{% endif %};
+    height: var(--vmq-h);
+    max-width: none;
+    object-fit: {% if section.settings.circular %}cover{% else %}contain{% endif %};
+    {% if section.settings.circular %}
+      border-radius: 50%;
+      border: 2px solid {{ section.settings.circle_border_color }};
+    {% endif %}
+    {% if section.settings.grayscale %}filter: grayscale(1); opacity: 0.75;{% endif %}
+    transition: filter 0.25s ease, opacity 0.25s ease;
+  }
+  {%- if section.settings.grayscale -%}
+  .vmq--{{ sid }} .vmq__item:hover img { filter: grayscale(0); opacity: 1; }
+  {%- endif -%}
+
+  .vmq--{{ sid }} .vmq__name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .vmq--{{ sid }} .vmq__caption {
+    color: {{ section.settings.caption_color }};
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .vmq--{{ sid }} .vmq__empty { margin: 0; text-align: center; opacity: 0.6; }
+
+  @keyframes vmq-scroll-{{ sid }} {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-50% - (var(--vmq-gap) / 2))); }
+  }
+
+  @media screen and (min-width: 750px) {
+    .vmq--{{ sid }} {
+      --vmq-gap: {{ section.settings.gap_desktop }}px;
+      --vmq-h: {{ section.settings.logo_height_desktop }}px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vmq--{{ sid }} .vmq__track { animation: none; }
+    .vmq--{{ sid }} .vmq__viewport {
+      overflow-x: auto;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Marquesina de logos",
+  "tag": "section",
+  "class": "valca-marquee-section",
+  "settings": [
+    { "type": "header", "content": "Título" },
+    { "type": "richtext", "id": "title", "label": "Título", "default": "<p><strong>Recomendado por dermatólogos</strong></p>" },
+    { "type": "color", "id": "title_color", "label": "Color del título", "default": "#202020" },
+    { "type": "range", "id": "title_size", "label": "Tamaño del título (px)", "min": 10, "max": 28, "step": 1, "default": 14 },
+    { "type": "range", "id": "title_weight", "label": "Grosor del título", "min": 400, "max": 800, "step": 100, "default": 500 },
+    { "type": "range", "id": "title_tracking", "label": "Espaciado de letras (em)", "min": 0, "max": 0.3, "step": 0.01, "default": 0.02 },
+    { "type": "checkbox", "id": "title_uppercase", "label": "Título en mayúsculas", "default": false },
+    { "type": "range", "id": "title_gap", "label": "Espacio bajo el título (px)", "min": 0, "max": 60, "step": 2, "default": 22 },
+    { "type": "header", "content": "Animación" },
+    { "type": "range", "id": "duration", "label": "Duración del ciclo (s)", "min": 10, "max": 90, "step": 5, "default": 35 },
+    { "type": "checkbox", "id": "pause_on_hover", "label": "Pausar al pasar el cursor", "default": true },
+    { "type": "header", "content": "Logos" },
+    { "type": "range", "id": "logo_height_mobile", "label": "Alto en móvil (px)", "min": 24, "max": 120, "step": 2, "default": 56 },
+    { "type": "range", "id": "logo_height_desktop", "label": "Alto en escritorio (px)", "min": 24, "max": 160, "step": 2, "default": 72 },
+    { "type": "range", "id": "gap", "label": "Separación en móvil (px)", "min": 16, "max": 120, "step": 4, "default": 44 },
+    { "type": "range", "id": "gap_desktop", "label": "Separación en escritorio (px)", "min": 16, "max": 180, "step": 4, "default": 88 },
+    { "type": "checkbox", "id": "circular", "label": "Recortar en círculo (retratos)", "default": false },
+    { "type": "color", "id": "circle_border_color", "label": "Borde del círculo", "default": "#0194A8" },
+    { "type": "checkbox", "id": "grayscale", "label": "Escala de grises hasta pasar el cursor", "default": false },
+    { "type": "color", "id": "caption_color", "label": "Color del pie de logo", "default": "#5F5E5A" },
+    { "type": "header", "content": "Sección" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#F6F6F6" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#202020" },
+    { "type": "checkbox", "id": "show_borders", "label": "Mostrar bordes superior e inferior", "default": true },
+    { "type": "color", "id": "border_color", "label": "Color del borde", "default": "#E5E5E5" },
+    { "type": "range", "id": "padding_top", "label": "Espaciado superior (px)", "min": 0, "max": 100, "step": 2, "default": 26 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaciado inferior (px)", "min": 0, "max": 100, "step": 2, "default": 26 }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagen" },
+        { "type": "text", "id": "name", "label": "Nombre (texto alternativo)" },
+        { "type": "text", "id": "caption", "label": "Pie de logo (opcional)" },
+        { "type": "url", "id": "link", "label": "Enlace (opcional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Marquesina de logos",
+      "blocks": [{ "type": "logo" }, { "type": "logo" }, { "type": "logo" }, { "type": "logo" }]
+    }
+  ]
+}
+{% endschema %}

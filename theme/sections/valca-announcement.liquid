@@ -1,0 +1,303 @@
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign slides = section.blocks
+-%}
+
+<div class="vann vann--{{ sid }}" data-vann-root>
+  {%- if slides.size > 0 -%}
+    <div
+      class="vann__viewport"
+      data-vann-slider
+      data-interval="{{ section.settings.interval | times: 1000 }}"
+      data-speed="{{ section.settings.speed }}"
+      role="region"
+      aria-label="{{ section.settings.aria_label | default: 'Anuncios de la tienda' | escape }}"
+    >
+      {%- for block in slides -%}
+        <div
+          class="vann__slide{% if forloop.first %} is-active{% endif %}"
+          data-vann-slide
+          {{ block.shopify_attributes }}
+        >
+          <div class="vann__inner">
+            {%- if block.settings.icon != blank -%}
+              <span class="vann__icon" aria-hidden="true">
+                <img src="{{ block.settings.icon | image_url: width: 80 }}" alt="" width="20" height="20" loading="lazy">
+              </span>
+            {%- endif -%}
+            <span class="vann__text">{{ block.settings.text }}</span>
+            {%- if block.settings.link != blank and block.settings.link_text != blank -%}
+              <a class="vann__cta" href="{{ block.settings.link }}">{{ block.settings.link_text }}</a>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_arrows and slides.size > 1 -%}
+      <button type="button" class="vann__nav vann__nav--prev" data-vann-prev aria-label="Anuncio anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <button type="button" class="vann__nav vann__nav--next" data-vann-next aria-label="Anuncio siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+<style>
+  .vann--{{ sid }} {
+    --vann-bg: {{ section.settings.bg_color }};
+    --vann-fg: {{ section.settings.text_color }};
+    --vann-hl: {{ section.settings.highlight_color }};
+    --vann-h-mobile: {{ section.settings.height_mobile }}px;
+    --vann-h-desktop: {{ section.settings.height_desktop }}px;
+    --vann-fs-mobile: {{ section.settings.font_size_mobile }}px;
+    --vann-fs-desktop: {{ section.settings.font_size_desktop }}px;
+    --vann-speed: {{ section.settings.speed }}ms;
+
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: var(--vann-bg);
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .vann--{{ sid }} *,
+  .vann--{{ sid }} *::before,
+  .vann--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vann--{{ sid }} .vann__viewport {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: var(--vann-h-mobile);
+  }
+
+  .vann--{{ sid }} .vann__slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 44px;
+    transform: translateY(100%);
+    transition: transform var(--vann-speed) ease;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .vann--{{ sid }} .vann__slide.is-active {
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .vann--{{ sid }} .vann__slide.is-exiting {
+    transform: translateY(-100%);
+    visibility: visible;
+  }
+
+  .vann--{{ sid }} .vann__inner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .vann--{{ sid }} .vann__icon { display: inline-flex; flex: 0 0 auto; }
+  .vann--{{ sid }} .vann__icon img { display: block; width: 20px; height: 20px; object-fit: contain; }
+
+  .vann--{{ sid }} .vann__text,
+  .vann--{{ sid }} .vann__text p {
+    margin: 0;
+    display: inline;
+    color: var(--vann-fg);
+    font-size: var(--vann-fs-mobile);
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    font-weight: 400;
+  }
+
+  .vann--{{ sid }} .vann__text strong,
+  .vann--{{ sid }} .vann__text b { font-weight: 700; color: var(--vann-hl); }
+
+  .vann--{{ sid }} .vann__cta {
+    flex: 0 0 auto;
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    color: var(--vann-fg);
+    font-size: calc(var(--vann-fs-mobile) - 1px);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+  .vann--{{ sid }} .vann__cta:hover { background: rgba(255, 255, 255, 0.28); }
+
+  .vann--{{ sid }} .vann__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--vann-fg);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+  .vann--{{ sid }} .vann__nav:hover { opacity: 1; }
+  .vann--{{ sid }} .vann__nav--prev { left: 6px; }
+  .vann--{{ sid }} .vann__nav--next { right: 6px; }
+  .vann--{{ sid }} .vann__nav svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media screen and (min-width: 750px) {
+    .vann--{{ sid }} .vann__viewport { height: var(--vann-h-desktop); }
+    .vann--{{ sid }} .vann__text,
+    .vann--{{ sid }} .vann__text p { font-size: var(--vann-fs-desktop); }
+    .vann--{{ sid }} .vann__cta { font-size: calc(var(--vann-fs-desktop) - 1px); }
+    .vann--{{ sid }} .vann__nav--prev { left: 18px; }
+    .vann--{{ sid }} .vann__nav--next { right: 18px; }
+    .vann--{{ sid }} .vann__nav svg { width: 17px; height: 17px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vann--{{ sid }} .vann__slide { transition: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('.vann--{{ sid }}');
+    if (!root || root.dataset.vannInit === '1') return;
+    root.dataset.vannInit = '1';
+
+    var slider = root.querySelector('[data-vann-slider]');
+    if (!slider) return;
+
+    var slides = Array.prototype.slice.call(slider.querySelectorAll('[data-vann-slide]'));
+    if (slides.length < 2) return;
+
+    var interval = parseInt(slider.dataset.interval, 10) || 5000;
+    var speed = parseInt(slider.dataset.speed, 10) || 500;
+    var current = 0;
+    var busy = false;
+    var timer = null;
+
+    function go(next) {
+      if (busy || next === current) return;
+      busy = true;
+
+      var outgoing = slides[current];
+      var incoming = slides[next];
+
+      incoming.classList.remove('is-exiting');
+      // Reflow so the entering transform is applied before the transition starts.
+      void incoming.offsetHeight;
+
+      outgoing.classList.remove('is-active');
+      outgoing.classList.add('is-exiting');
+      incoming.classList.add('is-active');
+
+      window.setTimeout(function () {
+        outgoing.classList.remove('is-exiting');
+        current = next;
+        busy = false;
+      }, speed);
+    }
+
+    function step(dir) {
+      go((current + dir + slides.length) % slides.length);
+    }
+
+    function play() {
+      stop();
+      timer = window.setInterval(function () { step(1); }, interval);
+    }
+    function stop() {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+    }
+
+    var prev = root.querySelector('[data-vann-prev]');
+    var next = root.querySelector('[data-vann-next]');
+    if (prev) prev.addEventListener('click', function (e) { e.preventDefault(); step(-1); play(); });
+    if (next) next.addEventListener('click', function (e) { e.preventDefault(); step(1); play(); });
+
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', play);
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) play();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VALCA · Barra de anuncios",
+  "tag": "section",
+  "class": "valca-announcement-section",
+  "settings": [
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#0194A8" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#FFFFFF" },
+    { "type": "color", "id": "highlight_color", "label": "Texto destacado (negrita)", "default": "#FFFFFF" },
+    { "type": "header", "content": "Rotación" },
+    { "type": "range", "id": "interval", "label": "Segundos por anuncio", "min": 2, "max": 12, "step": 1, "default": 5 },
+    { "type": "range", "id": "speed", "label": "Velocidad de transición (ms)", "min": 200, "max": 1200, "step": 50, "default": 500 },
+    { "type": "checkbox", "id": "show_arrows", "label": "Mostrar flechas", "default": false },
+    { "type": "header", "content": "Tamaños" },
+    { "type": "range", "id": "height_mobile", "label": "Altura móvil (px)", "min": 28, "max": 70, "step": 1, "default": 35 },
+    { "type": "range", "id": "height_desktop", "label": "Altura escritorio (px)", "min": 28, "max": 80, "step": 1, "default": 40 },
+    { "type": "range", "id": "font_size_mobile", "label": "Tamaño de texto móvil (px)", "min": 10, "max": 18, "step": 1, "default": 12 },
+    { "type": "range", "id": "font_size_desktop", "label": "Tamaño de texto escritorio (px)", "min": 10, "max": 20, "step": 1, "default": 14 },
+    { "type": "header", "content": "Accesibilidad" },
+    { "type": "text", "id": "aria_label", "label": "Etiqueta accesible", "default": "Anuncios de la tienda" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Anuncio",
+      "settings": [
+        { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Envío gratis en compras superiores a $150.000</p>" },
+        { "type": "image_picker", "id": "icon", "label": "Icono (opcional)" },
+        { "type": "text", "id": "link_text", "label": "Texto del botón (opcional)" },
+        { "type": "url", "id": "link", "label": "Enlace del botón" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Barra de anuncios",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

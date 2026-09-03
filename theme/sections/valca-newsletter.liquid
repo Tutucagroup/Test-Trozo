@@ -1,0 +1,244 @@
+{%- render 'valca-fonts' -%}
+{%- assign sid = section.id -%}
+
+<section class="vnl vnl--{{ sid }}" aria-label="{{ section.settings.heading | default: 'Newsletter' | escape }}">
+  <div class="vnl__container">
+    <div class="vnl__left">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="vnl__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <div class="vnl__body">{{ section.settings.body }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="vnl__right">
+      {%- if section.settings.input_label != blank -%}
+        <label class="vnl__input-label" for="vnl-email-{{ sid }}">{{ section.settings.input_label }}</label>
+      {%- endif -%}
+
+      {%- form 'customer', class: 'vnl__form' -%}
+        <input type="hidden" name="contact[tags]" value="{{ section.settings.tag | default: 'newsletter' }}">
+
+        {%- if form.posted_successfully? -%}
+          <p class="vnl__success" role="status">{{ section.settings.success_text }}</p>
+        {%- else -%}
+          <div class="vnl__field">
+            <input
+              id="vnl-email-{{ sid }}"
+              class="vnl__input"
+              type="email"
+              name="contact[email]"
+              value="{{ form.email }}"
+              placeholder="{{ section.settings.placeholder | escape }}"
+              autocomplete="email"
+              autocorrect="off"
+              autocapitalize="off"
+              aria-label="{{ section.settings.placeholder | escape }}"
+              required
+            >
+            <button type="submit" class="vnl__submit" name="commit" aria-label="{{ section.settings.button_label | default: 'Suscribirme' | escape }}">
+              {%- if section.settings.show_button_text and section.settings.button_label != blank -%}
+                <span class="vnl__submit-text">{{ section.settings.button_label }}</span>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M5 12h13M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {%- endif -%}
+            </button>
+          </div>
+
+          {%- if form.errors -%}
+            <p class="vnl__error" role="alert">{{ form.errors | default_errors }}</p>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endform -%}
+
+      {%- if section.settings.disclaimer != blank -%}
+        <div class="vnl__disclaimer">{{ section.settings.disclaimer }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .vnl--{{ sid }} {
+    box-sizing: border-box;
+    background: {{ section.settings.bg_color }};
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .vnl--{{ sid }} *,
+  .vnl--{{ sid }} *::before,
+  .vnl--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vnl--{{ sid }} .vnl__container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .vnl--{{ sid }} .vnl__heading {
+    margin: 0 0 12px;
+    color: {{ section.settings.heading_color }};
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .vnl--{{ sid }} .vnl__body,
+  .vnl--{{ sid }} .vnl__body p {
+    margin: 0;
+    color: {{ section.settings.text_color }};
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .vnl--{{ sid }} .vnl__body strong { font-weight: 700; }
+
+  .vnl--{{ sid }} .vnl__input-label {
+    display: block;
+    margin-bottom: 8px;
+    color: {{ section.settings.label_color }};
+    font-size: 14px;
+  }
+
+  .vnl--{{ sid }} .vnl__form { margin: 0; }
+
+  .vnl--{{ sid }} .vnl__field {
+    position: relative;
+    width: 100%;
+  }
+
+  .vnl--{{ sid }} .vnl__input {
+    width: 100%;
+    height: {{ section.settings.input_height }}px;
+    padding: 12px 16px;
+    padding-right: {% if section.settings.show_button_text %}122px{% else %}{{ section.settings.input_height | plus: 4 }}px{% endif %};
+    border: 1px solid {{ section.settings.input_border }};
+    border-radius: {{ section.settings.input_radius }}px;
+    background: {{ section.settings.input_bg }};
+    color: {{ section.settings.input_text_color }};
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.2;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .vnl--{{ sid }} .vnl__input::placeholder { color: {{ section.settings.placeholder_color }}; opacity: 1; }
+  .vnl--{{ sid }} .vnl__input:focus {
+    outline: 2px solid {{ section.settings.button_bg }};
+    outline-offset: 1px;
+  }
+
+  .vnl--{{ sid }} .vnl__submit {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc({{ section.settings.input_height }}px - 12px);
+    min-width: calc({{ section.settings.input_height }}px - 12px);
+    padding: 0 {% if section.settings.show_button_text %}16px{% else %}0{% endif %};
+    border: 0;
+    border-radius: {{ section.settings.button_radius }}px;
+    background: {{ section.settings.button_bg }};
+    color: {{ section.settings.button_text_color }};
+    font-family: inherit;
+    cursor: pointer;
+    transition: opacity 0.25s ease;
+  }
+  .vnl--{{ sid }} .vnl__submit:hover { opacity: 0.85; }
+  .vnl--{{ sid }} .vnl__submit svg { width: 16px; height: 16px; }
+  .vnl--{{ sid }} .vnl__submit-text {
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .vnl--{{ sid }} .vnl__disclaimer,
+  .vnl--{{ sid }} .vnl__disclaimer p {
+    margin: 0;
+    color: {{ section.settings.disclaimer_color }};
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .vnl--{{ sid }} .vnl__disclaimer { margin-top: 12px; }
+  .vnl--{{ sid }} .vnl__disclaimer a { color: {{ section.settings.link_color }}; text-decoration: underline; }
+
+  .vnl--{{ sid }} .vnl__success,
+  .vnl--{{ sid }} .vnl__error {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .vnl--{{ sid }} .vnl__success { color: {{ section.settings.heading_color }}; font-weight: 600; }
+  .vnl--{{ sid }} .vnl__error { margin-top: 10px; color: {{ section.settings.error_color }}; }
+
+  @media screen and (min-width: 990px) {
+    .vnl--{{ sid }} { padding-top: {{ section.settings.padding_top_desktop }}px; padding-bottom: {{ section.settings.padding_bottom_desktop }}px; }
+    .vnl--{{ sid }} .vnl__container {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 60px;
+    }
+    .vnl--{{ sid }} .vnl__left,
+    .vnl--{{ sid }} .vnl__right { flex: 1 1 0; max-width: calc(50% - 30px); }
+    .vnl--{{ sid }} .vnl__heading { font-size: 36px; }
+    .vnl--{{ sid }} .vnl__body,
+    .vnl--{{ sid }} .vnl__body p { font-size: 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vnl--{{ sid }} .vnl__submit { transition: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Newsletter",
+  "tag": "section",
+  "class": "valca-newsletter-section",
+  "settings": [
+    { "type": "header", "content": "Contenido" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Sumate al cuidado consciente" },
+    { "type": "richtext", "id": "body", "label": "Texto", "default": "<p>Suscribite y recibí tips de cuidado, lanzamientos y novedades directo en tu correo.</p>" },
+    { "type": "text", "id": "input_label", "label": "Etiqueta del campo" },
+    { "type": "text", "id": "placeholder", "label": "Texto del campo", "default": "Tu correo electrónico" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Suscribirme" },
+    { "type": "checkbox", "id": "show_button_text", "label": "Mostrar texto en el botón", "default": true },
+    { "type": "text", "id": "tag", "label": "Etiqueta del suscriptor", "default": "newsletter" },
+    { "type": "text", "id": "success_text", "label": "Mensaje de éxito", "default": "¡Gracias! Ya estás suscripta." },
+    { "type": "richtext", "id": "disclaimer", "label": "Aviso legal", "default": "<p>Al suscribirte aceptás recibir comunicaciones. Podés darte de baja en cualquier momento.</p>" },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#0194A8" },
+    { "type": "color", "id": "heading_color", "label": "Título", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#E8F6F8" },
+    { "type": "color", "id": "label_color", "label": "Etiqueta del campo", "default": "#FFFFFF" },
+    { "type": "color", "id": "disclaimer_color", "label": "Aviso legal", "default": "#FFFFFF" },
+    { "type": "color", "id": "link_color", "label": "Enlaces", "default": "#FFFFFF" },
+    { "type": "color", "id": "error_color", "label": "Errores", "default": "#FFE0E0" },
+    { "type": "header", "content": "Campo y botón" },
+    { "type": "color", "id": "input_bg", "label": "Fondo del campo", "default": "#FFFFFF" },
+    { "type": "color", "id": "input_text_color", "label": "Texto del campo", "default": "#202020" },
+    { "type": "color", "id": "placeholder_color", "label": "Texto de ejemplo", "default": "#5F5E5A" },
+    { "type": "color", "id": "input_border", "label": "Borde del campo", "default": "#CCCCCC" },
+    { "type": "range", "id": "input_height", "label": "Altura del campo (px)", "min": 40, "max": 72, "step": 1, "default": 50 },
+    { "type": "range", "id": "input_radius", "label": "Radio del campo (px)", "min": 0, "max": 30, "step": 1, "default": 8 },
+    { "type": "color", "id": "button_bg", "label": "Fondo del botón", "default": "#185C67" },
+    { "type": "color", "id": "button_text_color", "label": "Texto del botón", "default": "#FFFFFF" },
+    { "type": "range", "id": "button_radius", "label": "Radio del botón (px)", "min": 0, "max": 30, "step": 1, "default": 8 },
+    { "type": "header", "content": "Espaciado" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 800, "max": 1600, "step": 20, "default": 1200 },
+    { "type": "range", "id": "padding_top", "label": "Espaciado superior móvil (px)", "min": 0, "max": 120, "step": 4, "default": 28 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaciado inferior móvil (px)", "min": 0, "max": 120, "step": 4, "default": 28 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Espaciado superior escritorio (px)", "min": 0, "max": 160, "step": 4, "default": 44 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Espaciado inferior escritorio (px)", "min": 0, "max": 160, "step": 4, "default": 52 }
+  ],
+  "presets": [{ "name": "VALCA · Newsletter" }]
+}
+{% endschema %}

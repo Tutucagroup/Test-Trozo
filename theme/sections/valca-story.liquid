@@ -1,0 +1,349 @@
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<section class="vst vst--{{ sid }}{% if section.settings.reverse %} vst--reverse{% endif %}" aria-label="{{ section.settings.title | default: 'Nuestra historia' | escape }}">
+  <div class="vst__container">
+    <div class="vst__media">
+      <div class="vst__image-wrap">
+        {%- if section.settings.image != blank -%}
+          <img
+            class="vst__image"
+            src="{{ section.settings.image | image_url: width: 900 }}"
+            srcset="{{ section.settings.image | image_url: width: 500 }} 500w, {{ section.settings.image | image_url: width: 900 }} 900w"
+            sizes="(min-width: 900px) 45vw, 85vw"
+            alt="{{ section.settings.image_alt | default: section.settings.title | escape }}"
+            width="900"
+            height="1200"
+            loading="lazy"
+            decoding="async"
+          >
+        {%- else -%}
+          <div class="vst__image-placeholder">Elegí una imagen para esta sección</div>
+        {%- endif -%}
+
+        {%- if section.settings.show_tape -%}
+          <span class="vst__tape" aria-hidden="true"></span>
+        {%- endif -%}
+
+        {%- if section.settings.date_label != blank -%}
+          <span class="vst__date">{{ section.settings.date_label }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.note_text != blank -%}
+        <div class="vst__note" aria-hidden="true">
+          <span class="vst__note-text">{{ section.settings.note_text }}</span>
+          <svg class="vst__note-arrow" viewBox="0 0 110 70" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+            <path d="M8,12 C30,8 55,30 90,55"/>
+            <path d="M82,46 L92,57 L78,58"/>
+          </svg>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="vst__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="vst__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="vst__title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <p class="vst__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <div class="vst__body">{{ section.settings.body }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="vst__cta" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+          {{ section.settings.button_label }}
+          <span class="vst__cta-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .vst--{{ sid }} {
+    box-sizing: border-box;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .vst--{{ sid }} *,
+  .vst--{{ sid }} *::before,
+  .vst--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vst--{{ sid }} .vst__container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ---- Imagen con cinta, fecha y nota ---- */
+  .vst--{{ sid }} .vst__media {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    padding: 30px 30px 50px;
+  }
+
+  .vst--{{ sid }} .vst__image-wrap {
+    position: relative;
+    aspect-ratio: {{ section.settings.image_ratio }};
+    border-radius: 4px;
+  }
+
+  .vst--{{ sid }} .vst__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ section.settings.image_position }};
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .vst--{{ sid }} .vst__image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    border-radius: 4px;
+    background: #EFEDE7;
+    color: #888880;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .vst--{{ sid }} .vst__tape {
+    position: absolute;
+    top: -12px;
+    left: -10px;
+    z-index: 2;
+    width: 90px;
+    height: 24px;
+    background: {{ section.settings.tape_color }};
+    opacity: 0.92;
+    transform: rotate(-12deg);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  }
+
+  .vst--{{ sid }} .vst__date {
+    position: absolute;
+    bottom: -14px;
+    left: 10px;
+    z-index: 2;
+    padding: 6px 12px;
+    border: 1px solid {{ section.settings.date_border }};
+    background: {{ section.settings.date_bg }};
+    color: {{ section.settings.date_color }};
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transform: rotate(-2deg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .vst--{{ sid }} .vst__note {
+    position: absolute;
+    top: 25%;
+    right: -20px;
+    z-index: 2;
+    width: 110px;
+    color: {{ section.settings.note_color }};
+    transform: rotate(-4deg);
+  }
+  .vst--{{ sid }} .vst__note-text {
+    display: block;
+    margin-bottom: 4px;
+    font-family: 'Caveat', 'Segoe Script', cursive;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .vst--{{ sid }} .vst__note-arrow {
+    width: 70px;
+    height: 48px;
+    margin-left: -10px;
+    transform: rotate(180deg) scaleY(-1);
+  }
+
+  /* ---- Contenido ---- */
+  .vst--{{ sid }} .vst__content { max-width: 480px; }
+
+  .vst--{{ sid }} .vst__eyebrow {
+    margin: 0 0 16px;
+    color: {{ section.settings.eyebrow_color }};
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  .vst--{{ sid }} .vst__title {
+    margin: 0 0 20px;
+    color: {{ section.settings.title_color }};
+    font-size: 26px;
+    font-weight: {{ section.settings.title_weight }};
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .vst--{{ sid }} .vst__subtitle {
+    margin: 0 0 28px;
+    color: {{ section.settings.text_color }};
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    opacity: 0.75;
+  }
+
+  .vst--{{ sid }} .vst__body,
+  .vst--{{ sid }} .vst__body p {
+    margin: 0 0 16px;
+    color: {{ section.settings.text_color }};
+    font-size: 14px;
+    line-height: 1.65;
+    opacity: 0.85;
+  }
+  .vst--{{ sid }} .vst__body p:last-child { margin-bottom: 0; }
+  .vst--{{ sid }} .vst__body strong { font-weight: 700; }
+
+  .vst--{{ sid }} .vst__cta {
+    display: inline-block;
+    margin-top: 16px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid currentColor;
+    color: {{ section.settings.cta_color }};
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .vst--{{ sid }} .vst__cta-arrow {
+    display: inline-block;
+    margin-left: 4px;
+    transition: transform 0.25s ease;
+  }
+  .vst--{{ sid }} .vst__cta:hover .vst__cta-arrow { transform: translateX(4px); }
+
+  /* ---- Escritorio ---- */
+  @media screen and (min-width: 900px) {
+    .vst--{{ sid }} .vst__container {
+      grid-template-columns: 1fr 1fr;
+      gap: {{ section.settings.column_gap }}px;
+    }
+    .vst--{{ sid }}.vst--reverse .vst__container { direction: rtl; }
+    .vst--{{ sid }}.vst--reverse .vst__media,
+    .vst--{{ sid }}.vst--reverse .vst__content { direction: ltr; }
+
+    .vst--{{ sid }} .vst__media {
+      max-width: none;
+      margin: 0;
+      padding: 50px 60px 60px 30px;
+    }
+    .vst--{{ sid }} .vst__tape {
+      top: -18px;
+      left: -22px;
+      width: 110px;
+      height: 28px;
+    }
+    .vst--{{ sid }} .vst__date {
+      bottom: -18px;
+      left: 20px;
+      padding: 8px 16px;
+      font-size: 11px;
+    }
+    .vst--{{ sid }} .vst__note {
+      top: 30%;
+      right: -10px;
+      width: 140px;
+    }
+    .vst--{{ sid }} .vst__note-text { font-size: 26px; }
+    .vst--{{ sid }} .vst__note-arrow { width: 90px; height: 60px; }
+
+    .vst--{{ sid }} .vst__title { font-size: 36px; }
+    .vst--{{ sid }} .vst__subtitle { font-size: 17px; }
+    .vst--{{ sid }} .vst__body,
+    .vst--{{ sid }} .vst__body p { font-size: 15px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vst--{{ sid }} .vst__cta-arrow { transition: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Historia",
+  "tag": "section",
+  "class": "valca-story-section",
+  "settings": [
+    { "type": "header", "content": "Imagen" },
+    { "type": "image_picker", "id": "image", "label": "Imagen" },
+    { "type": "text", "id": "image_alt", "label": "Texto alternativo" },
+    {
+      "type": "select", "id": "image_ratio", "label": "Proporción", "default": "3 / 4",
+      "options": [
+        { "value": "3 / 4", "label": "Retrato 3:4" },
+        { "value": "1 / 1", "label": "Cuadrada" },
+        { "value": "4 / 5", "label": "Retrato 4:5" }
+      ]
+    },
+    {
+      "type": "select", "id": "image_position", "label": "Encuadre", "default": "center center",
+      "options": [
+        { "value": "center center", "label": "Centro" },
+        { "value": "center top", "label": "Arriba" },
+        { "value": "center bottom", "label": "Abajo" }
+      ]
+    },
+    { "type": "checkbox", "id": "show_tape", "label": "Mostrar cinta adhesiva", "default": true },
+    { "type": "color", "id": "tape_color", "label": "Color de la cinta", "default": "#E8DCC4" },
+    { "type": "header", "content": "Etiqueta de fecha" },
+    { "type": "text", "id": "date_label", "label": "Texto", "default": "Desde 2019" },
+    { "type": "color", "id": "date_bg", "label": "Fondo", "default": "#FFFFFF" },
+    { "type": "color", "id": "date_color", "label": "Texto", "default": "#202020" },
+    { "type": "color", "id": "date_border", "label": "Borde", "default": "#E0DDD3" },
+    { "type": "header", "content": "Nota manuscrita" },
+    { "type": "text", "id": "note_text", "label": "Texto", "default": "Donde todo empezó" },
+    { "type": "color", "id": "note_color", "label": "Color", "default": "#0194A8" },
+    { "type": "header", "content": "Contenido" },
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Nuestra historia" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Empezó en el consultorio" },
+    { "type": "range", "id": "title_weight", "label": "Grosor del título", "min": 400, "max": 800, "step": 100, "default": 500 },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Fórmulas nacidas de la consulta dermatológica diaria, no de una tendencia." },
+    { "type": "richtext", "id": "body", "label": "Texto" },
+    { "type": "text", "id": "button_label", "label": "Texto del enlace" },
+    { "type": "url", "id": "button_link", "label": "Destino del enlace" },
+    { "type": "header", "content": "Disposición y colores" },
+    { "type": "checkbox", "id": "reverse", "label": "Invertir columnas en escritorio", "default": false },
+    { "type": "range", "id": "column_gap", "label": "Separación entre columnas (px)", "min": 24, "max": 140, "step": 4, "default": 80 },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FAFAF7" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#202020" },
+    { "type": "color", "id": "title_color", "label": "Título", "default": "#202020" },
+    { "type": "color", "id": "eyebrow_color", "label": "Antetítulo", "default": "#0194A8" },
+    { "type": "color", "id": "cta_color", "label": "Enlace", "default": "#0194A8" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 900, "max": 1600, "step": 20, "default": 1180 },
+    { "type": "range", "id": "padding_top", "label": "Espaciado superior (px)", "min": 0, "max": 140, "step": 4, "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaciado inferior (px)", "min": 0, "max": 140, "step": 4, "default": 40 }
+  ],
+  "presets": [{ "name": "VALCA · Historia" }]
+}
+{% endschema %}

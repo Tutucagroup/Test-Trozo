@@ -1,0 +1,100 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "valca_footer": {
+      "type": "valca-footer",
+      "blocks": {
+        "brand": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/Latinologia-Logo-Blanco.png",
+            "logo_width": 150,
+            "show_shop_name": true,
+            "text": "<p>Dermocosmética desarrollada por dermatólogos para la piel latina. Fórmulas con activos de alto rendimiento y respaldo profesional.</p>"
+          }
+        },
+        "menu_shop": {
+          "type": "menu",
+          "settings": {
+            "heading": "Tienda",
+            "menu": "footer"
+          }
+        },
+        "menu_help": {
+          "type": "menu",
+          "settings": {
+            "heading": "Ayuda",
+            "menu": "new-footer"
+          }
+        },
+        "menu_legal": {
+          "type": "menu",
+          "settings": {
+            "heading": "Legal",
+            "menu": "legal-footer"
+          }
+        },
+        "social": {
+          "type": "social",
+          "settings": {
+            "heading": "Seguinos",
+            "instagram": "https://www.instagram.com/latinologia__/",
+            "facebook": "https://www.facebook.com/Latinologia",
+            "tiktok": "https://www.tiktok.com/@latinologia",
+            "whatsapp": "https://api.whatsapp.com/send/?phone=573332432893&text=%C2%A1Hola%21+Necesito+ayuda&type=phone_number&app_absent=0"
+          }
+        }
+      },
+      "block_order": [
+        "brand",
+        "menu_shop",
+        "menu_help",
+        "menu_legal",
+        "social"
+      ],
+      "settings": {
+        "copyright": "<p>© [year] Latinologia · Todos los derechos reservados</p>",
+        "payment_image": "shopify://shop_images/Pagos_1.webp",
+        "show_payment_icons": true,
+        "payment_height": 26,
+        "bg_color": "#202020",
+        "text_color": "#A2A2A2",
+        "heading_color": "#FFFFFF",
+        "link_color": "#FFFFFF",
+        "link_hover_color": "#0194A8",
+        "social_color": "#FFFFFF",
+        "border_color": "#3A3A3A",
+        "show_top_border": false,
+        "heading_size": 14,
+        "text_size": 14,
+        "columns_desktop": 5,
+        "max_width": 1300,
+        "padding_top": 36,
+        "padding_bottom": 28,
+        "padding_top_desktop": 56,
+        "padding_bottom_desktop": 36
+      }
+    },
+    "valca_legal": {
+      "type": "valca-legal-bar",
+      "settings": {
+        "button_label": "↩ Botón de retracto",
+        "button_link": "/policies/refund-policy",
+        "text": "<p>Como consumidor podés ejercer el derecho de retracto en las compras a distancia según el Estatuto del Consumidor (Ley 1480 de 2011). Consultá los plazos y condiciones vigentes en nuestra <a href=\"/policies/refund-policy\">política de devoluciones</a>.</p>",
+        "bg_color": "#181818",
+        "text_color": "#FFFFFF",
+        "button_text_color": "#FFFFFF",
+        "button_border": "#FFFFFF",
+        "button_hover_bg": "#FFFFFF",
+        "button_hover_text": "#202020",
+        "max_width": 1300,
+        "padding_y": 24
+      }
+    }
+  },
+  "order": [
+    "valca_footer",
+    "valca_legal"
+  ]
+}

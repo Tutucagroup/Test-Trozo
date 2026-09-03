@@ -1,0 +1,602 @@
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign cards = section.blocks
+-%}
+
+<section class="vug vug--{{ sid }}" data-vug-root aria-label="{{ section.settings.heading | default: 'Opiniones en video' | escape }}">
+  <div class="vug__container">
+    {%- if section.settings.heading != blank or section.settings.show_rating -%}
+      <header class="vug__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="vug__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.show_rating -%}
+          <div class="vug__rating">
+            <span class="vug__stars" aria-hidden="true">
+              {%- for i in (1..5) -%}
+                <svg viewBox="0 0 16 16" focusable="false"><path d="M8 0l2.4 5.2 5.6.5-4.2 3.8 1.2 5.5L8 12.2 3 15l1.2-5.5L0 5.7l5.6-.5z"/></svg>
+              {%- endfor -%}
+            </span>
+            {%- if section.settings.rating_text != blank -%}
+              <span class="vug__rating-text">{{ section.settings.rating_text }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.subtitle != blank -%}
+          <div class="vug__subtitle">{{ section.settings.subtitle }}</div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    {%- if cards.size > 0 -%}
+      <div class="vug__track-wrap">
+        <div class="vug__track" data-vug-track>
+          {%- for block in cards -%}
+            {%- liquid
+              assign v = block.settings.video
+              assign product = block.settings.product
+              assign strip = block.settings.strip_color
+              assign on_sale = false
+              if product != blank
+                assign cap = product.compare_at_price | default: 0
+                if cap > product.price
+                  assign on_sale = true
+                endif
+              endif
+            -%}
+
+            <article class="vug__card" data-vug-card {{ block.shopify_attributes }}>
+              <div class="vug__media" data-vug-media>
+                {%- if v != blank or block.settings.mp4_url != blank -%}
+                  <video
+                    class="vug__video"
+                    data-vug-video
+                    preload="metadata"
+                    playsinline
+                    {% if block.settings.muted %}muted{% endif %}
+                    {%- if block.settings.poster_url != blank -%}
+                      poster="{{ block.settings.poster_url }}"
+                    {%- elsif v != blank and v.preview_image != blank -%}
+                      poster="{{ v.preview_image | image_url: width: 800 }}"
+                    {%- endif -%}
+                  >
+                    {%- if block.settings.mp4_url != blank -%}
+                      <source src="{{ block.settings.mp4_url }}" type="video/mp4">
+                    {%- endif -%}
+                    {%- if v != blank -%}
+                      {%- comment -%} MP4 primero: HLS solo lo reproducen algunos navegadores. {%- endcomment -%}
+                      {%- for source in v.sources -%}
+                        {%- unless source.mime_type contains 'mpegURL' -%}
+                          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                        {%- endunless -%}
+                      {%- endfor -%}
+                      {%- for source in v.sources -%}
+                        {%- if source.mime_type contains 'mpegURL' -%}
+                          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+                  </video>
+
+                  <button type="button" class="vug__play" data-vug-play aria-label="Reproducir video">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                {%- elsif block.settings.fallback_image != blank -%}
+                  <img
+                    class="vug__fallback"
+                    src="{{ block.settings.fallback_image | image_url: width: 800 }}"
+                    alt="{{ block.settings.fallback_image.alt | escape }}"
+                    width="600"
+                    height="1066"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                {%- else -%}
+                  <div class="vug__placeholder">Subí un video en la configuración de este bloque</div>
+                {%- endif -%}
+              </div>
+
+              {%- if product != blank -%}
+                <a class="vug__product" href="{{ product.url }}">
+                  {%- if strip != blank -%}
+                    <span class="vug__strip" style="background: {{ strip }};" aria-hidden="true"></span>
+                  {%- endif -%}
+                  <div class="vug__product-inner">
+                    {%- if product.featured_image != blank -%}
+                      <img
+                        class="vug__thumb"
+                        src="{{ product.featured_image | image_url: width: 200 }}"
+                        alt="{{ product.title | escape }}"
+                        width="52"
+                        height="52"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                    {%- endif -%}
+                    <div class="vug__product-info">
+                      <h3 class="vug__product-title">{{ product.title }}</h3>
+                      <div class="vug__prices">
+                        <span class="vug__price">{{ product.price | money }}</span>
+                        {%- if on_sale -%}
+                          <s class="vug__compare">{{ product.compare_at_price | money }}</s>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              {%- endif -%}
+            </article>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.show_arrows -%}
+          <button type="button" class="vug__nav vug__nav--prev" data-vug-prev aria-label="Anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" class="vug__nav vug__nav--next" data-vug-next aria-label="Siguiente">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        {%- endif -%}
+
+        {%- if section.settings.show_progress -%}
+          <div class="vug__progress" aria-hidden="true">
+            <div class="vug__progress-fill" data-vug-progress></div>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      <p class="vug__empty">Agregá bloques de video desde la configuración de esta sección.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .vug--{{ sid }} {
+    --vug-gap: {{ section.settings.gap }}px;
+    --vug-cols: {{ section.settings.columns_desktop }};
+
+    box-sizing: border-box;
+    background: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .vug--{{ sid }} *,
+  .vug--{{ sid }} *::before,
+  .vug--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vug--{{ sid }} .vug__container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .vug--{{ sid }} .vug__header { text-align: center; margin-bottom: 32px; }
+  .vug--{{ sid }} .vug__heading {
+    margin: 0 0 10px;
+    color: {{ section.settings.heading_color }};
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .vug--{{ sid }} .vug__rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .vug--{{ sid }} .vug__stars { display: inline-flex; gap: 2px; color: {{ section.settings.stars_color }}; }
+  .vug--{{ sid }} .vug__stars svg { width: 18px; height: 18px; fill: currentColor; }
+  .vug--{{ sid }} .vug__rating-text,
+  .vug--{{ sid }} .vug__rating-text p {
+    margin: 0;
+    display: inline;
+    color: {{ section.settings.muted_color }};
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .vug--{{ sid }} .vug__subtitle,
+  .vug--{{ sid }} .vug__subtitle p {
+    margin: 0;
+    color: {{ section.settings.muted_color }};
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .vug--{{ sid }} .vug__track-wrap { position: relative; }
+  .vug--{{ sid }} .vug__track {
+    display: flex;
+    gap: var(--vug-gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 0 12px;
+    cursor: grab;
+  }
+  .vug--{{ sid }} .vug__track::-webkit-scrollbar { display: none; }
+  .vug--{{ sid }} .vug__track.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+
+  .vug--{{ sid }} .vug__card {
+    position: relative;
+    flex: 0 0 calc(100vw - 40px - 50px);
+    max-width: calc(100vw - 40px - 50px);
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: {{ section.settings.card_radius }}px;
+    background: {{ section.settings.card_bg }};
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.25s ease;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .vug--{{ sid }} .vug__card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06), 0 10px 24px rgba(0, 0, 0, 0.09);
+  }
+
+  .vug--{{ sid }} .vug__media {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    background: #1A1A1A;
+    cursor: pointer;
+  }
+  .vug--{{ sid }} .vug__video,
+  .vug--{{ sid }} .vug__fallback {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .vug--{{ sid }} .vug__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+    color: #888;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .vug--{{ sid }} .vug__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: {{ section.settings.play_bg }};
+    color: {{ section.settings.play_color }};
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .vug--{{ sid }} .vug__play svg { width: 28px; height: 28px; margin-left: 3px; fill: currentColor; }
+  .vug--{{ sid }} .vug__play:hover { transform: translate(-50%, -50%) scale(1.05); }
+  .vug--{{ sid }} .vug__media.is-playing .vug__play { opacity: 0; pointer-events: none; }
+
+  .vug--{{ sid }} .vug__product {
+    position: relative;
+    display: block;
+    background: {{ section.settings.card_bg }};
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+  .vug--{{ sid }} .vug__product:hover { background: rgba(0, 0, 0, 0.02); }
+
+  .vug--{{ sid }} .vug__strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .vug--{{ sid }} .vug__product-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .vug--{{ sid }} .vug__thumb {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #F6F6F6;
+  }
+  .vug--{{ sid }} .vug__product-info { flex: 1; min-width: 0; }
+  .vug--{{ sid }} .vug__product-title {
+    margin: 0 0 4px;
+    overflow: hidden;
+    color: {{ section.settings.text_color }};
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .vug--{{ sid }} .vug__prices { display: flex; align-items: baseline; gap: 8px; }
+  .vug--{{ sid }} .vug__price {
+    color: {{ section.settings.text_color }};
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .vug--{{ sid }} .vug__compare {
+    color: {{ section.settings.muted_color }};
+    font-size: 12px;
+    text-decoration: line-through;
+  }
+
+  .vug--{{ sid }} .vug__nav { display: none; }
+
+  .vug--{{ sid }} .vug__progress {
+    max-width: 320px;
+    height: 3px;
+    margin: 24px auto 0;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+  .vug--{{ sid }} .vug__progress-fill {
+    height: 100%;
+    background: {{ section.settings.progress_color }};
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.15s ease-out;
+  }
+
+  .vug--{{ sid }} .vug__empty { margin: 0; color: {{ section.settings.muted_color }}; text-align: center; }
+
+  @media screen and (min-width: 990px) {
+    .vug--{{ sid }} .vug__container { padding: 0 40px; }
+    .vug--{{ sid }} .vug__heading { font-size: 32px; }
+    .vug--{{ sid }} .vug__subtitle,
+    .vug--{{ sid }} .vug__subtitle p { font-size: 16px; }
+    .vug--{{ sid }} .vug__card {
+      flex: 0 0 calc((100% - (var(--vug-cols) - 1) * var(--vug-gap)) / var(--vug-cols));
+      max-width: calc((100% - (var(--vug-cols) - 1) * var(--vug-gap)) / var(--vug-cols));
+    }
+    .vug--{{ sid }} .vug__play { width: 72px; height: 72px; }
+    .vug--{{ sid }} .vug__play svg { width: 32px; height: 32px; }
+
+    .vug--{{ sid }} .vug__nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 50%;
+      background: #fff;
+      color: {{ section.settings.text_color }};
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    }
+    .vug--{{ sid }} .vug__nav:hover { background: {{ section.settings.accent_color }}; color: #fff; }
+    .vug--{{ sid }} .vug__nav svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .vug--{{ sid }} .vug__nav--prev { left: -10px; }
+    .vug--{{ sid }} .vug__nav--next { right: -10px; }
+    .vug--{{ sid }} .vug__nav.is-disabled { opacity: 0.3; pointer-events: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vug--{{ sid }} .vug__track { scroll-behavior: auto; }
+    .vug--{{ sid }} .vug__play,
+    .vug--{{ sid }} .vug__progress-fill { transition: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('.vug--{{ sid }}');
+    if (!root || root.dataset.vugInit === '1') return;
+    root.dataset.vugInit = '1';
+
+    var track = root.querySelector('[data-vug-track]');
+    if (!track) return;
+
+    var progress = root.querySelector('[data-vug-progress]');
+    var prevBtn = root.querySelector('[data-vug-prev]');
+    var nextBtn = root.querySelector('[data-vug-next]');
+    var GAP = {{ section.settings.gap }};
+
+    function refresh() {
+      var max = track.scrollWidth - track.clientWidth;
+      if (progress) {
+        progress.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, Math.max(0, track.scrollLeft / max)) : 0) + ')';
+      }
+      if (prevBtn) prevBtn.classList.toggle('is-disabled', track.scrollLeft <= 5);
+      if (nextBtn) nextBtn.classList.toggle('is-disabled', max <= 0 || track.scrollLeft >= max - 5);
+    }
+    track.addEventListener('scroll', refresh, { passive: true });
+    window.addEventListener('resize', refresh);
+    refresh();
+
+    function step() {
+      var card = track.querySelector('[data-vug-card]');
+      return card ? card.offsetWidth + GAP : track.clientWidth * 0.8;
+    }
+    if (prevBtn) prevBtn.addEventListener('click', function (e) { e.preventDefault(); track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (nextBtn) nextBtn.addEventListener('click', function (e) { e.preventDefault(); track.scrollBy({ left: step(), behavior: 'smooth' }); });
+
+    /* Arrastrar para desplazar, sin interferir con el botón de reproducción. */
+    var down = false, startX = 0, startScroll = 0;
+    track.addEventListener('mousedown', function (e) {
+      if (e.button !== 0) return;
+      if (e.target.closest('[data-vug-media]') || e.target.closest('[data-vug-play]')) return;
+      down = true;
+      startX = e.pageX;
+      startScroll = track.scrollLeft;
+      track.classList.add('is-dragging');
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!down) return;
+      track.scrollLeft = startScroll - (e.pageX - startX);
+    });
+    document.addEventListener('mouseup', function () {
+      if (!down) return;
+      down = false;
+      track.classList.remove('is-dragging');
+    });
+
+    var videos = Array.prototype.slice.call(root.querySelectorAll('[data-vug-video]'));
+
+    function pauseOthers(current) {
+      videos.forEach(function (v) {
+        if (v !== current && !v.paused) {
+          v.pause();
+          var m = v.closest('[data-vug-media]');
+          if (m) m.classList.remove('is-playing');
+        }
+      });
+    }
+
+    root.querySelectorAll('[data-vug-card]').forEach(function (card) {
+      var media = card.querySelector('[data-vug-media]');
+      var video = card.querySelector('[data-vug-video]');
+      var play = card.querySelector('[data-vug-play]');
+      if (!media || !video) return;
+
+      function toggle(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (video.paused) {
+          pauseOthers(video);
+          var p = video.play();
+          if (p && p.catch) {
+            p.catch(function () {
+              // Algunos navegadores solo permiten autoplay silenciado.
+              video.muted = true;
+              video.play();
+            });
+          }
+        } else {
+          video.pause();
+        }
+      }
+
+      media.addEventListener('click', toggle);
+      if (play) play.addEventListener('click', toggle);
+
+      video.addEventListener('play', function () { media.classList.add('is-playing'); });
+      video.addEventListener('pause', function () { media.classList.remove('is-playing'); });
+      video.addEventListener('ended', function () { media.classList.remove('is-playing'); });
+    });
+
+    /* Pausa los videos que salen de pantalla. */
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) return;
+          var v = entry.target.querySelector('[data-vug-video]');
+          var m = entry.target.querySelector('[data-vug-media]');
+          if (v && !v.paused) {
+            v.pause();
+            if (m) m.classList.remove('is-playing');
+          }
+        });
+      }, { threshold: 0.3 });
+      root.querySelectorAll('[data-vug-card]').forEach(function (c) { io.observe(c); });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VALCA · Videos de clientas",
+  "tag": "section",
+  "class": "valca-ugc-section",
+  "settings": [
+    { "type": "header", "content": "Encabezado" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Miles de latinas ya eligieron Latinologia" },
+    { "type": "checkbox", "id": "show_rating", "label": "Mostrar valoración", "default": true },
+    { "type": "richtext", "id": "rating_text", "label": "Texto de valoración", "default": "<p>Más de 2.500 reseñas reales</p>" },
+    { "type": "richtext", "id": "subtitle", "label": "Subtítulo" },
+    { "type": "header", "content": "Reproductor" },
+    { "type": "color", "id": "play_bg", "label": "Fondo del botón de play", "default": "#0194A8" },
+    { "type": "color", "id": "play_color", "label": "Icono del botón de play", "default": "#FFFFFF" },
+    { "type": "header", "content": "Navegación" },
+    { "type": "checkbox", "id": "show_arrows", "label": "Mostrar flechas (escritorio)", "default": true },
+    { "type": "checkbox", "id": "show_progress", "label": "Mostrar barra de progreso", "default": true },
+    { "type": "color", "id": "progress_color", "label": "Color de la barra", "default": "#202020" },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "columns_desktop", "label": "Columnas en escritorio", "min": 2, "max": 5, "step": 1, "default": 3 },
+    { "type": "range", "id": "gap", "label": "Separación (px)", "min": 8, "max": 40, "step": 2, "default": 20 },
+    { "type": "range", "id": "card_radius", "label": "Radio de la tarjeta (px)", "min": 0, "max": 24, "step": 1, "default": 10 },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 1000, "max": 1800, "step": 20, "default": 1400 },
+    { "type": "range", "id": "padding_top", "label": "Espaciado superior (px)", "min": 0, "max": 120, "step": 4, "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaciado inferior (px)", "min": 0, "max": 120, "step": 4, "default": 36 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo de la sección", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_bg", "label": "Fondo de la tarjeta", "default": "#FFFFFF" },
+    { "type": "color", "id": "heading_color", "label": "Título", "default": "#202020" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#202020" },
+    { "type": "color", "id": "muted_color", "label": "Texto secundario", "default": "#5F5E5A" },
+    { "type": "color", "id": "stars_color", "label": "Estrellas", "default": "#FFC107" },
+    { "type": "color", "id": "accent_color", "label": "Acento", "default": "#0194A8" }
+  ],
+  "blocks": [
+    {
+      "type": "video_card",
+      "name": "Video",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Video (subido a Shopify)" },
+        { "type": "text", "id": "mp4_url", "label": "URL de video MP4", "info": "Alternativa al selector de video. Tiene prioridad sobre el video subido." },
+        { "type": "text", "id": "poster_url", "label": "URL de la miniatura" },
+        { "type": "image_picker", "id": "fallback_image", "label": "Imagen alternativa (si no hay video)" },
+        { "type": "checkbox", "id": "muted", "label": "Iniciar sin sonido", "default": false },
+        { "type": "product", "id": "product", "label": "Producto asociado" },
+        { "type": "color", "id": "strip_color", "label": "Franja de color", "default": "#0194A8" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Videos de clientas",
+      "blocks": [{ "type": "video_card" }, { "type": "video_card" }, { "type": "video_card" }]
+    }
+  ]
+}
+{% endschema %}

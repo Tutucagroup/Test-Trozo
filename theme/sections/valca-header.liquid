@@ -1,0 +1,618 @@
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign menu = section.settings.menu
+-%}
+
+<div class="vhd vhd--{{ sid }}{% if section.settings.sticky %} vhd--sticky{% endif %}" data-vhd-root>
+  <header class="vhd__bar">
+    <button
+      type="button"
+      class="vhd__burger"
+      data-vhd-open
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="vhd-drawer-{{ sid }}"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+      </svg>
+    </button>
+
+    <a class="vhd__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} — inicio">
+      {%- if section.settings.logo != blank -%}
+        {%- assign logo_w = section.settings.logo_width | times: 2 -%}
+        <img
+          src="{{ section.settings.logo | image_url: width: logo_w }}"
+          alt="{{ shop.name | escape }}"
+          width="{{ section.settings.logo_width }}"
+          height="auto"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- else -%}
+        <span class="vhd__logo-text">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="vhd__nav" aria-label="Navegación principal">
+      <ul class="vhd__nav-list">
+        {%- for link in linklists[menu].links -%}
+          <li class="vhd__nav-item{% if link.links.size > 0 %} vhd__nav-item--has-sub{% endif %}">
+            {%- if link.links.size > 0 -%}
+              <details class="vhd__details" data-vhd-details>
+                <summary class="vhd__nav-link" aria-haspopup="true">
+                  <span{% if link.active or link.child_active %} class="vhd__nav-link--active"{% endif %}>{{ link.title }}</span>
+                  <svg class="vhd__caret" viewBox="0 0 10 6" aria-hidden="true" focusable="false">
+                    <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </summary>
+                <ul class="vhd__submenu">
+                  {%- for child in link.links -%}
+                    <li>
+                      <a class="vhd__submenu-link" href="{{ child.url }}">{{ child.title }}</a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </details>
+            {%- else -%}
+              <a class="vhd__nav-link" href="{{ link.url }}">
+                <span{% if link.active %} class="vhd__nav-link--active"{% endif %}>{{ link.title }}</span>
+              </a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="vhd__actions">
+      {%- if section.settings.show_search -%}
+        <a class="vhd__icon vhd__icon--search" href="{{ routes.search_url }}" aria-label="Buscar">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="7"/>
+            <path d="M20 20l-3.6-3.6"/>
+          </svg>
+        </a>
+      {%- endif -%}
+
+      {%- if shop.customer_accounts_enabled and section.settings.show_account -%}
+        <a
+          class="vhd__icon vhd__icon--account"
+          href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+          aria-label="{% if customer %}Mi cuenta{% else %}Iniciar sesión{% endif %}"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="8.5" r="3.75"/>
+            <path d="M4.75 20.25c0-3.6 3.25-5.75 7.25-5.75s7.25 2.15 7.25 5.75"/>
+          </svg>
+        </a>
+      {%- endif -%}
+
+      <a class="vhd__icon vhd__icon--cart" href="{{ routes.cart_url }}" aria-label="Carrito ({{ cart.item_count }})">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <path d="M3 6h18"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        {%- if cart.item_count > 0 -%}
+          <span class="vhd__cart-count" data-vhd-cart-count>{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+  </header>
+
+  <div class="vhd__overlay" data-vhd-overlay hidden></div>
+
+  <div id="vhd-drawer-{{ sid }}" class="vhd__drawer" data-vhd-drawer aria-hidden="true">
+    <div class="vhd__drawer-head">
+      <span class="vhd__drawer-title">Menú</span>
+      <button type="button" class="vhd__drawer-close" data-vhd-close aria-label="Cerrar menú">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </button>
+    </div>
+
+    <nav class="vhd__drawer-nav" aria-label="Navegación móvil">
+      <ul class="vhd__drawer-list">
+        {%- for link in linklists[menu].links -%}
+          <li class="vhd__drawer-item">
+            {%- if link.links.size > 0 -%}
+              <details class="vhd__drawer-details">
+                <summary class="vhd__drawer-link">
+                  {{ link.title }}
+                  <svg class="vhd__caret" viewBox="0 0 10 6" aria-hidden="true" focusable="false">
+                    <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </summary>
+                <ul class="vhd__drawer-sublist">
+                  {%- for child in link.links -%}
+                    <li><a class="vhd__drawer-sublink" href="{{ child.url }}">{{ child.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </details>
+            {%- else -%}
+              <a class="vhd__drawer-link" href="{{ link.url }}">{{ link.title }}</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="vhd__drawer-foot">
+      {%- if shop.customer_accounts_enabled and section.settings.show_account -%}
+        <a
+          class="vhd__drawer-account"
+          href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="8.5" r="3.75"/>
+            <path d="M4.75 20.25c0-3.6 3.25-5.75 7.25-5.75s7.25 2.15 7.25 5.75"/>
+          </svg>
+          {% if customer %}Mi cuenta{% else %}Iniciar sesión{% endif %}
+        </a>
+      {%- endif -%}
+
+      {%- assign socials = section.settings.social_instagram | append: section.settings.social_facebook | append: section.settings.social_tiktok -%}
+      {%- if socials != blank -%}
+        <ul class="vhd__socials">
+          {%- if section.settings.social_instagram != blank -%}
+            <li><a href="{{ section.settings.social_instagram }}" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M13.2 3.5c-.8 0-1.1 0-3.2 0s-2.4 0-3.2.06c-.8.03-1.2.16-1.5.27a2.4 2.4 0 00-.9.6 2.5 2.5 0 00-.6.92c-.1.28-.24.7-.27 1.49C3.5 7.6 3.5 7.87 3.5 10s0 2.4.05 3.23c.03.5.1 1 .27 1.5.15.36.32.64.6.91.28.29.54.46.92.6.48.18.98.27 1.48.28.85.04 1.1.04 3.24.04s2.39 0 3.23-.05c.78-.03 1.2-.16 1.49-.27.37-.14.65-.32.92-.6.28-.28.44-.55.6-.92.18-.48.27-.98.27-1.49.04-.84.05-1.1.05-3.23s0-2.39-.06-3.23c-.02-.78-.16-1.2-.27-1.49a2.4 2.4 0 00-.6-.91 2.6 2.6 0 00-.91-.6c-.29-.12-.71-.25-1.49-.28ZM6.7 2.05C7.55 2.02 7.83 2 10 2a63 63 0 013.3.05c.67.01 1.33.14 1.95.37a4 4 0 011.4.92c.42.4.74.88.94 1.42.23.62.35 1.28.36 1.94C18 7.56 18 7.82 18 10c0 2.17-.01 2.44-.05 3.29-.03.86-.17 1.44-.37 1.94-.2.53-.48.98-.93 1.42a3.9 3.9 0 01-1.41.93c-.51.19-1.1.33-1.95.37-.85.03-1.12.04-3.3.04-2.17 0-2.44 0-3.3-.05-.85-.03-1.43-.17-1.94-.37a4.2 4.2 0 01-1.41-.92 4.1 4.1 0 01-.93-1.42c-.19-.51-.33-1.09-.37-1.95C2 12.45 2 12.17 2 10c0-2.16 0-2.43.06-3.3.02-.85.16-1.43.36-1.94a4.4 4.4 0 01.92-1.42 4.2 4.2 0 011.42-.93c.51-.18 1.09-.32 1.94-.36Zm.43 4.8a4.1 4.1 0 115.8 5.81 4.1 4.1 0 01-5.8-5.8Zm1.88 5.37a2.67 2.67 0 102.04-4.93 2.67 2.67 0 00-2.04 4.93Zm5.92-5.94a.96.96 0 11-1.35-1.36.96.96 0 011.35 1.36Z"/></svg>
+            </a></li>
+          {%- endif -%}
+          {%- if section.settings.social_facebook != blank -%}
+            <li><a href="{{ section.settings.social_facebook }}" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M18 10.05C18 5.6 14.42 2 10 2s-8 3.6-8 8.05C2 14.07 4.93 17.4 8.75 18v-5.62H6.72v-2.33h2.03V8.28c0-2.02 1.2-3.14 3.02-3.14.88 0 1.8.16 1.8.16v1.98h-1.02c-1 0-1.3.62-1.3 1.26v1.51h2.22l-.36 2.33h-1.86V18A8.04 8.04 0 0018 10.05Z"/></svg>
+            </a></li>
+          {%- endif -%}
+          {%- if section.settings.social_tiktok != blank -%}
+            <li><a href="{{ section.settings.social_tiktok }}" aria-label="TikTok" target="_blank" rel="noopener">
+              <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10.51 1.7h2.74s-.16 3.52 3.8 3.78v2.71s-2.12.13-3.8-1.16l.03 5.6a5.07 5.07 0 11-5.07-5.08h.71v2.79a2.3 2.3 0 101.62 2.2V1.7Z"/></svg>
+            </a></li>
+          {%- endif -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .vhd--{{ sid }} {
+    --vhd-bg: {{ section.settings.bg_color }};
+    --vhd-fg: {{ section.settings.text_color }};
+    --vhd-accent: {{ section.settings.accent_color }};
+    --vhd-border: {{ section.settings.border_color }};
+    --vhd-h-mobile: {{ section.settings.height_mobile }}px;
+    --vhd-h-desktop: {{ section.settings.height_desktop }}px;
+
+    position: relative;
+    z-index: 60;
+    box-sizing: border-box;
+    background: var(--vhd-bg);
+    border-bottom: 1px solid var(--vhd-border);
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .vhd--{{ sid }} *,
+  .vhd--{{ sid }} *::before,
+  .vhd--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vhd--{{ sid }}.vhd--sticky { position: sticky; top: 0; }
+
+  .vhd--{{ sid }} .vhd__bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 8px;
+    height: var(--vhd-h-mobile);
+    padding: 0 14px;
+    margin: 0 auto;
+    max-width: {{ section.settings.max_width }}px;
+  }
+
+  .vhd--{{ sid }} .vhd__burger,
+  .vhd--{{ sid }} .vhd__drawer-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    margin-left: -8px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--vhd-fg);
+    cursor: pointer;
+  }
+  .vhd--{{ sid }} .vhd__burger svg,
+  .vhd--{{ sid }} .vhd__drawer-close svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .vhd--{{ sid }} .vhd__logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    grid-column: 2;
+    text-decoration: none;
+    color: var(--vhd-fg);
+  }
+  .vhd--{{ sid }} .vhd__logo img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(var(--vhd-h-mobile) - 22px);
+  }
+  .vhd--{{ sid }} .vhd__logo-text {
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .vhd--{{ sid }} .vhd__nav { display: none; }
+
+  .vhd--{{ sid }} .vhd__actions {
+    grid-column: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+  }
+
+  .vhd--{{ sid }} .vhd__icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    color: var(--vhd-fg);
+    text-decoration: none;
+  }
+  .vhd--{{ sid }} .vhd__icon svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .vhd--{{ sid }} .vhd__icon--search { display: none; }
+
+  .vhd--{{ sid }} .vhd__cart-count {
+    position: absolute;
+    top: 3px;
+    right: 1px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--vhd-accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 16px;
+    text-align: center;
+  }
+
+  /* ---------- Drawer móvil ---------- */
+  .vhd--{{ sid }} .vhd__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .vhd--{{ sid }} .vhd__overlay.is-visible { opacity: 1; }
+
+  .vhd--{{ sid }} .vhd__drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 80;
+    display: flex;
+    flex-direction: column;
+    width: min(86vw, 360px);
+    background: var(--vhd-bg);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    visibility: hidden;
+  }
+  .vhd--{{ sid }} .vhd__drawer.is-open { transform: translateX(0); visibility: visible; }
+
+  .vhd--{{ sid }} .vhd__drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 14px 14px 18px;
+    border-bottom: 1px solid var(--vhd-border);
+  }
+  .vhd--{{ sid }} .vhd__drawer-title {
+    color: var(--vhd-fg);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .vhd--{{ sid }} .vhd__drawer-close { margin-left: 0; margin-right: -6px; }
+
+  .vhd--{{ sid }} .vhd__drawer-nav { flex: 1; padding: 8px 0; }
+  .vhd--{{ sid }} .vhd__drawer-list,
+  .vhd--{{ sid }} .vhd__drawer-sublist,
+  .vhd--{{ sid }} .vhd__nav-list,
+  .vhd--{{ sid }} .vhd__submenu,
+  .vhd--{{ sid }} .vhd__socials {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .vhd--{{ sid }} .vhd__drawer-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 13px 18px;
+    color: var(--vhd-fg);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    list-style: none;
+  }
+  .vhd--{{ sid }} .vhd__drawer-link::-webkit-details-marker { display: none; }
+  .vhd--{{ sid }} .vhd__drawer-details[open] > .vhd__drawer-link { font-weight: 700; }
+  .vhd--{{ sid }} .vhd__drawer-details[open] > .vhd__drawer-link .vhd__caret { transform: rotate(180deg); }
+
+  .vhd--{{ sid }} .vhd__drawer-sublink {
+    display: block;
+    padding: 10px 18px 10px 32px;
+    color: var(--vhd-fg);
+    opacity: 0.72;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .vhd--{{ sid }} .vhd__drawer-sublink:hover { opacity: 1; color: var(--vhd-accent); }
+
+  .vhd--{{ sid }} .vhd__drawer-foot {
+    padding: 16px 18px 26px;
+    border-top: 1px solid var(--vhd-border);
+  }
+  .vhd--{{ sid }} .vhd__drawer-account {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--vhd-fg);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .vhd--{{ sid }} .vhd__drawer-account svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .vhd--{{ sid }} .vhd__socials { display: flex; gap: 14px; margin-top: 16px; }
+  .vhd--{{ sid }} .vhd__socials a { display: inline-flex; color: var(--vhd-fg); }
+  .vhd--{{ sid }} .vhd__socials svg { width: 20px; height: 20px; fill: currentColor; }
+
+  .vhd--{{ sid }} .vhd__caret {
+    flex: 0 0 auto;
+    width: 10px;
+    height: 6px;
+    transition: transform 0.2s ease;
+  }
+
+  /* ---------- Escritorio ---------- */
+  @media screen and (min-width: 990px) {
+    .vhd--{{ sid }} .vhd__bar {
+      grid-template-columns: auto 1fr auto;
+      gap: 26px;
+      height: var(--vhd-h-desktop);
+      padding: 0 28px;
+    }
+
+    .vhd--{{ sid }} .vhd__burger { display: none; }
+
+    .vhd--{{ sid }} .vhd__logo {
+      grid-column: 1;
+      justify-content: flex-start;
+    }
+    .vhd--{{ sid }} .vhd__logo img { max-height: calc(var(--vhd-h-desktop) - 26px); }
+
+    .vhd--{{ sid }} .vhd__nav {
+      grid-column: 2;
+      display: block;
+    }
+    .vhd--{{ sid }} .vhd__nav-list {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 26px;
+    }
+    .vhd--{{ sid }} .vhd__nav-item { position: relative; }
+
+    .vhd--{{ sid }} .vhd__nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 0;
+      color: var(--vhd-fg);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      list-style: none;
+      white-space: nowrap;
+    }
+    .vhd--{{ sid }} .vhd__nav-link::-webkit-details-marker { display: none; }
+
+    .vhd--{{ sid }} .vhd__nav-link > span {
+      position: relative;
+      display: inline-block;
+    }
+    .vhd--{{ sid }} .vhd__nav-link > span::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      border-radius: 1px;
+      background: var(--vhd-accent);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.25s ease-out;
+    }
+    .vhd--{{ sid }} .vhd__nav-link:hover > span::after,
+    .vhd--{{ sid }} .vhd__nav-link:focus-visible > span::after,
+    .vhd--{{ sid }} .vhd__nav-link > span.vhd__nav-link--active::after { transform: scaleX(1); }
+
+    .vhd--{{ sid }} .vhd__submenu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      min-width: 240px;
+      max-width: 320px;
+      padding: 10px 0;
+      border-radius: 10px;
+      background: var(--vhd-bg);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    }
+    .vhd--{{ sid }} .vhd__nav-item--has-sub:hover .vhd__submenu,
+    .vhd--{{ sid }} .vhd__details[open] .vhd__submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .vhd--{{ sid }} .vhd__nav-item--has-sub:hover .vhd__caret { transform: rotate(180deg); }
+
+    .vhd--{{ sid }} .vhd__submenu-link {
+      display: block;
+      padding: 9px 18px;
+      color: var(--vhd-fg);
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .vhd--{{ sid }} .vhd__submenu-link:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: var(--vhd-accent);
+    }
+
+    .vhd--{{ sid }} .vhd__actions { grid-column: 3; gap: 4px; }
+    .vhd--{{ sid }} .vhd__icon--search { display: inline-flex; }
+    .vhd--{{ sid }} .vhd__drawer,
+    .vhd--{{ sid }} .vhd__overlay { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vhd--{{ sid }} .vhd__drawer,
+    .vhd--{{ sid }} .vhd__overlay,
+    .vhd--{{ sid }} .vhd__submenu,
+    .vhd--{{ sid }} .vhd__nav-link > span::after { transition: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('.vhd--{{ sid }}');
+    if (!root || root.dataset.vhdInit === '1') return;
+    root.dataset.vhdInit = '1';
+
+    var drawer = root.querySelector('[data-vhd-drawer]');
+    var overlay = root.querySelector('[data-vhd-overlay]');
+    var openBtn = root.querySelector('[data-vhd-open]');
+    var closeBtn = root.querySelector('[data-vhd-close]');
+    if (!drawer || !overlay || !openBtn) return;
+
+    function open() {
+      overlay.hidden = false;
+      // Reflow so the opacity transition runs from 0.
+      void overlay.offsetHeight;
+      overlay.classList.add('is-visible');
+      drawer.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      openBtn.setAttribute('aria-expanded', 'true');
+      document.documentElement.style.overflow = 'hidden';
+    }
+
+    function close() {
+      overlay.classList.remove('is-visible');
+      drawer.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      openBtn.setAttribute('aria-expanded', 'false');
+      document.documentElement.style.overflow = '';
+      window.setTimeout(function () {
+        if (!drawer.classList.contains('is-open')) overlay.hidden = true;
+      }, 260);
+    }
+
+    openBtn.addEventListener('click', open);
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) close();
+    });
+
+    // Cierra los desplegables de escritorio al hacer clic fuera.
+    document.addEventListener('click', function (e) {
+      root.querySelectorAll('[data-vhd-details][open]').forEach(function (d) {
+        if (!d.contains(e.target)) d.removeAttribute('open');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VALCA · Encabezado",
+  "tag": "section",
+  "class": "valca-header-section",
+  "settings": [
+    { "type": "header", "content": "Logo" },
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "range", "id": "logo_width", "label": "Ancho del logo (px)", "min": 60, "max": 260, "step": 5, "default": 120 },
+    { "type": "header", "content": "Navegación" },
+    { "type": "link_list", "id": "menu", "label": "Menú", "default": "main-menu" },
+    { "type": "checkbox", "id": "show_search", "label": "Mostrar icono de búsqueda", "default": true },
+    { "type": "checkbox", "id": "show_account", "label": "Mostrar icono de cuenta", "default": true },
+    { "type": "header", "content": "Comportamiento" },
+    { "type": "checkbox", "id": "sticky", "label": "Encabezado fijo al hacer scroll", "default": true },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo del contenido (px)", "min": 1000, "max": 1800, "step": 20, "default": 1400 },
+    { "type": "range", "id": "height_mobile", "label": "Altura móvil (px)", "min": 48, "max": 90, "step": 1, "default": 58 },
+    { "type": "range", "id": "height_desktop", "label": "Altura escritorio (px)", "min": 52, "max": 120, "step": 1, "default": 66 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Texto e iconos", "default": "#202020" },
+    { "type": "color", "id": "accent_color", "label": "Acento", "default": "#0194A8" },
+    { "type": "color", "id": "border_color", "label": "Borde inferior", "default": "#E5E5E5" },
+    { "type": "header", "content": "Redes sociales (menú móvil)" },
+    { "type": "url", "id": "social_instagram", "label": "Instagram" },
+    { "type": "url", "id": "social_facebook", "label": "Facebook" },
+    { "type": "url", "id": "social_tiktok", "label": "TikTok" }
+  ],
+  "presets": [{ "name": "VALCA · Encabezado" }]
+}
+{% endschema %}

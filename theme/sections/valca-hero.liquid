@@ -1,0 +1,358 @@
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign heading = section.settings.heading
+  assign accent = section.settings.accent_text
+-%}
+
+<section
+  class="vhr vhr--{{ sid }}"
+  {% if section.settings.aria_label != blank %}aria-label="{{ section.settings.aria_label | escape }}"{% endif %}
+>
+  <div class="vhr__container">
+    <div class="vhr__content">
+      {%- if section.settings.show_rating -%}
+        <div class="vhr__rating">
+          <span class="vhr__stars" aria-hidden="true">
+            {%- for i in (1..5) -%}
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M11.52 3.46a.5.5 0 01.95 0l1.66 5.1a.5.5 0 00.47.35h5.36a.5.5 0 01.3.9l-4.34 3.15a.5.5 0 00-.18.56l1.66 5.1a.5.5 0 01-.77.56l-4.34-3.15a.5.5 0 00-.59 0L7.37 19.19a.5.5 0 01-.77-.56l1.66-5.1a.5.5 0 00-.18-.56L3.73 9.81a.5.5 0 01.3-.9h5.36a.5.5 0 00.47-.35l1.66-5.1z"/>
+              </svg>
+            {%- endfor -%}
+          </span>
+          {%- if section.settings.rating_text != blank -%}
+            <span class="vhr__rating-text">{{ section.settings.rating_text }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if heading != blank -%}
+        <h1 class="vhr__title">
+          {{ heading }}{% if accent != blank %}
+            <span class="vhr__accent">{{ accent }}</span>
+          {% endif %}
+        </h1>
+      {%- endif -%}
+
+      {%- if section.settings.subtitle != blank -%}
+        <div class="vhr__subtitle">{{ section.settings.subtitle }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <div class="vhr__cta-wrap">
+          <a
+            class="vhr__cta"
+            {% if section.settings.button_link != blank %}href="{{ section.settings.button_link }}"{% else %}href="{{ routes.all_products_collection_url }}"{% endif %}
+          >
+            {{ section.settings.button_label }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .vhr--{{ sid }} {
+    --vhr-fallback: {{ section.settings.fallback_color }};
+    --vhr-text: {{ section.settings.text_color }};
+    --vhr-accent: {{ section.settings.accent_color }};
+    --vhr-btn-bg: {{ section.settings.button_bg }};
+    --vhr-btn-fg: {{ section.settings.button_text_color }};
+    --vhr-btn-bg-hover: {{ section.settings.button_bg_hover }};
+    --vhr-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: {{ section.settings.min_height_mobile }}px;
+    padding: 10px;
+    background-color: var(--vhr-fallback);
+    {% if section.settings.image_mobile != blank %}
+      background-image: url('{{ section.settings.image_mobile | image_url: width: 1200 }}');
+    {% elsif section.settings.image != blank %}
+      background-image: url('{{ section.settings.image | image_url: width: 1400 }}');
+    {% endif %}
+    background-size: cover;
+    background-position: {{ section.settings.focal_mobile }};
+    background-repeat: no-repeat;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+  }
+
+  .vhr--{{ sid }} *,
+  .vhr--{{ sid }} *::before,
+  .vhr--{{ sid }} *::after { box-sizing: border-box; }
+
+  {%- if section.settings.overlay_opacity > 0 -%}
+  .vhr--{{ sid }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: {{ section.settings.overlay_color }};
+    opacity: var(--vhr-overlay);
+    pointer-events: none;
+  }
+  {%- endif -%}
+
+  .vhr--{{ sid }} .vhr__container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: {{ section.settings.position_mobile }};
+    width: 100%;
+    max-width: {{ section.settings.max_width }}px;
+    min-height: {{ section.settings.min_height_mobile }}px;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .vhr--{{ sid }} .vhr__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  /* ---- Valoración ---- */
+  .vhr--{{ sid }} .vhr__rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 14px;
+    padding: 5px 16px;
+    border: 1px solid {{ section.settings.rating_border_color }};
+    border-radius: 3px;
+    background: {{ section.settings.rating_bg_color }};
+  }
+  .vhr--{{ sid }} .vhr__stars { display: inline-flex; gap: 1px; }
+  .vhr--{{ sid }} .vhr__stars svg {
+    width: 12px;
+    height: 12px;
+    fill: {{ section.settings.rating_color }};
+  }
+  .vhr--{{ sid }} .vhr__rating-text,
+  .vhr--{{ sid }} .vhr__rating-text p {
+    margin: 0;
+    display: inline;
+    color: {{ section.settings.rating_color }};
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+  .vhr--{{ sid }} .vhr__rating-text strong { font-weight: 700; }
+
+  /* ---- Título ---- */
+  .vhr--{{ sid }} .vhr__title {
+    width: 100%;
+    margin: 0 0 14px;
+    color: var(--vhr-text);
+    font-family: 'Manrope', sans-serif;
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    font-weight: {{ section.settings.heading_weight }};
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-align: {{ section.settings.text_align_mobile }};
+    text-wrap: balance;
+  }
+  .vhr--{{ sid }} .vhr__accent {
+    color: var(--vhr-accent);
+    {% if section.settings.accent_style == 'italic_serif' %}
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+    {% endif %}
+  }
+
+  /* ---- Subtítulo ---- */
+  .vhr--{{ sid }} .vhr__subtitle,
+  .vhr--{{ sid }} .vhr__subtitle p {
+    margin: 0;
+    color: var(--vhr-text);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.35;
+  }
+  .vhr--{{ sid }} .vhr__subtitle {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: {{ section.settings.text_align_mobile }};
+    opacity: 0.95;
+  }
+  .vhr--{{ sid }} .vhr__subtitle strong { font-weight: 700; }
+
+  /* ---- Botón ---- */
+  .vhr--{{ sid }} .vhr__cta-wrap { width: 100%; }
+  .vhr--{{ sid }} .vhr__cta {
+    display: block;
+    width: 100%;
+    padding: 13px 20px;
+    border: 1px solid var(--vhr-btn-bg);
+    border-radius: {{ section.settings.button_radius }}px;
+    background: var(--vhr-btn-bg);
+    color: var(--vhr-btn-fg);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .vhr--{{ sid }} .vhr__cta:hover {
+    background: var(--vhr-btn-bg-hover);
+    border-color: var(--vhr-btn-bg-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  }
+
+  /* ---- Escritorio ---- */
+  @media screen and (min-width: 769px) {
+    .vhr--{{ sid }} {
+      min-height: {{ section.settings.min_height_desktop }}px;
+      padding: 15px 10px;
+      background-position: {{ section.settings.focal_desktop }};
+      {% if section.settings.image != blank %}
+        background-image: url('{{ section.settings.image | image_url: width: 2400 }}');
+      {% endif %}
+    }
+    .vhr--{{ sid }} .vhr__container {
+      align-items: center;
+      justify-content: {{ section.settings.position_desktop }};
+      min-height: {{ section.settings.min_height_desktop }}px;
+      padding: 20px 30px;
+    }
+    .vhr--{{ sid }} .vhr__content {
+      width: {{ section.settings.content_width }}px;
+      max-width: 50%;
+      padding: 20px 25px;
+    }
+    .vhr--{{ sid }} .vhr__rating { margin-bottom: 20px; }
+    .vhr--{{ sid }} .vhr__title {
+      margin-bottom: 16px;
+      font-size: {{ section.settings.heading_size_desktop }}px;
+      text-align: {{ section.settings.text_align_desktop }};
+    }
+    .vhr--{{ sid }} .vhr__subtitle {
+      margin-bottom: 24px;
+      text-align: {{ section.settings.text_align_desktop }};
+    }
+    .vhr--{{ sid }} .vhr__subtitle,
+    .vhr--{{ sid }} .vhr__subtitle p { font-size: 16px; }
+    .vhr--{{ sid }} .vhr__cta { font-size: 17px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vhr--{{ sid }} .vhr__cta { transition: none; }
+    .vhr--{{ sid }} .vhr__cta:hover { transform: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Hero",
+  "tag": "section",
+  "class": "valca-hero-section",
+  "settings": [
+    { "type": "header", "content": "Imágenes de fondo" },
+    { "type": "image_picker", "id": "image", "label": "Imagen escritorio" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Imagen móvil" },
+    {
+      "type": "select", "id": "focal_desktop", "label": "Encuadre escritorio", "default": "center center",
+      "options": [
+        { "value": "center center", "label": "Centro" },
+        { "value": "left center", "label": "Izquierda" },
+        { "value": "right center", "label": "Derecha" },
+        { "value": "center top", "label": "Arriba" },
+        { "value": "center bottom", "label": "Abajo" }
+      ]
+    },
+    {
+      "type": "select", "id": "focal_mobile", "label": "Encuadre móvil", "default": "center top",
+      "options": [
+        { "value": "center center", "label": "Centro" },
+        { "value": "center top", "label": "Arriba" },
+        { "value": "center bottom", "label": "Abajo" }
+      ]
+    },
+    { "type": "color", "id": "fallback_color", "label": "Color de respaldo", "default": "#0F1113" },
+    { "type": "color", "id": "overlay_color", "label": "Color de superposición", "default": "#000000" },
+    { "type": "range", "id": "overlay_opacity", "label": "Opacidad de superposición (%)", "min": 0, "max": 80, "step": 5, "default": 0 },
+    { "type": "header", "content": "Valoración" },
+    { "type": "checkbox", "id": "show_rating", "label": "Mostrar valoración", "default": true },
+    { "type": "richtext", "id": "rating_text", "label": "Texto de valoración", "default": "<p><strong>+40.000 latinas confían en nosotros</strong></p>" },
+    { "type": "color", "id": "rating_color", "label": "Color de estrellas y texto", "default": "#FFFFFF" },
+    { "type": "color", "id": "rating_border_color", "label": "Color del borde", "default": "#FFFFFF" },
+    { "type": "color_background", "id": "rating_bg_color", "label": "Fondo de la valoración", "default": "rgba(0,0,0,0)" },
+    { "type": "header", "content": "Texto" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Cuidamos lo que muchas veces" },
+    { "type": "text", "id": "accent_text", "label": "Texto destacado", "default": "no se habla" },
+    {
+      "type": "select", "id": "accent_style", "label": "Estilo del texto destacado", "default": "bold",
+      "options": [
+        { "value": "bold", "label": "Igual al título" },
+        { "value": "italic_serif", "label": "Serif cursiva" }
+      ]
+    },
+    { "type": "richtext", "id": "subtitle", "label": "Subtítulo", "default": "<p>Dermocosmética formulada para la piel latina, con activos de alto rendimiento.</p>" },
+    { "type": "range", "id": "heading_size_mobile", "label": "Tamaño del título móvil (px)", "min": 18, "max": 44, "step": 1, "default": 26 },
+    { "type": "range", "id": "heading_size_desktop", "label": "Tamaño del título escritorio (px)", "min": 28, "max": 72, "step": 1, "default": 52 },
+    { "type": "range", "id": "heading_weight", "label": "Grosor del título", "min": 400, "max": 800, "step": 100, "default": 700 },
+    { "type": "color", "id": "text_color", "label": "Color del texto", "default": "#FFFFFF" },
+    { "type": "color", "id": "accent_color", "label": "Color del texto destacado", "default": "#3BAFBF" },
+    { "type": "header", "content": "Botón" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Conocé la línea completa" },
+    { "type": "url", "id": "button_link", "label": "Enlace del botón" },
+    { "type": "color", "id": "button_bg", "label": "Fondo del botón", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_text_color", "label": "Texto del botón", "default": "#0C0C0D" },
+    { "type": "color", "id": "button_bg_hover", "label": "Fondo del botón (hover)", "default": "#E4E4E4" },
+    { "type": "range", "id": "button_radius", "label": "Radio del botón (px)", "min": 0, "max": 40, "step": 1, "default": 21 },
+    { "type": "header", "content": "Disposición" },
+    {
+      "type": "select", "id": "position_desktop", "label": "Posición del contenido (escritorio)", "default": "flex-end",
+      "options": [
+        { "value": "flex-start", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "flex-end", "label": "Derecha" }
+      ]
+    },
+    {
+      "type": "select", "id": "position_mobile", "label": "Posición del contenido (móvil)", "default": "flex-start",
+      "options": [
+        { "value": "flex-start", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "flex-end", "label": "Derecha" }
+      ]
+    },
+    {
+      "type": "select", "id": "text_align_desktop", "label": "Alineación del texto (escritorio)", "default": "left",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ]
+    },
+    {
+      "type": "select", "id": "text_align_mobile", "label": "Alineación del texto (móvil)", "default": "left",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ]
+    },
+    { "type": "range", "id": "content_width", "label": "Ancho del bloque de contenido (px)", "min": 300, "max": 700, "step": 10, "default": 430 },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo del contenedor (px)", "min": 1000, "max": 1800, "step": 20, "default": 1400 },
+    { "type": "range", "id": "min_height_mobile", "label": "Altura mínima móvil (px)", "min": 320, "max": 800, "step": 5, "default": 575 },
+    { "type": "range", "id": "min_height_desktop", "label": "Altura mínima escritorio (px)", "min": 360, "max": 900, "step": 5, "default": 550 },
+    { "type": "header", "content": "Accesibilidad" },
+    { "type": "text", "id": "aria_label", "label": "Etiqueta accesible", "default": "Destacado principal" }
+  ],
+  "presets": [{ "name": "VALCA · Hero" }]
+}
+{% endschema %}

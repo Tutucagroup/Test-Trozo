@@ -1,0 +1,540 @@
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign cards = section.blocks
+-%}
+
+<section class="vtr vtr--{{ sid }}" data-vtr-root aria-label="{{ section.settings.heading | default: 'Resultados reales' | escape }}">
+  <div class="vtr__container">
+    {%- if section.settings.heading != blank or section.settings.subtitle != blank -%}
+      <header class="vtr__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="vtr__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <div class="vtr__subtitle">{{ section.settings.subtitle }}</div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    {%- if cards.size > 0 -%}
+      <div class="vtr__track-wrap">
+        <div class="vtr__track" data-vtr-track>
+          {%- for block in cards -%}
+            {%- liquid
+              assign product = block.settings.product
+              assign has_pair = false
+              if block.settings.image_before != blank and block.settings.image_after != blank
+                assign has_pair = true
+              endif
+            -%}
+
+            <article class="vtr__card" {{ block.shopify_attributes }}>
+              <div class="vtr__media">
+                {%- if has_pair -%}
+                  <div class="vtr__pair">
+                    <div class="vtr__half">
+                      <img
+                        src="{{ block.settings.image_before | image_url: width: 600 }}"
+                        alt="{{ section.settings.label_before | escape }}"
+                        width="600"
+                        height="450"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                      {%- if section.settings.label_before != blank -%}
+                        <span class="vtr__label">{{ section.settings.label_before }}</span>
+                      {%- endif -%}
+                    </div>
+                    <div class="vtr__half">
+                      <img
+                        src="{{ block.settings.image_after | image_url: width: 600 }}"
+                        alt="{{ section.settings.label_after | escape }}"
+                        width="600"
+                        height="450"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                      {%- if section.settings.label_after != blank -%}
+                        <span class="vtr__label">{{ section.settings.label_after }}</span>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- elsif block.settings.image_before != blank -%}
+                  <img
+                    class="vtr__single"
+                    src="{{ block.settings.image_before | image_url: width: 900 }}"
+                    alt="{{ block.settings.author | default: 'Resultado real' | escape }}"
+                    width="900"
+                    height="1200"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                {%- else -%}
+                  <div class="vtr__placeholder">Agregá una imagen de antes y después</div>
+                {%- endif -%}
+              </div>
+
+              <div class="vtr__body">
+                {%- if section.settings.show_stars -%}
+                  <div class="vtr__stars" aria-label="5 de 5 estrellas">
+                    {%- for i in (1..5) -%}
+                      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 0l2.4 5.2 5.6.5-4.2 3.8 1.2 5.5L8 12.2 3 15l1.2-5.5L0 5.7l5.6-.5z"/></svg>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.review != blank -%}
+                  <p class="vtr__review">{{ block.settings.review }}</p>
+                {%- endif -%}
+
+                {%- if block.settings.author != blank -%}
+                  <div class="vtr__author">{{ block.settings.author }}</div>
+                {%- endif -%}
+
+                {%- if product != blank -%}
+                  <a class="vtr__product" href="{{ product.url }}">
+                    {%- if block.settings.dot_color != blank -%}
+                      <span class="vtr__dot" style="background: {{ block.settings.dot_color }};" aria-hidden="true"></span>
+                    {%- endif -%}
+                    <span class="vtr__product-name">{{ product.title }}</span>
+                    <svg class="vtr__product-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M5 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                {%- endif -%}
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.show_arrows -%}
+          <button type="button" class="vtr__nav vtr__nav--prev" data-vtr-prev aria-label="Anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" class="vtr__nav vtr__nav--next" data-vtr-next aria-label="Siguiente">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        {%- endif -%}
+
+        {%- if section.settings.show_progress -%}
+          <div class="vtr__progress" aria-hidden="true">
+            <div class="vtr__progress-fill" data-vtr-progress></div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.disclaimer != blank -%}
+        <p class="vtr__disclaimer">{{ section.settings.disclaimer }}</p>
+      {%- endif -%}
+    {%- else -%}
+      <p class="vtr__empty">Agregá testimonios desde la configuración de esta sección.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .vtr--{{ sid }} {
+    --vtr-gap: {{ section.settings.gap }}px;
+    --vtr-cols: {{ section.settings.columns_desktop }};
+
+    box-sizing: border-box;
+    background: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .vtr--{{ sid }} *,
+  .vtr--{{ sid }} *::before,
+  .vtr--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vtr--{{ sid }} .vtr__container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .vtr--{{ sid }} .vtr__header { text-align: center; margin-bottom: 32px; }
+  .vtr--{{ sid }} .vtr__heading {
+    margin: 0 0 8px;
+    color: {{ section.settings.heading_color }};
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .vtr--{{ sid }} .vtr__subtitle,
+  .vtr--{{ sid }} .vtr__subtitle p {
+    margin: 0;
+    color: {{ section.settings.muted_color }};
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .vtr--{{ sid }} .vtr__track-wrap { position: relative; }
+  .vtr--{{ sid }} .vtr__track {
+    display: flex;
+    gap: var(--vtr-gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 0 12px;
+    cursor: grab;
+  }
+  .vtr--{{ sid }} .vtr__track::-webkit-scrollbar { display: none; }
+  .vtr--{{ sid }} .vtr__track.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+
+  .vtr--{{ sid }} .vtr__card {
+    flex: 0 0 calc(100vw - 40px - 50px);
+    max-width: calc(100vw - 40px - 50px);
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: {{ section.settings.card_radius }}px;
+    background: {{ section.settings.card_bg }};
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.25s ease;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .vtr--{{ sid }} .vtr__card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06), 0 10px 24px rgba(0, 0, 0, 0.09);
+  }
+
+  .vtr--{{ sid }} .vtr__media {
+    position: relative;
+    aspect-ratio: {{ section.settings.media_ratio }};
+    overflow: hidden;
+    background: #F6F6F6;
+  }
+  .vtr--{{ sid }} .vtr__pair { display: flex; width: 100%; height: 100%; }
+  .vtr--{{ sid }} .vtr__half {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+  }
+  .vtr--{{ sid }} .vtr__half:first-child { border-right: 2px solid {{ section.settings.card_bg }}; }
+  .vtr--{{ sid }} .vtr__half img,
+  .vtr--{{ sid }} .vtr__single {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.image_fit }};
+    pointer-events: none;
+  }
+  .vtr--{{ sid }} .vtr__label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    background: rgba(32, 32, 32, 0.78);
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    backdrop-filter: blur(2px);
+  }
+  .vtr--{{ sid }} .vtr__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+    color: {{ section.settings.muted_color }};
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .vtr--{{ sid }} .vtr__body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    padding: 20px 22px 22px;
+  }
+  .vtr--{{ sid }} .vtr__stars { display: inline-flex; gap: 2px; color: {{ section.settings.stars_color }}; }
+  .vtr--{{ sid }} .vtr__stars svg { width: 14px; height: 14px; fill: currentColor; }
+
+  .vtr--{{ sid }} .vtr__review {
+    margin: 0;
+    color: {{ section.settings.text_color }};
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .vtr--{{ sid }} .vtr__author {
+    color: {{ section.settings.muted_color }};
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .vtr--{{ sid }} .vtr__product {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 4px;
+    color: {{ section.settings.accent_color }};
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s ease;
+  }
+  .vtr--{{ sid }} .vtr__product:hover { color: {{ section.settings.accent_hover_color }}; }
+  .vtr--{{ sid }} .vtr__product:hover .vtr__product-arrow { transform: translateX(3px); }
+  .vtr--{{ sid }} .vtr__dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .vtr--{{ sid }} .vtr__product-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .vtr--{{ sid }} .vtr__product-arrow {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    transition: transform 0.2s ease;
+  }
+
+  .vtr--{{ sid }} .vtr__nav { display: none; }
+
+  .vtr--{{ sid }} .vtr__progress {
+    max-width: 320px;
+    height: 3px;
+    margin: 24px auto 0;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+  .vtr--{{ sid }} .vtr__progress-fill {
+    height: 100%;
+    background: {{ section.settings.progress_color }};
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.15s ease-out;
+  }
+
+  .vtr--{{ sid }} .vtr__disclaimer {
+    max-width: 780px;
+    margin: 24px auto 0;
+    color: {{ section.settings.muted_color }};
+    font-size: 11px;
+    line-height: 1.5;
+    text-align: center;
+    opacity: 0.85;
+  }
+
+  .vtr--{{ sid }} .vtr__empty { margin: 0; color: {{ section.settings.muted_color }}; text-align: center; }
+
+  @media screen and (min-width: 990px) {
+    .vtr--{{ sid }} .vtr__container { padding: 0 40px; }
+    .vtr--{{ sid }} .vtr__heading { font-size: 32px; }
+    .vtr--{{ sid }} .vtr__subtitle,
+    .vtr--{{ sid }} .vtr__subtitle p { font-size: 16px; }
+    .vtr--{{ sid }} .vtr__review { font-size: 15px; }
+    .vtr--{{ sid }} .vtr__stars svg { width: 16px; height: 16px; }
+    .vtr--{{ sid }} .vtr__card {
+      flex: 0 0 calc((100% - (var(--vtr-cols) - 1) * var(--vtr-gap)) / var(--vtr-cols));
+      max-width: calc((100% - (var(--vtr-cols) - 1) * var(--vtr-gap)) / var(--vtr-cols));
+    }
+
+    .vtr--{{ sid }} .vtr__nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 50%;
+      background: #fff;
+      color: {{ section.settings.text_color }};
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    }
+    .vtr--{{ sid }} .vtr__nav:hover { background: {{ section.settings.accent_color }}; color: #fff; }
+    .vtr--{{ sid }} .vtr__nav svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .vtr--{{ sid }} .vtr__nav--prev { left: -10px; }
+    .vtr--{{ sid }} .vtr__nav--next { right: -10px; }
+    .vtr--{{ sid }} .vtr__nav.is-disabled { opacity: 0.3; pointer-events: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vtr--{{ sid }} .vtr__track { scroll-behavior: auto; }
+    .vtr--{{ sid }} .vtr__progress-fill,
+    .vtr--{{ sid }} .vtr__product-arrow { transition: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('.vtr--{{ sid }}');
+    if (!root || root.dataset.vtrInit === '1') return;
+    root.dataset.vtrInit = '1';
+
+    var track = root.querySelector('[data-vtr-track]');
+    if (!track) return;
+
+    var progress = root.querySelector('[data-vtr-progress]');
+    var prevBtn = root.querySelector('[data-vtr-prev]');
+    var nextBtn = root.querySelector('[data-vtr-next]');
+    var GAP = {{ section.settings.gap }};
+
+    function refresh() {
+      var max = track.scrollWidth - track.clientWidth;
+      if (progress) {
+        progress.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, Math.max(0, track.scrollLeft / max)) : 0) + ')';
+      }
+      if (prevBtn) prevBtn.classList.toggle('is-disabled', track.scrollLeft <= 5);
+      if (nextBtn) nextBtn.classList.toggle('is-disabled', max <= 0 || track.scrollLeft >= max - 5);
+    }
+    track.addEventListener('scroll', refresh, { passive: true });
+    window.addEventListener('resize', refresh);
+    refresh();
+
+    function step() {
+      var card = track.querySelector('.vtr__card');
+      return card ? card.offsetWidth + GAP : track.clientWidth * 0.8;
+    }
+    if (prevBtn) prevBtn.addEventListener('click', function (e) { e.preventDefault(); track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (nextBtn) nextBtn.addEventListener('click', function (e) { e.preventDefault(); track.scrollBy({ left: step(), behavior: 'smooth' }); });
+
+    var down = false, startX = 0, startScroll = 0, moved = false;
+    track.addEventListener('mousedown', function (e) {
+      if (e.button !== 0 || e.target.closest('a')) return;
+      down = true;
+      moved = false;
+      startX = e.pageX;
+      startScroll = track.scrollLeft;
+      track.classList.add('is-dragging');
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!down) return;
+      if (Math.abs(e.pageX - startX) > 5) moved = true;
+      track.scrollLeft = startScroll - (e.pageX - startX);
+    });
+    document.addEventListener('mouseup', function () {
+      if (!down) return;
+      down = false;
+      track.classList.remove('is-dragging');
+    });
+    track.addEventListener('click', function (e) {
+      if (moved && e.target.closest('a')) {
+        e.preventDefault();
+        moved = false;
+      }
+    });
+
+    track.querySelectorAll('img').forEach(function (img) {
+      img.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VALCA · Transformaciones",
+  "tag": "section",
+  "class": "valca-transformations-section",
+  "settings": [
+    { "type": "header", "content": "Encabezado" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Resultados reales" },
+    { "type": "richtext", "id": "subtitle", "label": "Subtítulo", "default": "<p>Cambios visibles con uso constante, contados por quienes los viven</p>" },
+    { "type": "header", "content": "Etiquetas antes/después" },
+    { "type": "text", "id": "label_before", "label": "Etiqueta antes", "default": "Antes" },
+    { "type": "text", "id": "label_after", "label": "Etiqueta después", "default": "Después" },
+    { "type": "checkbox", "id": "show_stars", "label": "Mostrar estrellas", "default": true },
+    { "type": "header", "content": "Imágenes" },
+    {
+      "type": "select", "id": "media_ratio", "label": "Proporción", "default": "4 / 3",
+      "options": [
+        { "value": "4 / 3", "label": "4:3" },
+        { "value": "1 / 1", "label": "Cuadrada" },
+        { "value": "3 / 4", "label": "Retrato 3:4" }
+      ]
+    },
+    {
+      "type": "select", "id": "image_fit", "label": "Ajuste de imagen", "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Recortar" },
+        { "value": "contain", "label": "Contener" }
+      ]
+    },
+    { "type": "header", "content": "Navegación" },
+    { "type": "checkbox", "id": "show_arrows", "label": "Mostrar flechas (escritorio)", "default": true },
+    { "type": "checkbox", "id": "show_progress", "label": "Mostrar barra de progreso", "default": true },
+    { "type": "color", "id": "progress_color", "label": "Color de la barra", "default": "#202020" },
+    { "type": "header", "content": "Aviso legal" },
+    { "type": "textarea", "id": "disclaimer", "label": "Texto de descargo", "info": "Recomendado para comunicación de resultados. Revisalo con tu equipo legal.", "default": "Los resultados varían según el tipo de piel, la constancia de uso y las condiciones de cada persona. Estos productos no reemplazan la consulta con un profesional de la salud." },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "columns_desktop", "label": "Columnas en escritorio", "min": 2, "max": 5, "step": 1, "default": 3 },
+    { "type": "range", "id": "gap", "label": "Separación (px)", "min": 8, "max": 40, "step": 2, "default": 20 },
+    { "type": "range", "id": "card_radius", "label": "Radio de la tarjeta (px)", "min": 0, "max": 24, "step": 1, "default": 10 },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 1000, "max": 1800, "step": 20, "default": 1400 },
+    { "type": "range", "id": "padding_top", "label": "Espaciado superior (px)", "min": 0, "max": 120, "step": 4, "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaciado inferior (px)", "min": 0, "max": 120, "step": 4, "default": 36 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo de la sección", "default": "#FAFAF7" },
+    { "type": "color", "id": "card_bg", "label": "Fondo de la tarjeta", "default": "#FFFFFF" },
+    { "type": "color", "id": "heading_color", "label": "Título", "default": "#202020" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#202020" },
+    { "type": "color", "id": "muted_color", "label": "Texto secundario", "default": "#5F5E5A" },
+    { "type": "color", "id": "stars_color", "label": "Estrellas", "default": "#FFC107" },
+    { "type": "color", "id": "accent_color", "label": "Acento", "default": "#0194A8" },
+    { "type": "color", "id": "accent_hover_color", "label": "Acento (hover)", "default": "#185C67" }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonio",
+      "settings": [
+        { "type": "image_picker", "id": "image_before", "label": "Imagen antes (o imagen única)" },
+        { "type": "image_picker", "id": "image_after", "label": "Imagen después (opcional)" },
+        { "type": "textarea", "id": "review", "label": "Reseña" },
+        { "type": "text", "id": "author", "label": "Autor" },
+        { "type": "product", "id": "product", "label": "Producto asociado" },
+        { "type": "color", "id": "dot_color", "label": "Color del punto", "default": "#0194A8" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Transformaciones",
+      "blocks": [{ "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" }]
+    }
+  ]
+}
+{% endschema %}

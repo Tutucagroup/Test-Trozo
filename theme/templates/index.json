@@ -1,0 +1,656 @@
+{
+  "sections": {
+    "hero": {
+      "type": "valca-hero",
+      "settings": {
+        "image": "shopify://shop_images/Home_desktop.webp",
+        "image_mobile": "shopify://shop_images/Home_mobile.webp",
+        "focal_desktop": "center center",
+        "focal_mobile": "center top",
+        "fallback_color": "#000000",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "show_rating": true,
+        "rating_text": "<p><strong>Recomendado por dermatólogos en toda Colombia</strong></p>",
+        "rating_color": "#FFFFFF",
+        "rating_border_color": "#FFFFFF",
+        "rating_bg_color": "rgba(0,0,0,0)",
+        "heading": "Cuidamos la piel que",
+        "accent_text": "nadie más formula",
+        "accent_style": "bold",
+        "subtitle": "<p>Dermocosmética con activos de alto rendimiento, pensada para las necesidades reales de la piel latina.</p>",
+        "heading_size_mobile": 26,
+        "heading_size_desktop": 50,
+        "heading_weight": 700,
+        "text_color": "#FFFFFF",
+        "accent_color": "#3BAFBF",
+        "button_label": "Conocé la línea completa",
+        "button_link": "shopify://collections/tienda",
+        "button_bg": "#FFFFFF",
+        "button_text_color": "#0C0C0D",
+        "button_bg_hover": "#E4E4E4",
+        "button_radius": 21,
+        "position_desktop": "flex-end",
+        "position_mobile": "flex-start",
+        "text_align_desktop": "left",
+        "text_align_mobile": "left",
+        "content_width": 430,
+        "max_width": 1400,
+        "min_height_mobile": 575,
+        "min_height_desktop": 550,
+        "aria_label": "Destacado principal"
+      }
+    },
+    "combos": {
+      "type": "valca-product-carousel",
+      "settings": {
+        "heading": "Las rutinas más elegidas",
+        "subtitle": "<p>Kits pensados para acompañar tu piel</p>",
+        "collection": "kits",
+        "products_to_show": 8,
+        "images_per_card": 4,
+        "badge_tag": "mas-vendido",
+        "badge_text": "Más vendido",
+        "badge_bg": "#202020",
+        "badge_text_color": "#FFFFFF",
+        "show_strip": true,
+        "strip_color": "#0194A8",
+        "strip_height": 4,
+        "trust_1": "Envío gratis desde $150.000",
+        "trust_2": "Hasta 3 cuotas sin interés",
+        "trust_color": "#5F5E5A",
+        "show_discount": true,
+        "discount_bg": "#0194A8",
+        "discount_text_color": "#FFFFFF",
+        "show_arrows": true,
+        "show_progress": true,
+        "progress_color": "#202020",
+        "button_label": "Ver todos los kits",
+        "button_link": "shopify://collections/kits",
+        "button_text_color": "#FFFFFF",
+        "columns_desktop": 4,
+        "gap": 20,
+        "card_radius": 10,
+        "image_fit": "cover",
+        "max_width": 1400,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "bg_color": "#FAFAF7",
+        "heading_color": "#202020",
+        "subtitle_color": "#A2A2A2",
+        "card_bg": "#FFFFFF",
+        "card_border": "#EEEEEC",
+        "text_color": "#202020",
+        "muted_color": "#A2A2A2",
+        "accent_color": "#0194A8"
+      }
+    },
+    "doctors": {
+      "type": "valca-logos-marquee",
+      "blocks": {
+        "d1": { "type": "logo", "settings": { "image": "shopify://shop_images/Dra._Dalia_Cuervo_Mesa_de_trabajo_1.jpg", "name": "Dra. Dalia Cuervo", "caption": "Dermatóloga" } },
+        "d2": { "type": "logo", "settings": { "image": "shopify://shop_images/Dra._Angela_Marino.jpg", "name": "Dra. Ángela Marino", "caption": "Dermatóloga" } },
+        "d3": { "type": "logo", "settings": { "image": "shopify://shop_images/Dr._Jonathan_Arguello_Mesa_de_trabajo_1.jpg", "name": "Dr. Jonathan Arguello", "caption": "Dermatólogo" } },
+        "d4": { "type": "logo", "settings": { "image": "shopify://shop_images/Dra._Maria_Manuela_Echavarria.jpg", "name": "Dra. María Manuela Echavarría", "caption": "Dermatóloga" } },
+        "d5": { "type": "logo", "settings": { "image": "shopify://shop_images/Dra._Daissy_Munoz.jpg", "name": "Dra. Daissy Muñoz", "caption": "Dermatóloga" } },
+        "d6": { "type": "logo", "settings": { "image": "shopify://shop_images/Bojanini_Mesa_de_trabajo_1.jpg", "name": "Dr. Bojanini", "caption": "Dermatólogo" } }
+      },
+      "block_order": ["d1", "d2", "d3", "d4", "d5", "d6"],
+      "settings": {
+        "title": "<p><strong>Respaldado y recomendado por dermatólogos</strong></p>",
+        "title_color": "#202020",
+        "title_size": 14,
+        "title_weight": 500,
+        "title_tracking": 0.02,
+        "title_uppercase": false,
+        "title_gap": 22,
+        "duration": 40,
+        "pause_on_hover": true,
+        "logo_height_mobile": 62,
+        "logo_height_desktop": 82,
+        "gap": 44,
+        "gap_desktop": 76,
+        "circular": true,
+        "circle_border_color": "#0194A8",
+        "grayscale": false,
+        "caption_color": "#5F5E5A",
+        "bg_color": "#F6F6F6",
+        "text_color": "#202020",
+        "show_borders": true,
+        "border_color": "#E5E5E5",
+        "padding_top": 26,
+        "padding_bottom": 26
+      }
+    },
+    "lines": {
+      "type": "valca-featured-collections",
+      "blocks": {
+        "c1": {
+          "type": "card",
+          "settings": {
+            "collection": "facial",
+            "title": "Cuidado facial",
+            "description": "Limpieza, hidratación, manchas e imperfecciones con activos dermatológicos."
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "collection": "capilar",
+            "title": "Cuidado capilar",
+            "description": "Anticaída y anticaspa para recuperar densidad y calmar el cuero cabelludo."
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "collection": "proteccion-solar",
+            "title": "Protección solar",
+            "description": "Fluidos ultraligeros de uso diario, con y sin color, para piel latina."
+          }
+        }
+      },
+      "block_order": ["c1", "c2", "c3"],
+      "settings": {
+        "eyebrow": "Nuestras líneas",
+        "title": "Tres líneas, una misma piel cuidada",
+        "title_weight": 500,
+        "cta_label": "Ver línea",
+        "image_radius": 8,
+        "gap": 20,
+        "button_label": "Ver todos los productos",
+        "button_link": "shopify://collections/tienda",
+        "button_bg": "#3BAFBF",
+        "button_text_color": "#FFFFFF",
+        "button_bg_hover": "#FFFFFF",
+        "button_text_color_hover": "#3BAFBF",
+        "button_border": "#DDDCDC",
+        "button_radius": 6,
+        "bg_color": "#FFFFFF",
+        "text_color": "#202020",
+        "title_color": "#202020",
+        "eyebrow_color": "#888880",
+        "desc_color": "#5F5E5A",
+        "cta_color": "#0194A8",
+        "max_width": 1220,
+        "padding_top": 32,
+        "padding_bottom": 20
+      }
+    },
+    "story": {
+      "type": "valca-story",
+      "settings": {
+        "image": "shopify://shop_images/Dra._Dalia_Cuervo_Mesa_de_trabajo_1.jpg",
+        "image_alt": "Dermatóloga del equipo Latinologia",
+        "image_ratio": "3 / 4",
+        "image_position": "center top",
+        "show_tape": true,
+        "tape_color": "#E8DCC4",
+        "date_label": "Investigación clínica",
+        "date_bg": "#FFFFFF",
+        "date_color": "#202020",
+        "date_border": "#E0DDD3",
+        "note_text": "Donde todo empieza",
+        "note_color": "#0194A8",
+        "eyebrow": "Nuestra historia",
+        "title": "Empezó en el consultorio",
+        "title_weight": 500,
+        "subtitle": "Fórmulas que nacieron de la consulta dermatológica diaria, no de una tendencia.",
+        "body": "<p>Antes de ser una marca, Latinologia fue una respuesta a un problema concreto: la mayoría de la dermocosmética disponible estaba pensada para pieles que no se parecen a las nuestras. Manchas, sensibilidad, exceso de grasa y cicatrización en fototipos latinos se comportan distinto.</p><p>Nuestro equipo de dermatólogos empezó a formular para lo que veía todos los días en consulta. Cada activo entra por evidencia, cada concentración se ajusta a la tolerancia real de la piel latina, y cada producto se prueba antes de salir del laboratorio.</p>",
+        "button_label": "Conocé al equipo",
+        "button_link": "shopify://pages/nosotros",
+        "reverse": false,
+        "column_gap": 80,
+        "bg_color": "#FAFAF7",
+        "text_color": "#202020",
+        "title_color": "#202020",
+        "eyebrow_color": "#0194A8",
+        "cta_color": "#0194A8",
+        "max_width": 1180,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "benefits": {
+      "type": "valca-benefits",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "doctor", "title": "Formulado por dermatólogos", "text": "Cada fórmula nace y se valida en la consulta dermatológica." } },
+        "b2": { "type": "benefit", "settings": { "icon": "shield", "title": "Apto para piel latina", "text": "Concentraciones ajustadas a la tolerancia de los fototipos latinos." } },
+        "b3": { "type": "benefit", "settings": { "icon": "flask", "title": "Activos de alto rendimiento", "text": "Ingredientes con evidencia, en dosis que sí hacen diferencia." } },
+        "b4": { "type": "benefit", "settings": { "icon": "eye", "title": "Resultados que se ven", "text": "Piel más pareja, calmada e hidratada con uso constante." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "heading": "Lo que nos hace",
+        "heading_accent": "distintos",
+        "accent_style": "italic_serif",
+        "use_gradient": true,
+        "bg_color": "#0194A8",
+        "bg_color_2": "#185C67",
+        "gradient_angle": 135,
+        "icon_shape": "circle",
+        "icon_radius": 12,
+        "icon_bg": "#FFFFFF",
+        "icon_color": "#0194A8",
+        "icon_size_mobile": 34,
+        "icon_size_desktop": 44,
+        "heading_color": "#FFFFFF",
+        "accent_color": "#FFFFFF",
+        "title_color": "#FFFFFF",
+        "text_color": "#E0F4F7",
+        "columns_mobile": 2,
+        "columns_desktop": 4,
+        "gap": 26,
+        "max_width": 1200,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_top_desktop": 52,
+        "padding_bottom_desktop": 52
+      }
+    },
+    "singles": {
+      "type": "valca-product-carousel",
+      "settings": {
+        "heading": "Cada piel pide algo distinto",
+        "subtitle": "<p>Tratamientos puntuales, formulados para una necesidad real</p>",
+        "collection": "facial",
+        "products_to_show": 10,
+        "images_per_card": 4,
+        "badge_tag": "nuevo",
+        "badge_text": "Nuevo",
+        "badge_bg": "#0194A8",
+        "badge_text_color": "#FFFFFF",
+        "show_strip": true,
+        "strip_color": "#3BAFBF",
+        "strip_height": 3,
+        "trust_1": "Hasta 3 cuotas sin interés",
+        "trust_2": "",
+        "trust_color": "#5F5E5A",
+        "show_discount": true,
+        "discount_bg": "#F2F0EA",
+        "discount_text_color": "#202020",
+        "show_arrows": true,
+        "show_progress": true,
+        "progress_color": "#202020",
+        "button_label": "Ver todos los productos",
+        "button_link": "shopify://collections/tienda",
+        "button_text_color": "#FFFFFF",
+        "columns_desktop": 4,
+        "gap": 20,
+        "card_radius": 10,
+        "image_fit": "cover",
+        "max_width": 1400,
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "bg_color": "#FAFAF7",
+        "heading_color": "#202020",
+        "subtitle_color": "#A2A2A2",
+        "card_bg": "#FFFFFF",
+        "card_border": "#EEEEEC",
+        "text_color": "#202020",
+        "muted_color": "#A2A2A2",
+        "accent_color": "#0194A8"
+      }
+    },
+    "ugc": {
+      "type": "valca-ugc-videos",
+      "blocks": {
+        "v1": {
+          "type": "video_card",
+          "settings": {
+            "mp4_url": "https://cdn.shopify.com/videos/c/vp/229352ffebf847b7905e9efbae444c70/229352ffebf847b7905e9efbae444c70.HD-720p-4.5Mbps-35729987.mp4",
+            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/229352ffebf847b7905e9efbae444c70.thumbnail.0000000000.jpg?v=1727891405",
+            "muted": false,
+            "product": "kit-melacontrolx",
+            "strip_color": "#0194A8"
+          }
+        },
+        "v2": {
+          "type": "video_card",
+          "settings": {
+            "mp4_url": "https://cdn.shopify.com/videos/c/vp/4c9a3add689b4beb90f37e1b23598d01/4c9a3add689b4beb90f37e1b23598d01.HD-720p-4.5Mbps-35730324.mp4",
+            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/4c9a3add689b4beb90f37e1b23598d01.thumbnail.0000000000.jpg?v=1727891842",
+            "muted": false,
+            "product": "kit-acn-shield",
+            "strip_color": "#3BAFBF"
+          }
+        },
+        "v3": {
+          "type": "video_card",
+          "settings": {
+            "mp4_url": "https://cdn.shopify.com/videos/c/vp/06f76dcc1121404380bd33ab0dc50855/06f76dcc1121404380bd33ab0dc50855.HD-720p-4.5Mbps-35730368.mp4",
+            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/06f76dcc1121404380bd33ab0dc50855.thumbnail.0000000000.jpg?v=1727891823",
+            "muted": false,
+            "product": "kit-capilar-advanced",
+            "strip_color": "#185C67"
+          }
+        },
+        "v4": {
+          "type": "video_card",
+          "settings": {
+            "mp4_url": "https://cdn.shopify.com/videos/c/vp/34b3fe3ffa6d49d38b0f603caaa9006d/34b3fe3ffa6d49d38b0f603caaa9006d.HD-720p-4.5Mbps-35730503.mp4",
+            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/34b3fe3ffa6d49d38b0f603caaa9006d.thumbnail.0000000000.jpg?v=1727892032",
+            "muted": false,
+            "product": "kit-rutina-basica-de-cuidado-facial",
+            "strip_color": "#0194A8"
+          }
+        },
+        "v5": {
+          "type": "video_card",
+          "settings": {
+            "mp4_url": "https://cdn.shopify.com/videos/c/vp/e89cc909b9df4fd9a38aad305ef5ea96/e89cc909b9df4fd9a38aad305ef5ea96.HD-720p-4.5Mbps-35731111.mp4",
+            "poster_url": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/preview_images/e89cc909b9df4fd9a38aad305ef5ea96.thumbnail.0000000000.jpg?v=1727892593",
+            "muted": false,
+            "product": "kit-parches",
+            "strip_color": "#3BAFBF"
+          }
+        }
+      },
+      "block_order": ["v1", "v2", "v3", "v4", "v5"],
+      "settings": {
+        "heading": "Miles de latinas ya eligieron Latinologia",
+        "show_rating": true,
+        "rating_text": "<p>Reseñas reales de nuestra comunidad</p>",
+        "subtitle": "",
+        "play_bg": "#0194A8",
+        "play_color": "#FFFFFF",
+        "show_arrows": true,
+        "show_progress": true,
+        "progress_color": "#202020",
+        "columns_desktop": 3,
+        "gap": 20,
+        "card_radius": 10,
+        "max_width": 1400,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "bg_color": "#FFFFFF",
+        "card_bg": "#FFFFFF",
+        "heading_color": "#202020",
+        "text_color": "#202020",
+        "muted_color": "#5F5E5A",
+        "stars_color": "#FFC107",
+        "accent_color": "#0194A8"
+      }
+    },
+    "transformations": {
+      "type": "valca-transformations",
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "image_before": "shopify://shop_images/Danney_g_mobile.webp",
+            "review": "Mis imperfecciones no desaparecieron de un día para otro, pero con la rutina completa la piel se fue calmando y hoy la veo mucho más pareja.",
+            "author": "Paciente de la Dra. Danney Gómez",
+            "product": "kit-acn-shield",
+            "dot_color": "#0194A8"
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "image_before": "shopify://shop_images/Caro_solorzano_mobile.webp",
+            "review": "Venía con manchas desde el embarazo. Con uso constante y protección solar diaria empecé a notar el tono mucho más uniforme.",
+            "author": "Paciente de la Dra. Carolina Solórzano",
+            "product": "kit-melacontrolx",
+            "dot_color": "#3BAFBF"
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "image_before": "shopify://shop_images/Paola_T_mobile.webp",
+            "review": "Lo que más me sorprendió fue la textura: la piel dejó de sentirse tirante y la hidratación se mantiene todo el día.",
+            "author": "Paciente de la Dra. Paola Urquijo",
+            "product": "kit-rutina-basica-de-cuidado-facial",
+            "dot_color": "#185C67"
+          }
+        },
+        "t4": {
+          "type": "testimonial",
+          "settings": {
+            "image_before": "shopify://shop_images/Acosta_mobile.webp",
+            "review": "Después de meses de tratamiento la mejoría es evidente. Es el resultado de constancia, no de un milagro.",
+            "author": "Paciente del Dr. Alejandro Acosta",
+            "product": "kit-melacontrolx",
+            "dot_color": "#0194A8"
+          }
+        },
+        "t5": {
+          "type": "testimonial",
+          "settings": {
+            "image_before": "shopify://shop_images/Naranjo_mobile.webp",
+            "review": "El cuero cabelludo dejó de picar y la caída se redujo bastante. Recuperé densidad en las zonas más despobladas.",
+            "author": "Paciente del Dr. Naranjo",
+            "product": "kit-capilar-advanced",
+            "dot_color": "#3BAFBF"
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3", "t4", "t5"],
+      "settings": {
+        "heading": "Transformaciones reales",
+        "subtitle": "<p>Cambios visibles con uso constante, respaldados por dermatólogos</p>",
+        "label_before": "Antes",
+        "label_after": "Después",
+        "show_stars": true,
+        "media_ratio": "3 / 4",
+        "image_fit": "contain",
+        "show_arrows": true,
+        "show_progress": true,
+        "progress_color": "#202020",
+        "disclaimer": "Los resultados varían según el tipo de piel, la constancia de uso y las condiciones de cada persona. Estos productos no reemplazan la consulta con un profesional de la salud.",
+        "columns_desktop": 3,
+        "gap": 20,
+        "card_radius": 10,
+        "max_width": 1400,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "bg_color": "#FAFAF7",
+        "card_bg": "#FFFFFF",
+        "heading_color": "#202020",
+        "text_color": "#202020",
+        "muted_color": "#5F5E5A",
+        "stars_color": "#FFC107",
+        "accent_color": "#0194A8",
+        "accent_hover_color": "#185C67"
+      }
+    },
+    "banner": {
+      "type": "valca-image-banner",
+      "settings": {
+        "image": "shopify://shop_images/Pieles_latinas.webp",
+        "image_mobile": "shopify://shop_images/Pieles_latinas_copy.webp",
+        "background_size": "cover",
+        "focal_desktop": "center center",
+        "focal_mobile": "center center",
+        "fallback_color": "#000000",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "link": "shopify://pages/nosotros",
+        "eyebrow": "",
+        "heading": "",
+        "subheading": "",
+        "heading_size_mobile": 28,
+        "heading_size_desktop": 44,
+        "heading_weight": 700,
+        "button_label": "",
+        "button_link": "",
+        "heading_color": "#FFFFFF",
+        "text_color": "#FFFFFF",
+        "eyebrow_color": "#FFFFFF",
+        "halign_desktop": "flex-start",
+        "valign_desktop": "center",
+        "halign_mobile": "center",
+        "valign_mobile": "flex-end",
+        "text_align": "left",
+        "max_width": 1400,
+        "min_height_mobile": 520,
+        "min_height_desktop": 470
+      }
+    },
+    "gallery": {
+      "type": "valca-photo-grid",
+      "blocks": {
+        "p1": { "type": "photo", "settings": { "image": "shopify://shop_images/RenovAOX_X__1.jpg", "alt": "Rutina Latinologia", "link": "shopify://collections/tienda" } },
+        "p2": { "type": "photo", "settings": { "image": "shopify://shop_images/RenovAOX_X__2.jpg", "alt": "Rutina Latinologia", "link": "shopify://collections/tienda" } },
+        "p3": { "type": "photo", "settings": { "image": "shopify://shop_images/RenovAOX_X__3.jpg", "alt": "Rutina Latinologia", "link": "shopify://collections/tienda" } },
+        "p4": { "type": "photo", "settings": { "image": "shopify://shop_images/RenovAOX_X__4.jpg", "alt": "Rutina Latinologia", "link": "shopify://collections/tienda" } },
+        "p5": { "type": "photo", "settings": { "image": "shopify://shop_images/RenovAOX_X__5.jpg", "alt": "Rutina Latinologia", "link": "shopify://collections/tienda" } },
+        "p6": { "type": "photo", "settings": { "image": "shopify://shop_images/MELACONTROL_AM_1_e7961ccb-c764-477d-abe8-7cfbdb9e8ca2.jpg", "alt": "MelaControlX AM", "link": "shopify://collections/manchas" } },
+        "p7": { "type": "photo", "settings": { "image": "shopify://shop_images/MELACONTROL_pM_1.jpg", "alt": "MelaControlX PM", "link": "shopify://collections/manchas" } },
+        "p8": { "type": "photo", "settings": { "image": "shopify://shop_images/PROTECTOR_SOLAR_1.jpg", "alt": "SunShield", "link": "shopify://collections/proteccion-solar" } },
+        "p9": { "type": "photo", "settings": { "image": "shopify://shop_images/KIT_FOLIGROW.jpg", "alt": "FoliGrow", "link": "shopify://collections/capilar" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"],
+      "settings": {
+        "title": "Sé parte de",
+        "title_accent": "Latinologia",
+        "accent_style": "bold",
+        "subtitle": "Mostrá tu rutina con #MiPielLatina",
+        "columns_mobile": 3,
+        "columns_desktop": 3,
+        "gap": 6,
+        "image_radius": 4,
+        "border_width": 0,
+        "border_color": "#DDDDDD",
+        "grid_max_width": 600,
+        "follow_label": "Seguinos en",
+        "follow_handle": "@latinologia__",
+        "follow_link": "https://www.instagram.com/latinologia__/",
+        "follow_bg": "#FFFFFF",
+        "follow_label_color": "#8A6A7C",
+        "gradient_1": "#833AB4",
+        "gradient_2": "#A61563",
+        "gradient_3": "#E5842C",
+        "bg_color": "#FAFAF7",
+        "title_color": "#202020",
+        "accent_color": "#0194A8",
+        "subtitle_color": "#5F5E5A",
+        "max_width": 1200,
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "faq": {
+      "type": "valca-faq",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué hace distinta a la dermocosmética de Latinologia?",
+            "answer": "<p>Nuestras fórmulas se desarrollan a partir de lo que los dermatólogos ven en consulta con pieles latinas: mayor tendencia a manchas, sensibilidad y cicatrización distinta. Ajustamos activos y concentraciones a esa realidad, en lugar de adaptar fórmulas pensadas para otros fototipos.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Sirven para piel sensible?",
+            "answer": "<p>Sí. Las líneas están formuladas buscando tolerancia, y varias referencias son aptas para piel sensible. Aun así, antes del primer uso te recomendamos aplicar una pequeña cantidad en una zona discreta para confirmar tu tolerancia individual.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "¿En cuánto tiempo se ven resultados?",
+            "answer": "<p>La hidratación y la comodidad de la piel suelen notarse en las primeras aplicaciones. Los cambios visibles —tono más uniforme, menos imperfecciones, mejor textura— dependen del uso constante y del estado inicial de la piel: en general se empiezan a percibir entre las 4 y 12 semanas.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Me conviene un kit o un producto individual?",
+            "answer": "<p>Si querés tratar una necesidad puntual, un producto individual alcanza. Si buscás una rutina completa, los kits están armados para que los productos trabajen en conjunto y además tienen un precio más conveniente que comprarlos por separado.</p>"
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto tarda el envío?",
+            "answer": "<p>Hacemos envíos a toda Colombia. Los pedidos se despachan en 24 a 48 horas hábiles luego de confirmado el pago. Los tiempos de entrega y el monto de envío gratis vigente se muestran al finalizar la compra.</p>"
+          }
+        },
+        "q6": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Reemplazan la consulta con un dermatólogo?",
+            "answer": "<p>No. Son productos de cuidado cosmético que acompañan el tratamiento, pero no sustituyen el diagnóstico ni la indicación de un profesional de la salud. Si tenés una afección en la piel, consultá a tu dermatólogo.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6"],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Preguntas frecuentes",
+        "subtitle": "<p>Lo que necesitás saber antes de elegir tu rutina</p>",
+        "layout": "center",
+        "accordion": true,
+        "bg_color": "#FAFAF7",
+        "item_bg": "#FFFFFF",
+        "border_color": "#E5E5E5",
+        "heading_color": "#202020",
+        "subtitle_color": "#5F5E5A",
+        "question_color": "#202020",
+        "answer_color": "#5F5E5A",
+        "accent_color": "#0194A8",
+        "item_radius": 8,
+        "item_gap": 4,
+        "max_width": 1200,
+        "items_max_width": 800,
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "padding_top_desktop": 44,
+        "padding_bottom_desktop": 44
+      }
+    },
+    "newsletter": {
+      "type": "valca-newsletter",
+      "settings": {
+        "heading": "Sumate al cuidado consciente",
+        "body": "<p>Suscribite y recibí <strong>tips de cuidado, lanzamientos y novedades</strong> de Latinologia directo en tu correo.</p>",
+        "input_label": "",
+        "placeholder": "Tu correo electrónico",
+        "button_label": "Suscribirme",
+        "show_button_text": true,
+        "tag": "newsletter",
+        "success_text": "¡Gracias! Ya estás suscrita.",
+        "disclaimer": "<p>Al suscribirte aceptás recibir comunicaciones de Latinologia. Podés darte de baja en cualquier momento.</p>",
+        "bg_color": "#0194A8",
+        "heading_color": "#FFFFFF",
+        "text_color": "#E8F6F8",
+        "label_color": "#FFFFFF",
+        "disclaimer_color": "#FFFFFF",
+        "link_color": "#FFFFFF",
+        "error_color": "#FFE0E0",
+        "input_bg": "#FFFFFF",
+        "input_text_color": "#202020",
+        "placeholder_color": "#5F5E5A",
+        "input_border": "#CCCCCC",
+        "input_height": 50,
+        "input_radius": 8,
+        "button_bg": "#185C67",
+        "button_text_color": "#FFFFFF",
+        "button_radius": 8,
+        "max_width": 1200,
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "padding_top_desktop": 44,
+        "padding_bottom_desktop": 52
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "combos",
+    "doctors",
+    "lines",
+    "story",
+    "benefits",
+    "singles",
+    "ugc",
+    "transformations",
+    "banner",
+    "gallery",
+    "faq",
+    "newsletter"
+  ]
+}

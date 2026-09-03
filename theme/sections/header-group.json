@@ -1,0 +1,50 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "valca_announcement": {
+      "type": "valca-announcement",
+      "blocks": {
+        "s1": { "type": "slide", "settings": { "text": "<p>Envío <strong>gratis</strong> en compras superiores a $150.000</p>" } },
+        "s2": { "type": "slide", "settings": { "text": "<p>Paga hasta en <strong>3 cuotas sin interés</strong></p>" } },
+        "s3": { "type": "slide", "settings": { "text": "<p><strong>Dermocosmética formulada por dermatólogos</strong></p>" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "bg_color": "#0194A8",
+        "text_color": "#FFFFFF",
+        "highlight_color": "#FFFFFF",
+        "interval": 5,
+        "speed": 500,
+        "show_arrows": false,
+        "height_mobile": 35,
+        "height_desktop": 40,
+        "font_size_mobile": 12,
+        "font_size_desktop": 14,
+        "aria_label": "Anuncios de la tienda"
+      }
+    },
+    "valca_header": {
+      "type": "valca-header",
+      "settings": {
+        "logo": "shopify://shop_images/Logo_Latinolog_a.png",
+        "logo_width": 150,
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "sticky": true,
+        "max_width": 1400,
+        "height_mobile": 58,
+        "height_desktop": 66,
+        "bg_color": "#FFFFFF",
+        "text_color": "#202020",
+        "accent_color": "#0194A8",
+        "border_color": "#E5E5E5",
+        "social_instagram": "https://www.instagram.com/latinologia__/",
+        "social_facebook": "https://www.facebook.com/Latinologia",
+        "social_tiktok": "https://www.tiktok.com/@latinologia"
+      }
+    }
+  },
+  "order": ["valca_announcement", "valca_header"]
+}
