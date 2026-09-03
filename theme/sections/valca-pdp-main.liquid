@@ -1,0 +1,663 @@
+{%- comment -%}
+  VALCA · Ficha de producto (galería + columna de compra).
+
+  Autónoma: no depende de CSS ni de JS del tema anfitrión. Todo el estilo y el
+  comportamiento van dentro de la sección y se aíslan con `section.id`, de modo
+  que puede convivir con cualquier otra sección de Horizon.
+
+  La columna derecha se arma con bloques para que el orden se cambie desde el
+  editor. Incluye el bloque `@app`, que es donde entra la app de upsell/bundles
+  sin tocar el código.
+{%- endcomment -%}
+
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign prod = section.settings.product | default: product
+  assign has_product = false
+  if prod != blank
+    assign has_product = true
+  endif
+-%}
+
+<section
+  class="vpd vpd--{{ sid }}"
+  data-vpd="{{ sid }}"
+  aria-label="{{ prod.title | default: 'Producto' | escape }}"
+>
+  <div class="vpd__inner">
+    <div class="vpd__grid">
+      {%- comment -%} ---------- Galería ---------- {%- endcomment -%}
+      <div class="vpd__gallery">
+        <div class="vpd__stage">
+          {%- if has_product and prod.images.size > 0 -%}
+            {%- for img in prod.images limit: 10 -%}
+              <figure class="vpd__slide{% if forloop.first %} is-active{% endif %}" data-vpd-slide="{{ forloop.index0 }}">
+                <img
+                  src="{{ img | image_url: width: 1200 }}"
+                  alt="{{ img.alt | default: prod.title | escape }}"
+                  width="1200"
+                  height="1200"
+                  {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                >
+              </figure>
+            {%- endfor -%}
+          {%- else -%}
+            <figure class="vpd__slide is-active vpd__slide--empty">
+              <span>Elegí un producto en los ajustes de la sección</span>
+            </figure>
+          {%- endif -%}
+
+          {%- if has_product and prod.images.size > 1 -%}
+            <button class="vpd__arrow vpd__arrow--prev" type="button" data-vpd-prev aria-label="Imagen anterior">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <button class="vpd__arrow vpd__arrow--next" type="button" data-vpd-next aria-label="Imagen siguiente">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          {%- endif -%}
+        </div>
+
+        {%- if has_product and prod.images.size > 1 -%}
+          <div class="vpd__thumbs" role="tablist" aria-label="Miniaturas del producto">
+            {%- for img in prod.images limit: 10 -%}
+              <button
+                class="vpd__thumb{% if forloop.first %} is-active{% endif %}"
+                type="button"
+                role="tab"
+                aria-label="Ver imagen {{ forloop.index }}"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                data-vpd-thumb="{{ forloop.index0 }}"
+              >
+                <img src="{{ img | image_url: width: 240 }}" alt="" width="240" height="240" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+
+          <div class="vpd__dots" aria-hidden="true">
+            {%- for img in prod.images limit: 10 -%}
+              <span class="vpd__dot{% if forloop.first %} is-active{% endif %}" data-vpd-dot="{{ forloop.index0 }}"></span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ---------- Información y compra ---------- {%- endcomment -%}
+      <div class="vpd__info">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+
+            {%- when 'rating' -%}
+              <div class="vpd__rating" {{ block.shopify_attributes }}>
+                <span class="vpd__stars" aria-hidden="true">
+                  {%- assign full = block.settings.stars_full | at_most: 5 -%}
+                  {%- for i in (1..5) -%}
+                    <svg viewBox="0 0 24 24" class="vpd__star{% if forloop.index > full %} is-empty{% endif %}">
+                      <path d="M12 3.2l2.6 5.9 6.2.6-4.7 4.1 1.4 6.1L12 16.7 6.5 19.9l1.4-6.1L3.2 9.7l6.2-.6z"/>
+                    </svg>
+                  {%- endfor -%}
+                </span>
+                <span class="vpd__rating-score">{{ block.settings.score }}</span>
+                {%- if block.settings.count != blank -%}
+                  <span class="vpd__rating-count">{{ block.settings.count }}</span>
+                {%- endif -%}
+              </div>
+
+            {%- when 'trust' -%}
+              <div class="vpd__trust" {{ block.shopify_attributes }}>
+                <p class="vpd__trust-top">
+                  <span class="vpd__trust-brand">{{ block.settings.brand }}</span>{% if block.settings.brand_tail != blank %} · {{ block.settings.brand_tail }}{% endif %}
+                </p>
+                {%- if block.settings.proof != blank -%}
+                  <p class="vpd__trust-bottom">
+                    <span class="vpd__trust-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><path d="M4 10h16M5 10l7-5 7 5M6 10v9M10 10v9M14 10v9M18 10v9M4 19h16"/></svg>
+                    </span>
+                    <span>{{ block.settings.proof }}</span>
+                  </p>
+                {%- endif -%}
+              </div>
+
+            {%- when 'heading' -%}
+              <div class="vpd__heading" {{ block.shopify_attributes }}>
+                {%- if block.settings.eyebrow != blank -%}
+                  <span class="vpd__eyebrow"><span class="vpd__eyebrow-dot"></span>{{ block.settings.eyebrow }}</span>
+                {%- endif -%}
+                <h1 class="vpd__title">
+                  {{ block.settings.title | default: prod.title }}
+                  {%- if block.settings.title_accent != blank %} <span class="vpd__title-accent">{{ block.settings.title_accent }}</span>{% endif -%}
+                </h1>
+                {%- if block.settings.subtitle != blank -%}
+                  <div class="vpd__subtitle">{{ block.settings.subtitle }}</div>
+                {%- endif -%}
+              </div>
+
+            {%- when 'bullets' -%}
+              <ul class="vpd__bullets" {{ block.shopify_attributes }}>
+                {%- for i in (1..5) -%}
+                  {%- liquid
+                    case i
+                      when 1
+                        assign line = block.settings.bullet_1
+                      when 2
+                        assign line = block.settings.bullet_2
+                      when 3
+                        assign line = block.settings.bullet_3
+                      when 4
+                        assign line = block.settings.bullet_4
+                      else
+                        assign line = block.settings.bullet_5
+                    endcase
+                  -%}
+                  {%- if line != blank -%}
+                    <li class="vpd__bullet">
+                      <span class="vpd__bullet-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+                      </span>
+                      <span>{{ line }}</span>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+
+            {%- when 'price' -%}
+              <div class="vpd__price" {{ block.shopify_attributes }}>
+                <span class="vpd__price-now">{{ prod.price | money }}</span>
+                {%- assign cap = prod.compare_at_price | default: 0 -%}
+                {%- if cap > prod.price -%}
+                  <s class="vpd__price-was">{{ cap | money }}</s>
+                  {%- assign saved = cap | minus: prod.price | times: 100.0 | divided_by: cap | round -%}
+                  <span class="vpd__price-off">-{{ saved }}%</span>
+                {%- endif -%}
+              </div>
+
+            {%- when 'buy_buttons' -%}
+              <div class="vpd__buy" {{ block.shopify_attributes }}>
+                {%- if has_product -%}
+                  {%- form 'product', prod, class: 'vpd__form' -%}
+                    <input type="hidden" name="id" value="{{ prod.selected_or_first_available_variant.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button
+                      class="vpd__cta"
+                      type="submit"
+                      name="add"
+                      {% unless prod.available %}disabled{% endunless %}
+                    >
+                      {%- if prod.available -%}
+                        {{ block.settings.label | default: 'Agregar al carrito' }}
+                      {%- else -%}
+                        Agotado
+                      {%- endif -%}
+                    </button>
+                  {%- endform -%}
+                {%- else -%}
+                  <button class="vpd__cta" type="button" disabled>{{ block.settings.label }}</button>
+                {%- endif -%}
+              </div>
+
+            {%- when 'badge' -%}
+              <div class="vpd__badge vpd__badge--{{ block.settings.style }}" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </div>
+
+            {%- when 'text' -%}
+              <div class="vpd__text" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+
+            {%- when '@app' -%}
+              <div class="vpd__app" {{ block.shopify_attributes }}>{% render block %}</div>
+
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vpd--{{ sid }} {
+    --vpd-accent: {{ section.settings.accent_color }};
+    --vpd-accent-dark: {{ section.settings.accent_dark }};
+    --vpd-accent-soft: {{ section.settings.accent_soft }};
+    --vpd-ink: {{ section.settings.text_color }};
+    --vpd-muted: {{ section.settings.muted_color }};
+
+    box-sizing: border-box;
+    padding: {{ section.settings.padding_top }}px 16px {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color }};
+    color: var(--vpd-ink);
+    font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    letter-spacing: -0.01em;
+  }
+  .vpd--{{ sid }} *,
+  .vpd--{{ sid }} *::before,
+  .vpd--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vpd--{{ sid }} .vpd__inner { max-width: {{ section.settings.max_width }}px; margin: 0 auto; }
+  .vpd--{{ sid }} .vpd__grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+
+  /* ---------- Galería ---------- */
+  .vpd--{{ sid }} .vpd__stage {
+    position: relative;
+    border-radius: {{ section.settings.image_radius }}px;
+    overflow: hidden;
+    background: {{ section.settings.image_bg }};
+  }
+  .vpd--{{ sid }} .vpd__slide {
+    display: none;
+    margin: 0;
+    aspect-ratio: 1 / 1;
+  }
+  .vpd--{{ sid }} .vpd__slide.is-active { display: block; }
+  .vpd--{{ sid }} .vpd__slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.image_fit }};
+  }
+  .vpd--{{ sid }} .vpd__slide--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    color: var(--vpd-muted);
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .vpd--{{ sid }} .vpd__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--vpd-ink);
+    cursor: pointer;
+    padding: 0;
+  }
+  .vpd--{{ sid }} .vpd__arrow svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .vpd--{{ sid }} .vpd__arrow--prev { left: 10px; }
+  .vpd--{{ sid }} .vpd__arrow--next { right: 10px; }
+
+  /* En móvil, una sola fila desplazable: 10 miniaturas en rejilla ocuparían
+     tres filas y empujarían el precio y el botón fuera de la primera pantalla. */
+  .vpd--{{ sid }} .vpd__thumbs {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .vpd--{{ sid }} .vpd__thumbs::-webkit-scrollbar { display: none; }
+  .vpd--{{ sid }} .vpd__thumb {
+    flex: 0 0 calc(25% - 3px);
+    scroll-snap-align: start;
+    padding: 0;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    overflow: hidden;
+    background: {{ section.settings.image_bg }};
+    cursor: pointer;
+    aspect-ratio: 1 / 1;
+  }
+  .vpd--{{ sid }} .vpd__thumb.is-active { border-color: var(--vpd-accent); }
+  .vpd--{{ sid }} .vpd__thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  .vpd--{{ sid }} .vpd__dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px; }
+  .vpd--{{ sid }} .vpd__dot { width: 7px; height: 7px; border-radius: 999px; background: #d5d5d5; }
+  .vpd--{{ sid }} .vpd__dot.is-active { background: var(--vpd-accent); }
+
+  /* ---------- Columna de compra ---------- */
+  .vpd--{{ sid }} .vpd__info { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
+
+  .vpd--{{ sid }} .vpd__rating { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .vpd--{{ sid }} .vpd__stars { display: inline-flex; gap: 1px; }
+  .vpd--{{ sid }} .vpd__star { width: 18px; height: 18px; fill: {{ section.settings.star_color }}; }
+  .vpd--{{ sid }} .vpd__star.is-empty { fill: #e4e4e4; }
+  .vpd--{{ sid }} .vpd__rating-score { font-size: 14px; font-weight: 700; }
+  .vpd--{{ sid }} .vpd__rating-count { font-size: 14px; color: var(--vpd-muted); }
+
+  .vpd--{{ sid }} .vpd__trust {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 3px;
+    align-self: flex-start;
+    max-width: 100%;
+    padding: 8px 12px 8px 13px;
+    background: #fff;
+    border: 1px solid var(--vpd-accent-soft);
+    border-left: 4px solid var(--vpd-accent);
+    border-radius: 11px;
+  }
+  .vpd--{{ sid }} .vpd__trust-top { margin: 0; font-size: 13px; line-height: 1.15; font-weight: 800; }
+  .vpd--{{ sid }} .vpd__trust-brand { color: var(--vpd-accent-dark); font-weight: 900; }
+  .vpd--{{ sid }} .vpd__trust-bottom { display: inline-flex; align-items: center; gap: 5px; margin: 0; font-size: 11.5px; font-weight: 700; color: var(--vpd-muted); }
+  .vpd--{{ sid }} .vpd__trust-icon svg { width: 12px; height: 12px; fill: none; stroke: var(--vpd-accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; display: block; }
+
+  .vpd--{{ sid }} .vpd__heading { display: flex; flex-direction: column; gap: 8px; }
+  .vpd--{{ sid }} .vpd__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    align-self: flex-start;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--vpd-accent-soft);
+    color: var(--vpd-accent-dark);
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .vpd--{{ sid }} .vpd__eyebrow-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--vpd-accent); }
+  .vpd--{{ sid }} .vpd__title {
+    margin: 0;
+    font-size: {{ section.settings.title_size_mobile }}px;
+    line-height: 1.08;
+    font-weight: 760;
+    letter-spacing: -0.035em;
+  }
+  .vpd--{{ sid }} .vpd__title-accent { color: var(--vpd-accent-dark); }
+  .vpd--{{ sid }} .vpd__subtitle { font-size: 13.5px; line-height: 1.45; color: #3f3f3f; }
+  .vpd--{{ sid }} .vpd__subtitle p { margin: 0; }
+  .vpd--{{ sid }} .vpd__subtitle strong { font-weight: 800; color: var(--vpd-accent-dark); }
+
+  .vpd--{{ sid }} .vpd__bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; }
+  .vpd--{{ sid }} .vpd__bullet {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 7px 10px;
+    background: #fff;
+    border: 1px solid var(--vpd-accent-soft);
+    border-radius: 10px;
+    font-size: 12.8px;
+    line-height: 1.32;
+  }
+  .vpd--{{ sid }} .vpd__bullet-icon {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    background: var(--vpd-accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--vpd-accent-dark);
+  }
+  .vpd--{{ sid }} .vpd__bullet-icon svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+  .vpd--{{ sid }} .vpd__bullet strong { color: var(--vpd-accent-dark); font-weight: 850; }
+
+  .vpd--{{ sid }} .vpd__price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .vpd--{{ sid }} .vpd__price-now { font-size: 24px; font-weight: 800; }
+  .vpd--{{ sid }} .vpd__price-was { font-size: 15px; color: #9a9a9a; }
+  .vpd--{{ sid }} .vpd__price-off {
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--vpd-accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .vpd--{{ sid }} .vpd__form { margin: 0; }
+  .vpd--{{ sid }} .vpd__cta {
+    width: 100%;
+    min-height: 50px;
+    padding: 13px 20px;
+    border: 0;
+    border-radius: {{ section.settings.button_radius }}px;
+    background: var(--vpd-accent);
+    color: {{ section.settings.button_text_color }};
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .vpd--{{ sid }} .vpd__cta[disabled] { background: #c9c9c9; cursor: not-allowed; }
+
+  .vpd--{{ sid }} .vpd__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 800;
+    text-align: center;
+  }
+  .vpd--{{ sid }} .vpd__badge--shipping {
+    background: var(--vpd-accent-soft);
+    border: 1px solid var(--vpd-accent);
+    color: var(--vpd-accent-dark);
+  }
+  .vpd--{{ sid }} .vpd__badge--kit {
+    background: #fff;
+    border: 1px solid var(--vpd-accent-soft);
+    color: var(--vpd-accent-dark);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .vpd--{{ sid }} .vpd__text { font-size: 13.5px; line-height: 1.5; color: var(--vpd-muted); }
+  .vpd--{{ sid }} .vpd__text p { margin: 0 0 8px; }
+  .vpd--{{ sid }} .vpd__app:empty { display: none; }
+
+  /* ---------- Escritorio ---------- */
+  @media screen and (min-width: 900px) {
+    .vpd--{{ sid }} { padding-left: 24px; padding-right: 24px; }
+    .vpd--{{ sid }} .vpd__grid {
+      grid-template-columns: minmax(0, {{ section.settings.gallery_ratio }}fr) minmax(0, {{ section.settings.info_ratio }}fr);
+      gap: 40px;
+      align-items: start;
+    }
+    .vpd--{{ sid }} .vpd__gallery { position: sticky; top: 20px; }
+    .vpd--{{ sid }} .vpd__thumbs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      overflow: visible;
+    }
+    .vpd--{{ sid }} .vpd__thumb { flex: none; }
+    .vpd--{{ sid }} .vpd__dots { display: none; }
+    .vpd--{{ sid }} .vpd__info { gap: 12px; }
+    .vpd--{{ sid }} .vpd__title { font-size: {{ section.settings.title_size_desktop }}px; }
+    .vpd--{{ sid }} .vpd__subtitle { font-size: 14.5px; }
+    .vpd--{{ sid }} .vpd__bullet { font-size: 13.4px; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-vpd="{{ sid }}"]');
+    if (!root || root.dataset.vpdReady) return;
+    root.dataset.vpdReady = '1';
+
+    var slides = root.querySelectorAll('[data-vpd-slide]');
+    var thumbs = root.querySelectorAll('[data-vpd-thumb]');
+    var dots = root.querySelectorAll('[data-vpd-dot]');
+    if (slides.length < 2) return;
+    var current = 0;
+
+    function show(index) {
+      current = (index + slides.length) % slides.length;
+      for (var i = 0; i < slides.length; i++) {
+        slides[i].classList.toggle('is-active', i === current);
+      }
+      for (var t = 0; t < thumbs.length; t++) {
+        var on = t === current;
+        thumbs[t].classList.toggle('is-active', on);
+        thumbs[t].setAttribute('aria-selected', on ? 'true' : 'false');
+      }
+      for (var d = 0; d < dots.length; d++) {
+        dots[d].classList.toggle('is-active', d === current);
+      }
+    }
+
+    for (var i = 0; i < thumbs.length; i++) {
+      (function (index) {
+        thumbs[index].addEventListener('click', function () { show(index); });
+      })(i);
+    }
+
+    var prev = root.querySelector('[data-vpd-prev]');
+    var next = root.querySelector('[data-vpd-next]');
+    if (prev) prev.addEventListener('click', function () { show(current - 1); });
+    if (next) next.addEventListener('click', function () { show(current + 1); });
+
+    // Deslizar con el dedo sobre la imagen principal.
+    var stage = root.querySelector('.vpd__stage');
+    var startX = null;
+    stage.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) show(dx < 0 ? current + 1 : current - 1);
+      startX = null;
+    }, { passive: true });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VALCA · Ficha producto",
+  "tag": "section",
+  "class": "valca-pdp-main",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Producto (vacío = el de la página)" },
+    { "type": "header", "content": "Galería" },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Ajuste de la imagen",
+      "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Recortar" },
+        { "value": "contain", "label": "Contener" }
+      ]
+    },
+    { "type": "color", "id": "image_bg", "label": "Fondo de la imagen", "default": "#F4F4F2" },
+    { "type": "range", "id": "image_radius", "label": "Radio de la imagen (px)", "min": 0, "max": 24, "step": 2, "default": 8 },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 900, "max": 1500, "step": 20, "default": 1180 },
+    { "type": "range", "id": "gallery_ratio", "label": "Proporción de la galería", "min": 4, "max": 8, "step": 1, "default": 6 },
+    { "type": "range", "id": "info_ratio", "label": "Proporción del texto", "min": 4, "max": 8, "step": 1, "default": 6 },
+    { "type": "range", "id": "title_size_mobile", "label": "Título móvil (px)", "min": 20, "max": 34, "step": 1, "default": 25 },
+    { "type": "range", "id": "title_size_desktop", "label": "Título escritorio (px)", "min": 24, "max": 44, "step": 1, "default": 29 },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 80, "step": 4, "default": 20 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 80, "step": 4, "default": 24 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#202020" },
+    { "type": "color", "id": "muted_color", "label": "Texto secundario", "default": "#4E4E4E" },
+    { "type": "color", "id": "accent_color", "label": "Acento", "default": "#0194A8" },
+    { "type": "color", "id": "accent_dark", "label": "Acento oscuro", "default": "#0B5C67" },
+    { "type": "color", "id": "accent_soft", "label": "Acento suave", "default": "#D6EEF2" },
+    { "type": "color", "id": "star_color", "label": "Estrellas", "default": "#FFC107" },
+    { "type": "color", "id": "button_text_color", "label": "Texto del botón", "default": "#FFFFFF" },
+    { "type": "range", "id": "button_radius", "label": "Radio del botón (px)", "min": 0, "max": 24, "step": 2, "default": 10 }
+  ],
+  "blocks": [
+    {
+      "type": "rating",
+      "name": "Valoración",
+      "limit": 1,
+      "settings": [
+        { "type": "range", "id": "stars_full", "label": "Estrellas llenas", "min": 0, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "score", "label": "Puntaje", "default": "4.8/5" },
+        { "type": "text", "id": "count", "label": "Cantidad", "default": "(+3.400 reseñas)" }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Respaldo",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "brand", "label": "Marca", "default": "Latinologia®" },
+        { "type": "text", "id": "brand_tail", "label": "Complemento", "default": "dermocosmética para piel latina" },
+        { "type": "text", "id": "proof", "label": "Prueba social", "default": "Formulado por dermatólogos" }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Encabezado",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "eyebrow", "label": "Etiqueta" },
+        { "type": "text", "id": "title", "label": "Título (vacío = nombre del producto)" },
+        { "type": "text", "id": "title_accent", "label": "Parte destacada del título" },
+        { "type": "richtext", "id": "subtitle", "label": "Bajada" }
+      ]
+    },
+    {
+      "type": "bullets",
+      "name": "Beneficios",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "bullet_1", "label": "Beneficio 1" },
+        { "type": "text", "id": "bullet_2", "label": "Beneficio 2" },
+        { "type": "text", "id": "bullet_3", "label": "Beneficio 3" },
+        { "type": "text", "id": "bullet_4", "label": "Beneficio 4" },
+        { "type": "text", "id": "bullet_5", "label": "Beneficio 5" }
+      ]
+    },
+    { "type": "price", "name": "Precio", "limit": 1, "settings": [] },
+    {
+      "type": "buy_buttons",
+      "name": "Botón de compra",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Texto del botón", "default": "Empezar mi rutina" }
+      ]
+    },
+    {
+      "type": "badge",
+      "name": "Franja destacada",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "✓ Envío gratis disponible" },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Estilo",
+          "default": "shipping",
+          "options": [
+            { "value": "shipping", "label": "Destacado" },
+            { "value": "kit", "label": "Sutil" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Texto libre",
+      "settings": [{ "type": "richtext", "id": "text", "label": "Texto" }]
+    },
+    { "type": "@app" }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Ficha producto",
+      "blocks": [
+        { "type": "rating" },
+        { "type": "trust" },
+        { "type": "heading" },
+        { "type": "bullets" },
+        { "type": "buy_buttons" },
+        { "type": "badge" }
+      ]
+    }
+  ]
+}
+{% endschema %}

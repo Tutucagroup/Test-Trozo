@@ -112,6 +112,13 @@ def build_image(url: str) -> dict:
 
 def build_product(raw: dict) -> dict:
     images = [build_image(u) for u in raw["images"]]
+    variant = {
+        "id": raw.get("variant_id", 0),
+        "title": "Default Title",
+        "price": raw["price"],
+        "compare_at_price": raw.get("compare_at_price"),
+        "available": raw.get("available", True),
+    }
     return {
         "handle": raw["handle"],
         "title": raw["title"],
@@ -121,7 +128,10 @@ def build_product(raw: dict) -> dict:
         "compare_at_price": raw.get("compare_at_price"),
         "available": raw.get("available", True),
         "images": images,
-        "featured_image": images[0] if images else None,
+        "featured_image": images[0] if images else "",
+        "variants": [variant],
+        "first_available_variant": variant,
+        "selected_or_first_available_variant": variant,
         "metafields": {"custom": {}},
     }
 
@@ -244,6 +254,8 @@ def resolve_settings(settings: dict, section_type: str) -> dict:
 # --------------------------------------------------------------------------- #
 SCHEMA_RE = re.compile(r"\{%-?\s*schema\s*-?%\}.*?\{%-?\s*endschema\s*-?%\}", re.DOTALL)
 FORM_OPEN_RE = re.compile(r"\{%-?\s*form\s+'customer'(?:\s*,\s*class:\s*'([^']*)')?\s*-?%\}")
+PRODUCT_FORM_RE = re.compile(r"\{%-?\s*form\s+'product'\s*,[^%]*?(?:class:\s*'([^']*)')?\s*-?%\}")
+APP_BLOCK_RE = re.compile(r"\{%-?\s*render\s+block\s*-?%\}")
 FORM_CLOSE_RE = re.compile(r"\{%-?\s*endform\s*-?%\}")
 
 
@@ -257,6 +269,15 @@ def preprocess(src: str) -> str:
         ),
         src,
     )
+    src = PRODUCT_FORM_RE.sub(
+        lambda m: (
+            '<form method="post" action="/cart/add" accept-charset="UTF-8" '
+            f'class="{m.group(1) or ""}">'
+        ),
+        src,
+    )
+    # Los bloques de app sólo existen en Shopify; aquí no hay nada que insertar.
+    src = APP_BLOCK_RE.sub("", src)
     src = FORM_CLOSE_RE.sub("</form>", src)
     src = src.replace("form.posted_successfully?", "form.posted_successfully")
     return src
@@ -283,7 +304,7 @@ def make_env() -> Environment:
     return env
 
 
-def render_section(env: Environment, key: str, conf: dict) -> str:
+def render_section(env: Environment, key: str, conf: dict, extra: dict | None = None) -> str:
     stype = conf["type"]
     path = THEME / "sections" / f"{stype}.liquid"
     if not path.exists():
@@ -309,7 +330,8 @@ def render_section(env: Environment, key: str, conf: dict) -> str:
         "location": "template",
     }
 
-    template = env.from_string(preprocess(path.read_text()), globals=GLOBALS)
+    scope = dict(GLOBALS, **(extra or {}))
+    template = env.from_string(preprocess(path.read_text()), globals=scope)
     return template.render(section=section)
 
 
@@ -320,33 +342,23 @@ def load_group(name: str):
     return [(k, data["sections"][k]) for k in data["order"]]
 
 
-def main() -> int:
-    env = make_env()
-    OUT.mkdir(exist_ok=True)
-
-    index = json.loads((THEME / "templates" / "index.json").read_text())
-    pipeline = (
-        load_group("header-group")
-        + [(k, index["sections"][k]) for k in index["order"]]
-        + load_group("footer-group")
-    )
-
+def render_page(env: Environment, pipeline, title: str, out_name: str, extra=None) -> int:
     chunks, failures = [], []
     for key, conf in pipeline:
         try:
-            html = render_section(env, key, conf)
+            html = render_section(env, key, conf, extra)
             chunks.append(f"<!-- section: {key} ({conf['type']}) -->\n{html}")
-            print(f"  ok   {key:16s} {conf['type']}")
+            print(f"  ok   {key:18s} {conf['type']}")
         except Exception as exc:  # noqa: BLE001 - queremos ver todos los fallos
             failures.append((key, conf["type"], exc))
-            print(f"  FAIL {key:16s} {conf['type']}: {exc}")
+            print(f"  FAIL {key:18s} {conf['type']}: {exc}")
 
     page = f"""<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vista previa · Réplica VALCA para Latinologia</title>
+<title>{title}</title>
 <style>
   *, *::before, *::after {{ box-sizing: border-box; }}
   html {{ -webkit-text-size-adjust: 100%; }}
@@ -360,15 +372,49 @@ def main() -> int:
 </body>
 </html>
 """
-    (OUT / "preview.html").write_text(page)
-    print(f"\nEscrito {OUT / 'preview.html'} ({len(page)} bytes)")
+    target = OUT / out_name
+    target.write_text(page)
+    print(f"Escrito {target} ({len(page)} bytes)\n")
 
     if failures:
-        print(f"\n{len(failures)} sección(es) con error:")
+        print(f"{len(failures)} sección(es) con error:")
         for key, stype, exc in failures:
             print(f"  - {key} ({stype}): {type(exc).__name__}: {exc}")
         return 1
     return 0
+
+
+def main() -> int:
+    env = make_env()
+    OUT.mkdir(exist_ok=True)
+
+    header = load_group("header-group")
+    footer = load_group("footer-group")
+    status = 0
+
+    index = json.loads((THEME / "templates" / "index.json").read_text())
+    print("Portada")
+    status |= render_page(
+        env,
+        header + [(k, index["sections"][k]) for k in index["order"]] + footer,
+        "Vista previa · Portada",
+        "preview.html",
+    )
+
+    product_tpl = THEME / "templates" / "product.json"
+    if product_tpl.exists():
+        pdp = json.loads(product_tpl.read_text())
+        current = PRODUCTS[DATA["current_product"]]
+        print("Ficha de producto")
+        status |= render_page(
+            env,
+            header + [(k, pdp["sections"][k]) for k in pdp["order"]] + footer,
+            "Vista previa · Ficha de producto",
+            "preview-product.html",
+            extra={"product": current, "request": {"design_mode": False, "page_type": "product"}},
+        )
+
+    return status
 
 
 if __name__ == "__main__":

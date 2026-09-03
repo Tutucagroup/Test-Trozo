@@ -1,0 +1,307 @@
+{%- comment -%}
+  VALCA · Tarjetas de valor.
+
+  Un solo componente para los cuatro bloques editoriales de la ficha, porque en
+  el diseño son la misma pieza con distinto acabado:
+
+    plain    → tarjeta simple (contexto educativo)
+    top-bar  → tarjeta con barra superior y píldora (fases del tratamiento)
+    icon     → tarjeta con icono (por qué funciona)
+    numbered → tarjeta numerada automáticamente (cómo usarlo)
+
+  Tenerlo unificado evita cuatro secciones casi idénticas y deja que el comercio
+  cambie el acabado sin tocar el código.
+{%- endcomment -%}
+
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign style = section.settings.card_style
+-%}
+
+<section class="vvc vvc--{{ sid }} vvc--{{ style }}" aria-label="{{ section.settings.title | strip_html | escape }}">
+  <div class="vvc__inner">
+    {%- if section.settings.eyebrow != blank or section.settings.title != blank or section.settings.subtitle != blank -%}
+      <header class="vvc__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="vvc__eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="vvc__title">
+            {{ section.settings.title }}
+            {%- if section.settings.title_accent != blank %} <em>{{ section.settings.title_accent }}</em>{% endif -%}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <div class="vvc__subtitle">{{ section.settings.subtitle }}</div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    <div class="vvc__grid">
+      {%- for block in section.blocks -%}
+        <article class="vvc__card" {{ block.shopify_attributes }}>
+          {%- if style == 'top-bar' and block.settings.badge != blank -%}
+            <span class="vvc__badge">{{ block.settings.badge }}</span>
+          {%- endif -%}
+
+          {%- if style == 'icon' -%}
+            <span class="vvc__icon" aria-hidden="true">
+              {%- case block.settings.icon -%}
+                {%- when 'leaf' -%}
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8 9 4 13 4 17a8 8 0 0 0 16 0c0-4-4-8-8-15z"/></svg>
+                {%- when 'shield' -%}
+                  <svg viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 5-3.5 8.5-7 9-3.5-.5-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-4"/></svg>
+                {%- when 'flask' -%}
+                  <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/><path d="M7.5 15h9"/></svg>
+                {%- when 'routine' -%}
+                  <svg viewBox="0 0 24 24"><path d="M4 4h16v5H4zM7 9v11h10V9"/><path d="M10 13h4M10 17h4"/></svg>
+                {%- when 'clock' -%}
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                {%- when 'drop' -%}
+                  <svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5A6 6 0 0 1 6 13.5C6 9.5 12 3 12 3z"/></svg>
+                {%- when 'doctor' -%}
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v2"/></svg>
+                {%- else -%}
+                  <svg viewBox="0 0 24 24"><path d="M12 3c-4.2 0-7 3.1-7 7v11M12 3c4.2 0 7 3.1 7 7v11M12 3v18M8.5 21c0-6 .8-9.5 3.5-12M15.5 21c0-6-.8-9.5-3.5-12"/></svg>
+              {%- endcase -%}
+            </span>
+          {%- endif -%}
+
+          {%- if block.settings.title != blank -%}
+            <h3 class="vvc__card-title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <div class="vvc__card-text">{{ block.settings.text }}</div>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .vvc--{{ sid }} {
+    --vvc-accent: {{ section.settings.accent_color }};
+    --vvc-accent-dark: {{ section.settings.accent_dark }};
+    --vvc-accent-soft: {{ section.settings.accent_soft }};
+
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color }};
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  }
+  .vvc--{{ sid }} *,
+  .vvc--{{ sid }} *::before,
+  .vvc--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vvc--{{ sid }} .vvc__inner { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 0 18px; }
+
+  .vvc--{{ sid }} .vvc__header { text-align: center; margin-bottom: 24px; }
+  .vvc--{{ sid }} .vvc__eyebrow {
+    display: inline-flex;
+    margin-bottom: 12px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: var(--vvc-accent-soft);
+    color: var(--vvc-accent-dark);
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .vvc--{{ sid }} .vvc__title {
+    margin: 0 auto 10px;
+    max-width: 640px;
+    font-size: 22px;
+    line-height: 1.12;
+    font-weight: 740;
+    letter-spacing: -0.03em;
+    color: {{ section.settings.title_color }};
+  }
+  .vvc--{{ sid }} .vvc__title em { font-style: normal; color: var(--vvc-accent-dark); font-weight: 800; }
+  .vvc--{{ sid }} .vvc__subtitle {
+    margin: 0 auto;
+    max-width: 610px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: {{ section.settings.text_color }};
+  }
+  .vvc--{{ sid }} .vvc__subtitle p { margin: 0; }
+
+  .vvc--{{ sid }} .vvc__grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+
+  .vvc--{{ sid }} .vvc__card {
+    position: relative;
+    padding: 18px 15px;
+    background: {{ section.settings.card_bg }};
+    border: 1px solid var(--vvc-accent-soft);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .vvc--{{ sid }} .vvc__card-title {
+    margin: 0 0 6px;
+    font-size: 14.2px;
+    line-height: 1.25;
+    font-weight: 850;
+    color: var(--vvc-accent-dark);
+  }
+  .vvc--{{ sid }} .vvc__card-text { margin: 0; font-size: 13px; line-height: 1.45; color: {{ section.settings.text_color }}; }
+  .vvc--{{ sid }} .vvc__card-text p { margin: 0; }
+  .vvc--{{ sid }} .vvc__card-text strong { color: {{ section.settings.title_color }}; font-weight: 800; }
+
+  /* --- Acabado: barra superior + píldora --- */
+  .vvc--{{ sid }}.vvc--top-bar .vvc__card { padding: 20px 16px 18px; border-radius: 16px; }
+  .vvc--{{ sid }}.vvc--top-bar .vvc__card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--vvc-accent), var(--vvc-accent-soft));
+  }
+  .vvc--{{ sid }} .vvc__badge {
+    display: inline-flex;
+    margin-bottom: 14px;
+    padding: 5px 9px;
+    border: 1px solid var(--vvc-accent-soft);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--vvc-accent-dark);
+    font-size: 10.5px;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .vvc--{{ sid }}.vvc--top-bar .vvc__card-title { font-size: 15px; color: {{ section.settings.title_color }}; }
+
+  /* --- Acabado: con icono --- */
+  .vvc--{{ sid }}.vvc--icon .vvc__card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 38px;
+    height: 3px;
+    background: var(--vvc-accent);
+    border-radius: 0 0 3px 0;
+  }
+  .vvc--{{ sid }} .vvc__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    background: var(--vvc-accent-soft);
+    color: var(--vvc-accent-dark);
+  }
+  .vvc--{{ sid }} .vvc__icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* --- Acabado: numerado --- */
+  .vvc--{{ sid }}.vvc--numbered .vvc__grid { counter-reset: vvc-step; }
+  .vvc--{{ sid }}.vvc--numbered .vvc__card { counter-increment: vvc-step; padding: 18px 15px 16px; }
+  .vvc--{{ sid }}.vvc--numbered .vvc__card::before {
+    content: counter(vvc-step);
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--vvc-accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 850;
+  }
+  .vvc--{{ sid }}.vvc--numbered .vvc__card-title { margin-right: 36px; font-size: 15px; }
+
+  @media screen and (min-width: 750px) {
+    .vvc--{{ sid }} .vvc__title { font-size: 25px; }
+    .vvc--{{ sid }} .vvc__grid {
+      grid-template-columns: repeat({{ section.settings.columns }}, minmax(0, 1fr));
+      gap: 14px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Tarjetas",
+  "tag": "section",
+  "class": "valca-value-cards",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta" },
+    { "type": "text", "id": "title", "label": "Título" },
+    { "type": "text", "id": "title_accent", "label": "Parte destacada del título" },
+    { "type": "richtext", "id": "subtitle", "label": "Bajada" },
+    { "type": "header", "content": "Tarjetas" },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Acabado",
+      "default": "plain",
+      "options": [
+        { "value": "plain", "label": "Simple" },
+        { "value": "top-bar", "label": "Barra superior" },
+        { "value": "icon", "label": "Con icono" },
+        { "value": "numbered", "label": "Numerado" }
+      ]
+    },
+    { "type": "range", "id": "columns", "label": "Columnas en escritorio", "min": 2, "max": 4, "step": 1, "default": 2 },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 600, "max": 1200, "step": 20, "default": 820 },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 100, "step": 2, "default": 38 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 100, "step": 2, "default": 42 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FAFAF7" },
+    { "type": "color", "id": "card_bg", "label": "Fondo de la tarjeta", "default": "#FFFFFF" },
+    { "type": "color", "id": "title_color", "label": "Títulos", "default": "#202020" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#555555" },
+    { "type": "color", "id": "accent_color", "label": "Acento", "default": "#0194A8" },
+    { "type": "color", "id": "accent_dark", "label": "Acento oscuro", "default": "#0B5C67" },
+    { "type": "color", "id": "accent_soft", "label": "Acento suave", "default": "#D6EEF2" }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Tarjeta",
+      "settings": [
+        { "type": "text", "id": "badge", "label": "Píldora (acabado barra superior)" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono (acabado con icono)",
+          "default": "hair",
+          "options": [
+            { "value": "hair", "label": "Cabello" },
+            { "value": "leaf", "label": "Hoja" },
+            { "value": "shield", "label": "Escudo" },
+            { "value": "flask", "label": "Laboratorio" },
+            { "value": "routine", "label": "Rutina" },
+            { "value": "clock", "label": "Reloj" },
+            { "value": "drop", "label": "Gota" },
+            { "value": "doctor", "label": "Profesional" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Título" },
+        { "type": "richtext", "id": "text", "label": "Texto" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Tarjetas",
+      "blocks": [{ "type": "card" }, { "type": "card" }, { "type": "card" }, { "type": "card" }]
+    }
+  ]
+}
+{% endschema %}

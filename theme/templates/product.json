@@ -1,0 +1,587 @@
+{
+  "sections": {
+    "main": {
+      "type": "valca-pdp-main",
+      "blocks": {
+        "rating": {
+          "type": "rating",
+          "settings": {
+            "stars_full": 5,
+            "score": "Recomendado por dermatólogos",
+            "count": ""
+          }
+        },
+        "trust": {
+          "type": "trust",
+          "settings": {
+            "brand": "Latinologia®",
+            "brand_tail": "dermocosmética para piel latina",
+            "proof": "Formulado y validado en consulta dermatológica"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "eyebrow": "Tratamiento capilar · 90 días",
+            "title": "Kit Capilar Advanced para",
+            "title_accent": "frenar la caída y recuperar densidad",
+            "subtitle": "<p>Sistema de tres pasos: <strong>FoliGrow Shampoo 200 ml + FoliGrow Tónico 60 ml + ScalpShieldX Serum 60 ml</strong>. Pensado para quien nota más caída, cabello más fino o caspa que vuelve, y quiere empezar un proceso serio, sin promesas mágicas.</p>"
+          }
+        },
+        "bullets": {
+          "type": "bullets",
+          "settings": {
+            "bullet_1": "<strong>Tres pasos reales:</strong> shampoo que prepara, tónico que actúa en la raíz y serum que calma el cuero cabelludo.",
+            "bullet_2": "<strong>Plan de 90 días:</strong> menos caída visible, más fuerza y densidad progresiva con constancia.",
+            "bullet_3": "<strong>Textura ligera:</strong> uso diario sin sensación grasa, también en cuero cabelludo graso.",
+            "bullet_4": "<strong>Respaldo Latinologia:</strong> activos con evidencia, en concentraciones ajustadas a la tolerancia de la piel latina."
+          }
+        },
+        "price": { "type": "price", "settings": {} },
+        "buy": {
+          "type": "buy_buttons",
+          "settings": { "label": "Empezar mi tratamiento" }
+        },
+        "shipping": {
+          "type": "badge",
+          "settings": {
+            "text": "✓ Envío gratis desde $150.000",
+            "style": "shipping"
+          }
+        },
+        "kit": {
+          "type": "badge",
+          "settings": {
+            "text": "Shampoo 200 ml + Tónico 60 ml + Serum 60 ml · sistema completo",
+            "style": "kit"
+          }
+        }
+      },
+      "block_order": ["rating", "trust", "heading", "bullets", "price", "buy", "shipping", "kit"],
+      "settings": {
+        "image_fit": "cover",
+        "image_bg": "#F4F4F2",
+        "image_radius": 8,
+        "max_width": 1180,
+        "gallery_ratio": 6,
+        "info_ratio": 6,
+        "title_size_mobile": 25,
+        "title_size_desktop": 29,
+        "padding_top": 20,
+        "padding_bottom": 24,
+        "bg_color": "#FFFFFF",
+        "text_color": "#202020",
+        "muted_color": "#4E4E4E",
+        "accent_color": "#0194A8",
+        "accent_dark": "#0B5C67",
+        "accent_soft": "#D6EEF2",
+        "star_color": "#FFC107",
+        "button_text_color": "#FFFFFF",
+        "button_radius": 10
+      }
+    },
+
+    "marquee": {
+      "type": "valca-marquee",
+      "blocks": {
+        "m1": { "type": "item", "settings": { "text": "Tratamiento de 90 días" } },
+        "m2": { "type": "item", "settings": { "text": "Shampoo 200 ml" } },
+        "m3": { "type": "item", "settings": { "text": "Tónico capilar 60 ml" } },
+        "m4": { "type": "item", "settings": { "text": "Serum anticaspa 60 ml" } },
+        "m5": { "type": "item", "settings": { "text": "Triple acción anticaída" } },
+        "m6": { "type": "item", "settings": { "text": "No engrasa" } },
+        "m7": { "type": "item", "settings": { "text": "Sin parabenos" } },
+        "m8": { "type": "item", "settings": { "text": "Formulado por dermatólogos" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6", "m7", "m8"],
+      "settings": {
+        "bg_color": "#0194A8",
+        "text_color": "#FFFFFF",
+        "dot_color": "#FFFFFF",
+        "padding": 13,
+        "duration": 25,
+        "aria_label": "Beneficios del Kit Capilar Advanced"
+      }
+    },
+
+    "edu": {
+      "type": "valca-value-cards",
+      "blocks": {
+        "c1": {
+          "type": "card",
+          "settings": {
+            "title": "Primero, la base",
+            "text": "<p>El shampoo limpia, equilibra y deja el cuero cabelludo en mejores condiciones para el resto de la rutina.</p>"
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "title": "Después, la acción",
+            "text": "<p>El tónico trabaja directo en la raíz para acompañar el ciclo de crecimiento y la densidad.</p>"
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "title": "Luego, constancia",
+            "text": "<p>Los cambios reales se ven con continuidad: 90 días de tratamiento, no una compra impulsiva.</p>"
+          }
+        },
+        "c4": {
+          "type": "card",
+          "settings": {
+            "title": "Sin exagerar",
+            "text": "<p>Menos caída visible, cabello más fuerte y más cuerpo de forma progresiva. Nada de resultados en una semana.</p>"
+          }
+        }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": {
+        "eyebrow": "No es un shampoo más",
+        "title": "Cuando el cabello cambia, necesitás",
+        "title_accent": "un tratamiento con proceso",
+        "subtitle": "<p>La caída no se resuelve con promesas de una semana. Cuando ves más cabello en el cepillo, la raya más marcada o menos volumen, hay que preparar el cuero cabelludo, fortalecer la fibra y sostener la rutina con activos adecuados.</p>",
+        "card_style": "plain",
+        "columns": 2,
+        "max_width": 820,
+        "padding_top": 38,
+        "padding_bottom": 42,
+        "bg_color": "#FAFAF7",
+        "card_bg": "#FFFFFF",
+        "title_color": "#202020",
+        "text_color": "#555555",
+        "accent_color": "#0194A8",
+        "accent_dark": "#0B5C67",
+        "accent_soft": "#D6EEF2"
+      }
+    },
+
+    "img_reviews": {
+      "type": "valca-media-card",
+      "settings": {
+        "image": "shopify://shop_images/07_foligrow_shampoo_triple-accion_anticaida_review_destacado.png",
+        "alt": "Reseña destacada del shampoo FoliGrow triple acción anticaída",
+        "caption_top": "Lo que cuentan quienes ya lo usan",
+        "max_width": 820,
+        "radius": 16,
+        "padding": 24,
+        "bg_color": "#FFFFFF",
+        "frame_color": "#EFF7F8",
+        "caption_color": "#6F6F6F"
+      }
+    },
+
+    "img_routine": {
+      "type": "valca-media-card",
+      "settings": {
+        "image": "shopify://shop_images/04_foligrow_shampoo_triple-accion_anticaida_etapa_de_rutina.png",
+        "alt": "En qué etapa de la rutina capilar entra cada producto del kit",
+        "max_width": 820,
+        "radius": 16,
+        "padding": 24,
+        "bg_color": "#FFFFFF",
+        "frame_color": "#F5EFE8",
+        "caption_color": "#6F6F6F"
+      }
+    },
+
+    "process": {
+      "type": "valca-value-cards",
+      "blocks": {
+        "p1": {
+          "type": "card",
+          "settings": {
+            "badge": "Semanas 1–2",
+            "title": "Cuero cabelludo preparado",
+            "text": "<p>La rutina ayuda a limpiar, equilibrar y dejar una base más sana para el crecimiento.</p>"
+          }
+        },
+        "p2": {
+          "type": "card",
+          "settings": {
+            "badge": "Semanas 4–6",
+            "title": "Menos caída visible",
+            "text": "<p>El cabello se siente más fuerte y resistente al quiebre con uso sostenido.</p>"
+          }
+        },
+        "p3": {
+          "type": "card",
+          "settings": {
+            "badge": "Semanas 8–12",
+            "title": "Más densidad y cuerpo",
+            "text": "<p>El proceso apunta a recuperar volumen, densidad y mejor anclaje desde la raíz.</p>"
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "Tratamiento 90 días",
+        "title": "Los cambios reales llevan tiempo",
+        "title_accent": "",
+        "subtitle": "<p>El Kit Capilar Advanced está pensado para acompañarte semana a semana, con expectativas honestas y una rutina clara.</p>",
+        "card_style": "top-bar",
+        "columns": 3,
+        "max_width": 820,
+        "padding_top": 38,
+        "padding_bottom": 42,
+        "bg_color": "#FFFFFF",
+        "card_bg": "#FAFAF7",
+        "title_color": "#202020",
+        "text_color": "#555555",
+        "accent_color": "#0194A8",
+        "accent_dark": "#0B5C67",
+        "accent_soft": "#D6EEF2"
+      }
+    },
+
+    "howto": {
+      "type": "valca-value-cards",
+      "blocks": {
+        "s1": {
+          "type": "card",
+          "settings": {
+            "title": "Shampoo FoliGrow",
+            "text": "<p>Aplicá sobre el cuero cabelludo húmedo, masajeá suavemente y dejá actuar unos minutos antes de enjuagar.</p>"
+          }
+        },
+        "s2": {
+          "type": "card",
+          "settings": {
+            "title": "Tónico FoliGrow",
+            "text": "<p>Aplicá sobre el cuero cabelludo seco o húmedo, sobre todo en las zonas con menor densidad. No se enjuaga.</p>"
+          }
+        },
+        "s3": {
+          "type": "card",
+          "settings": {
+            "title": "Serum ScalpShieldX",
+            "text": "<p>Usalo en los días en que la caspa o la descamación aparecen, para calmar e hidratar el cuero cabelludo.</p>"
+          }
+        },
+        "s4": {
+          "type": "card",
+          "settings": {
+            "title": "Seguimiento semanal",
+            "text": "<p>Sostené la rutina <strong>90 días</strong> y mirá la caída al peinarte, la raya del cabello y el volumen. La clave no es usar más producto: es no abandonar el proceso.</p>"
+          }
+        }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "eyebrow": "",
+        "title": "Cómo usar el Kit Capilar Advanced",
+        "title_accent": "",
+        "subtitle": "<p>Tres productos, una rutina simple de sostener durante 90 días.</p>",
+        "card_style": "numbered",
+        "columns": 2,
+        "max_width": 820,
+        "padding_top": 36,
+        "padding_bottom": 40,
+        "bg_color": "#FFFFFF",
+        "card_bg": "#FAFAF7",
+        "title_color": "#202020",
+        "text_color": "#555555",
+        "accent_color": "#0194A8",
+        "accent_dark": "#0B5C67",
+        "accent_soft": "#D6EEF2"
+      }
+    },
+
+    "compare": {
+      "type": "valca-compare",
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "label": "Sistema completo",
+            "ours": "Shampoo + tónico + serum",
+            "theirs": "Producto suelto"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "label": "Plazo honesto",
+            "ours": "90 días",
+            "theirs": "Promesas rápidas"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "label": "Trabajo en la raíz",
+            "ours": "Tónico revitalizante",
+            "theirs": "Solo limpieza"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "label": "Cuero cabelludo",
+            "ours": "Serum anticaspa dedicado",
+            "theirs": "Sin abordaje"
+          }
+        },
+        "r5": {
+          "type": "row",
+          "settings": {
+            "label": "Textura diaria",
+            "ours": "Ligera, no engrasa",
+            "theirs": "Puede dejar peso"
+          }
+        },
+        "r6": {
+          "type": "row",
+          "settings": {
+            "label": "Respaldo",
+            "ours": "Dermatólogos y evidencia",
+            "theirs": "Fórmula genérica"
+          }
+        }
+      },
+      "block_order": ["r1", "r2", "r3", "r4", "r5", "r6"],
+      "settings": {
+        "title": "¿Por qué no es otro shampoo de góndola?",
+        "subtitle": "<p>La diferencia está en tratar la caída como un proceso, no como una promesa rápida.</p>",
+        "col_label": "Diferencia",
+        "col_ours": "Kit Advanced",
+        "col_theirs": "Shampoo común",
+        "max_width": 760,
+        "padding_top": 38,
+        "padding_bottom": 42,
+        "bg_color": "#FAFAF7",
+        "title_color": "#202020",
+        "text_color": "#4E4E4E",
+        "accent_color": "#0194A8",
+        "accent_dark": "#0B5C67",
+        "accent_soft": "#D6EEF2"
+      }
+    },
+
+    "img_howto": {
+      "type": "valca-media-card",
+      "settings": {
+        "image": "shopify://shop_images/05_foligrow_shampoo_triple-accion_anticaida_guia_de_uso.png",
+        "alt": "Guía de uso paso a paso del shampoo FoliGrow triple acción anticaída",
+        "max_width": 820,
+        "radius": 16,
+        "padding": 24,
+        "bg_color": "#FFFFFF",
+        "frame_color": "#EFF7F8",
+        "caption_color": "#6F6F6F"
+      }
+    },
+
+    "why": {
+      "type": "valca-value-cards",
+      "blocks": {
+        "w1": {
+          "type": "card",
+          "settings": {
+            "icon": "hair",
+            "title": "Triple acción anticaída",
+            "text": "<p>El shampoo FoliGrow combina limpieza, fortalecimiento y estímulo del folículo en un solo paso diario.</p>"
+          }
+        },
+        "w2": {
+          "type": "card",
+          "settings": {
+            "icon": "drop",
+            "title": "Tónico que llega a la raíz",
+            "text": "<p>Formulación antioxidante y biotecnológica para acompañar la densidad y la calidad capilar.</p>"
+          }
+        },
+        "w3": {
+          "type": "card",
+          "settings": {
+            "icon": "shield",
+            "title": "Cuero cabelludo calmado",
+            "text": "<p>ScalpShieldX reduce la descamación y restaura la hidratación con activos calmantes.</p>"
+          }
+        },
+        "w4": {
+          "type": "card",
+          "settings": {
+            "icon": "routine",
+            "title": "Rutina completa, no productos sueltos",
+            "text": "<p>Los tres pasos trabajan juntos para que el resultado no dependa de una sola aplicación aislada.</p>"
+          }
+        }
+      },
+      "block_order": ["w1", "w2", "w3", "w4"],
+      "settings": {
+        "eyebrow": "",
+        "title": "Por qué funciona como tratamiento",
+        "title_accent": "",
+        "subtitle": "<p>Cada paso tiene una función distinta. Juntos preparan, fortalecen y acompañan la recuperación de densidad.</p>",
+        "card_style": "icon",
+        "columns": 2,
+        "max_width": 820,
+        "padding_top": 38,
+        "padding_bottom": 42,
+        "bg_color": "#FFFFFF",
+        "card_bg": "#FAFAF7",
+        "title_color": "#202020",
+        "text_color": "#555555",
+        "accent_color": "#0194A8",
+        "accent_dark": "#0B5C67",
+        "accent_soft": "#D6EEF2"
+      }
+    },
+
+    "img_before_after": {
+      "type": "valca-media-card",
+      "settings": {
+        "image": "shopify://shop_images/02_foligrow_shampoo_triple-accion_anticaida_antes_y_despues.png",
+        "alt": "Comparativa antes y después del uso sostenido del shampoo FoliGrow anticaída",
+        "caption": "Los resultados varían según el tipo de cabello, la constancia de uso y las condiciones de cada persona.",
+        "max_width": 820,
+        "radius": 16,
+        "padding": 24,
+        "bg_color": "#FFFFFF",
+        "frame_color": "#F5EFE8",
+        "caption_color": "#6F6F6F"
+      }
+    },
+
+    "faq": {
+      "type": "valca-faq",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "¿En cuánto tiempo puedo notar cambios?",
+            "answer": "<p>El tratamiento está pensado para <strong>90 días</strong>. Muchas personas empiezan a notar menos caída visible entre las semanas 4 y 6, pero la densidad y el volumen requieren constancia.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Sirve si tengo cuero cabelludo graso?",
+            "answer": "<p>Sí. Las tres fórmulas tienen textura ligera y están pensadas para uso diario sin dejar sensación grasa ni alterar el equilibrio del cuero cabelludo.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué incluye el kit?",
+            "answer": "<p>Incluye <strong>FoliGrow Shampoo Triple-Acción Anticaída 200 ml</strong>, <strong>FoliGrow Tónico Capilar Revitalizante 60 ml</strong> y <strong>ScalpShieldX Serum Anticaspa 60 ml</strong>.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Puedo usar los tres productos el mismo día?",
+            "answer": "<p>Sí. El shampoo y el tónico se usan como rutina base; el serum ScalpShieldX se suma en los días en que aparece caspa o descamación.</p>"
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Reemplaza un tratamiento médico?",
+            "answer": "<p>No. Es un tratamiento dermocosmético capilar. Si la caída es repentina, intensa o viene con otros síntomas, conviene consultar con un profesional de la salud.</p>"
+          }
+        },
+        "q6": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto tarda el envío?",
+            "answer": "<p>Los pedidos se despachan en 24 a 48 horas hábiles. El tiempo de entrega depende de la ciudad de destino y lo ves en el checkout antes de pagar.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6"],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Preguntas frecuentes",
+        "subtitle": "<p>Lo que necesitás saber antes de empezar el tratamiento.</p>",
+        "layout": "stacked",
+        "accordion": true,
+        "bg_color": "#FAFAF7",
+        "item_bg": "#FFFFFF",
+        "border_color": "#E7E7E2",
+        "heading_color": "#202020",
+        "subtitle_color": "#5F5E5A",
+        "question_color": "#202020",
+        "answer_color": "#55554F",
+        "accent_color": "#0194A8",
+        "item_radius": 10,
+        "item_gap": 10,
+        "max_width": 1200,
+        "items_max_width": 800,
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
+      }
+    },
+
+    "cta": {
+      "type": "valca-pdp-cta",
+      "blocks": {
+        "t1": { "type": "chip", "settings": { "icon": "check", "text": "Formulado por dermatólogos" } },
+        "t2": { "type": "chip", "settings": { "icon": "lab", "text": "Dermocosmética" } },
+        "t3": { "type": "chip", "settings": { "icon": "leaf", "text": "No engrasa" } }
+      },
+      "block_order": ["t1", "t2", "t3"],
+      "settings": {
+        "badge": "Cambios reales · 90 días",
+        "title": "Frená la caída.",
+        "title_accent": "Recuperá tu densidad.",
+        "text": "<p>No hace falta seguir probando productos al voleo. Empezá un sistema claro, de tres pasos, con activos dermocosméticos y un plazo honesto para acompañar tu cabello desde la raíz.</p>",
+        "button_label": "Empezar mi tratamiento",
+        "button_link": "",
+        "scroll_target": ".valca-pdp-main",
+        "max_width": 720,
+        "padding_top": 42,
+        "padding_bottom": 46,
+        "bg_bottom": "#FFFFFF",
+        "title_color": "#202020",
+        "text_color": "#4E4E4E",
+        "accent_color": "#0194A8",
+        "accent_dark": "#0B5C67",
+        "accent_soft": "#D6EEF2",
+        "button_text_color": "#FFFFFF"
+      }
+    },
+
+    "sticky": {
+      "type": "valca-sticky-atc",
+      "settings": {
+        "title": "",
+        "label": "Empezar mi tratamiento",
+        "behavior": "scroll",
+        "anchor": ".valca-pdp-main",
+        "show_rating": true,
+        "rating_text": "Recomendado por dermatólogos",
+        "show_price": true,
+        "max_width": 1180,
+        "button_radius": 10,
+        "bg_color": "#FFFFFF",
+        "border_color": "#E6E6E6",
+        "text_color": "#202020",
+        "muted_color": "#8D8D8D",
+        "star_color": "#FFC107",
+        "button_bg": "#0194A8",
+        "button_text_color": "#FFFFFF"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "marquee",
+    "edu",
+    "img_reviews",
+    "img_routine",
+    "process",
+    "howto",
+    "compare",
+    "img_howto",
+    "why",
+    "img_before_after",
+    "faq",
+    "cta",
+    "sticky"
+  ]
+}

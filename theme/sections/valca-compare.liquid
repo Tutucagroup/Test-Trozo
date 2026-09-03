@@ -1,0 +1,157 @@
+{%- comment -%}
+  VALCA · Tabla comparativa. Tres columnas: diferencia, nuestra propuesta y la
+  alternativa habitual. En móvil se conserva la rejilla de tres columnas (no se
+  apila) porque la comparación pierde sentido si las celdas no quedan enfrentadas;
+  lo que se reduce es el tamaño de letra.
+{%- endcomment -%}
+
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<section class="vcp vcp--{{ sid }}" aria-label="{{ section.settings.title | escape }}">
+  <div class="vcp__inner">
+    {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+      <header class="vcp__header">
+        {%- if section.settings.title != blank -%}
+          <h2 class="vcp__title">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <div class="vcp__subtitle">{{ section.settings.subtitle }}</div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    <div class="vcp__table" role="table">
+      <div class="vcp__row" role="row">
+        <div class="vcp__cell vcp__cell--head" role="columnheader">{{ section.settings.col_label }}</div>
+        <div class="vcp__cell vcp__cell--head" role="columnheader">{{ section.settings.col_ours }}</div>
+        <div class="vcp__cell vcp__cell--head" role="columnheader">{{ section.settings.col_theirs }}</div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div class="vcp__row" role="row" {{ block.shopify_attributes }}>
+          <div class="vcp__cell vcp__cell--label" role="cell">{{ block.settings.label }}</div>
+          <div class="vcp__cell vcp__cell--ours" role="cell">{{ block.settings.ours }}</div>
+          <div class="vcp__cell vcp__cell--theirs" role="cell">{{ block.settings.theirs }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .vcp--{{ sid }} {
+    --vcp-accent: {{ section.settings.accent_color }};
+    --vcp-accent-dark: {{ section.settings.accent_dark }};
+    --vcp-accent-soft: {{ section.settings.accent_soft }};
+
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color }};
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  }
+  .vcp--{{ sid }} *, .vcp--{{ sid }} *::before, .vcp--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vcp--{{ sid }} .vcp__inner { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 0 18px; }
+
+  .vcp--{{ sid }} .vcp__header { text-align: center; margin-bottom: 22px; }
+  .vcp--{{ sid }} .vcp__title {
+    margin: 0 0 8px;
+    font-size: 22px;
+    line-height: 1.15;
+    font-weight: 750;
+    letter-spacing: -0.03em;
+    color: {{ section.settings.title_color }};
+  }
+  .vcp--{{ sid }} .vcp__subtitle { margin: 0 auto; max-width: 560px; font-size: 14px; line-height: 1.5; color: {{ section.settings.text_color }}; }
+  .vcp--{{ sid }} .vcp__subtitle p { margin: 0; }
+
+  .vcp--{{ sid }} .vcp__table {
+    background: #fff;
+    border: 1px solid var(--vcp-accent-soft);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(11, 92, 103, 0.05);
+  }
+  .vcp--{{ sid }} .vcp__row {
+    display: grid;
+    grid-template-columns: 1fr 0.92fr 0.92fr;
+    border-bottom: 1px solid #edf0f0;
+  }
+  .vcp--{{ sid }} .vcp__row:last-child { border-bottom: 0; }
+
+  .vcp--{{ sid }} .vcp__cell {
+    display: flex;
+    align-items: center;
+    padding: 11px 9px;
+    font-size: 11.5px;
+    line-height: 1.35;
+    color: {{ section.settings.text_color }};
+  }
+  .vcp--{{ sid }} .vcp__cell--head {
+    background: var(--vcp-accent-dark);
+    color: #fff;
+    font-size: 11.2px;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .vcp--{{ sid }} .vcp__cell--label { background: {{ section.settings.bg_color }}; color: {{ section.settings.title_color }}; font-weight: 750; }
+  .vcp--{{ sid }} .vcp__cell--ours { background: var(--vcp-accent-soft); color: var(--vcp-accent-dark); font-weight: 800; }
+  .vcp--{{ sid }} .vcp__cell--theirs { color: #777; }
+
+  @media screen and (min-width: 750px) {
+    .vcp--{{ sid }} .vcp__title { font-size: 24px; }
+    .vcp--{{ sid }} .vcp__row { grid-template-columns: 1.05fr 1fr 1fr; }
+    .vcp--{{ sid }} .vcp__cell { padding: 13px 12px; font-size: 12.5px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Comparativa",
+  "tag": "section",
+  "class": "valca-compare",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "¿Por qué no es otro producto de góndola?" },
+    { "type": "richtext", "id": "subtitle", "label": "Bajada" },
+    { "type": "header", "content": "Encabezados" },
+    { "type": "text", "id": "col_label", "label": "Columna 1", "default": "Diferencia" },
+    { "type": "text", "id": "col_ours", "label": "Columna 2", "default": "Kit Latinologia" },
+    { "type": "text", "id": "col_theirs", "label": "Columna 3", "default": "Producto común" },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 600, "max": 1100, "step": 20, "default": 760 },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 100, "step": 2, "default": 38 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 100, "step": 2, "default": 42 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FAFAF7" },
+    { "type": "color", "id": "title_color", "label": "Títulos", "default": "#202020" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#4E4E4E" },
+    { "type": "color", "id": "accent_color", "label": "Acento", "default": "#0194A8" },
+    { "type": "color", "id": "accent_dark", "label": "Acento oscuro", "default": "#0B5C67" },
+    { "type": "color", "id": "accent_soft", "label": "Acento suave", "default": "#D6EEF2" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Fila",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Diferencia" },
+        { "type": "text", "id": "ours", "label": "Nuestro" },
+        { "type": "text", "id": "theirs", "label": "Alternativa" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Comparativa",
+      "blocks": [{ "type": "row" }, { "type": "row" }, { "type": "row" }, { "type": "row" }]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,245 @@
+{%- comment -%}
+  VALCA · Barra de compra fija. Aparece cuando la caja de compra principal sale
+  de pantalla y vuelve a esconderse al regresar a ella.
+
+  El botón por defecto lleva de vuelta a la caja de compra en lugar de agregar
+  al carrito directo: si hay una app de bundles o de upsell en la ficha, la
+  elección del comprador vive en ese formulario, y un alta directa desde la
+  barra se saltearía esa selección. Quien no use apps puede cambiar el
+  comportamiento a "Agregar al carrito" desde los ajustes.
+{%- endcomment -%}
+
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign prod = section.settings.product | default: product
+  assign img = section.settings.image | default: prod.featured_image
+-%}
+
+{%- if prod != blank -%}
+  <div class="vsa vsa--{{ sid }}" data-vsa="{{ sid }}" data-vsa-anchor="{{ section.settings.anchor }}" hidden>
+    <div class="vsa__inner">
+      <div class="vsa__product">
+        {%- if img != blank -%}
+          <span class="vsa__thumb">
+            <img src="{{ img | image_url: width: 120 }}" alt="" width="60" height="60" loading="lazy">
+          </span>
+        {%- endif -%}
+        <span class="vsa__details">
+          {%- if section.settings.show_rating -%}
+            <span class="vsa__rating">
+              <span class="vsa__stars" aria-hidden="true">
+                {%- for i in (1..5) -%}
+                  <svg viewBox="0 0 24 24"><path d="M12 3.2l2.6 5.9 6.2.6-4.7 4.1 1.4 6.1L12 16.7 6.5 19.9l1.4-6.1L3.2 9.7l6.2-.6z"/></svg>
+                {%- endfor -%}
+              </span>
+              <span class="vsa__rating-text">{{ section.settings.rating_text }}</span>
+            </span>
+          {%- endif -%}
+          <span class="vsa__title">{{ section.settings.title | default: prod.title }}</span>
+        </span>
+      </div>
+
+      <div class="vsa__action">
+        {%- assign cap = prod.compare_at_price | default: 0 -%}
+        {%- if section.settings.show_price -%}
+          <span class="vsa__price">
+            <span class="vsa__price-now">{{ prod.price | money }}</span>
+            {%- if cap > prod.price -%}<s class="vsa__price-was">{{ cap | money }}</s>{%- endif -%}
+          </span>
+        {%- endif -%}
+
+        {%- if section.settings.behavior == 'add' -%}
+          {%- form 'product', prod, class: 'vsa__form' -%}
+            <input type="hidden" name="id" value="{{ prod.selected_or_first_available_variant.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button class="vsa__button" type="submit" name="add" {% unless prod.available %}disabled{% endunless %}>
+              {%- if prod.available -%}{{ section.settings.label }}{%- else -%}Agotado{%- endif -%}
+            </button>
+          {%- endform -%}
+        {%- else -%}
+          <button class="vsa__button" type="button" data-vsa-scroll>{{ section.settings.label }}</button>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+<style>
+  .vsa--{{ sid }} {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    box-sizing: border-box;
+    padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 0px));
+    background: {{ section.settings.bg_color }};
+    border-top: 1px solid {{ section.settings.border_color }};
+    box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.08);
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+    transform: translateY(110%);
+    transition: transform 0.25s ease;
+  }
+  .vsa--{{ sid }}[hidden] { display: block !important; }
+  .vsa--{{ sid }}.is-visible { transform: translateY(0); }
+  .vsa--{{ sid }} *, .vsa--{{ sid }} *::before, .vsa--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vsa--{{ sid }} .vsa__inner {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .vsa--{{ sid }} .vsa__product { display: none; align-items: center; gap: 12px; min-width: 0; }
+  .vsa--{{ sid }} .vsa__thumb { flex: 0 0 52px; width: 52px; height: 52px; border-radius: 8px; overflow: hidden; background: #f2f2f2; }
+  .vsa--{{ sid }} .vsa__thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .vsa--{{ sid }} .vsa__details { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .vsa--{{ sid }} .vsa__rating { display: flex; align-items: center; gap: 6px; }
+  .vsa--{{ sid }} .vsa__stars { display: inline-flex; gap: 1px; }
+  .vsa--{{ sid }} .vsa__stars svg { width: 14px; height: 14px; fill: {{ section.settings.star_color }}; }
+  .vsa--{{ sid }} .vsa__rating-text { font-size: 12px; color: {{ section.settings.muted_color }}; }
+  .vsa--{{ sid }} .vsa__title {
+    font-size: 14px;
+    font-weight: 800;
+    color: {{ section.settings.text_color }};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 320px;
+  }
+
+  .vsa--{{ sid }} .vsa__action { display: flex; align-items: center; gap: 12px; flex: 1 1 auto; justify-content: flex-end; }
+  .vsa--{{ sid }} .vsa__price { display: flex; align-items: baseline; gap: 7px; white-space: nowrap; }
+  .vsa--{{ sid }} .vsa__price-now { font-size: 15px; font-weight: 800; color: {{ section.settings.text_color }}; }
+  .vsa--{{ sid }} .vsa__price-was { font-size: 12px; color: {{ section.settings.muted_color }}; }
+  .vsa--{{ sid }} .vsa__form { margin: 0; flex: 1 1 auto; }
+  .vsa--{{ sid }} .vsa__button {
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 20px;
+    border: 0;
+    border-radius: {{ section.settings.button_radius }}px;
+    background: {{ section.settings.button_bg }};
+    color: {{ section.settings.button_text_color }};
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .vsa--{{ sid }} .vsa__button[disabled] { background: #c9c9c9; cursor: not-allowed; }
+
+  @media screen and (max-width: 749px) {
+    /* A 390 px el botón compite con el precio: sin este ajuste, un texto como
+       «Empezar mi tratamiento» parte en dos líneas y desalinea la barra. */
+    .vsa--{{ sid }} .vsa__button { font-size: 13px; padding: 12px 14px; letter-spacing: 0; }
+    .vsa--{{ sid }} .vsa__price-now { font-size: 14px; }
+  }
+
+  @media screen and (min-width: 750px) {
+    .vsa--{{ sid }} { padding: 10px 0; }
+    .vsa--{{ sid }} .vsa__product { display: flex; }
+    .vsa--{{ sid }} .vsa__action { flex: 0 0 auto; }
+    .vsa--{{ sid }} .vsa__form,
+    .vsa--{{ sid }} .vsa__button { width: auto; min-width: 240px; }
+  }
+</style>
+
+<script>
+  (function () {
+    var bar = document.querySelector('[data-vsa="{{ sid }}"]');
+    if (!bar || bar.dataset.vsaReady) return;
+    bar.dataset.vsaReady = '1';
+    bar.hidden = false;
+
+    var selector = bar.getAttribute('data-vsa-anchor');
+    var anchor = selector ? document.querySelector(selector) : null;
+
+    var scroller = bar.querySelector('[data-vsa-scroll]');
+    if (scroller) {
+      scroller.addEventListener('click', function () {
+        var target = anchor || document.querySelector('form[action$="/cart/add"]');
+        if (!target) return;
+        var top = target.getBoundingClientRect().top + window.pageYOffset - 90;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      });
+    }
+
+    if (!anchor) {
+      // Sin ancla no hay forma de saber cuándo mostrarla: se deja siempre visible.
+      bar.classList.add('is-visible');
+      return;
+    }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(
+        function (entries) {
+          bar.classList.toggle('is-visible', !entries[0].isIntersecting);
+        },
+        { rootMargin: '0px 0px -60% 0px' }
+      ).observe(anchor);
+    } else {
+      var onScroll = function () {
+        var rect = anchor.getBoundingClientRect();
+        bar.classList.toggle('is-visible', rect.bottom < 0);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VALCA · Barra fija",
+  "tag": "section",
+  "class": "valca-sticky-atc",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Producto (vacío = el de la página)" },
+    { "type": "text", "id": "title", "label": "Título (vacío = nombre del producto)" },
+    { "type": "image_picker", "id": "image", "label": "Imagen (vacío = la destacada)" },
+    { "type": "text", "id": "label", "label": "Texto del botón", "default": "Empezar mi rutina" },
+    {
+      "type": "select",
+      "id": "behavior",
+      "label": "Al pulsar el botón",
+      "info": "Con apps de bundles o upsell, dejá «Ir a la caja de compra» para no saltearte la selección del comprador.",
+      "default": "scroll",
+      "options": [
+        { "value": "scroll", "label": "Ir a la caja de compra" },
+        { "value": "add", "label": "Agregar al carrito" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Selector de la caja de compra",
+      "info": "Se muestra la barra cuando este elemento sale de pantalla.",
+      "default": ".valca-pdp-main"
+    },
+    { "type": "header", "content": "Contenido" },
+    { "type": "checkbox", "id": "show_rating", "label": "Mostrar valoración", "default": true },
+    { "type": "text", "id": "rating_text", "label": "Texto de la valoración", "default": "4.8/5" },
+    { "type": "checkbox", "id": "show_price", "label": "Mostrar precio", "default": true },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 900, "max": 1500, "step": 20, "default": 1180 },
+    { "type": "range", "id": "button_radius", "label": "Radio del botón (px)", "min": 0, "max": 24, "step": 2, "default": 10 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FFFFFF" },
+    { "type": "color", "id": "border_color", "label": "Borde superior", "default": "#E6E6E6" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#202020" },
+    { "type": "color", "id": "muted_color", "label": "Texto secundario", "default": "#8D8D8D" },
+    { "type": "color", "id": "star_color", "label": "Estrellas", "default": "#FFC107" },
+    { "type": "color", "id": "button_bg", "label": "Fondo del botón", "default": "#0194A8" },
+    { "type": "color", "id": "button_text_color", "label": "Texto del botón", "default": "#FFFFFF" }
+  ],
+  "presets": [{ "name": "VALCA · Barra fija" }]
+}
+{% endschema %}

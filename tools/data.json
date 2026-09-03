@@ -84,11 +84,18 @@
    "compare_at_price": 36000000,
    "available": true,
    "tags": [],
+   "variant_id": 50227675824447,
    "images": [
     "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/KIT_ADVANCED_5f4a0312-1e9d-438a-b5af-a282185207c4.jpg?v=1788218389",
     "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/SCALPSHIELD_2_8ecf4265-f368-4044-9aaa-a4209d88c7ec.webp?v=1788189674",
     "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/FOLIGROW_SHAMPOO_2_b3df0b88-8dd2-4f47-9a0a-e6a3d11967df.webp?v=1788189686",
-    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/FOLIGROW_TONICO_2_a1d095d9-696e-4a04-bc92-0b53d8f5c12e.webp?v=1788189699"
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/FOLIGROW_TONICO_2_a1d095d9-696e-4a04-bc92-0b53d8f5c12e.webp?v=1788189699",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_foligrow_shampoo_triple-accion_anticaida_modelo_beneficio_3bbfe95b-e1b8-4e7c-9c39-6b3beeae7dbe.png?v=1788218397",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/03_foligrow_shampoo_triple-accion_anticaida_apto_para_pieles_c5b8b331-b2af-4922-9c8d-55d5b3620544.png?v=1788218405",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/05_foligrow_shampoo_triple-accion_anticaida_guia_de_uso_b73f86cd-7b85-493f-bf69-e3640bf914ef.png?v=1788218413",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/06_foligrow_shampoo_triple-accion_anticaida_que_hay_adentro_b810aac2-8c4a-4572-98f5-c3a4ef906db0.png?v=1788218421",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_foligrow_tonico_capilar_revitalizante_modelo_beneficio_9d593e0e-1b8a-4412-b3e8-f5fe7a879eeb.png?v=1788218429",
+    "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/03_foligrow_tonico_capilar_revitalizante_apto_para_pieles_7a31138f-6b00-4828-b3db-d097fb6dcca5.png?v=1788218437"
    ]
   },
   "kit": {
@@ -369,7 +376,11 @@
   "01_hidratante_facial_piel_mixta_a_grasa_modelo_beneficio_d3d31b4e-417c-4f6e-b43d-60ed212b8d59.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_hidratante_facial_piel_mixta_a_grasa_modelo_beneficio_d3d31b4e-417c-4f6e-b43d-60ed212b8d59.png?v=1788219127",
   "01_sun_shield_spf_50_con_color_modelo_beneficio_448163bb-2afd-4bce-91a9-37adf7765e82.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/01_sun_shield_spf_50_con_color_modelo_beneficio_448163bb-2afd-4bce-91a9-37adf7765e82.png?v=1788219143",
   "ACN.SHIELD_AM_1_c1e75e71-1bd0-4caf-bdc6-b7413723da2d.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/ACN.SHIELD_AM_1_c1e75e71-1bd0-4caf-bdc6-b7413723da2d.jpg?v=1759847376",
-  "21_FOLIGROW_TONICO_2.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/21_FOLIGROW_TONICO_2.jpg?v=1759251293"
+  "21_FOLIGROW_TONICO_2.jpg": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/21_FOLIGROW_TONICO_2.jpg?v=1759251293",
+  "07_foligrow_shampoo_triple-accion_anticaida_review_destacado.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/07_foligrow_shampoo_triple-accion_anticaida_review_destacado.png?v=1779918871",
+  "04_foligrow_shampoo_triple-accion_anticaida_etapa_de_rutina.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/04_foligrow_shampoo_triple-accion_anticaida_etapa_de_rutina.png?v=1779918871",
+  "05_foligrow_shampoo_triple-accion_anticaida_guia_de_uso.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/05_foligrow_shampoo_triple-accion_anticaida_guia_de_uso.png?v=1779918871",
+  "02_foligrow_shampoo_triple-accion_anticaida_antes_y_despues.png": "https://cdn.shopify.com/s/files/1/0684/2449/9519/files/02_foligrow_shampoo_triple-accion_anticaida_antes_y_despues.png?v=1779918871"
  },
  "menus": {
   "main-menu": {
@@ -489,5 +500,6 @@
     }
    ]
   }
- }
+ },
+ "current_product": "kit-capilar-advanced"
 }

@@ -1,0 +1,227 @@
+{%- comment -%}
+  VALCA · Cierre de ficha. Bloque final con degradado, promesa y botón que
+  devuelve al comprador a la caja de compra de arriba (no duplica el formulario,
+  para que la selección hecha en la app de bundles no se pierda).
+{%- endcomment -%}
+
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<section class="vct vct--{{ sid }}" aria-label="{{ section.settings.title | escape }}">
+  <div class="vct__inner">
+    {%- if section.settings.badge != blank -%}
+      <span class="vct__badge">{{ section.settings.badge }}</span>
+    {%- endif -%}
+
+    {%- if section.settings.title != blank -%}
+      <h2 class="vct__title">
+        {{ section.settings.title }}
+        {%- if section.settings.title_accent != blank %} <em>{{ section.settings.title_accent }}</em>{% endif -%}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.text != blank -%}
+      <div class="vct__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <a
+        class="vct__button"
+        href="{{ section.settings.button_link | default: '#' }}"
+        data-vct-scroll="{{ sid }}"
+        data-vct-target="{{ section.settings.scroll_target }}"
+      >{{ section.settings.button_label }}</a>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="vct__trust">
+        {%- for block in section.blocks -%}
+          <span {{ block.shopify_attributes }}>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              {%- case block.settings.icon -%}
+                {%- when 'lab' -%}
+                  <path d="M4 10h16M5 10l7-5 7 5M6 10v9M18 10v9M4 19h16"/>
+                {%- when 'leaf' -%}
+                  <path d="M12 2C8 9 4 13 4 17a8 8 0 0 0 16 0c0-4-4-8-8-15z"/>
+                {%- when 'truck' -%}
+                  <path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/>
+                {%- else -%}
+                  <circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>
+              {%- endcase -%}
+            </svg>
+            {{ block.settings.text }}
+          </span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .vct--{{ sid }} {
+    --vct-accent: {{ section.settings.accent_color }};
+    --vct-accent-dark: {{ section.settings.accent_dark }};
+    --vct-accent-soft: {{ section.settings.accent_soft }};
+
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: linear-gradient(180deg, var(--vct-accent-soft) 0%, {{ section.settings.bg_bottom }} 100%);
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  }
+  .vct--{{ sid }} *, .vct--{{ sid }} *::before, .vct--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vct--{{ sid }} .vct__inner { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 0 18px; text-align: center; }
+
+  .vct--{{ sid }} .vct__badge {
+    display: inline-flex;
+    margin-bottom: 14px;
+    padding: 7px 11px;
+    border: 1px solid var(--vct-accent-soft);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--vct-accent-dark);
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .vct--{{ sid }} .vct__title {
+    margin: 0 0 10px;
+    font-size: 22px;
+    line-height: 1.15;
+    font-weight: 780;
+    letter-spacing: -0.03em;
+    color: {{ section.settings.title_color }};
+  }
+  .vct--{{ sid }} .vct__title em { font-style: normal; color: var(--vct-accent-dark); }
+  .vct--{{ sid }} .vct__text {
+    margin: 0 auto 20px;
+    max-width: 580px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: {{ section.settings.text_color }};
+  }
+  .vct--{{ sid }} .vct__text p { margin: 0; }
+
+  .vct--{{ sid }} .vct__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 26px;
+    border-radius: 10px;
+    background: var(--vct-accent);
+    color: {{ section.settings.button_text_color }};
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: 0 8px 22px rgba(1, 148, 168, 0.24);
+  }
+
+  .vct--{{ sid }} .vct__trust { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 18px; }
+  .vct--{{ sid }} .vct__trust span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border: 1px solid var(--vct-accent-soft);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--vct-accent-dark);
+    font-size: 11.5px;
+    font-weight: 750;
+  }
+  .vct--{{ sid }} .vct__trust svg { width: 13px; height: 13px; fill: none; stroke: var(--vct-accent); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+  @media screen and (min-width: 750px) {
+    .vct--{{ sid }} .vct__title { font-size: 25px; }
+    .vct--{{ sid }} .vct__text { font-size: 14px; }
+  }
+  @media screen and (max-width: 749px) {
+    .vct--{{ sid }} .vct__button { width: 100%; max-width: 330px; }
+  }
+</style>
+
+<script>
+  (function () {
+    var link = document.querySelector('[data-vct-scroll="{{ sid }}"]');
+    if (!link) return;
+    link.addEventListener('click', function (event) {
+      var selector = link.getAttribute('data-vct-target');
+      var target = selector ? document.querySelector(selector) : null;
+      if (!target) return; // sin destino, el enlace se comporta como enlace normal
+      event.preventDefault();
+      var top = target.getBoundingClientRect().top + window.pageYOffset - 90;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VALCA · Cierre",
+  "tag": "section",
+  "class": "valca-pdp-cta",
+  "settings": [
+    { "type": "text", "id": "badge", "label": "Píldora" },
+    { "type": "text", "id": "title", "label": "Título" },
+    { "type": "text", "id": "title_accent", "label": "Parte destacada del título" },
+    { "type": "richtext", "id": "text", "label": "Texto" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Empezar mi rutina" },
+    { "type": "url", "id": "button_link", "label": "Enlace de respaldo" },
+    {
+      "type": "text",
+      "id": "scroll_target",
+      "label": "Selector al que desplazarse",
+      "info": "Por defecto la caja de compra de la ficha. Si no existe, se usa el enlace de respaldo.",
+      "default": ".valca-pdp-main"
+    },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 600, "max": 1000, "step": 20, "default": 720 },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 100, "step": 2, "default": 42 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 100, "step": 2, "default": 46 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_bottom", "label": "Fondo inferior", "default": "#FFFFFF" },
+    { "type": "color", "id": "title_color", "label": "Título", "default": "#202020" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#4E4E4E" },
+    { "type": "color", "id": "accent_color", "label": "Acento", "default": "#0194A8" },
+    { "type": "color", "id": "accent_dark", "label": "Acento oscuro", "default": "#0B5C67" },
+    { "type": "color", "id": "accent_soft", "label": "Acento suave", "default": "#D6EEF2" },
+    { "type": "color", "id": "button_text_color", "label": "Texto del botón", "default": "#FFFFFF" }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Sello",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "default": "check",
+          "options": [
+            { "value": "check", "label": "Verificado" },
+            { "value": "lab", "label": "Laboratorio" },
+            { "value": "leaf", "label": "Hoja" },
+            { "value": "truck", "label": "Envío" }
+          ]
+        },
+        { "type": "text", "id": "text", "label": "Texto" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Cierre",
+      "blocks": [{ "type": "chip" }, { "type": "chip" }, { "type": "chip" }]
+    }
+  ]
+}
+{% endschema %}

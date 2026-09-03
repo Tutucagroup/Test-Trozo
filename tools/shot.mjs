@@ -2,9 +2,10 @@ import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-const OUT = resolve('out/shots');
+const page_file = process.argv[2] || 'out/preview.local.html';
+const OUT = resolve(process.argv[3] || 'out/shots');
 mkdirSync(OUT, { recursive: true });
-const url = 'file://' + resolve('out/preview.local.html');
+const url = 'file://' + resolve(page_file);
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 950 },

@@ -1,0 +1,113 @@
+{%- comment -%}
+  VALCA · Imagen editorial. Una pieza gráfica a ancho de columna, enmarcada y
+  con esquinas redondeadas. En la ficha de Valca separa los bloques de texto:
+  testimonios, línea de tiempo, comparativa de antes y después.
+{%- endcomment -%}
+
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<div class="vmc vmc--{{ sid }}">
+  <div class="vmc__inner">
+    {%- if section.settings.caption_top != blank -%}
+      <p class="vmc__caption vmc__caption--top">{{ section.settings.caption_top }}</p>
+    {%- endif -%}
+
+    <div class="vmc__frame">
+      {%- if section.settings.image != blank -%}
+        {%- if section.settings.link != blank -%}<a href="{{ section.settings.link }}">{%- endif -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 1400 }}"
+          srcset="{{ section.settings.image | image_url: width: 700 }} 700w, {{ section.settings.image | image_url: width: 1400 }} 1400w"
+          sizes="(min-width: 860px) 820px, 100vw"
+          alt="{{ section.settings.alt | escape }}"
+          width="{{ section.settings.image.width | default: 1024 }}"
+          height="{{ section.settings.image.height | default: 1024 }}"
+          loading="lazy"
+        >
+        {%- if section.settings.link != blank -%}</a>{%- endif -%}
+      {%- else -%}
+        <div class="vmc__placeholder">Elegí una imagen en los ajustes de la sección</div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.caption != blank -%}
+      <p class="vmc__caption">{{ section.settings.caption }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .vmc--{{ sid }} {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: {{ section.settings.padding }}px 0;
+    background: {{ section.settings.bg_color }};
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  }
+  .vmc--{{ sid }} *, .vmc--{{ sid }} *::before, .vmc--{{ sid }} *::after { box-sizing: border-box; }
+
+  .vmc--{{ sid }} .vmc__inner { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 0 18px; }
+
+  .vmc--{{ sid }} .vmc__frame {
+    width: 100%;
+    border-radius: {{ section.settings.radius }}px;
+    overflow: hidden;
+    background: {{ section.settings.frame_color }};
+    box-shadow: 0 8px 24px rgba(11, 92, 103, 0.07);
+  }
+  .vmc--{{ sid }} .vmc__frame img,
+  .vmc--{{ sid }} .vmc__frame a { display: block; width: 100%; height: auto; }
+
+  .vmc--{{ sid }} .vmc__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    padding: 24px;
+    color: #6f6f6f;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .vmc--{{ sid }} .vmc__caption {
+    margin: 12px 0 0;
+    font-size: 12px;
+    line-height: 1.45;
+    text-align: center;
+    color: {{ section.settings.caption_color }};
+  }
+  .vmc--{{ sid }} .vmc__caption--top { margin: 0 0 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; }
+
+  @media screen and (max-width: 749px) {
+    .vmc--{{ sid }} { padding: {{ section.settings.padding | times: 0.75 | round }}px 0; }
+    .vmc--{{ sid }} .vmc__inner { padding: 0 14px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Imagen",
+  "tag": "section",
+  "class": "valca-media-card",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Imagen" },
+    { "type": "text", "id": "alt", "label": "Texto alternativo" },
+    { "type": "url", "id": "link", "label": "Enlace" },
+    { "type": "text", "id": "caption_top", "label": "Rótulo superior" },
+    { "type": "text", "id": "caption", "label": "Pie de imagen" },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 600, "max": 1200, "step": 20, "default": 820 },
+    { "type": "range", "id": "radius", "label": "Radio (px)", "min": 0, "max": 28, "step": 2, "default": 16 },
+    { "type": "range", "id": "padding", "label": "Espacio vertical (px)", "min": 0, "max": 80, "step": 2, "default": 24 },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FFFFFF" },
+    { "type": "color", "id": "frame_color", "label": "Fondo del marco", "default": "#EFF7F8" },
+    { "type": "color", "id": "caption_color", "label": "Pie de imagen", "default": "#6F6F6F" }
+  ],
+  "presets": [{ "name": "VALCA · Imagen" }]
+}
+{% endschema %}

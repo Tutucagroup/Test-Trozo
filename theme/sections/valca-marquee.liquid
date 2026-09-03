@@ -1,0 +1,104 @@
+{%- comment -%}
+  VALCA · Marquesina de texto. Cinta de color con beneficios que se desplaza en
+  bucle. La lista se duplica en el marcado porque la animación traslada la pista
+  un 50%: al llegar a ese punto la segunda copia queda exactamente donde estaba
+  la primera y el bucle no tiene salto.
+{%- endcomment -%}
+
+{%- render 'valca-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<div class="vmq vmq--{{ sid }}" aria-label="{{ section.settings.aria_label | escape }}">
+  <div class="vmq__track">
+    {%- for pass in (1..2) -%}
+      {%- for block in section.blocks -%}
+        <div class="vmq__item" {% if pass == 2 %}aria-hidden="true"{% endif %} {{ block.shopify_attributes }}>
+          <span>{{ block.settings.text }}</span>
+          <span class="vmq__dot"></span>
+        </div>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .vmq--{{ sid }} {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: {{ section.settings.padding }}px 0;
+    background: {{ section.settings.bg_color }};
+    overflow: hidden;
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  }
+  .vmq--{{ sid }} .vmq__track {
+    display: flex;
+    width: max-content;
+    animation: vmq-scroll-{{ sid }} {{ section.settings.duration }}s linear infinite;
+  }
+  .vmq--{{ sid }} .vmq__item {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 0 22px;
+    color: {{ section.settings.text_color }};
+    font-size: 14px;
+    font-weight: 750;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .vmq--{{ sid }} .vmq__dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: {{ section.settings.dot_color }};
+    opacity: 0.85;
+  }
+
+  @keyframes vmq-scroll-{{ sid }} {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vmq--{{ sid }} .vmq__track { animation: none; }
+    .vmq--{{ sid }} { overflow-x: auto; }
+  }
+
+  @media screen and (max-width: 749px) {
+    .vmq--{{ sid }} .vmq__item { font-size: 13px; gap: 18px; padding: 0 18px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VALCA · Marquesina",
+  "tag": "section",
+  "class": "valca-marquee",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#0194A8" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#FFFFFF" },
+    { "type": "color", "id": "dot_color", "label": "Separador", "default": "#FFFFFF" },
+    { "type": "range", "id": "padding", "label": "Alto (px)", "min": 6, "max": 30, "step": 1, "default": 13 },
+    { "type": "range", "id": "duration", "label": "Duración del ciclo (s)", "min": 10, "max": 60, "step": 1, "default": 25 },
+    { "type": "text", "id": "aria_label", "label": "Etiqueta accesible", "default": "Beneficios del producto" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Texto",
+      "settings": [{ "type": "text", "id": "text", "label": "Texto", "default": "Envío gratis" }]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VALCA · Marquesina",
+      "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }, { "type": "item" }]
+    }
+  ]
+}
+{% endschema %}
