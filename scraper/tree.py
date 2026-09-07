@@ -11,8 +11,12 @@ import html as htmllib
 import unicodedata
 import openpyxl
 
-COLLECTIONS_XLSX = "/root/.claude/uploads/f4677800-7e33-5d4e-ab81-cb54e5e95596/22759230-chestershopifycolecciones_1.xlsx"
-PRODUCTS_TEMPLATE = "/root/.claude/uploads/f4677800-7e33-5d4e-ab81-cb54e5e95596/bc350482-chesterproductosmatrixifytemplate_1.xlsx"
+import os as _os
+_BASE = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
+# El árbol (dept/cat/subcat/handle/tags/type) vive en la hoja 'Tags por categoría'
+# de la plantilla committeada en el repo (equivale a 'Árbol & Tags' + Type).
+TREE_XLSX = _os.path.join(_BASE, "plantilla_nuevo_producto.xlsx")
+TREE_SHEET = "Tags por categoría"
 
 
 def norm(s):
@@ -39,27 +43,20 @@ def _name_eq(a, b):
 
 
 def load_tree():
-    """Árbol anidado: {dept_name: {"node":.., "children": {cat_name: {"node":.., "children": {sub: {"node":..}}}}}}"""
-    wb = openpyxl.load_workbook(COLLECTIONS_XLSX)
-    ws = wb["Árbol & Tags"]
-    wb2 = openpyxl.load_workbook(PRODUCTS_TEMPLATE)
-    ws2 = wb2["Tags por categoría"]
-    type_by_handle = {}
-    for r in range(5, ws2.max_row + 1):
-        handle = ws2.cell(r, 5).value
-        typ = ws2.cell(r, 6).value
-        if handle:
-            type_by_handle[handle] = typ
+    """Árbol anidado: {dept_name: {"node":.., "children": {cat_name: {"node":.., "children": {sub: {"node":..}}}}}}
+    Lee de la hoja 'Tags por categoría': Nivel, Depto, Categoría, Subcat, Handle, Type, Tags."""
+    wb = openpyxl.load_workbook(TREE_XLSX)
+    ws = wb[TREE_SHEET]
 
     tree = {}
     for r in range(5, ws.max_row + 1):
-        lvl, dep, cat, sub, handle, url, tags = [ws.cell(r, c).value for c in range(1, 8)]
+        lvl, dep, cat, sub, handle, typ, tags = [ws.cell(r, c).value for c in range(1, 8)]
         if not handle:
             continue
         node = {
             "handle": handle,
             "tags": tags,
-            "type": type_by_handle.get(handle) or (sub or cat or dep),
+            "type": typ or (sub or cat or dep),
             "level": lvl,
             "names": (dep, cat, sub),
         }

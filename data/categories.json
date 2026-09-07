@@ -1480,5 +1480,81 @@
    "Higiene Corporal",
    "Hisopos"
   ]
+ },
+ "82545": {
+  "slug": "sets",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado de la Piel",
+   "Sets"
+  ]
+ },
+ "65849": {
+  "slug": "cicatrizantes",
+  "path": [
+   "Dermocosmética",
+   "Corporal",
+   "Cicatrizantes"
+  ]
+ },
+ "82548": {
+  "slug": "termometros",
+  "path": [
+   "Electro",
+   "Salud",
+   "Termómetros"
+  ]
+ },
+ "79341": {
+  "slug": "aerocamara",
+  "path": [
+   "Electro",
+   "Salud",
+   "Aerocamara"
+  ]
+ },
+ "65777": {
+  "slug": "barbijos",
+  "path": [
+   "Cuidado de la Salud",
+   "Complementos de Farmacia",
+   "Barbijos"
+  ]
+ },
+ "65825": {
+  "slug": "infantiles",
+  "path": [
+   "Infantiles"
+  ]
+ },
+ "30789": {
+  "slug": "perfumes-fragancias",
+  "path": [
+   "Perfumes & Fragancias"
+  ]
+ },
+ "67366": {
+  "slug": "anti-caspa",
+  "path": [
+   "Dermocosmética",
+   "Capilares",
+   "Anti-Caspa"
+  ]
+ },
+ "82165": {
+  "slug": "anti-frizz",
+  "path": [
+   "Cuidado Personal",
+   "Cuidado Capilar",
+   "Anti-Frizz"
+  ]
+ },
+ "82547": {
+  "slug": "gel-frio-calor",
+  "path": [
+   "Cuidado de la Salud",
+   "Primeros Auxilios",
+   "Gel frío-calor"
+  ]
  }
 }

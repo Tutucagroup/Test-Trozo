@@ -65,7 +65,7 @@ def main():
 
     fout = open(OUT, "a", encoding="utf-8")
     t0 = time.time()
-    with ThreadPoolExecutor(max_workers=12) as ex:
+    with ThreadPoolExecutor(max_workers=10) as ex:
         futs = {ex.submit(worker, u): u for u in todo}
         n = 0
         for fut in as_completed(futs):

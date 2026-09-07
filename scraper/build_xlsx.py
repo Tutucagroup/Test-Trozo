@@ -28,10 +28,9 @@ from tree import TreeMatcher
 
 PRODUCTS = os.path.join(BASE, "data", "products.jsonl")
 CATEGORIES = os.path.join(BASE, "data", "categories.json")
-IMAGES = os.path.join(BASE, "data", "images_resolved.json")
-# capa final: octet-stream -> weserv (Shopify sólo acepta content-type image/*)
+# mapa único: url scrapeada -> url final para Shopify (directa, weserv, o None si muerta)
 IMAGES_FINAL = os.path.join(BASE, "data", "images_final.json")
-TEMPLATE = "/root/.claude/uploads/f4677800-7e33-5d4e-ab81-cb54e5e95596/bc350482-chesterproductosmatrixifytemplate_1.xlsx"
+TEMPLATE = os.path.join(BASE, "plantilla_nuevo_producto.xlsx")
 OUT = os.path.join(BASE, "chester_productos_matrixify.xlsx")
 
 SHEET = "Products (Matrixify)"
@@ -75,9 +74,7 @@ def col_index(ws):
 
 def main():
     cats = json.load(open(CATEGORIES, encoding="utf-8"))
-    # mapa de imagen original(_f) -> URL accesible (_l/_m) o None (muerta)
-    img_map = json.load(open(IMAGES, encoding="utf-8")) if os.path.exists(IMAGES) else {}
-    # mapa URL accesible -> URL final para Shopify (directa o vía weserv)
+    # mapa único: url scrapeada -> url final para Shopify (o None si muerta)
     img_final = json.load(open(IMAGES_FINAL, encoding="utf-8")) if os.path.exists(IMAGES_FINAL) else {}
     tm = TreeMatcher()
     prods = load_products()
@@ -106,7 +103,10 @@ def main():
         if cat and cat.get("path"):
             node = tm.match_path(cat["path"])
         tags = node["tags"] if node else None
-        ptype = node["type"] if node else (p.get("category_name") or None)
+        cat_name = p.get("category_name")
+        if cat_name and cat_name.strip().lower() == "sin categoría":
+            cat_name = None  # el sitio no lo categorizó -> no forzar Type
+        ptype = node["type"] if node else cat_name
         if tags:
             stats["con_tags"] += 1
         else:
@@ -137,14 +137,12 @@ def main():
         put(r, "Variant Inventory Tracker", "shopify")
         put(r, "Variant Requires Shipping", "TRUE")
         put(r, "Variant Taxable", "TRUE")
-        # resolver imágenes al tamaño accesible, descartar muertas, y aplicar
-        # la capa final (weserv para las octet-stream que Shopify rechaza)
+        # mapear cada imagen scrapeada a su URL final (directa/weserv); descartar muertas
         imgs = []
         for im in (p.get("images") or []):
-            resolved = img_map.get(im, im)  # tamaño/extensión accesible
-            if not resolved:
-                continue
-            imgs.append(img_final.get(resolved, resolved))
+            final_url = img_final.get(im, im)
+            if final_url:
+                imgs.append(final_url)
         if imgs:
             put(r, "Image Src", imgs[0])
             put(r, "Image Position", 1)
