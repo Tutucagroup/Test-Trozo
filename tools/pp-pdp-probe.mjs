@@ -40,8 +40,28 @@ await p.click('.ppp__acc-item:nth-child(2) .ppp__acc-head');
 console.log('acordeón 2 abierto:', await p.evaluate(() => document.querySelectorAll('.ppp__acc-item')[1].classList.contains('is-open')));
 
 await p.click('[data-ppp-thumb="3"]');
-await p.waitForTimeout(400);
-console.log('miniatura 3 activa:', await p.evaluate(() => document.querySelector('[data-ppp-thumb="3"]').classList.contains('is-active')));
+await p.waitForTimeout(1200);
+console.log('miniatura 3 activa:', await p.evaluate(() => document.querySelector('[data-ppp-thumb="3"]').classList.contains('is-active')),
+            '| foto en pantalla:', await p.evaluate(() => {
+              const box = document.querySelector('[data-ppp-slides]');
+              return Math.round(box.scrollLeft / box.clientWidth);
+            }));
+await p.click('[data-ppp-next]');
+await p.waitForTimeout(1200);
+console.log('tras siguiente:', await p.evaluate(() => {
+  const box = document.querySelector('[data-ppp-slides]');
+  return { foto: Math.round(box.scrollLeft / box.clientWidth), thumb: [...document.querySelectorAll('[data-ppp-thumb]')].findIndex(t => t.classList.contains('is-active')) };
+}));
+await p.click('[data-ppp-prev]');
+await p.click('[data-ppp-prev]');
+await p.click('[data-ppp-prev]');
+await p.click('[data-ppp-prev]');
+await p.click('[data-ppp-prev]');
+await p.waitForTimeout(1400);
+console.log('tras 5 anteriores (da la vuelta):', await p.evaluate(() => {
+  const box = document.querySelector('[data-ppp-slides]');
+  return { foto: Math.round(box.scrollLeft / box.clientWidth), total: document.querySelectorAll('[data-ppp-slide]').length };
+}));
 
 await p.click('[data-ppp-slide="1"]');
 await p.waitForTimeout(300);

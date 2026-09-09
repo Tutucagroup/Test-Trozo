@@ -89,27 +89,52 @@
   .ppp__media { position: relative; }
   .ppp__rail { display: none; }
   .ppp__stage { position: relative; }
+  /* La galería enseña una foto por vez y se pasa de largo, igual en móvil que
+     en escritorio: apiladas, ocho fotos convertían la ficha en una tira
+     interminable antes de llegar al botón de compra. */
   .ppp__slides {
     display: flex;
-    gap: 4px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
     margin: 0 -16px;
-    padding: 0 0 0 0;
   }
   .ppp__slides::-webkit-scrollbar { display: none; }
   .ppp__slide {
     position: relative;
-    flex: 0 0 88%;
-    scroll-snap-align: center;
+    /* `figure` trae margen propio del navegador y deja una franja en blanco
+       arriba y abajo de cada foto. */
+    margin: 0;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
     background: #f4f4f4;
     aspect-ratio: 1344 / 1820;
   }
-  .ppp__slide:first-child { margin-left: 16px; }
-  .ppp__slide:last-child { margin-right: 16px; }
   .ppp__slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* Flechas sobre la foto grande: en un ratón son el gesto natural, y el
+     deslizar del dedo sigue funcionando igual en pantalla táctil. */
+  .ppp__arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    display: none;
+    width: 38px;
+    height: 38px;
+    transform: translateY(-50%);
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+  }
+  .ppp__arrow svg { width: 14px; height: 14px; fill: none; stroke: #000; stroke-width: 1.8; }
+  .ppp__arrow--prev { left: 12px; }
+  .ppp__arrow--next { right: 12px; }
+  .ppp__stage:hover .ppp__arrow { background: #fff; }
   .ppp__modelinfo {
     position: absolute;
     left: 10px;
@@ -364,35 +389,35 @@
   @media screen and (min-width: 750px) {
     .ppp__inner { padding: 0 24px; }
     .ppp__slides { margin: 0; }
-    .ppp__slide { flex-basis: 62%; }
-    .ppp__slide:first-child, .ppp__slide:last-child { margin: 0; }
+    .ppp__arrow { display: grid; }
     .ppp__usps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   @media screen and (min-width: 990px) {
     .ppp__inner { padding: 0 32px; }
     .ppp__grid { display: grid; grid-template-columns: minmax(0, 1fr) {{ section.settings.info_width }}px; gap: 44px; align-items: start; }
-    .ppp__media { display: flex; gap: 10px; }
+    /* `flex-start` evita que el carrete se estire hasta la altura de la foto:
+       sin él la columna de miniaturas marca el alto de toda la galería. */
+    .ppp__media { display: flex; gap: 10px; align-items: flex-start; }
     .ppp__rail {
       display: flex;
       flex-direction: column;
       gap: 8px;
       flex: 0 0 62px;
-      position: sticky;
-      top: 96px;
-      max-height: calc(100vh - 120px);
+      max-height: 100%;
       overflow-y: auto;
       scrollbar-width: none;
     }
     .ppp__rail::-webkit-scrollbar { display: none; }
     .ppp__thumb { padding: 0; border: 1px solid transparent; background: #f4f4f4; cursor: pointer; display: block; }
-    .ppp__thumb img { width: 100%; aspect-ratio: 1344 / 1820; object-fit: cover; display: block; }
+    /* `height: auto` es obligatorio: con el alto del atributo HTML en pie, la
+       proporción declarada aquí no llega a aplicarse y cada miniatura sale con
+       el tamaño intrínseco de la foto. */
+    .ppp__thumb img { width: 100%; height: auto; aspect-ratio: 1344 / 1820; object-fit: cover; display: block; }
     .ppp__thumb.is-active { border-color: #000; }
     .ppp__stage { flex: 1; min-width: 0; }
-    /* En escritorio la galería deja de ser un carrusel y pasa a ser una
-       columna: se recorre con la rueda, igual que en la web original. */
-    .ppp__slides { display: grid; grid-template-columns: 1fr; gap: 6px; overflow: visible; margin: 0; }
-    .ppp__slide { flex: none; width: auto; cursor: zoom-in; }
+    .ppp__slide { cursor: zoom-in; }
+    /* Con miniaturas y flechas a la vista, los puntos sobran en escritorio. */
     .ppp__dots { display: none; }
     .ppp__info { padding: 0; }
     .ppp__sticky { padding: 10px 32px; }
@@ -405,7 +430,6 @@
   }
 
   @media screen and (min-width: 1280px) {
-    .ppp__slides { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .ppp__rail { flex-basis: 72px; }
   }
 </style>
@@ -445,6 +469,13 @@
             {%- if is_sale -%}<span class="ppp__flag">Sale</span>{%- endif -%}
             {%- if section.settings.badge != blank -%}<span class="ppp__flag ppp__flag--soft">{{ section.settings.badge }}</span>{%- endif -%}
           </div>
+
+          <button class="ppp__arrow ppp__arrow--prev" type="button" data-ppp-prev aria-label="Foto anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg>
+          </button>
+          <button class="ppp__arrow ppp__arrow--next" type="button" data-ppp-next aria-label="Foto siguiente">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg>
+          </button>
 
           <div class="ppp__slides" data-ppp-slides>
             {%- for img in prod.images limit: 12 -%}
@@ -816,7 +847,10 @@
     var thumbs = Array.prototype.slice.call(root.querySelectorAll('[data-ppp-thumb]'));
     var dots = Array.prototype.slice.call(root.querySelectorAll('[data-ppp-dot]'));
 
+    var currentSlide = 0;
+
     function markActive(index) {
+      currentSlide = index;
       thumbs.forEach(function (t, i) {
         t.classList.toggle('is-active', i === index);
         t.setAttribute('aria-selected', i === index ? 'true' : 'false');
@@ -825,29 +859,37 @@
     }
 
     function goTo(index) {
+      // Da la vuelta en los extremos: llegar a la última foto y quedarse con la
+      // flecha muerta es la forma más rápida de que nadie vea el resto.
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+
       var target = slides[index];
       if (!target) return;
-      // En escritorio la galería es una columna y el carrete no se desplaza en
-      // horizontal: ahí lo correcto es llevar la foto a la vista.
-      if (window.matchMedia('(min-width: 990px)').matches) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else {
-        slidesBox.scrollTo({ left: target.offsetLeft - slidesBox.offsetLeft, behavior: 'smooth' });
-      }
+      slidesBox.scrollTo({ left: target.offsetLeft - slidesBox.offsetLeft, behavior: 'smooth' });
       markActive(index);
     }
 
     thumbs.forEach(function (t, i) { t.addEventListener('click', function () { goTo(i); }); });
     dots.forEach(function (d, i) { d.addEventListener('click', function () { goTo(i); }); });
 
+    var prevPhoto = root.querySelector('[data-ppp-prev]');
+    var nextPhoto = root.querySelector('[data-ppp-next]');
+    if (prevPhoto) prevPhoto.addEventListener('click', function () { goTo(currentSlide - 1); });
+    if (nextPhoto) nextPhoto.addEventListener('click', function () { goTo(currentSlide + 1); });
+
+    // El observador mira contra el propio carrusel, no contra la ventana: la
+    // foto es más alta que la pantalla, así que medida contra la ventana su
+    // proporción visible nunca llegaría al umbral y el carrete no se enteraría
+    // de qué foto está delante.
     if ('IntersectionObserver' in window && slides.length) {
       var seen = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.55) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
             markActive(slides.indexOf(entry.target));
           }
         });
-      }, { threshold: [0.55] });
+      }, { root: slidesBox, threshold: [0.6] });
       slides.forEach(function (slide) { seen.observe(slide); });
     }
 
