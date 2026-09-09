@@ -1,0 +1,70 @@
+{%- comment -%}
+  Tarjeta de producto de la portada.
+
+  Parámetros:
+    product        producto a mostrar (obligatorio)
+    show_wishlist  dibuja el corazón de la esquina (por defecto sí)
+
+  La segunda imagen se precarga sólo si existe: en Princess Polly el cambio al
+  pasar el ratón es parte de la tarjeta, pero un producto con una sola foto no
+  debe quedarse en blanco al hacer hover.
+{%- endcomment -%}
+
+{%- liquid
+  assign card_product = product
+  assign img_main = card_product.images[0]
+  assign img_alt = card_product.images[1]
+  assign cap = card_product.compare_at_price | default: 0
+-%}
+
+<div class="ppcard">
+  <a class="ppcard__media" href="{{ card_product.url }}" aria-label="{{ card_product.title | escape }}">
+    {%- if img_main != blank -%}
+      <img
+        class="ppcard__img ppcard__img--main"
+        src="{{ img_main | image_url: width: 600 }}"
+        alt="{{ card_product.title | escape }}"
+        width="600"
+        height="812"
+        loading="lazy"
+      >
+    {%- else -%}
+      <span class="ppcard__img ppcard__img--empty" aria-hidden="true"></span>
+    {%- endif -%}
+
+    {%- if img_alt != blank -%}
+      <img
+        class="ppcard__img ppcard__img--alt"
+        src="{{ img_alt | image_url: width: 600 }}"
+        alt=""
+        width="600"
+        height="812"
+        loading="lazy"
+        aria-hidden="true"
+      >
+    {%- endif -%}
+
+    {%- if cap > card_product.price -%}
+      <span class="ppcard__flag">Sale</span>
+    {%- endif -%}
+  </a>
+
+  {%- if show_wishlist != false -%}
+    <button class="ppcard__wish" type="button" aria-label="Add {{ card_product.title | escape }} to wishlist">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 20.5S3.5 14.8 3.5 9.3A4.8 4.8 0 0 1 12 6.4a4.8 4.8 0 0 1 8.5 2.9c0 5.5-8.5 11.2-8.5 11.2z"/>
+      </svg>
+    </button>
+  {%- endif -%}
+
+  <a class="ppcard__title" href="{{ card_product.url }}">{{ card_product.title }}</a>
+
+  <p class="ppcard__price">
+    <span class="ppcard__price-now{% if cap > card_product.price %} is-sale{% endif %}">
+      {{ card_product.price | money }}
+    </span>
+    {%- if cap > card_product.price -%}
+      <s class="ppcard__price-was">{{ cap | money }}</s>
+    {%- endif -%}
+  </p>
+</div>

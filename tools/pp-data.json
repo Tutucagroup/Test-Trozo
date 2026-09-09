@@ -1,0 +1,685 @@
+{
+  "shop": {
+    "name": "Massrutine OK",
+    "url": "https://massrutine.com",
+    "money_format": "${{amount}}"
+  },
+  "files": {
+    "HP-Hero_ab867aa5-e49b-4772-8f23-702eda71cef3.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/HP-Hero_ab867aa5-e49b-4772-8f23-702eda71cef3.png?v=1788969737",
+    "HP-Hero_d41e6e7f-5ba1-4f14-bbf2-2433c719230f.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/HP-Hero_d41e6e7f-5ba1-4f14-bbf2-2433c719230f.png?v=1788958254",
+    "HP-Hero-1_980b97ac-5399-47ac-ba1f-5b471aca65e4.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/HP-Hero-1_980b97ac-5399-47ac-ba1f-5b471aca65e4.png?v=1788958254",
+    "HP-Mob_b3b78ae1-6083-4b5d-9070-816da4d7af93.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/HP-Mob_b3b78ae1-6083-4b5d-9070-816da4d7af93.png?v=1788958322",
+    "US-HP-Mob_81695eda-73e6-493f-a329-6861dd73283d.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/US-HP-Mob_81695eda-73e6-493f-a329-6861dd73283d.png?v=1788958319",
+    "HP-Mob-1_dd69bc6a-9b59-4029-85cc-6d93d9f44934.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/HP-Mob-1_dd69bc6a-9b59-4029-85cc-6d93d9f44934.png?v=1788958249",
+    "Block_19_4c6ff8d1-77a5-4b10-aa8c-51f5523d6e64.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/Block_19_4c6ff8d1-77a5-4b10-aa8c-51f5523d6e64.png?v=1788958250",
+    "Block_20_c5551e76-dfb2-42a3-9ec9-376bf0f396cb.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/Block_20_c5551e76-dfb2-42a3-9ec9-376bf0f396cb.png?v=1788958251",
+    "Block_18_aeadd548-513e-44ee-b6d2-69709cd04d22.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/Block_18_aeadd548-513e-44ee-b6d2-69709cd04d22.png?v=1788958327",
+    "Block_21_9843f41e-2df2-4875-be8d-a1908eae8be3.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/Block_21_9843f41e-2df2-4875-be8d-a1908eae8be3.png?v=1788958338",
+    "Mob_Block_17_81fd97d0-eea0-403d-a938-a3e47fc4c1dd.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/Mob_Block_17_81fd97d0-eea0-403d-a938-a3e47fc4c1dd.png?v=1788958311",
+    "Mob_Block_18_623bf140-2f83-407a-90ca-c1d91467f308.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/Mob_Block_18_623bf140-2f83-407a-90ca-c1d91467f308.png?v=1788958249",
+    "Mob_Block_19_781954b7-80e9-4b7b-aded-07bc42d663e7.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/Mob_Block_19_781954b7-80e9-4b7b-aded-07bc42d663e7.png?v=1788958313",
+    "Mob_Block_20_b2cbea65-71e1-45e1-91cc-83b054d76925.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/Mob_Block_20_b2cbea65-71e1-45e1-91cc-83b054d76925.png?v=1788958317",
+    "logo.svg": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/logo.svg?v=1788958305",
+    "logo-b-corporation.svg": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/logo-b-corporation.svg?v=1788958247",
+    "fee.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/fee.png?v=1788958247",
+    "ss.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/ss.png?v=1788958247",
+    "image_4jjj.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/image_4jjj.png?v=1788958247",
+    "f10.12_-_PARTY7474.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/f10.12_-_PARTY7474.png?v=1788958308",
+    "Image24-shortsheros.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/Image24-shortsheros.png?v=1788958308",
+    "s10.12_-_PARTY7279.png": "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/s10.12_-_PARTY7279.png?v=1788958308"
+  },
+  "products": {
+    "delcina-off-shoulder-corset-mini-dress-burgundy": {
+      "handle": "delcina-off-shoulder-corset-mini-dress-burgundy",
+      "title": "Delcina Off Shoulder Corset Mini Dress Burgundy",
+      "price": 5999,
+      "compare_at_price": 7999,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/2-modelinfo-hollie-us2_e74683d1-ea14-44d4-b2b2-455802f475a5.jpg?v=1788912833",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/3-modelinfo-hollie-us2_cd8e8618-de7c-4f71-899d-85340371d288.jpg?v=1788912833"
+      ],
+      "available": true,
+      "variant_id": 17216619524
+    },
+    "delaney-v-neck-frill-midi-dress-brown-brown-pink-polka-dot": {
+      "handle": "delaney-v-neck-frill-midi-dress-brown-brown-pink-polka-dot",
+      "title": "Delaney V Neck Frill Midi Dress Brown / Pink Polka Dot",
+      "price": 8999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-aisha-us4_96b8fc9e-8ce7-43b8-867a-bb1a0bbe215c.jpg?v=1788912831",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-aisha-us4_1ed71057-e7fc-4b3f-9b53-d50c48ae5484.jpg?v=1788912832"
+      ],
+      "available": true,
+      "variant_id": 466501439290
+    },
+    "delamere-mini-dress-yellow-brown-polka": {
+      "handle": "delamere-mini-dress-yellow-brown-polka",
+      "title": "Delamere Mini Dress Yellow / Brown Polka Dot",
+      "price": 8999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-ayla-us2_597285a6-16b8-495c-ace0-08a264227236.jpg?v=1788912830",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-ayla-us2_1a23f7e5-5a9e-4bd2-9001-0621c25e4c39.jpg?v=1788912830"
+      ],
+      "available": true,
+      "variant_id": 504056236169
+    },
+    "delamere-mini-dress-white-burnout": {
+      "handle": "delamere-mini-dress-white-burnout",
+      "title": "Delamere Mini Dress White Burnout",
+      "price": 8999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-mia-us4_5bca068d-43c9-4053-be36-7a4a0c5ca4bf.jpg?v=1788912829",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-mia-us4_5071c338-1aea-4e29-a3f3-505a3b2ab8a9.jpg?v=1788912828"
+      ],
+      "available": true,
+      "variant_id": 348905423194
+    },
+    "delamere-mini-dress-red-polka": {
+      "handle": "delamere-mini-dress-red-polka",
+      "title": "Delamere Mini Dress Red Polka",
+      "price": 8999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-ella-us4_d66727e3-693e-447e-9d9e-fc26fbdac253.jpg?v=1788912827",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/2-modelinfo-ella-us4_fc2a43a6-b91e-4646-b257-ee22e0780ebf.jpg?v=1788912827"
+      ],
+      "available": true,
+      "variant_id": 790689817098
+    },
+    "delamere-mini-dress-pink-floral": {
+      "handle": "delamere-mini-dress-pink-floral",
+      "title": "Delamere Mini Dress Pink Floral",
+      "price": 8999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-monique-us2_2badc51a-296e-424b-b72a-ca47a63aa368.jpg?v=1788912825",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-monique-us2_34c1347a-e827-49f3-b686-4156b2eac732.jpg?v=1788912825"
+      ],
+      "available": true,
+      "variant_id": 554201521292
+    },
+    "delamere-mini-dress-pink-black-polka": {
+      "handle": "delamere-mini-dress-pink-black-polka",
+      "title": "Delamere Mini Dress Pink / Black Polka Dot",
+      "price": 8999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-mia-us2_c1cf49a9-5f4c-4fbd-bdcf-73730ac8a01f.jpg?v=1788912824",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-savannah-us2_4c532356-824e-4ab9-abbb-44bb1cf44440.jpg?v=1788912824"
+      ],
+      "available": true,
+      "variant_id": 312237482671
+    },
+    "delamere-mini-dress-pink": {
+      "handle": "delamere-mini-dress-pink",
+      "title": "Delamere Mini Dress Pink",
+      "price": 7999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-elise-us2_f1d55db7-a460-43aa-a529-f1956dd62507.jpg?v=1788912822",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-elise-us2_5c67c304-92e9-465a-b92d-cb408313c9d9.jpg?v=1788912822"
+      ],
+      "available": true,
+      "variant_id": 722529626710
+    },
+    "dearly-embroidered-mini-dress-white": {
+      "handle": "dearly-embroidered-mini-dress-white",
+      "title": "Dearly Embroidered Mini Dress White",
+      "price": 7999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-elise-us2_f7b9b3af-3e50-44fc-93bd-66c34c33e80d.jpg?v=1788912775",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-elise-us2_fafe224c-298c-40a2-9d59-219778aa53bd.jpg?v=1788912775"
+      ],
+      "available": true,
+      "variant_id": 656784885365
+    },
+    "dawn-to-dusk-shoulder-bag-black": {
+      "handle": "dawn-to-dusk-shoulder-bag-black",
+      "title": "Dawn To Dusk Shoulder Bag Black",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/dawn-to-dusk-shoulder-bag-black_130f83c8-605f-4bf9-80cb-2c2a011d5238.jpg?v=1788912751",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1_a2806b49-6008-4625-992f-41ed9fc8d275.jpg?v=1788912751"
+      ],
+      "available": true,
+      "variant_id": 595477012821
+    },
+    "daveney-boatneck-3-4-sleeve-top-white": {
+      "handle": "daveney-boatneck-3-4-sleeve-top-white",
+      "title": "Daily Define Boatneck 3/4 Sleeve Top White",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-nat-us2_7a4b29d8-6484-4ada-8074-3ceff3847f89.jpg?v=1788912742",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-nat-us2_9698669e-a2dd-4600-ba35-211e83e530bf.jpg?v=1788912742"
+      ],
+      "available": true,
+      "variant_id": 216189111043
+    },
+    "daveney-boatneck-3-4-sleeve-top-icy-blue": {
+      "handle": "daveney-boatneck-3-4-sleeve-top-icy-blue",
+      "title": "Daily Define Boatneck 3/4 Sleeve Top Icy Blue",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-nat-us2_91d0ac02-9808-4b79-b155-501877d0227d.jpg?v=1788912740",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-nat-us2_9e2980a0-6b1b-4f52-825f-320c613c62bf.jpg?v=1788912740"
+      ],
+      "available": true,
+      "variant_id": 643483463939
+    },
+    "darla-low-rise-straight-jean-dark-wash-petite": {
+      "handle": "darla-low-rise-straight-jean-dark-wash-petite",
+      "title": "Darla Low Rise Straight Leg Jean Dark Blue Wash Petite",
+      "price": 7500,
+      "compare_at_price": 9500,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-hailey-us4_cc1895c5-a0b3-4eef-aafd-6abac1804751.jpg?v=1788912685",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/3-modelinfo-hailey-us4_568d9bdf-689f-4e53-9109-bf45d7281020.jpg?v=1788912685"
+      ],
+      "available": true,
+      "variant_id": 259245952290
+    },
+    "daleah-frog-closure-top-white": {
+      "handle": "daleah-frog-closure-top-white",
+      "title": "Daleah Frog Closure Top White",
+      "price": 6500,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-olivia-us2_1f3fde5a-95fe-4f27-9483-e71f9f55ab6a.jpg?v=1788912621",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-olivia-us2_912a2268-b853-486c-a225-9be1e99585e0.jpg?v=1788912621"
+      ],
+      "available": true,
+      "variant_id": 392138710332
+    },
+    "daily-define-thick-strap-tank-top-white": {
+      "handle": "daily-define-thick-strap-tank-top-white",
+      "title": "Daily Define Thick Strap Tank Top White",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-taniesha-us2_6bbc1ba5-cdad-4b19-b1c9-953ddc68f487.jpg?v=1788912603",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-taniesha-us2_ce04f53f-6f5a-4aff-bceb-ff7457b26109.jpg?v=1788912603"
+      ],
+      "available": true,
+      "variant_id": 383459947447
+    },
+    "daily-define-thick-strap-tank-top-black": {
+      "handle": "daily-define-thick-strap-tank-top-black",
+      "title": "Daily Define Thick Strap Tank Top Black",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-taniesha-us2_3426842d-1131-4523-a977-dc57b9fc3ec2.jpg?v=1788912602",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-taniesha-us2_eb65e14e-502c-4b51-8b5d-756f3cc2343f.jpg?v=1788912602"
+      ],
+      "available": true,
+      "variant_id": 814393685655
+    },
+    "delamere-mini-dress-pastel-blue-floral": {
+      "handle": "delamere-mini-dress-pastel-blue-floral",
+      "title": "Delamere Mini Dress Pastel Blue Floral",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-holly-us2_abe5adf4-b726-4808-947a-be939532cf49.jpg?v=1788912821",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-holly-us2_8ed289e0-2157-4d32-9660-40e68f958c4f.jpg?v=1788912820"
+      ],
+      "available": true,
+      "variant_id": 838748139914
+    },
+    "delamere-mini-dress-burgundy-burnout": {
+      "handle": "delamere-mini-dress-burgundy-burnout",
+      "title": "Delamere Mini Dress Burgundy Burnout",
+      "price": 5999,
+      "compare_at_price": 7999,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-holly-us0_6a7ed6b0-a74d-4a00-b2d7-ac51b7cf1bad.jpg?v=1788912817",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-mari-us2_5d207493-0b7d-40e5-94bb-bbe5b9ac8bf2.jpg?v=1788912817"
+      ],
+      "available": true,
+      "variant_id": 446989104926
+    },
+    "dejonge-sleeveless-maxi-dress-black-curve": {
+      "handle": "dejonge-sleeveless-maxi-dress-black-curve",
+      "title": "Dejonge Ring Sleeveless Maxi Dress Black Curve",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-yasmine-us14_154fb1f4-c8d8-47b0-946f-f6d9ba884821.jpg?v=1788912801",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-yasmine-us14_57887996-d1e6-43d7-8e82-ca25330182d1.jpg?v=1788912801"
+      ],
+      "available": true,
+      "variant_id": 411562373853
+    },
+    "dejonge-sleeveless-maxi-black": {
+      "handle": "dejonge-sleeveless-maxi-black",
+      "title": "Dejonge Ring Sleeveless Maxi Dress Black",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-beanie-us2_24ee2b8e-045e-42fb-ae89-86b898c12da1.jpg?v=1788912799",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/2-modelinfo-beanie-us2_35ea84ff-326d-4493-9ad3-8e06b17d43bc.jpg?v=1788912799"
+      ],
+      "available": true,
+      "variant_id": 684310218627
+    },
+    "decadent-strapless-maxi-dress-black-tall": {
+      "handle": "decadent-strapless-maxi-dress-black-tall",
+      "title": "Decadent Strapless Maxi Dress Black Tall",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-saskia-us2_198cf456-51f2-400d-b892-4cd19e273402.jpg?v=1788912783",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-saskia-us2_65d262d2-016e-4906-b507-e6f49c29ee7f.jpg?v=1788912784"
+      ],
+      "available": true,
+      "variant_id": 838798500342
+    },
+    "decadent-strapless-maxi-dress-black": {
+      "handle": "decadent-strapless-maxi-dress-black",
+      "title": "Decadent Strapless Maxi Dress Black",
+      "price": 9900,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-meeya-us2_712da56b-3a55-4b44-b4e7-404cc8480eec.jpg?v=1788912782",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-saskia-us2_d749c4b0-6b6c-4f69-b7ef-337b76fd4fd2.jpg?v=1788912782"
+      ],
+      "available": true,
+      "variant_id": 486003049249
+    },
+    "decadence-strapless-maxi-dress-brown": {
+      "handle": "decadence-strapless-maxi-dress-brown",
+      "title": "Decadence Strapless Maxi Dress Brown",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-rino-us4_778215ac-62ae-4577-bf92-e1d1c2a21f1c.jpg?v=1788912780",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-rino-us4_5e25c255-9ba0-4cda-8e72-85ce86f7f65d.jpg?v=1788912780"
+      ],
+      "available": true,
+      "variant_id": 791148200925
+    },
+    "decadence-strapless-maxi-dress-blue": {
+      "handle": "decadence-strapless-maxi-dress-blue",
+      "title": "Decadence Strapless Maxi Dress Lilac",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-rino-us4_de38ced6-8288-4c69-bd0d-cc3376f1b790.jpg?v=1788912778",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-rino-us4_4e5be7c2-6231-44d0-98ab-0cd5eb18a35a.jpg?v=1788912779"
+      ],
+      "available": true,
+      "variant_id": 908545345477
+    },
+    "dearlie-frill-maxi-dress-multi": {
+      "handle": "dearlie-frill-maxi-dress-multi",
+      "title": "Dearlie Frill Maxi Dress Multi",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-olivia-us2_5d041eea-18bb-4ccd-b8c7-748924cba8d3.jpg?v=1788912771",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-lola-us4_526265ee-6b48-4589-8599-5d1132afc2b4.jpg?v=1788912771"
+      ],
+      "available": true,
+      "variant_id": 445464221286
+    },
+    "dayona-strapless-maxi-dress-red": {
+      "handle": "dayona-strapless-maxi-dress-red",
+      "title": "Dayona Strapless Maxi Dress Red",
+      "price": 5999,
+      "compare_at_price": null,
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/0-modelinfo-nat-us2_cf9ec835-9f9b-487a-8610-14721873a673.jpg?v=1788912758",
+        "https://cdn.shopify.com/s/files/1/0847/3283/8128/files/1-modelinfo-nat-us2_c7424a6e-8e6f-4192-8e0c-15535ceb0c6b.jpg?v=1788912758"
+      ],
+      "available": true,
+      "variant_id": 16768265218
+    }
+  },
+  "collections": {
+    "new-dresses": {
+      "title": "New Dresses",
+      "products": [
+        "delcina-off-shoulder-corset-mini-dress-burgundy",
+        "delaney-v-neck-frill-midi-dress-brown-brown-pink-polka-dot",
+        "delamere-mini-dress-yellow-brown-polka",
+        "delamere-mini-dress-white-burnout",
+        "delamere-mini-dress-red-polka",
+        "delamere-mini-dress-pink-floral",
+        "delamere-mini-dress-pink-black-polka",
+        "delamere-mini-dress-pink"
+      ]
+    },
+    "best-seller": {
+      "title": "Best Seller",
+      "products": [
+        "dearly-embroidered-mini-dress-white",
+        "dawn-to-dusk-shoulder-bag-black",
+        "daveney-boatneck-3-4-sleeve-top-white",
+        "daveney-boatneck-3-4-sleeve-top-icy-blue",
+        "darla-low-rise-straight-jean-dark-wash-petite",
+        "daleah-frog-closure-top-white",
+        "daily-define-thick-strap-tank-top-white",
+        "daily-define-thick-strap-tank-top-black"
+      ]
+    },
+    "mini-dresses": {
+      "title": "Mini Dresses",
+      "products": [
+        "delamere-mini-dress-pastel-blue-floral",
+        "delamere-mini-dress-burgundy-burnout"
+      ]
+    },
+    "maxi-dresses": {
+      "title": "Maxi Dresses",
+      "products": [
+        "dejonge-sleeveless-maxi-dress-black-curve",
+        "dejonge-sleeveless-maxi-black",
+        "decadent-strapless-maxi-dress-black-tall",
+        "decadent-strapless-maxi-dress-black",
+        "decadence-strapless-maxi-dress-brown",
+        "decadence-strapless-maxi-dress-blue",
+        "dearlie-frill-maxi-dress-multi",
+        "dayona-strapless-maxi-dress-red"
+      ]
+    },
+    "dresses": {
+      "title": "Dresses",
+      "products": [
+        "delcina-off-shoulder-corset-mini-dress-burgundy",
+        "delaney-v-neck-frill-midi-dress-brown-brown-pink-polka-dot",
+        "delamere-mini-dress-yellow-brown-polka",
+        "delamere-mini-dress-white-burnout",
+        "delamere-mini-dress-red-polka",
+        "delamere-mini-dress-pink-floral",
+        "delamere-mini-dress-pink-black-polka",
+        "delamere-mini-dress-pink"
+      ]
+    },
+    "going-out-dresses": {
+      "title": "Going Out Dresses",
+      "products": [
+        "delaney-v-neck-frill-midi-dress-brown-brown-pink-polka-dot",
+        "delamere-mini-dress-yellow-brown-polka",
+        "delamere-mini-dress-white-burnout",
+        "delamere-mini-dress-red-polka",
+        "delamere-mini-dress-pink-floral",
+        "delamere-mini-dress-pink-black-polka",
+        "delamere-mini-dress-pink",
+        "dearly-embroidered-mini-dress-white"
+      ]
+    },
+    "fall-dresses": {
+      "title": "Fall Dresses",
+      "products": [
+        "delamere-mini-dress-yellow-brown-polka",
+        "delamere-mini-dress-white-burnout",
+        "delamere-mini-dress-red-polka",
+        "delamere-mini-dress-pink-floral",
+        "delamere-mini-dress-pink-black-polka",
+        "delamere-mini-dress-pink",
+        "dearly-embroidered-mini-dress-white",
+        "dawn-to-dusk-shoulder-bag-black"
+      ]
+    },
+    "party-dresses": {
+      "title": "Party Dresses",
+      "products": [
+        "delamere-mini-dress-white-burnout",
+        "delamere-mini-dress-red-polka",
+        "delamere-mini-dress-pink-floral",
+        "delamere-mini-dress-pink-black-polka",
+        "delamere-mini-dress-pink",
+        "dearly-embroidered-mini-dress-white",
+        "dawn-to-dusk-shoulder-bag-black",
+        "daveney-boatneck-3-4-sleeve-top-white"
+      ]
+    },
+    "sale-dresses": {
+      "title": "Sale Dresses",
+      "products": [
+        "delamere-mini-dress-red-polka",
+        "delamere-mini-dress-pink-floral",
+        "delamere-mini-dress-pink-black-polka",
+        "delamere-mini-dress-pink",
+        "dearly-embroidered-mini-dress-white",
+        "dawn-to-dusk-shoulder-bag-black",
+        "daveney-boatneck-3-4-sleeve-top-white",
+        "daveney-boatneck-3-4-sleeve-top-icy-blue"
+      ]
+    },
+    "formal-fancy-dresses": {
+      "title": "Formal & Fancy Dresses",
+      "products": [
+        "delamere-mini-dress-pink-floral",
+        "delamere-mini-dress-pink-black-polka",
+        "delamere-mini-dress-pink",
+        "dearly-embroidered-mini-dress-white",
+        "dawn-to-dusk-shoulder-bag-black",
+        "daveney-boatneck-3-4-sleeve-top-white",
+        "daveney-boatneck-3-4-sleeve-top-icy-blue",
+        "darla-low-rise-straight-jean-dark-wash-petite"
+      ]
+    },
+    "homecoming-dresses": {
+      "title": "Homecoming Dresses",
+      "products": [
+        "delamere-mini-dress-pink-black-polka",
+        "delamere-mini-dress-pink",
+        "dearly-embroidered-mini-dress-white",
+        "dawn-to-dusk-shoulder-bag-black",
+        "daveney-boatneck-3-4-sleeve-top-white",
+        "daveney-boatneck-3-4-sleeve-top-icy-blue",
+        "darla-low-rise-straight-jean-dark-wash-petite",
+        "daleah-frog-closure-top-white"
+      ]
+    },
+    "midi-dresses": {
+      "title": "Midi Dresses",
+      "products": [
+        "delamere-mini-dress-pink",
+        "dearly-embroidered-mini-dress-white",
+        "dawn-to-dusk-shoulder-bag-black",
+        "daveney-boatneck-3-4-sleeve-top-white",
+        "daveney-boatneck-3-4-sleeve-top-icy-blue",
+        "darla-low-rise-straight-jean-dark-wash-petite",
+        "daleah-frog-closure-top-white",
+        "daily-define-thick-strap-tank-top-white"
+      ]
+    }
+  },
+  "menus": {
+    "pp-footer-shop": {
+      "title": "Shop",
+      "items": [
+        {
+          "title": "New In",
+          "url": "/collections/new-dresses",
+          "items": []
+        },
+        {
+          "title": "Best Sellers",
+          "url": "/collections/best-seller",
+          "items": []
+        },
+        {
+          "title": "Dresses",
+          "url": "/collections/dresses",
+          "items": []
+        },
+        {
+          "title": "Going Out",
+          "url": "/collections/going-out-dresses",
+          "items": []
+        },
+        {
+          "title": "Sale",
+          "url": "/collections/sale-dresses",
+          "items": []
+        }
+      ]
+    },
+    "pp-footer-help": {
+      "title": "Help",
+      "items": [
+        {
+          "title": "Contact Us",
+          "url": "/pages/contact",
+          "items": []
+        },
+        {
+          "title": "Shipping",
+          "url": "/pages/shipping",
+          "items": []
+        },
+        {
+          "title": "Returns",
+          "url": "/pages/returns",
+          "items": []
+        },
+        {
+          "title": "Size Guide",
+          "url": "/pages/size-guide",
+          "items": []
+        },
+        {
+          "title": "FAQs",
+          "url": "/pages/faqs",
+          "items": []
+        }
+      ]
+    },
+    "pp-footer-about": {
+      "title": "About",
+      "items": [
+        {
+          "title": "About Us",
+          "url": "/pages/about",
+          "items": []
+        },
+        {
+          "title": "Sustainability",
+          "url": "/pages/sustainability",
+          "items": []
+        },
+        {
+          "title": "Careers",
+          "url": "/pages/careers",
+          "items": []
+        },
+        {
+          "title": "Affiliates",
+          "url": "/pages/affiliates",
+          "items": []
+        }
+      ]
+    },
+    "pp-footer-legal": {
+      "title": "Legal",
+      "items": [
+        {
+          "title": "Privacy Policy",
+          "url": "/policies/privacy-policy",
+          "items": []
+        },
+        {
+          "title": "Terms of Service",
+          "url": "/policies/terms-of-service",
+          "items": []
+        },
+        {
+          "title": "Refund Policy",
+          "url": "/policies/refund-policy",
+          "items": []
+        }
+      ]
+    },
+    "pp-main-menu": {
+      "title": "Main menu",
+      "items": [
+        {
+          "title": "NEW",
+          "url": "/collections/new-dresses",
+          "items": [
+            {
+              "title": "New In",
+              "url": "/collections/new-dresses"
+            },
+            {
+              "title": "Back In Stock",
+              "url": "/collections/back-in-stock-dresses"
+            },
+            {
+              "title": "Best Sellers",
+              "url": "/collections/best-seller"
+            }
+          ]
+        },
+        {
+          "title": "BEST SELLERS",
+          "url": "/collections/best-seller",
+          "items": []
+        },
+        {
+          "title": "DRESSES",
+          "url": "/collections/dresses",
+          "items": [
+            {
+              "title": "Mini Dresses",
+              "url": "/collections/mini-dresses"
+            },
+            {
+              "title": "Midi Dresses",
+              "url": "/collections/midi-dresses"
+            },
+            {
+              "title": "Maxi Dresses",
+              "url": "/collections/maxi-dresses"
+            },
+            {
+              "title": "Formal & Fancy",
+              "url": "/collections/formal-fancy-dresses"
+            }
+          ]
+        },
+        {
+          "title": "GOING OUT",
+          "url": "/collections/going-out-dresses",
+          "items": []
+        },
+        {
+          "title": "FALL",
+          "url": "/collections/fall-dresses",
+          "items": []
+        },
+        {
+          "title": "PARTY",
+          "url": "/collections/party-dresses",
+          "items": []
+        },
+        {
+          "title": "HOMECOMING",
+          "url": "/collections/homecoming-dresses",
+          "items": []
+        },
+        {
+          "title": "CURVE",
+          "url": "/collections/curve-dresses",
+          "items": []
+        },
+        {
+          "title": "SALE",
+          "url": "/collections/sale-dresses",
+          "items": []
+        }
+      ]
+    }
+  },
+  "current_product": "delcina-off-shoulder-corset-mini-dress-burgundy"
+}

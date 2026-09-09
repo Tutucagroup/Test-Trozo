@@ -1,0 +1,113 @@
+{%- comment -%}
+  Franja promocional de ancho completo, justo encima del carrusel principal.
+  Es texto y no imagen a propósito: la promoción cambia cada semana y así se
+  edita desde el personalizador sin volver a exportar una pieza gráfica.
+{%- endcomment -%}
+
+{%- render 'pp-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<a class="ppp ppp--{{ sid }}" href="{{ section.settings.link | default: '#' }}">
+  <span class="ppp__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="ppp__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    <span class="ppp__title">{{ section.settings.title }}</span>
+    {%- if section.settings.detail != blank -%}
+      <span class="ppp__detail">{{ section.settings.detail }}</span>
+    {%- endif -%}
+    {%- if section.settings.cta != blank -%}
+      <span class="ppp__cta">{{ section.settings.cta }}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></span>
+    {%- endif -%}
+  </span>
+</a>
+
+<style>
+  .ppp--{{ sid }} {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+    text-align: center;
+    text-decoration: none;
+  }
+  .ppp--{{ sid }} *, .ppp--{{ sid }} *::before, .ppp--{{ sid }} *::after { box-sizing: border-box; }
+
+  .ppp--{{ sid }} .ppp__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+  }
+
+  .ppp--{{ sid }} .ppp__eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .ppp--{{ sid }} .ppp__title {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .ppp--{{ sid }} .ppp__detail { font-size: 11px; font-weight: 500; letter-spacing: 0.04em; }
+  .ppp--{{ sid }} .ppp__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .ppp--{{ sid }} .ppp__cta svg {
+    width: 11px;
+    height: 11px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ppp--{{ sid }} { padding: 14px; }
+    .ppp--{{ sid }} .ppp__inner { flex-direction: row; gap: 14px; }
+    .ppp--{{ sid }} .ppp__title { font-size: 22px; }
+    .ppp--{{ sid }} .ppp__detail { font-size: 12px; }
+    .ppp--{{ sid }} .ppp__cta { margin-top: 0; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PP · Franja promocional",
+  "tag": "section",
+  "class": "pp-promo-strip",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Limited time" },
+    { "type": "text", "id": "title", "label": "Título", "default": "30% off almost everything" },
+    { "type": "text", "id": "detail", "label": "Detalle", "default": "Use code POLLY30 at checkout" },
+    { "type": "text", "id": "cta", "label": "Llamada a la acción", "default": "Shop now" },
+    { "type": "url", "id": "link", "label": "Enlace" },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#F2E7DE" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#000000" }
+  ],
+  "presets": [{ "name": "PP · Franja promocional" }]
+}
+{% endschema %}

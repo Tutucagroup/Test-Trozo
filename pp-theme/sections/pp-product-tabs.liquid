@@ -1,0 +1,209 @@
+{%- comment -%}
+  «More Ways to Shop»: mismas pastillas que el carrusel de arriba, pero el
+  contenido se presenta como rejilla fija en lugar de rail. Es la variante que
+  Princess Polly usa más abajo en la portada, cuando el visitante ya está
+  explorando y conviene enseñar el surtido completo de un vistazo.
+{%- endcomment -%}
+
+{%- render 'pp-fonts' -%}
+{%- render 'pp-card-styles' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<section class="ppt ppt--{{ sid }}" data-ppt="{{ sid }}">
+  <div class="ppt__inner">
+    {%- if section.settings.title != blank -%}
+      <h2 class="ppt__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 1 -%}
+      <div class="ppt__tabs" role="tablist" aria-label="{{ section.settings.title | escape }}">
+        {%- for block in section.blocks -%}
+          {%- assign coll = block.settings.collection -%}
+          <button
+            class="ppt__tab{% if forloop.first %} is-active{% endif %}"
+            type="button"
+            role="tab"
+            data-ppt-tab="{{ forloop.index0 }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            {{ block.shopify_attributes }}
+          >{{ block.settings.label | default: coll.title }}</button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- assign coll = block.settings.collection -%}
+      <div
+        class="ppt__panel{% if forloop.first %} is-active{% endif %}"
+        data-ppt-panel="{{ forloop.index0 }}"
+        role="tabpanel"
+      >
+        {%- if coll.products.size > 0 -%}
+          <ul class="ppt__grid">
+            {%- for prod in coll.products limit: section.settings.products_shown -%}
+              <li>{%- render 'pp-product-card', product: prod -%}</li>
+            {%- endfor -%}
+          </ul>
+
+          {%- if section.settings.show_button -%}
+            <div class="ppt__foot">
+              <a class="ppt__cta" href="{{ coll.url }}">{{ section.settings.button_label }}</a>
+            </div>
+          {%- endif -%}
+        {%- else -%}
+          <p class="ppt__empty">Elegí una colección con productos para esta pestaña.</p>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+<style>
+  .ppt--{{ sid }} {
+    box-sizing: border-box;
+    width: 100%;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+  }
+  .ppt--{{ sid }} *, .ppt--{{ sid }} *::before, .ppt--{{ sid }} *::after { box-sizing: border-box; }
+  .ppt--{{ sid }} ul { list-style: none; margin: 0; padding: 0; }
+
+  .ppt--{{ sid }} .ppt__inner { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 0 14px; }
+
+  .ppt--{{ sid }} .ppt__title {
+    margin: 0 0 14px;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .ppt--{{ sid }} .ppt__tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ppt--{{ sid }} .ppt__tabs::-webkit-scrollbar { display: none; }
+  .ppt--{{ sid }} .ppt__tab {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    border: 1px solid {{ section.settings.text_color }};
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .ppt--{{ sid }} .ppt__tab.is-active {
+    background: {{ section.settings.text_color }};
+    color: {{ section.settings.bg_color }};
+  }
+
+  .ppt--{{ sid }} .ppt__panel { display: none; }
+  .ppt--{{ sid }} .ppt__panel.is-active { display: block; }
+
+  .ppt--{{ sid }} .ppt__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 8px; }
+
+  .ppt--{{ sid }} .ppt__foot { display: flex; justify-content: center; margin-top: 22px; }
+  .ppt--{{ sid }} .ppt__cta {
+    display: inline-block;
+    padding: 11px 26px;
+    border: 1px solid {{ section.settings.text_color }};
+    border-radius: 999px;
+    color: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .ppt--{{ sid }} .ppt__cta:hover {
+    background: {{ section.settings.text_color }};
+    color: {{ section.settings.bg_color }};
+  }
+  .ppt--{{ sid }} .ppt__empty { margin: 0; font-size: 13px; color: #767676; text-align: center; }
+
+  @media screen and (min-width: 750px) {
+    .ppt--{{ sid }} .ppt__title { font-size: 26px; margin-bottom: 18px; }
+    .ppt--{{ sid }} .ppt__tabs { justify-content: center; flex-wrap: wrap; overflow: visible; margin-bottom: 24px; }
+    .ppt--{{ sid }} .ppt__grid { grid-template-columns: repeat({{ section.settings.columns }}, 1fr); }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-ppt="{{ sid }}"]');
+    if (!root || root.dataset.pptReady) return;
+    root.dataset.pptReady = '1';
+
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('[data-ppt-tab]'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('[data-ppt-panel]'));
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var target = tab.getAttribute('data-ppt-tab');
+        tabs.forEach(function (other) {
+          var active = other === tab;
+          other.classList.toggle('is-active', active);
+          other.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        panels.forEach(function (panel) {
+          panel.classList.toggle('is-active', panel.getAttribute('data-ppt-panel') === target);
+        });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PP · Pestañas de producto",
+  "tag": "section",
+  "class": "pp-product-tabs",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "More Ways to Shop" },
+    { "type": "range", "id": "products_shown", "label": "Productos por pestaña", "min": 2, "max": 16, "step": 1, "default": 8 },
+    { "type": "range", "id": "columns", "label": "Columnas en escritorio", "min": 3, "max": 6, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_button", "label": "Mostrar botón al final", "default": true },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Shop All" },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 1100, "max": 1800, "step": 20, "default": 1600 },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 100, "step": 2, "default": 34 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 100, "step": 2, "default": 34 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#000000" }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Pestaña",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "text", "id": "label", "label": "Etiqueta" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PP · Pestañas de producto",
+      "blocks": [{ "type": "tab" }, { "type": "tab" }, { "type": "tab" }]
+    }
+  ]
+}
+{% endschema %}

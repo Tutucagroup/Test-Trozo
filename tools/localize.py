@@ -7,12 +7,14 @@ las capturas de pantalla se rendericen sin depender de la red del navegador.
 from __future__ import annotations
 
 import hashlib
+import os
 import re
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "out"
+# Mismo directorio de salida que usa render_preview.py.
+OUT = ROOT / os.environ.get("OUT_DIR", "out")
 ASSETS = OUT / "assets"
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
 

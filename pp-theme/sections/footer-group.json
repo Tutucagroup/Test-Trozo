@@ -1,0 +1,76 @@
+{
+  "type": "footer",
+  "name": "Pie de p\u00e1gina",
+  "sections": {
+    "footer": {
+      "type": "pp-footer",
+      "blocks": {
+        "shop": {
+          "type": "menu",
+          "settings": {
+            "menu": "pp-footer-shop",
+            "title": "Shop"
+          }
+        },
+        "help": {
+          "type": "menu",
+          "settings": {
+            "menu": "pp-footer-help",
+            "title": "Help"
+          }
+        },
+        "about": {
+          "type": "menu",
+          "settings": {
+            "menu": "pp-footer-about",
+            "title": "About"
+          }
+        },
+        "legal": {
+          "type": "menu",
+          "settings": {
+            "menu": "pp-footer-legal",
+            "title": "Legal"
+          }
+        },
+        "news": {
+          "type": "newsletter",
+          "settings": {
+            "title": "Join the club",
+            "text": "Sign up for early access to new drops, sales and student perks.",
+            "placeholder": "Your email",
+            "button_label": "Sign up"
+          }
+        }
+      },
+      "block_order": [
+        "shop",
+        "help",
+        "about",
+        "legal",
+        "news"
+      ],
+      "settings": {
+        "chat_label": "Need help? Chat with us",
+        "badge_alt": "Certified B Corporation",
+        "instagram": "https://www.instagram.com/",
+        "tiktok": "https://www.tiktok.com/",
+        "facebook": "https://www.facebook.com/",
+        "pinterest": "https://www.pinterest.com/",
+        "region_label": "United States (USD $)",
+        "legal_text": "All rights reserved.",
+        "max_width": 1600,
+        "bg_color": "#FFFFFF",
+        "text_color": "#000000",
+        "muted_color": "#5B5B5B",
+        "border_color": "#E5E5E5",
+        "chat_bg": "#000000",
+        "chat_text": "#FFFFFF",
+        "badge_file": "logo-b-corporation.svg"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

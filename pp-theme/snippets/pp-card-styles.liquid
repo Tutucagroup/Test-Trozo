@@ -1,0 +1,96 @@
+{%- comment -%}
+  Estilos de la tarjeta de producto. Van en un snippet aparte porque tres
+  secciones distintas dibujan tarjetas: incluirlos dentro de `pp-product-card`
+  repetiría la hoja una vez por producto.
+
+  Las clases no llevan el id de sección: la tarjeta es idéntica en toda la
+  portada y el nombre `ppcard` sólo existe en este tema.
+{%- endcomment -%}
+<style>
+  .ppcard { position: relative; display: flex; flex-direction: column; }
+  .ppcard *, .ppcard *::before, .ppcard *::after { box-sizing: border-box; }
+
+  .ppcard__media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 300 / 406;
+    background: #f4f4f4;
+    text-decoration: none;
+  }
+  .ppcard__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .ppcard__img--empty { background: #eee; }
+  .ppcard__img--alt { opacity: 0; transition: opacity 0.25s ease; }
+  .ppcard__media:hover .ppcard__img--alt,
+  .ppcard__media:focus-visible .ppcard__img--alt { opacity: 1; }
+
+  .ppcard__flag {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 3px 7px;
+    background: #e80404;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .ppcard__wish {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .ppcard__wish svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: #000;
+    stroke-width: 1.5;
+  }
+  .ppcard__wish.is-active svg { fill: #000; }
+
+  .ppcard__title {
+    margin: 9px 0 0;
+    color: #000;
+    font-size: 12px;
+    line-height: 1.35;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    /* Dos líneas fijas: sin el recorte, un título largo desalinea la fila de
+       precios respecto a las tarjetas vecinas. */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .ppcard__title:hover { text-decoration: underline; }
+
+  .ppcard__price { margin: 5px 0 0; display: flex; align-items: baseline; gap: 6px; }
+  .ppcard__price-now { font-size: 12px; font-weight: 700; color: #000; }
+  .ppcard__price-now.is-sale { color: #e80404; }
+  .ppcard__price-was { font-size: 11px; color: #767676; }
+
+  @media screen and (min-width: 750px) {
+    .ppcard__title { font-size: 13px; }
+    .ppcard__price-now { font-size: 13px; }
+    .ppcard__price-was { font-size: 12px; }
+  }
+</style>

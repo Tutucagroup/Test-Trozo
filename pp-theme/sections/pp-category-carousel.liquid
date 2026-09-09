@@ -1,0 +1,296 @@
+{%- comment -%}
+  «Shop By Category»: título, pastillas de categoría y carrusel de productos.
+
+  Todas las pestañas se imprimen a la vez y se muestran con CSS. Cargarlas por
+  fetch obligaría a montar un endpoint de sección y dejaría el bloque vacío sin
+  JavaScript; aquí el primer panel es HTML servido y las demás sólo se revelan.
+{%- endcomment -%}
+
+{%- render 'pp-fonts' -%}
+{%- render 'pp-card-styles' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<section class="ppcc ppcc--{{ sid }}" data-ppcc="{{ sid }}">
+  <div class="ppcc__inner">
+    {%- if section.settings.title != blank -%}
+      <h2 class="ppcc__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 1 -%}
+      <div class="ppcc__tabs" role="tablist" aria-label="{{ section.settings.title | escape }}">
+        {%- for block in section.blocks -%}
+          {%- assign coll = block.settings.collection -%}
+          <button
+            class="ppcc__tab{% if forloop.first %} is-active{% endif %}"
+            type="button"
+            role="tab"
+            data-ppcc-tab="{{ forloop.index0 }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            {{ block.shopify_attributes }}
+          >{{ block.settings.label | default: coll.title }}</button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- for block in section.blocks -%}
+    {%- assign coll = block.settings.collection -%}
+    <div
+      class="ppcc__panel{% if forloop.first %} is-active{% endif %}"
+      data-ppcc-panel="{{ forloop.index0 }}"
+      role="tabpanel"
+    >
+      {%- if coll.products.size > 0 -%}
+        <div class="ppcc__viewport">
+          <ul class="ppcc__rail" data-ppcc-rail>
+            {%- for prod in coll.products limit: section.settings.products_shown -%}
+              <li class="ppcc__cell">
+                {%- render 'pp-product-card', product: prod -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+
+          <button class="ppcc__arrow ppcc__arrow--prev" type="button" data-ppcc-prev aria-label="Scroll left">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="ppcc__arrow ppcc__arrow--next" type="button" data-ppcc-next aria-label="Scroll right">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        {%- if section.settings.show_button -%}
+          <div class="ppcc__foot">
+            <a class="ppcc__cta" href="{{ coll.url }}">
+              {{ section.settings.button_label }} {{ block.settings.label | default: coll.title }}
+            </a>
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="ppcc__inner">
+          <p class="ppcc__empty">Elegí una colección con productos para esta pestaña.</p>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endfor -%}
+</section>
+
+<style>
+  .ppcc--{{ sid }} {
+    box-sizing: border-box;
+    width: 100%;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+  }
+  .ppcc--{{ sid }} *, .ppcc--{{ sid }} *::before, .ppcc--{{ sid }} *::after { box-sizing: border-box; }
+  .ppcc--{{ sid }} ul { list-style: none; margin: 0; padding: 0; }
+
+  .ppcc--{{ sid }} .ppcc__inner { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 0 14px; }
+
+  .ppcc--{{ sid }} .ppcc__title {
+    margin: 0 0 14px;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .ppcc--{{ sid }} .ppcc__tabs {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-bottom: 16px;
+    /* En móvil las pastillas no caben en una línea: se desplazan en lugar de
+       apilarse, que es lo que hace que la fila siga leyéndose como un filtro. */
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ppcc--{{ sid }} .ppcc__tabs::-webkit-scrollbar { display: none; }
+  .ppcc--{{ sid }} .ppcc__tab {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    border: 1px solid {{ section.settings.text_color }};
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .ppcc--{{ sid }} .ppcc__tab.is-active {
+    background: {{ section.settings.text_color }};
+    color: {{ section.settings.bg_color }};
+  }
+
+  .ppcc--{{ sid }} .ppcc__panel { display: none; }
+  .ppcc--{{ sid }} .ppcc__panel.is-active { display: block; }
+
+  .ppcc--{{ sid }} .ppcc__viewport { position: relative; }
+  .ppcc--{{ sid }} .ppcc__rail {
+    display: flex;
+    gap: 8px;
+    padding: 0 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* El puerto de anclaje ignora el relleno: sin esto el navegador desplaza
+       el carril justo esos píxeles y la primera tarjeta nace pegada al borde. */
+    scroll-padding-left: 14px;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ppcc--{{ sid }} .ppcc__rail::-webkit-scrollbar { display: none; }
+  .ppcc--{{ sid }} .ppcc__cell { flex: 0 0 44%; scroll-snap-align: start; }
+
+  .ppcc--{{ sid }} .ppcc__arrow {
+    position: absolute;
+    top: 34%;
+    transform: translateY(-50%);
+    display: none;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    cursor: pointer;
+  }
+  .ppcc--{{ sid }} .ppcc__arrow--prev { left: 8px; }
+  .ppcc--{{ sid }} .ppcc__arrow--next { right: 8px; }
+  .ppcc--{{ sid }} .ppcc__arrow[disabled] { opacity: 0.3; cursor: default; }
+  .ppcc--{{ sid }} .ppcc__arrow svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: #000;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .ppcc--{{ sid }} .ppcc__foot { display: flex; justify-content: center; margin-top: 20px; }
+  .ppcc--{{ sid }} .ppcc__cta {
+    display: inline-block;
+    padding: 11px 26px;
+    border: 1px solid {{ section.settings.text_color }};
+    border-radius: 999px;
+    color: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .ppcc--{{ sid }} .ppcc__cta:hover {
+    background: {{ section.settings.text_color }};
+    color: {{ section.settings.bg_color }};
+  }
+  .ppcc--{{ sid }} .ppcc__empty { margin: 0; font-size: 13px; color: #767676; text-align: center; }
+
+  @media screen and (min-width: 750px) {
+    .ppcc--{{ sid }} .ppcc__title { font-size: 26px; margin-bottom: 18px; }
+    .ppcc--{{ sid }} .ppcc__tabs { justify-content: center; flex-wrap: wrap; overflow: visible; margin-bottom: 22px; }
+    .ppcc--{{ sid }} .ppcc__cell { flex: 0 0 calc(20% - 6.4px); }
+    .ppcc--{{ sid }} .ppcc__rail { gap: 8px; padding: 0 52px; scroll-padding-left: 52px; }
+    .ppcc--{{ sid }} .ppcc__arrow { display: grid; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-ppcc="{{ sid }}"]');
+    if (!root || root.dataset.ppccReady) return;
+    root.dataset.ppccReady = '1';
+
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('[data-ppcc-tab]'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('[data-ppcc-panel]'));
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var target = tab.getAttribute('data-ppcc-tab');
+        tabs.forEach(function (other) {
+          var active = other === tab;
+          other.classList.toggle('is-active', active);
+          other.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        panels.forEach(function (panel) {
+          panel.classList.toggle('is-active', panel.getAttribute('data-ppcc-panel') === target);
+        });
+      });
+    });
+
+    panels.forEach(function (panel) {
+      var rail = panel.querySelector('[data-ppcc-rail]');
+      var prev = panel.querySelector('[data-ppcc-prev]');
+      var next = panel.querySelector('[data-ppcc-next]');
+      if (!rail || !prev || !next) return;
+
+      function step() {
+        var cell = rail.querySelector('li');
+        // Un ancho de tarjeta más el hueco: avanzar por la anchura visible
+        // dejaría medias tarjetas cortadas en los extremos.
+        return cell ? cell.getBoundingClientRect().width + 8 : rail.clientWidth * 0.8;
+      }
+
+      function refresh() {
+        prev.disabled = rail.scrollLeft <= 2;
+        next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
+      }
+
+      prev.addEventListener('click', function () { rail.scrollBy({ left: -step() * 2, behavior: 'smooth' }); });
+      next.addEventListener('click', function () { rail.scrollBy({ left: step() * 2, behavior: 'smooth' }); });
+      rail.addEventListener('scroll', refresh, { passive: true });
+      window.addEventListener('resize', refresh);
+      refresh();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PP · Categorías",
+  "tag": "section",
+  "class": "pp-category-carousel",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Shop By Category" },
+    { "type": "range", "id": "products_shown", "label": "Productos por pestaña", "min": 4, "max": 16, "step": 1, "default": 10 },
+    { "type": "checkbox", "id": "show_button", "label": "Mostrar botón al final", "default": true },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Shop All" },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 1100, "max": 1800, "step": 20, "default": 1600 },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 100, "step": 2, "default": 34 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 100, "step": 2, "default": 34 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#000000" }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Pestaña",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "text", "id": "label", "label": "Etiqueta", "info": "Si se deja vacía se usa el nombre de la colección." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PP · Categorías",
+      "blocks": [{ "type": "tab" }, { "type": "tab" }, { "type": "tab" }]
+    }
+  ]
+}
+{% endschema %}

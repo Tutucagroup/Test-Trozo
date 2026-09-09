@@ -1,0 +1,335 @@
+{%- comment -%}
+  Carrusel principal. Cada diapositiva admite una imagen para escritorio y otra
+  para móvil porque las piezas de campaña vienen recortadas para cada formato:
+  reencuadrar la de escritorio en vertical deja el texto fuera del lienzo.
+
+  El texto sobreimpreso es opcional; las piezas que ya lo traen quemado sólo
+  necesitan el enlace.
+{%- endcomment -%}
+
+{%- render 'pp-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <section
+    class="pph2 pph2--{{ sid }}"
+    data-pph2="{{ sid }}"
+    data-pph2-autoplay="{{ section.settings.autoplay }}"
+    data-pph2-interval="{{ section.settings.interval }}"
+    aria-roledescription="carousel"
+    aria-label="{{ section.settings.aria_label | escape }}"
+  >
+    <div class="pph2__track" data-pph2-track>
+      {%- for block in section.blocks -%}
+        <div
+          class="pph2__slide"
+          data-pph2-slide
+          role="group"
+          aria-roledescription="slide"
+          aria-label="{{ forloop.index }} of {{ section.blocks.size }}"
+          {{ block.shopify_attributes }}
+        >
+          <a class="pph2__link" href="{{ block.settings.link | default: '#' }}">
+            {%- assign desktop = block.settings.image -%}
+            {%- assign mobile = block.settings.image_mobile | default: desktop -%}
+
+            {%- if mobile != blank -%}
+              <img
+                class="pph2__img pph2__img--mobile"
+                src="{{ mobile | image_url: width: 900 }}"
+                alt="{{ block.settings.alt | escape }}"
+                width="854"
+                height="1040"
+                {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+              >
+            {%- endif -%}
+
+            {%- if desktop != blank -%}
+              <img
+                class="pph2__img pph2__img--desktop"
+                src="{{ desktop | image_url: width: 2400 }}"
+                alt="{{ block.settings.alt | escape }}"
+                width="1920"
+                height="746"
+                {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+              >
+            {%- endif -%}
+
+            {%- if block.settings.heading != blank or block.settings.button_label != blank -%}
+              <span class="pph2__caption pph2__caption--{{ block.settings.align }}">
+                {%- if block.settings.heading != blank -%}
+                  <span class="pph2__heading" style="color: {{ block.settings.text_color }};">
+                    {{ block.settings.heading }}
+                  </span>
+                {%- endif -%}
+                {%- if block.settings.button_label != blank -%}
+                  <span class="pph2__button">{{ block.settings.button_label }} &gt;</span>
+                {%- endif -%}
+              </span>
+            {%- endif -%}
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.blocks.size > 1 -%}
+      <button class="pph2__arrow pph2__arrow--prev" type="button" data-pph2-prev aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <button class="pph2__arrow pph2__arrow--next" type="button" data-pph2-next aria-label="Next slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+
+      <div class="pph2__dots" role="tablist" aria-label="Slides">
+        {%- for block in section.blocks -%}
+          <button
+            class="pph2__dot{% if forloop.first %} is-active{% endif %}"
+            type="button"
+            role="tab"
+            data-pph2-dot="{{ forloop.index0 }}"
+            aria-label="Go to slide {{ forloop.index }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          ></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </section>
+{%- endif -%}
+
+<style>
+  .pph2--{{ sid }} {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: {{ section.settings.bg_color }};
+    font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+  }
+  .pph2--{{ sid }} *, .pph2--{{ sid }} *::before, .pph2--{{ sid }} *::after { box-sizing: border-box; }
+
+  .pph2--{{ sid }} .pph2__track {
+    display: flex;
+    /* Desplazamiento por arrastre además de por flechas: en móvil el pulgar es
+       el control natural y `scroll-snap` deja cada pieza encuadrada. */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pph2--{{ sid }} .pph2__track::-webkit-scrollbar { display: none; }
+
+  .pph2--{{ sid }} .pph2__slide { flex: 0 0 100%; scroll-snap-align: start; }
+  .pph2--{{ sid }} .pph2__link { position: relative; display: block; text-decoration: none; }
+  .pph2--{{ sid }} .pph2__img { display: block; width: 100%; height: auto; }
+  .pph2--{{ sid }} .pph2__img--desktop { display: none; }
+
+  .pph2--{{ sid }} .pph2__caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 0 18px;
+    text-align: center;
+  }
+  .pph2--{{ sid }} .pph2__caption--left { align-items: flex-start; text-align: left; }
+  .pph2--{{ sid }} .pph2__caption--right { align-items: flex-end; text-align: right; }
+  .pph2--{{ sid }} .pph2__heading {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+  .pph2--{{ sid }} .pph2__button {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #fff;
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pph2--{{ sid }} .pph2__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+  }
+  .pph2--{{ sid }} .pph2__arrow--prev { left: 14px; }
+  .pph2--{{ sid }} .pph2__arrow--next { right: 14px; }
+  .pph2--{{ sid }} .pph2__arrow svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: #000;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .pph2--{{ sid }} .pph2__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+  .pph2--{{ sid }} .pph2__dot {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  }
+  .pph2--{{ sid }} .pph2__dot.is-active { background: #fff; }
+
+  @media screen and (min-width: 750px) {
+    .pph2--{{ sid }} .pph2__img--mobile { display: none; }
+    .pph2--{{ sid }} .pph2__img--desktop { display: block; }
+    .pph2--{{ sid }} .pph2__arrow { display: grid; }
+    .pph2--{{ sid }} .pph2__heading { font-size: 44px; }
+    .pph2--{{ sid }} .pph2__caption { padding: 0 60px; }
+    .pph2--{{ sid }} .pph2__dots { bottom: 18px; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-pph2="{{ sid }}"]');
+    if (!root || root.dataset.pph2Ready) return;
+    root.dataset.pph2Ready = '1';
+
+    var track = root.querySelector('[data-pph2-track]');
+    var slides = Array.prototype.slice.call(root.querySelectorAll('[data-pph2-slide]'));
+    var dots = Array.prototype.slice.call(root.querySelectorAll('[data-pph2-dot]'));
+    if (!track || slides.length < 2) return;
+
+    var index = 0;
+    var timer = null;
+    var delay = (parseFloat(root.getAttribute('data-pph2-interval')) || 6) * 1000;
+    var autoplay = root.getAttribute('data-pph2-autoplay') === 'true';
+
+    function goTo(next) {
+      index = (next + slides.length) % slides.length;
+      track.scrollTo({ left: slides[index].offsetLeft, behavior: 'smooth' });
+      sync();
+    }
+
+    function sync() {
+      dots.forEach(function (dot, i) {
+        var active = i === index;
+        dot.classList.toggle('is-active', active);
+        dot.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    }
+
+    function start() {
+      if (!autoplay) return;
+      stop();
+      timer = window.setInterval(function () { goTo(index + 1); }, delay);
+    }
+    function stop() {
+      if (timer) { window.clearInterval(timer); timer = null; }
+    }
+
+    var prev = root.querySelector('[data-pph2-prev]');
+    var next = root.querySelector('[data-pph2-next]');
+    if (prev) prev.addEventListener('click', function () { goTo(index - 1); start(); });
+    if (next) next.addEventListener('click', function () { goTo(index + 1); start(); });
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () { goTo(i); start(); });
+    });
+
+    // El arrastre manual también mueve el índice, si no las flechas volverían
+    // a la diapositiva anterior tras deslizar con el dedo.
+    var settle = null;
+    track.addEventListener('scroll', function () {
+      window.clearTimeout(settle);
+      settle = window.setTimeout(function () {
+        var nearest = 0;
+        var best = Infinity;
+        slides.forEach(function (slide, i) {
+          var distance = Math.abs(slide.offsetLeft - track.scrollLeft);
+          if (distance < best) { best = distance; nearest = i; }
+        });
+        index = nearest;
+        sync();
+      }, 90);
+    }, { passive: true });
+
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    start();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PP · Carrusel principal",
+  "tag": "section",
+  "class": "pp-hero",
+  "settings": [
+    { "type": "checkbox", "id": "autoplay", "label": "Rotación automática", "default": true },
+    { "type": "range", "id": "interval", "label": "Segundos por diapositiva", "min": 3, "max": 12, "step": 1, "default": 6 },
+    { "type": "text", "id": "aria_label", "label": "Etiqueta accesible", "default": "Featured campaigns" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FFFFFF" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Diapositiva",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagen de escritorio" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Imagen de móvil", "info": "Si se deja vacía se reutiliza la de escritorio." },
+        { "type": "text", "id": "alt", "label": "Texto alternativo" },
+        { "type": "url", "id": "link", "label": "Enlace" },
+        { "type": "header", "content": "Texto sobreimpreso" },
+        { "type": "text", "id": "heading", "label": "Título", "info": "Dejalo vacío si la imagen ya trae el texto." },
+        { "type": "text", "id": "button_label", "label": "Texto del botón" },
+        {
+          "type": "select",
+          "id": "align",
+          "label": "Alineación",
+          "default": "center",
+          "options": [
+            { "value": "left", "label": "Izquierda" },
+            { "value": "center", "label": "Centro" },
+            { "value": "right", "label": "Derecha" }
+          ]
+        },
+        { "type": "color", "id": "text_color", "label": "Color del título", "default": "#FFFFFF" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PP · Carrusel principal",
+      "blocks": [{ "type": "slide" }, { "type": "slide" }, { "type": "slide" }]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,95 @@
+{%- comment -%}
+  Bloque de texto de cierre. Es lo que Princess Polly pone al final de la
+  portada: un párrafo de marca, centrado y de ancho corto, que ayuda al SEO sin
+  competir con las piezas de campaña.
+{%- endcomment -%}
+
+{%- render 'pp-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<section class="ppab ppab--{{ sid }}">
+  <div class="ppab__inner">
+    {%- if section.settings.title != blank -%}
+      <h2 class="ppab__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="ppab__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <a class="ppab__cta" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .ppab--{{ sid }} {
+    box-sizing: border-box;
+    width: 100%;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+  }
+  .ppab--{{ sid }} *, .ppab--{{ sid }} *::before, .ppab--{{ sid }} *::after { box-sizing: border-box; }
+
+  .ppab--{{ sid }} .ppab__inner {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 18px;
+    text-align: center;
+  }
+  .ppab--{{ sid }} .ppab__title {
+    margin: 0 0 12px;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .ppab--{{ sid }} .ppab__text { font-size: 13px; line-height: 1.7; color: {{ section.settings.body_color }}; }
+  .ppab--{{ sid }} .ppab__text p { margin: 0 0 12px; }
+  .ppab--{{ sid }} .ppab__text p:last-child { margin-bottom: 0; }
+  .ppab--{{ sid }} .ppab__cta {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 11px 26px;
+    border: 1px solid {{ section.settings.text_color }};
+    border-radius: 999px;
+    color: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ppab--{{ sid }} .ppab__title { font-size: 26px; }
+    .ppab--{{ sid }} .ppab__text { font-size: 14px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PP · Texto de marca",
+  "tag": "section",
+  "class": "pp-about",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "About Princess Polly" },
+    { "type": "richtext", "id": "text", "label": "Texto" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón" },
+    { "type": "url", "id": "button_link", "label": "Enlace del botón" },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 600, "max": 1200, "step": 20, "default": 860 },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 120, "step": 2, "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 120, "step": 2, "default": 48 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Título", "default": "#000000" },
+    { "type": "color", "id": "body_color", "label": "Párrafo", "default": "#4A4A4A" }
+  ],
+  "presets": [{ "name": "PP · Texto de marca" }]
+}
+{% endschema %}

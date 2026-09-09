@@ -14,13 +14,14 @@ Uso:
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-TARGETS = ROOT / "tools" / "staged_targets.json"
-THEME = ROOT / "theme"
+TARGETS = ROOT / "tools" / os.environ.get("TARGETS_FILE", "staged_targets.json")
+THEME = ROOT / os.environ.get("THEME_DIR", "theme")
 
 
 def theme_path_for(staged_filename: str) -> Path:
@@ -77,8 +78,11 @@ def main() -> int:
         params = {p["name"]: p["value"] for p in target["parameters"]}
         staged_name = params["key"].rsplit("/", 1)[-1]
         theme_rel = str(theme_path_for(staged_name).relative_to(THEME))
-        files.append({"filename": theme_rel, "body": {"type": "URL", "value": target["resourceUrl"]}})
-    out = ROOT / "tools" / "upsert_input.json"
+        # Para BULK_MUTATION_VARIABLES, `resourceUrl` es la raíz del bucket y es
+        # idéntica en todos los destinos: la URL del objeto es raíz + key.
+        object_url = target["resourceUrl"].rstrip("/") + "/" + params["key"]
+        files.append({"filename": theme_rel, "body": {"type": "URL", "value": object_url}})
+    out = ROOT / "tools" / os.environ.get("UPSERT_FILE", "upsert_input.json")
     out.write_text(json.dumps(files, indent=1, ensure_ascii=False))
     print(f"input de themeFilesUpsert -> {out}")
     return 0

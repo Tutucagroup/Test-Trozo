@@ -9,6 +9,7 @@ linklists, routes) y omite `{% schema %}`, igual que hace el motor real al rende
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -16,9 +17,10 @@ from pathlib import Path
 from liquid import Environment, FileSystemLoader
 
 ROOT = Path(__file__).resolve().parent.parent
-THEME = ROOT / "theme"
-DATA = json.loads((ROOT / "tools" / "data.json").read_text())
-OUT = ROOT / "out"
+# El mismo arnés sirve para más de un tema: THEME_DIR/DATA_FILE/OUT_DIR eligen cuál.
+THEME = ROOT / os.environ.get("THEME_DIR", "theme")
+DATA = json.loads((ROOT / "tools" / os.environ.get("DATA_FILE", "data.json")).read_text())
+OUT = ROOT / os.environ.get("OUT_DIR", "out")
 
 MONEY_FORMAT = DATA["shop"]["money_format"]
 
@@ -97,6 +99,13 @@ def f_payment_type_svg_tag(value, *_a, **_k):
 
 def f_json(value, *_a, **_k):
     return json.dumps(value)
+
+
+def f_file_url(value, *_a, **_k):
+    """Resuelve el nombre de un archivo de Shopify contra el mapa de la tienda."""
+    if not value:
+        return ""
+    return DATA["files"].get(str(value), "")
 
 
 def f_handleize(value, *_a, **_k):
@@ -236,14 +245,22 @@ class BlankDict(dict):
 
 
 def resolve_settings(settings: dict, section_type: str) -> dict:
+    """Convierte los valores del JSON en los objetos que entrega Shopify.
+
+    Los ajustes de tipo `collection`, `product` y `link_list` se guardan en la
+    plantilla como identificadores, pero el motor los expone ya resueltos: la
+    sección escribe `settings.collection.products`, no `collections[handle]`.
+    Dejarlos como cadenas haría que la vista previa aceptara Liquid que en la
+    tienda devolvería nil.
+    """
     out = BlankDict()
     for key, val in settings.items():
         if key == "collection" and isinstance(val, str) and val:
-            out[key] = val  # el Liquid hace collections[handle]
+            out[key] = COLLECTIONS.get(val)
         elif key == "product" and isinstance(val, str) and val:
             out[key] = PRODUCTS.get(val)
-        elif key == "menu" and isinstance(val, str):
-            out[key] = val
+        elif key == "menu" and isinstance(val, str) and val:
+            out[key] = LINKLISTS.get(val)
         else:
             out[key] = resolve(val)
     return BlankDict({k: ("" if v is None else v) for k, v in out.items()})
@@ -296,6 +313,8 @@ def make_env() -> Environment:
             "at_least": f_at_least,
             "default_errors": f_default_errors,
             "payment_type_svg_tag": f_payment_type_svg_tag,
+            "file_url": f_file_url,
+            "asset_url": f_file_url,
             "json": f_json,
             "handleize": f_handleize,
             "handle": f_handleize,

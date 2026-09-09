@@ -1,0 +1,65 @@
+{
+  "type": "header",
+  "name": "Cabecera",
+  "sections": {
+    "announcement": {
+      "type": "pp-announcement",
+      "blocks": {
+        "m1": {
+          "type": "message",
+          "settings": {
+            "text": "Mystery student discount \u2014 unlock yours",
+            "link": "shopify://collections/sale-dresses"
+          }
+        },
+        "m2": {
+          "type": "message",
+          "settings": {
+            "text": "Free shipping on orders over $50"
+          }
+        },
+        "m3": {
+          "type": "message",
+          "settings": {
+            "text": "Buy now, pay later with Afterpay"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "settings": {
+        "rotate_seconds": 4,
+        "font_size": 11,
+        "bg_color": "#000000",
+        "text_color": "#FFFFFF"
+      }
+    },
+    "header": {
+      "type": "pp-header",
+      "settings": {
+        "logo_width": 200,
+        "logo_width_mobile": 130,
+        "menu": "pp-main-menu",
+        "sticky": true,
+        "max_width": 1600,
+        "show_currency": true,
+        "currency_label": "USD",
+        "rewards_label": "Rewards",
+        "rewards_link": "shopify://pages/rewards",
+        "wishlist_link": "shopify://pages/wishlist",
+        "bg_color": "#FFFFFF",
+        "text_color": "#000000",
+        "border_color": "#E5E5E5",
+        "sale_color": "#E80404",
+        "logo_file": "logo.svg"
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "header"
+  ]
+}

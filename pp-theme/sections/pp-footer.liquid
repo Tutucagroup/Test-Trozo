@@ -1,0 +1,418 @@
+{%- comment -%}
+  Pie de página. Columnas de enlaces desde menús de Shopify, boletín, sellos y
+  fila legal. En móvil las columnas se convierten en acordeones porque cinco
+  listas abiertas dejarían el aviso de copyright a varias pantallas de scroll.
+{%- endcomment -%}
+
+{%- render 'pp-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<footer class="ppft ppft--{{ sid }}" data-ppft="{{ sid }}">
+  {%- if section.settings.chat_label != blank -%}
+    <a class="ppft__chat" href="{{ section.settings.chat_link | default: '#' }}">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a7.5 7.5 0 0 1-11 6.6L4 20l1.4-4.2A7.5 7.5 0 1 1 20 12z"/></svg>
+      {{ section.settings.chat_label }}
+    </a>
+  {%- endif -%}
+
+  <div class="ppft__main">
+    <div class="ppft__cols">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'menu' -%}
+            {%- assign menu = block.settings.menu -%}
+            {%- if menu.links.size > 0 -%}
+              <div class="ppft__col" {{ block.shopify_attributes }}>
+                <button class="ppft__col-head" type="button" data-ppft-toggle aria-expanded="false">
+                  {{ block.settings.title | default: menu.title }}
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <ul class="ppft__links">
+                  {%- for link in menu.links -%}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+
+          {%- when 'text' -%}
+            <div class="ppft__col" {{ block.shopify_attributes }}>
+              <button class="ppft__col-head" type="button" data-ppft-toggle aria-expanded="false">
+                {{ block.settings.title }}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="ppft__links ppft__links--text">{{ block.settings.text }}</div>
+            </div>
+
+          {%- when 'newsletter' -%}
+            <div class="ppft__col ppft__col--wide" {{ block.shopify_attributes }}>
+              <button class="ppft__col-head" type="button" data-ppft-toggle aria-expanded="false">
+                {{ block.settings.title }}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="ppft__links">
+                {%- if block.settings.text != blank -%}
+                  <p class="ppft__news-text">{{ block.settings.text }}</p>
+                {%- endif -%}
+                {%- form 'customer', class: 'ppft__form' -%}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <label class="ppft__sr" for="ppft-email-{{ sid }}">Email</label>
+                  <input
+                    id="ppft-email-{{ sid }}"
+                    class="ppft__input"
+                    type="email"
+                    name="contact[email]"
+                    placeholder="{{ block.settings.placeholder | escape }}"
+                    autocomplete="email"
+                    required
+                  >
+                  <button class="ppft__submit" type="submit">{{ block.settings.button_label }}</button>
+                {%- endform -%}
+              </div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="ppft__badges">
+      {%- if section.settings.badge_image != blank -%}
+        <img
+          class="ppft__badge"
+          src="{{ section.settings.badge_image | image_url: width: 160 }}"
+          alt="{{ section.settings.badge_alt | escape }}"
+          width="60"
+          height="100"
+          loading="lazy"
+        >
+      {%- elsif section.settings.badge_file != blank -%}
+        <img
+          class="ppft__badge"
+          src="{{ section.settings.badge_file | file_url }}"
+          alt="{{ section.settings.badge_alt | escape }}"
+          width="60"
+          height="100"
+          loading="lazy"
+        >
+      {%- endif -%}
+
+      <div class="ppft__social">
+        {%- if section.settings.instagram != blank -%}
+          <a href="{{ section.settings.instagram }}" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.tiktok != blank -%}
+          <a href="{{ section.settings.tiktok }}" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v10.5a3.5 3.5 0 1 1-3-3.46"/><path d="M14 6.2A5 5 0 0 0 19 9"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.facebook != blank -%}
+          <a href="{{ section.settings.facebook }}" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8.5H17V5.6h-2.6c-2 0-3.3 1.3-3.3 3.4v1.7H9v3h2.1V21h3.1v-7.3h2.3l.4-3h-2.7V9.4c0-.6.2-.9.9-.9z" fill="currentColor" stroke="none"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.pinterest != blank -%}
+          <a href="{{ section.settings.pinterest }}" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 18l1.6-6M9.6 10.6c0-1.6 1.2-2.9 2.9-2.9 1.6 0 2.7 1 2.7 2.6 0 1.9-1 3.3-2.4 3.3-.8 0-1.4-.6-1.2-1.4"/></svg>
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.region_label != blank -%}
+        <span class="ppft__region">
+          <span class="ppft__flag" aria-hidden="true"></span>
+          {{ section.settings.region_label }}
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="ppft__legal">
+    <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+    {%- if section.settings.legal_text != blank -%}
+      <span>{{ section.settings.legal_text }}</span>
+    {%- endif -%}
+  </div>
+</footer>
+
+<style>
+  .ppft--{{ sid }} {
+    box-sizing: border-box;
+    width: 100%;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+  }
+  .ppft--{{ sid }} *, .ppft--{{ sid }} *::before, .ppft--{{ sid }} *::after { box-sizing: border-box; }
+  .ppft--{{ sid }} ul { list-style: none; margin: 0; padding: 0; }
+  .ppft--{{ sid }} a { color: inherit; text-decoration: none; }
+
+  .ppft--{{ sid }} .ppft__chat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 14px;
+    background: {{ section.settings.chat_bg }};
+    color: {{ section.settings.chat_text }};
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .ppft--{{ sid }} .ppft__chat svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .ppft--{{ sid }} .ppft__main { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 8px 14px 24px; }
+  .ppft--{{ sid }} .ppft__cols { display: grid; grid-template-columns: 1fr; }
+
+  .ppft--{{ sid }} .ppft__col-head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 15px 0;
+    border: 0;
+    border-bottom: 1px solid {{ section.settings.border_color }};
+    background: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .ppft--{{ sid }} .ppft__col-head svg {
+    flex: 0 0 auto;
+    width: 13px;
+    height: 13px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.2s ease;
+  }
+  .ppft--{{ sid }} .ppft__col.is-open .ppft__col-head svg { transform: rotate(180deg); }
+
+  .ppft--{{ sid }} .ppft__links { display: none; padding: 12px 0 16px; }
+  .ppft--{{ sid }} .ppft__col.is-open .ppft__links { display: block; }
+  .ppft--{{ sid }} .ppft__links li a,
+  .ppft--{{ sid }} .ppft__links--text p {
+    display: block;
+    padding: 6px 0;
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: {{ section.settings.muted_color }};
+  }
+  .ppft--{{ sid }} .ppft__links li a:hover { color: {{ section.settings.text_color }}; text-decoration: underline; }
+
+  .ppft--{{ sid }} .ppft__news-text { margin: 0 0 10px; font-size: 12.5px; line-height: 1.5; color: {{ section.settings.muted_color }}; }
+  .ppft--{{ sid }} .ppft__form { display: flex; gap: 0; margin: 0; }
+  .ppft--{{ sid }} .ppft__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .ppft--{{ sid }} .ppft__input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid {{ section.settings.border_color }};
+    border-right: 0;
+    background: {{ section.settings.bg_color }};
+    color: inherit;
+    font-family: inherit;
+    font-size: 12.5px;
+  }
+  .ppft--{{ sid }} .ppft__submit {
+    flex: 0 0 auto;
+    height: 40px;
+    padding: 0 18px;
+    border: 1px solid {{ section.settings.text_color }};
+    background: {{ section.settings.text_color }};
+    color: {{ section.settings.bg_color }};
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .ppft--{{ sid }} .ppft__badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    padding-top: 22px;
+  }
+  .ppft--{{ sid }} .ppft__badge { display: block; width: auto; height: 56px; }
+  .ppft--{{ sid }} .ppft__social { display: flex; gap: 14px; }
+  .ppft--{{ sid }} .ppft__social svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .ppft--{{ sid }} .ppft__region {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .ppft--{{ sid }} .ppft__region svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2.4; }
+  .ppft--{{ sid }} .ppft__flag {
+    width: 16px;
+    height: 11px;
+    border-radius: 1px;
+    background:
+      linear-gradient(#b22234 0 20%, #fff 20% 40%, #b22234 40% 60%, #fff 60% 80%, #b22234 80% 100%);
+    box-shadow: inset 7px 6px 0 0 #3c3b6e;
+  }
+
+  .ppft--{{ sid }} .ppft__legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 16px;
+    padding: 16px 14px 22px;
+    border-top: 1px solid {{ section.settings.border_color }};
+    font-size: 11px;
+    color: {{ section.settings.muted_color }};
+    text-align: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ppft--{{ sid }} .ppft__main { padding: 34px 24px 26px; }
+    .ppft--{{ sid }} .ppft__cols {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.4fr);
+      gap: 28px;
+      align-items: start;
+    }
+    /* En escritorio no hay acordeón: la cabecera vuelve a ser un rótulo y las
+       listas quedan siempre abiertas. */
+    .ppft--{{ sid }} .ppft__col-head { border-bottom: 0; padding: 0 0 12px; cursor: default; pointer-events: none; }
+    .ppft--{{ sid }} .ppft__col-head svg { display: none; }
+    .ppft--{{ sid }} .ppft__links { display: block; padding: 0; }
+    .ppft--{{ sid }} .ppft__badges { justify-content: space-between; padding-top: 30px; }
+    .ppft--{{ sid }} .ppft__legal { justify-content: space-between; padding: 16px 24px 26px; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-ppft="{{ sid }}"]');
+    if (!root || root.dataset.ppftReady) return;
+    root.dataset.ppftReady = '1';
+
+    var mq = window.matchMedia('(min-width: 750px)');
+
+    Array.prototype.forEach.call(root.querySelectorAll('[data-ppft-toggle]'), function (head) {
+      head.addEventListener('click', function () {
+        // En escritorio las columnas ya están abiertas y la cabecera no es un
+        // control: sin esta salida, un clic las cerraría.
+        if (mq.matches) return;
+        var col = head.parentNode;
+        var open = col.classList.toggle('is-open');
+        head.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PP · Pie de página",
+  "tag": "section",
+  "class": "pp-footer",
+  "settings": [
+    { "type": "text", "id": "chat_label", "label": "Barra de ayuda", "default": "Need help? Chat with us" },
+    { "type": "url", "id": "chat_link", "label": "Enlace de ayuda" },
+    { "type": "header", "content": "Sellos y redes" },
+    { "type": "image_picker", "id": "badge_image", "label": "Sello" },
+    { "type": "text", "id": "badge_file", "label": "Sello SVG (nombre del archivo)", "info": "Igual que el logo: nombre de un archivo de Configuración › Archivos. Sólo se usa si el selector está vacío." },
+    { "type": "text", "id": "badge_alt", "label": "Texto alternativo del sello", "default": "Certified B Corporation" },
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "url", "id": "tiktok", "label": "TikTok" },
+    { "type": "url", "id": "facebook", "label": "Facebook" },
+    { "type": "url", "id": "pinterest", "label": "Pinterest" },
+    { "type": "text", "id": "region_label", "label": "Región", "default": "United States (USD $)" },
+    { "type": "text", "id": "legal_text", "label": "Texto legal", "default": "All rights reserved." },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 1100, "max": 1800, "step": 20, "default": 1600 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#000000" },
+    { "type": "color", "id": "muted_color", "label": "Texto secundario", "default": "#5B5B5B" },
+    { "type": "color", "id": "border_color", "label": "Líneas", "default": "#E5E5E5" },
+    { "type": "color", "id": "chat_bg", "label": "Fondo de la barra de ayuda", "default": "#000000" },
+    { "type": "color", "id": "chat_text", "label": "Texto de la barra de ayuda", "default": "#FFFFFF" }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Columna de enlaces",
+      "settings": [
+        { "type": "link_list", "id": "menu", "label": "Menú" },
+        { "type": "text", "id": "title", "label": "Título" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Columna de texto",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Get the app" },
+        { "type": "richtext", "id": "text", "label": "Texto" }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Boletín",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Join the club" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Sign up for early access to new drops and sales." },
+        { "type": "text", "id": "placeholder", "label": "Marcador del campo", "default": "Your email" },
+        { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Sign up" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PP · Pie de página",
+      "blocks": [
+        { "type": "menu" },
+        { "type": "menu" },
+        { "type": "menu" },
+        { "type": "menu" },
+        { "type": "newsletter" }
+      ]
+    }
+  ]
+}
+{% endschema %}

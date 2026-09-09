@@ -1,0 +1,160 @@
+{%- comment -%}
+  Galería social. Fila de retratos que se desplaza en móvil y se reparte en seis
+  columnas en escritorio, con el usuario sobreimpreso al pasar el ratón.
+{%- endcomment -%}
+
+{%- render 'pp-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="ppf ppf--{{ sid }}">
+    <div class="ppf__head">
+      {%- if section.settings.title != blank -%}
+        <h2 class="ppf__title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <p class="ppf__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <ul class="ppf__rail">
+      {%- for block in section.blocks -%}
+        <li class="ppf__cell" {{ block.shopify_attributes }}>
+          <a class="ppf__link" href="{{ block.settings.link | default: '#' }}">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ block.settings.caption | escape }}"
+                width="296"
+                height="382"
+                loading="lazy"
+              >
+            {%- else -%}
+              <span class="ppf__empty" aria-hidden="true"></span>
+            {%- endif -%}
+            {%- if block.settings.caption != blank -%}
+              <span class="ppf__caption">{{ block.settings.caption }}</span>
+            {%- endif -%}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </section>
+{%- endif -%}
+
+<style>
+  .ppf--{{ sid }} {
+    box-sizing: border-box;
+    width: 100%;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+  }
+  .ppf--{{ sid }} *, .ppf--{{ sid }} *::before, .ppf--{{ sid }} *::after { box-sizing: border-box; }
+  .ppf--{{ sid }} ul { list-style: none; margin: 0; padding: 0; }
+
+  .ppf--{{ sid }} .ppf__head { max-width: {{ section.settings.max_width }}px; margin: 0 auto 16px; padding: 0 14px; text-align: center; }
+  .ppf--{{ sid }} .ppf__title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .ppf--{{ sid }} .ppf__subtitle { margin: 6px 0 0; font-size: 12px; color: #5b5b5b; }
+
+  .ppf--{{ sid }} .ppf__rail {
+    display: flex;
+    gap: 6px;
+    padding: 0 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 14px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ppf--{{ sid }} .ppf__rail::-webkit-scrollbar { display: none; }
+  .ppf--{{ sid }} .ppf__cell { flex: 0 0 42%; scroll-snap-align: start; }
+
+  .ppf--{{ sid }} .ppf__link {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 296 / 382;
+    background: #f1f1f1;
+    text-decoration: none;
+  }
+  .ppf--{{ sid }} .ppf__link img,
+  .ppf--{{ sid }} .ppf__empty {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .ppf--{{ sid }} .ppf__caption {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ppf--{{ sid }} .ppf__title { font-size: 26px; }
+    .ppf--{{ sid }} .ppf__rail {
+      display: grid;
+      grid-template-columns: repeat({{ section.blocks.size | at_most: 6 }}, 1fr);
+      max-width: {{ section.settings.max_width }}px;
+      margin: 0 auto;
+      overflow: visible;
+    }
+    .ppf--{{ sid }} .ppf__cell { flex: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PP · Galería social",
+  "tag": "section",
+  "class": "pp-feed",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Shop The Feed" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo", "default": "Tag us to be featured" },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 1100, "max": 1800, "step": 20, "default": 1600 },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 100, "step": 2, "default": 34 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 100, "step": 2, "default": 34 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#000000" }
+  ],
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Publicación",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagen" },
+        { "type": "text", "id": "caption", "label": "Pie" },
+        { "type": "url", "id": "link", "label": "Enlace" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PP · Galería social",
+      "blocks": [{ "type": "post" }, { "type": "post" }, { "type": "post" }, { "type": "post" }, { "type": "post" }, { "type": "post" }]
+    }
+  ]
+}
+{% endschema %}

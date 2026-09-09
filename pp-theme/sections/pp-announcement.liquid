@@ -1,0 +1,199 @@
+{%- comment -%}
+  Barra de avisos superior. Rota entre los mensajes que haya cargados y muestra
+  las flechas sólo cuando hay más de uno, para no dejar controles que no llevan
+  a ninguna parte cuando la tienda anuncia una sola cosa.
+{%- endcomment -%}
+
+{%- render 'pp-fonts' -%}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="ppa ppa--{{ sid }}" data-ppa="{{ sid }}" data-ppa-interval="{{ section.settings.rotate_seconds }}">
+    <div class="ppa__inner">
+      {%- if section.blocks.size > 1 -%}
+        <button class="ppa__nav ppa__nav--prev" type="button" data-ppa-prev aria-label="Previous announcement">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+      {%- endif -%}
+
+      <div class="ppa__viewport" aria-live="polite">
+        {%- for block in section.blocks -%}
+          <div
+            class="ppa__slide{% if forloop.first %} is-active{% endif %}"
+            data-ppa-slide
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.link != blank -%}
+              <a class="ppa__text" href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+            {%- else -%}
+              <span class="ppa__text">{{ block.settings.text }}</span>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.blocks.size > 1 -%}
+        <button class="ppa__nav ppa__nav--next" type="button" data-ppa-next aria-label="Next announcement">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+<style>
+  .ppa--{{ sid }} {
+    box-sizing: border-box;
+    width: 100%;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+  }
+  .ppa--{{ sid }} *, .ppa--{{ sid }} *::before, .ppa--{{ sid }} *::after { box-sizing: border-box; }
+
+  .ppa--{{ sid }} .ppa__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 34px;
+    padding: 0 8px;
+  }
+
+  .ppa--{{ sid }} .ppa__viewport {
+    position: relative;
+    flex: 0 1 auto;
+    min-width: 0;
+    display: grid;
+  }
+  /* Todas las diapositivas ocupan la misma celda: así la barra conserva su
+     alto y no da un salto al cambiar de mensaje. */
+  .ppa--{{ sid }} .ppa__slide {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+  }
+  .ppa--{{ sid }} .ppa__slide.is-active { opacity: 1; visibility: visible; }
+
+  .ppa--{{ sid }} .ppa__text {
+    display: block;
+    padding: 9px 0;
+    color: inherit;
+    font-size: {{ section.settings.font_size }}px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ppa--{{ sid }} a.ppa__text { text-decoration: underline; text-underline-offset: 2px; }
+
+  .ppa--{{ sid }} .ppa__nav {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .ppa--{{ sid }} .ppa__nav svg {
+    width: 13px;
+    height: 13px;
+    fill: none;
+    stroke: {{ section.settings.text_color }};
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ppa--{{ sid }} .ppa__inner { min-height: 38px; }
+    .ppa--{{ sid }} .ppa__text { font-size: {{ section.settings.font_size | plus: 1 }}px; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-ppa="{{ sid }}"]');
+    if (!root || root.dataset.ppaReady) return;
+    root.dataset.ppaReady = '1';
+
+    var slides = Array.prototype.slice.call(root.querySelectorAll('[data-ppa-slide]'));
+    if (slides.length < 2) return;
+
+    var index = 0;
+    var timer = null;
+    var delay = (parseFloat(root.getAttribute('data-ppa-interval')) || 4) * 1000;
+
+    function show(next) {
+      slides[index].classList.remove('is-active');
+      index = (next + slides.length) % slides.length;
+      slides[index].classList.add('is-active');
+    }
+
+    function start() {
+      stop();
+      timer = window.setInterval(function () { show(index + 1); }, delay);
+    }
+    function stop() {
+      if (timer) { window.clearInterval(timer); timer = null; }
+    }
+
+    var prev = root.querySelector('[data-ppa-prev]');
+    var next = root.querySelector('[data-ppa-next]');
+    if (prev) prev.addEventListener('click', function () { show(index - 1); start(); });
+    if (next) next.addEventListener('click', function () { show(index + 1); start(); });
+
+    // Al pasar el ratón la rotación se detiene: el mensaje suele ser un enlace
+    // y cambiar bajo el cursor haría pulsar el que no era.
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    start();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PP · Barra de avisos",
+  "tag": "section",
+  "class": "pp-announcement",
+  "settings": [
+    { "type": "range", "id": "rotate_seconds", "label": "Segundos por mensaje", "min": 2, "max": 12, "step": 1, "default": 4 },
+    { "type": "range", "id": "font_size", "label": "Tamaño de texto (px)", "min": 9, "max": 15, "step": 1, "default": 11 },
+    { "type": "header", "content": "Colores" },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#000000" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#FFFFFF" }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Mensaje",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Free shipping on orders over $50" },
+        { "type": "url", "id": "link", "label": "Enlace" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PP · Barra de avisos",
+      "blocks": [{ "type": "message" }, { "type": "message" }, { "type": "message" }]
+    }
+  ]
+}
+{% endschema %}
