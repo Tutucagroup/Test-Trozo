@@ -1,0 +1,186 @@
+{%- comment -%}
+  Rail de productos para la ficha: «Complete the look» y «You may also like».
+
+  El contenido se pinta siempre desde una colección, de modo que la sección
+  nunca aparece vacía aunque la tienda todavía no tenga configuradas las
+  recomendaciones de Shopify. Si se elige una fuente de recomendaciones, el
+  guion pide las de Shopify y sólo reemplaza la rejilla cuando vienen con
+  productos: así el recomendador mejora la sección, pero no puede romperla.
+{%- endcomment -%}
+
+{%- render 'pp-fonts' -%}
+{%- render 'pp-card-styles' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign coll = collections[section.settings.collection] | default: section.settings.collection
+  assign max_items = section.settings.products_shown | default: 8
+  # Si el ajuste apunta a una colección borrada, `coll` es nulo: contar con
+  # `default` evita comparar un valor inexistente contra un número.
+  assign coll_count = coll.products.size | default: 0
+-%}
+
+<style>
+  .pprail--{{ sid }} {
+    font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #000;
+    background: {{ section.settings.bg_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+  .pprail--{{ sid }} *, .pprail--{{ sid }} *::before, .pprail--{{ sid }} *::after { box-sizing: border-box; }
+  .pprail__inner { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 0 16px; }
+  .pprail__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 14px; }
+  .pprail__title { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+  .pprail__nav { display: none; gap: 6px; }
+  .pprail__arrow {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid #d9d9d9;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  .pprail__arrow svg { width: 13px; height: 13px; fill: none; stroke: #000; stroke-width: 1.8; }
+  .pprail__arrow[disabled] { opacity: 0.3; cursor: default; }
+
+  .pprail__list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 46%;
+    gap: 10px;
+    margin: 0 -16px;
+    padding: 0 16px;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .pprail__list::-webkit-scrollbar { display: none; }
+  .pprail__list > li { scroll-snap-align: start; }
+
+  .pprail__empty { margin: 0; font-size: 12px; color: #6b6b6b; }
+
+  @media screen and (min-width: 750px) {
+    .pprail__inner { padding: 0 24px; }
+    .pprail__list { grid-auto-columns: 24%; margin: 0; padding: 0; }
+  }
+  @media screen and (min-width: 990px) {
+    .pprail__inner { padding: 0 32px; }
+    .pprail__title { font-size: 17px; }
+    .pprail__nav { display: flex; }
+    .pprail__list { grid-auto-columns: calc((100% - 3 * 12px) / {{ section.settings.columns }}); gap: 12px; }
+  }
+</style>
+
+<section
+  class="pprail pprail--{{ sid }}"
+  data-pprail="{{ sid }}"
+  data-pprail-source="{{ section.settings.source }}"
+  data-pprail-url="{{ routes.product_recommendations_url }}?section_id={{ sid }}&product_id={{ product.id }}&limit={{ max_items }}&intent={% if section.settings.source == 'complementary' %}complementary{% else %}related{% endif %}"
+>
+  <div class="pprail__inner">
+    <div class="pprail__head">
+      <h2 class="pprail__title">{{ section.settings.title }}</h2>
+      <div class="pprail__nav">
+        <button class="pprail__arrow" type="button" data-pprail-prev aria-label="Anterior">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg>
+        </button>
+        <button class="pprail__arrow" type="button" data-pprail-next aria-label="Siguiente">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg>
+        </button>
+      </div>
+    </div>
+
+    {%- if coll_count > 0 -%}
+      <ul class="pprail__list" data-pprail-list>
+        {%- assign shown = 0 -%}
+        {%- for prod in coll.products -%}
+          {%- if prod.handle == product.handle -%}{%- continue -%}{%- endif -%}
+          {%- if shown >= max_items -%}{%- break -%}{%- endif -%}
+          {%- assign shown = shown | plus: 1 -%}
+          <li>{%- render 'pp-product-card', product: prod -%}</li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <p class="pprail__empty">Elegí una colección con productos para esta sección.</p>
+      <ul class="pprail__list" data-pprail-list hidden></ul>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-pprail="{{ sid }}"]');
+    if (!root) return;
+
+    var list = root.querySelector('[data-pprail-list]');
+    var prev = root.querySelector('[data-pprail-prev]');
+    var next = root.querySelector('[data-pprail-next]');
+
+    function step(direction) {
+      var first = list.querySelector('li');
+      var width = first ? first.getBoundingClientRect().width + 12 : 240;
+      list.scrollBy({ left: width * direction * 2, behavior: 'smooth' });
+    }
+
+    function syncArrows() {
+      if (!prev || !next) return;
+      prev.disabled = list.scrollLeft <= 2;
+      next.disabled = list.scrollLeft + list.clientWidth >= list.scrollWidth - 2;
+    }
+
+    if (prev) prev.addEventListener('click', function () { step(-1); });
+    if (next) next.addEventListener('click', function () { step(1); });
+    list.addEventListener('scroll', syncArrows);
+    syncArrows();
+
+    // Recomendaciones de Shopify: sólo pisan la rejilla si traen productos.
+    var source = root.getAttribute('data-pprail-source');
+    if (source !== 'collection' && window.fetch) {
+      fetch(root.getAttribute('data-pprail-url'))
+        .then(function (response) { return response.text(); })
+        .then(function (html) {
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          var fresh = doc.querySelector('[data-pprail-list]');
+          if (!fresh || !fresh.querySelector('li')) return;
+          list.innerHTML = fresh.innerHTML;
+          list.hidden = false;
+          var empty = root.querySelector('.pprail__empty');
+          if (empty) empty.hidden = true;
+          syncArrows();
+        })
+        .catch(function () {
+          /* Se queda la colección elegida a mano, que ya está pintada. */
+        });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PP · Rail de producto",
+  "tag": "section",
+  "class": "pp-product-rail",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "YOU MAY ALSO LIKE" },
+    { "type": "select", "id": "source", "label": "Origen de los productos", "default": "collection",
+      "options": [
+        { "value": "collection", "label": "Sólo la colección elegida" },
+        { "value": "related", "label": "Recomendaciones de Shopify (relacionados)" },
+        { "value": "complementary", "label": "Recomendaciones de Shopify (complementarios)" }
+      ],
+      "info": "Las recomendaciones necesitan la app Search & Discovery. Si no devuelven nada, se muestra la colección elegida." },
+    { "type": "collection", "id": "collection", "label": "Colección de respaldo" },
+    { "type": "range", "id": "products_shown", "label": "Productos", "min": 4, "max": 16, "step": 1, "default": 8 },
+    { "type": "range", "id": "columns", "label": "Columnas en escritorio", "min": 3, "max": 6, "step": 1, "default": 4 },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 1100, "max": 1800, "step": 20, "default": 1600 },
+    { "type": "color", "id": "bg_color", "label": "Fondo", "default": "#FFFFFF" },
+    { "type": "range", "id": "padding_top", "label": "Espacio arriba (px)", "min": 0, "max": 100, "step": 4, "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio abajo (px)", "min": 0, "max": 100, "step": 4, "default": 24 }
+  ],
+  "presets": [{ "name": "PP · Rail de producto" }]
+}
+{% endschema %}

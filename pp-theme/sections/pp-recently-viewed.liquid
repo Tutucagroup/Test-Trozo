@@ -1,0 +1,157 @@
+{%- comment -%}
+  «Recently viewed»: la fila que devuelve a la persona a la prenda que ya
+  estaba mirando y que, en catálogos de moda, evita que una sesión de
+  comparación termine sin volver a ninguna ficha.
+
+  Todo pasa en el navegador. La ficha guarda en localStorage lo justo para
+  volver a dibujar la tarjeta (enlace, título, precio y dos fotos), así que la
+  sección no necesita ni pedirle nada al servidor ni conocer al visitante.
+{%- endcomment -%}
+
+{%- render 'pp-fonts' -%}
+{%- render 'pp-card-styles' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign prod = product
+  assign cap = prod.compare_at_price | default: 0
+  assign on_sale = false
+  if cap > prod.price
+    assign on_sale = true
+  endif
+-%}
+
+<style>
+  .pprv--{{ sid }} {
+    font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #000;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+  .pprv--{{ sid }} *, .pprv--{{ sid }} *::before, .pprv--{{ sid }} *::after { box-sizing: border-box; }
+  .pprv--{{ sid }}[hidden] { display: none; }
+  .pprv__inner { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 0 16px; }
+  .pprv__title { margin: 0 0 14px; font-size: 15px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+  .pprv__list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 46%;
+    gap: 10px;
+    margin: 0 -16px;
+    padding: 0 16px;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .pprv__list::-webkit-scrollbar { display: none; }
+  .pprv__list > li { scroll-snap-align: start; }
+  @media screen and (min-width: 750px) {
+    .pprv__inner { padding: 0 24px; }
+    .pprv__list { grid-auto-columns: 24%; margin: 0; padding: 0; }
+  }
+  @media screen and (min-width: 990px) {
+    .pprv__inner { padding: 0 32px; }
+    .pprv__title { font-size: 17px; }
+    .pprv__list { grid-auto-columns: calc((100% - 3 * 12px) / {{ section.settings.columns }}); gap: 12px; }
+  }
+</style>
+
+<section class="pprv pprv--{{ sid }}" data-pprv="{{ sid }}" hidden>
+  <div class="pprv__inner">
+    <h2 class="pprv__title">{{ section.settings.title }}</h2>
+    <ul class="pprv__list" data-pprv-list></ul>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-pprv="{{ sid }}"]');
+    if (!root) return;
+
+    var KEY = 'pp-recently-viewed';
+    var MAX = {{ section.settings.products_shown | default: 8 }};
+
+    function read() {
+      try {
+        var raw = window.localStorage.getItem(KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (err) {
+        return [];
+      }
+    }
+
+    function write(items) {
+      try {
+        window.localStorage.setItem(KEY, JSON.stringify(items));
+      } catch (err) {
+        /* Modo privado o almacenamiento lleno: la sección simplemente no sale. */
+      }
+    }
+
+    var current = {
+      handle: {{ prod.handle | json }},
+      url: {{ prod.url | json }},
+      title: {{ prod.title | json }},
+      price: {{ prod.price | money | json }},
+      was: {{ cap | money | json }},
+      onSale: {{ on_sale | json }},
+      image: {{ prod.images[0] | image_url: width: 600 | json }},
+      alt: {{ prod.images[1] | image_url: width: 600 | json }}
+    };
+
+    var stored = read().filter(function (item) { return item && item.handle !== current.handle; });
+
+    function card(item) {
+      var li = document.createElement('li');
+      var alt = item.alt
+        ? '<img class="ppcard__img ppcard__img--alt" src="' + item.alt + '" alt="" loading="lazy" aria-hidden="true">'
+        : '';
+      var flag = item.onSale ? '<span class="ppcard__flag">Sale</span>' : '';
+      var was = item.onSale ? '<s class="ppcard__price-was">' + item.was + '</s>' : '';
+      li.innerHTML =
+        '<div class="ppcard">' +
+        '<a class="ppcard__media" href="' + item.url + '">' +
+        '<img class="ppcard__img ppcard__img--main" src="' + item.image + '" alt="" loading="lazy">' +
+        alt + flag +
+        '</a>' +
+        '<a class="ppcard__title" href="' + item.url + '"></a>' +
+        '<p class="ppcard__price"><span class="ppcard__price-now' + (item.onSale ? ' is-sale' : '') + '">' +
+        item.price + '</span>' + was + '</p>' +
+        '</div>';
+      // El título se asigna como texto para que un nombre con comillas o signos
+      // no pueda inyectar marcado al volver de localStorage.
+      li.querySelector('.ppcard__title').textContent = item.title;
+      li.querySelector('.ppcard__media').setAttribute('aria-label', item.title);
+      return li;
+    }
+
+    var list = root.querySelector('[data-pprv-list]');
+    stored.slice(0, MAX).forEach(function (item) {
+      if (item.url && item.image) list.appendChild(card(item));
+    });
+
+    if (list.children.length) root.hidden = false;
+
+    if (current.handle) {
+      stored.unshift(current);
+      write(stored.slice(0, 20));
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PP · Vistos hace poco",
+  "tag": "section",
+  "class": "pp-recently-viewed",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "RECENTLY VIEWED" },
+    { "type": "range", "id": "products_shown", "label": "Productos", "min": 4, "max": 12, "step": 1, "default": 8 },
+    { "type": "range", "id": "columns", "label": "Columnas en escritorio", "min": 3, "max": 6, "step": 1, "default": 4 },
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 1100, "max": 1800, "step": 20, "default": 1600 },
+    { "type": "range", "id": "padding_top", "label": "Espacio arriba (px)", "min": 0, "max": 100, "step": 4, "default": 32 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio abajo (px)", "min": 0, "max": 100, "step": 4, "default": 48 }
+  ],
+  "presets": [{ "name": "PP · Vistos hace poco" }]
+}
+{% endschema %}

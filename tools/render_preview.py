@@ -112,6 +112,22 @@ def f_handleize(value, *_a, **_k):
     return re.sub(r"[^a-z0-9]+", "-", str(value).lower()).strip("-")
 
 
+def f_payment_terms(value, *_a, **_k):
+    """Marcador de los plazos de pago: Shopify los inyecta desde su servidor."""
+    return (
+        '<div class="pp-preview-stub">Pagá en 4 cuotas sin interés · '
+        "Afterpay · Klarna · Shop Pay</div>"
+    )
+
+
+def f_payment_button(value, *_a, **_k):
+    return '<button type="button" class="pp-preview-stub-button">Comprar ahora</button>'
+
+
+def f_structured_data(value, *_a, **_k):
+    return json.dumps(value)
+
+
 # --------------------------------------------------------------------------- #
 # Objetos globales
 # --------------------------------------------------------------------------- #
@@ -119,29 +135,98 @@ def build_image(url: str) -> dict:
     return {"src": url, "url": url, "alt": "", "width": 1000, "height": 1000}
 
 
+def build_variant(raw_variant: dict, product_raw: dict, images: list) -> dict:
+    """Arma una variante con la forma que expone Shopify en la ficha.
+
+    `options` y `option1..option3` conviven porque el motor real ofrece ambas
+    y la sección usa las dos: la lista para el JSON del selector y los campos
+    sueltos para comparar contra el valor de cada botón.
+    """
+    opts = raw_variant.get("options", [])
+    price = raw_variant.get("price", product_raw["price"])
+    variant = {
+        "id": raw_variant["id"],
+        "title": raw_variant.get("title") or " / ".join(opts) or "Default Title",
+        "price": price,
+        "compare_at_price": raw_variant.get("compare_at_price", product_raw.get("compare_at_price")),
+        "available": raw_variant.get("available", True),
+        "options": opts,
+        "option1": opts[0] if len(opts) > 0 else "",
+        "option2": opts[1] if len(opts) > 1 else "",
+        "option3": opts[2] if len(opts) > 2 else "",
+        "sku": raw_variant.get("sku", ""),
+        "barcode": "",
+        "requires_shipping": True,
+        "taxable": True,
+        # Sin seguimiento de stock Shopify entrega nil aquí; el aviso de
+        # «quedan pocas» tiene que callarse en ese caso, no inventar un número.
+        "inventory_management": raw_variant.get("inventory_management", ""),
+        "inventory_policy": raw_variant.get("inventory_policy", "deny"),
+        "inventory_quantity": raw_variant.get("inventory_quantity", 0),
+        "featured_image": "",
+        "featured_media": "",
+        "image": "",
+        "url": f"/products/{product_raw['handle']}?variant={raw_variant['id']}",
+    }
+    idx = raw_variant.get("image_index")
+    if idx is not None and idx < len(images):
+        variant["featured_image"] = images[idx]
+        variant["image"] = images[idx]
+    return variant
+
+
 def build_product(raw: dict) -> dict:
     images = [build_image(u) for u in raw["images"]]
-    variant = {
-        "id": raw.get("variant_id", 0),
-        "title": "Default Title",
-        "price": raw["price"],
-        "compare_at_price": raw.get("compare_at_price"),
-        "available": raw.get("available", True),
-    }
+
+    raw_variants = raw.get("variants")
+    if not raw_variants:
+        raw_variants = [{"id": raw.get("variant_id", 0), "title": "Default Title", "options": []}]
+    variants = [build_variant(v, raw, images) for v in raw_variants]
+
+    available = [v for v in variants if v["available"]]
+    first_available = available[0] if available else variants[0]
+
+    options = raw.get("options", [])
+    options_with_values = []
+    for pos, opt in enumerate(options, start=1):
+        values = opt["values"]
+        options_with_values.append(
+            {
+                "name": opt["name"],
+                "position": pos,
+                "values": values,
+                "selected_value": first_available.get(f"option{pos}", ""),
+            }
+        )
+
     return {
+        "id": raw.get("id", raw.get("variant_id", 0)),
         "handle": raw["handle"],
         "title": raw["title"],
         "url": f"/products/{raw['handle']}",
         "tags": raw.get("tags", []),
+        "type": raw.get("type", ""),
+        "vendor": raw.get("vendor", ""),
+        "description": raw.get("description", ""),
+        "content": raw.get("description", ""),
         "price": raw["price"],
+        "price_min": raw["price"],
+        "price_max": raw["price"],
         "compare_at_price": raw.get("compare_at_price"),
         "available": raw.get("available", True),
         "images": images,
+        "media": images,
         "featured_image": images[0] if images else "",
-        "variants": [variant],
-        "first_available_variant": variant,
-        "selected_or_first_available_variant": variant,
+        "featured_media": images[0] if images else "",
+        "options": [o["name"] for o in options],
+        "options_with_values": options_with_values,
+        "has_only_default_variant": len(options) == 0,
+        "variants": variants,
+        "first_available_variant": first_available,
+        "selected_variant": "",
+        "selected_or_first_available_variant": first_available,
         "metafields": {"custom": {}},
+        "collections": [],
     }
 
 
@@ -158,6 +243,11 @@ for handle, coll in DATA["collections"].items():
         "image": "",  # Shopify entrega nil; "" es lo que python-liquid trata como blank
         "all_products_count": len(prods),
     }
+
+# Índice inverso: la ficha usa `product.collections` para las migas de pan.
+for handle, coll in COLLECTIONS.items():
+    for prod in coll["products"]:
+        prod["collections"].append(coll)
 
 LINKLISTS = {}
 for handle, menu in DATA["menus"].items():
@@ -200,6 +290,9 @@ GLOBALS = {
         "account_url": "/account",
         "account_login_url": "/account/login",
         "all_products_collection_url": "/collections/all",
+        "cart_add_url": "/cart/add",
+        "predictive_search_url": "/search/suggest",
+        "product_recommendations_url": "/recommendations/products",
     },
     "request": {"design_mode": False, "page_type": "index"},
     "form": {"posted_successfully": False, "errors": None, "email": ""},
@@ -321,6 +414,9 @@ def make_env() -> Environment:
             "json": f_json,
             "handleize": f_handleize,
             "handle": f_handleize,
+            "payment_terms": f_payment_terms,
+            "payment_button": f_payment_button,
+            "structured_data": f_structured_data,
         }
     )
     return env

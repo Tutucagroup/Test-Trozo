@@ -1,0 +1,1333 @@
+{%- comment -%}
+  Ficha de producto al estilo Princess Polly.
+
+  Dos columnas: a la izquierda el carrete de miniaturas y la galería (de dos en
+  dos a partir de 1280 px, como en la web de referencia); a la derecha la columna
+  de compra, que queda fija mientras se recorren las fotos.
+
+  Además del calco visual, la sección incorpora los elementos que mueven la
+  conversión y que la tienda puede sostener con datos reales: envío gratis a
+  partir de un importe, aviso de stock bajo sólo cuando Shopify lleva el
+  inventario, fecha estimada de entrega, aviso de reposición cuando el talle está
+  agotado y barra de compra fija al hacer scroll. Nada de urgencias inventadas:
+  cada mensaje se apaga solo si el dato que lo sostiene no existe.
+{%- endcomment -%}
+
+{%- render 'pp-fonts' -%}
+{%- render 'pp-card-styles' -%}
+
+{%- liquid
+  assign sid = section.id
+  assign prod = product
+  assign current = prod.selected_or_first_available_variant
+
+  assign cap = current.compare_at_price | default: 0
+  assign is_sale = false
+  if cap > current.price
+    assign is_sale = true
+  endif
+
+  # Posición de cada opción: la sección dibuja los talles como rejilla de
+  # botones y los colores como muestras, así que necesita saber cuál es cuál.
+  assign size_pos = 0
+  assign colour_pos = 0
+  for opt in prod.options_with_values
+    assign lname = opt.name | downcase
+    if lname contains 'size' or lname contains 'talle' or lname contains 'talla'
+      assign size_pos = opt.position
+    endif
+    if lname contains 'colour' or lname contains 'color'
+      assign colour_pos = opt.position
+    endif
+  endfor
+
+  assign free_ship_min = section.settings.free_shipping_min | times: 100
+  assign qualifies = false
+  if free_ship_min > 0 and current.price >= free_ship_min
+    assign qualifies = true
+  endif
+
+  # Migas de pan: la colección de llegada si existe y, si no, la primera del
+  # producto. Se resuelve con `default` en vez de comparar contra `blank`
+  # porque esa comparación sobre un valor nulo no da lo mismo en todos los
+  # motores de Liquid, y el título se guarda aparte ya como cadena.
+  assign crumb = collection | default: prod.collections.first
+  assign crumb_title = crumb.title | default: ''
+-%}
+
+<style>
+  .ppp--{{ sid }} { --ppp-red: #e80404; --ppp-line: #e2e2e2; --ppp-mute: #6b6b6b; }
+  .ppp--{{ sid }} * , .ppp--{{ sid }} *::before, .ppp--{{ sid }} *::after { box-sizing: border-box; }
+  .ppp--{{ sid }} {
+    font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #000;
+    background: #fff;
+  }
+  .ppp__inner { max-width: {{ section.settings.max_width }}px; margin: 0 auto; padding: 0 16px; }
+  .ppp--{{ sid }} .visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* --- Migas de pan --- */
+  .ppp__crumbs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 12px 0 14px; font-size: 11px; color: var(--ppp-mute); }
+  .ppp__crumbs a { color: var(--ppp-mute); text-decoration: none; }
+  .ppp__crumbs a:hover { text-decoration: underline; }
+  .ppp__crumbs span[aria-current] { color: #000; }
+
+  /* --- Rejilla principal --- */
+  .ppp__grid { display: block; }
+
+  /* --- Galería --- */
+  .ppp__media { position: relative; }
+  .ppp__rail { display: none; }
+  .ppp__stage { position: relative; }
+  .ppp__slides {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin: 0 -16px;
+    padding: 0 0 0 0;
+  }
+  .ppp__slides::-webkit-scrollbar { display: none; }
+  .ppp__slide {
+    position: relative;
+    flex: 0 0 88%;
+    scroll-snap-align: center;
+    background: #f4f4f4;
+    aspect-ratio: 1344 / 1820;
+  }
+  .ppp__slide:first-child { margin-left: 16px; }
+  .ppp__slide:last-child { margin-right: 16px; }
+  .ppp__slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ppp__modelinfo {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.86);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    color: #000;
+    pointer-events: none;
+  }
+  .ppp__dots { display: flex; justify-content: center; gap: 6px; margin: 10px 0 0; }
+  .ppp__dot { width: 6px; height: 6px; border-radius: 50%; border: 0; padding: 0; background: #d4d4d4; }
+  .ppp__dot.is-active { background: #000; }
+
+  .ppp__flags { position: absolute; top: 10px; left: 10px; z-index: 2; display: flex; flex-direction: column; gap: 5px; align-items: flex-start; }
+  .ppp__flag { padding: 4px 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--ppp-red); color: #fff; }
+  .ppp__flag--soft { background: #000; }
+
+  /* --- Columna de compra --- */
+  .ppp__info { padding: 22px 0 0; }
+  .ppp__title { margin: 0; font-size: 19px; line-height: 1.25; font-weight: 500; letter-spacing: 0.005em; }
+  .ppp__priceline { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin: 10px 0 0; }
+  .ppp__price { font-size: 17px; font-weight: 700; }
+  .ppp__price.is-sale { color: var(--ppp-red); }
+  .ppp__was { font-size: 13px; color: var(--ppp-mute); }
+  .ppp__off { font-size: 11px; font-weight: 700; color: var(--ppp-red); letter-spacing: 0.04em; }
+
+  .ppp__rating { display: flex; align-items: center; gap: 6px; margin: 8px 0 0; font-size: 11px; color: var(--ppp-mute); }
+  .ppp__stars { position: relative; display: inline-block; font-size: 12px; letter-spacing: 1px; color: #d9d9d9; }
+  .ppp__stars i { position: absolute; inset: 0; overflow: hidden; color: #000; font-style: normal; white-space: nowrap; }
+
+  .ppp__promo {
+    margin: 14px 0 0;
+    padding: 9px 12px;
+    background: #f5eee9;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .ppp__freeship { margin: 10px 0 0; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #167a3d; }
+
+  .ppp__optlabel { margin: 18px 0 8px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ppp-mute); }
+  .ppp__optlabel b { color: #000; font-weight: 600; }
+
+  .ppp__swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ppp__swatch {
+    width: 42px;
+    height: 56px;
+    padding: 0;
+    border: 1px solid transparent;
+    background: #f4f4f4 center / cover no-repeat;
+    cursor: pointer;
+    display: block;
+  }
+  .ppp__swatch.is-active { border-color: #000; outline: 1px solid #000; outline-offset: -3px; }
+
+  .ppp__sizehead { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 18px 0 8px; }
+  .ppp__sizeguide { border: 0; background: none; padding: 0; font-size: 11px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; color: #000; }
+  .ppp__sizes { display: grid; grid-template-columns: repeat(auto-fill, minmax(58px, 1fr)); gap: 6px; }
+  .ppp__size {
+    position: relative;
+    min-height: 42px;
+    padding: 4px 6px;
+    border: 1px solid var(--ppp-line);
+    background: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .ppp__size:hover { border-color: #000; }
+  .ppp__size.is-active { border-color: #000; background: #000; color: #fff; }
+  .ppp__size.is-out { color: #b9b9b9; border-color: #ededed; cursor: not-allowed; }
+  /* La diagonal marca el talle agotado sin quitarlo de la rejilla: la persona
+     ve que existe y que hoy no está, que es lo que evita el rebote. */
+  .ppp__size.is-out::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top left, transparent calc(50% - 0.5px), #e4e4e4 50%, transparent calc(50% + 0.5px));
+  }
+  .ppp__size small { display: block; margin-top: 2px; font-size: 9px; color: var(--ppp-red); letter-spacing: 0.03em; }
+  .ppp__size.is-active small { color: #ffb4b4; }
+
+  .ppp__stock { margin: 8px 0 0; font-size: 11px; font-weight: 600; color: var(--ppp-red); }
+  .ppp__error { margin: 8px 0 0; font-size: 11px; color: var(--ppp-red); }
+
+  .ppp__atc {
+    width: 100%;
+    margin: 14px 0 0;
+    padding: 15px 18px;
+    border: 0;
+    background: #000;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .ppp__atc:hover { background: #2b2b2b; }
+  .ppp__atc[disabled] { background: #bdbdbd; cursor: not-allowed; }
+  .ppp__atc--notify { background: #fff; color: #000; border: 1px solid #000; }
+
+  .ppp__terms { margin: 10px 0 0; font-size: 11px; color: var(--ppp-mute); text-align: center; }
+  .ppp__terms .shopify-payment-terms { font-size: 11px; }
+
+  .ppp__notify { margin: 12px 0 0; padding: 12px; border: 1px solid var(--ppp-line); background: #fafafa; }
+  .ppp__notify[hidden] { display: none; }
+  .ppp__notify p { margin: 0 0 8px; font-size: 11px; color: var(--ppp-mute); }
+  .ppp__notify-row { display: flex; gap: 6px; }
+  .ppp__notify input {
+    flex: 1;
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid var(--ppp-line);
+    font-size: 12px;
+    font-family: inherit;
+  }
+  .ppp__notify button { padding: 11px 16px; border: 0; background: #000; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+  .ppp__notify-ok { margin: 8px 0 0; font-size: 11px; color: #167a3d; }
+
+  /* --- Confianza y entrega --- */
+  .ppp__usps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 16px 0 0; padding: 14px 0 0; border-top: 1px solid var(--ppp-line); }
+  .ppp__usp { display: flex; gap: 8px; align-items: flex-start; font-size: 11px; line-height: 1.35; }
+  .ppp__usp svg { flex: 0 0 auto; width: 16px; height: 16px; fill: none; stroke: #000; stroke-width: 1.4; }
+  .ppp__usp b { display: block; font-weight: 600; }
+  .ppp__usp span { color: var(--ppp-mute); }
+
+  .ppp__eta { margin: 14px 0 0; padding: 11px 12px; background: #f6f6f6; font-size: 11px; line-height: 1.45; }
+  .ppp__eta b { font-weight: 700; }
+  .ppp__eta em { font-style: normal; color: var(--ppp-mute); }
+
+  /* --- Acordeones --- */
+  .ppp__acc { margin: 20px 0 0; border-top: 1px solid var(--ppp-line); }
+  .ppp__acc-item { border-bottom: 1px solid var(--ppp-line); }
+  .ppp__acc-head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 15px 0;
+    border: 0;
+    background: none;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: left;
+    cursor: pointer;
+  }
+  .ppp__acc-head::after { content: '+'; font-size: 16px; font-weight: 400; line-height: 1; }
+  .ppp__acc-item.is-open .ppp__acc-head::after { content: '\2013'; }
+  .ppp__acc-body { padding: 0 0 16px; font-size: 12px; line-height: 1.6; color: #333; }
+  .ppp__acc-body[hidden] { display: none; }
+  .ppp__acc-body ul { margin: 0; padding-left: 18px; }
+  .ppp__acc-body li { margin: 0 0 5px; }
+  .ppp__acc-body p { margin: 0 0 8px; }
+
+  .ppp__zip { display: flex; gap: 6px; margin: 10px 0 0; }
+  .ppp__zip input { flex: 1; min-width: 0; padding: 9px 10px; border: 1px solid var(--ppp-line); font-size: 12px; font-family: inherit; }
+  .ppp__zip button { padding: 9px 14px; border: 1px solid #000; background: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; }
+  .ppp__zip-out { margin: 8px 0 0; font-size: 11px; }
+
+  /* --- Barra de compra fija --- */
+  .ppp__sticky {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: #fff;
+    border-top: 1px solid var(--ppp-line);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.07);
+    transform: translateY(105%);
+    transition: transform 0.25s ease;
+  }
+  .ppp__sticky.is-on { transform: none; }
+  /* En móvil sólo caben el precio, el talle y el botón: la miniatura y el
+     título se esconden antes de que el título quede recortado a una letra. */
+  .ppp__sticky img { display: none; width: 42px; height: 56px; object-fit: cover; flex: 0 0 auto; }
+  .ppp__sticky-txt { flex: 0 0 auto; min-width: 0; }
+  .ppp__sticky-title { display: none; font-size: 12px; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ppp__sticky select { flex: 1; min-width: 0; }
+  .ppp__sticky-price { font-size: 12px; font-weight: 700; }
+  .ppp__sticky-price s { font-weight: 400; color: var(--ppp-mute); margin-left: 5px; }
+  .ppp__sticky select { padding: 11px 8px; border: 1px solid var(--ppp-line); font-size: 12px; font-family: inherit; background: #fff; }
+  .ppp__sticky .ppp__atc { width: auto; margin: 0; padding: 13px 20px; white-space: nowrap; }
+  .ppp__sticky-nudge { display: none; font-size: 10px; color: #167a3d; font-weight: 600; }
+
+  /* --- Aviso de añadido --- */
+  .ppp__toast {
+    position: fixed;
+    left: 50%;
+    bottom: 90px;
+    z-index: 60;
+    transform: translate(-50%, 20px);
+    padding: 12px 18px;
+    background: #000;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .ppp__toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+
+  /* --- Guía de talles --- */
+  .ppp__guide { position: fixed; inset: 0; z-index: 65; }
+  .ppp__guide[hidden] { display: none; }
+  .ppp__guide-backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.45); }
+  .ppp__guide-panel {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(560px, calc(100vw - 32px));
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 26px 24px;
+    background: #fff;
+  }
+  .ppp__guide-panel h2 { margin: 0 0 12px; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .ppp__guide-panel p, .ppp__guide-panel td, .ppp__guide-panel th { font-size: 12px; line-height: 1.6; }
+  .ppp__guide-panel table { width: 100%; border-collapse: collapse; }
+  .ppp__guide-panel td, .ppp__guide-panel th { border: 1px solid var(--ppp-line); padding: 7px 9px; text-align: left; }
+  .ppp__guide-close { position: absolute; top: 8px; right: 10px; border: 0; background: none; font-size: 22px; line-height: 1; cursor: pointer; }
+
+  /* --- Lupa --- */
+  .ppp__zoom {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: none;
+    background: rgba(255, 255, 255, 0.97);
+  }
+  .ppp__zoom.is-on { display: block; }
+  .ppp__zoom img { width: 100%; height: 100%; object-fit: contain; cursor: zoom-out; transition: transform 0.1s linear; }
+  .ppp__zoom.is-mag img { object-fit: cover; transform: scale(2); }
+  .ppp__zoom-close { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; border: 0; background: #fff; font-size: 20px; line-height: 1; cursor: pointer; }
+
+  @media screen and (min-width: 750px) {
+    .ppp__inner { padding: 0 24px; }
+    .ppp__slides { margin: 0; }
+    .ppp__slide { flex-basis: 62%; }
+    .ppp__slide:first-child, .ppp__slide:last-child { margin: 0; }
+    .ppp__usps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media screen and (min-width: 990px) {
+    .ppp__inner { padding: 0 32px; }
+    .ppp__grid { display: grid; grid-template-columns: minmax(0, 1fr) {{ section.settings.info_width }}px; gap: 44px; align-items: start; }
+    .ppp__media { display: flex; gap: 10px; }
+    .ppp__rail {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 0 0 62px;
+      position: sticky;
+      top: 96px;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    .ppp__rail::-webkit-scrollbar { display: none; }
+    .ppp__thumb { padding: 0; border: 1px solid transparent; background: #f4f4f4; cursor: pointer; display: block; }
+    .ppp__thumb img { width: 100%; aspect-ratio: 1344 / 1820; object-fit: cover; display: block; }
+    .ppp__thumb.is-active { border-color: #000; }
+    .ppp__stage { flex: 1; min-width: 0; }
+    /* En escritorio la galería deja de ser un carrusel y pasa a ser una
+       columna: se recorre con la rueda, igual que en la web original. */
+    .ppp__slides { display: grid; grid-template-columns: 1fr; gap: 6px; overflow: visible; margin: 0; }
+    .ppp__slide { flex: none; width: auto; cursor: zoom-in; }
+    .ppp__dots { display: none; }
+    .ppp__info { padding: 0; }
+    .ppp__sticky { padding: 10px 32px; }
+    .ppp__sticky img { display: block; }
+    .ppp__sticky-txt { flex: 1; }
+    .ppp__sticky-title { display: block; }
+    .ppp__sticky select { flex: 0 0 auto; }
+    .ppp__sticky-nudge { display: block; }
+    .ppp__modelinfo { font-size: 11px; }
+  }
+
+  @media screen and (min-width: 1280px) {
+    .ppp__slides { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ppp__rail { flex-basis: 72px; }
+  }
+</style>
+
+<section class="ppp ppp--{{ sid }}" data-ppp="{{ sid }}">
+  <div class="ppp__inner">
+    <nav class="ppp__crumbs" aria-label="Migas de pan">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span aria-hidden="true">/</span>
+      {%- if crumb_title != blank -%}
+        <a href="{{ crumb.url }}">{{ crumb_title }}</a>
+        <span aria-hidden="true">/</span>
+      {%- endif -%}
+      <span aria-current="page">{{ prod.title }}</span>
+    </nav>
+
+    <div class="ppp__grid">
+      {%- comment -%} ---------------- Galería ---------------- {%- endcomment -%}
+      <div class="ppp__media">
+        <div class="ppp__rail" role="tablist" aria-label="Fotos del producto">
+          {%- for img in prod.images limit: 12 -%}
+            <button
+              class="ppp__thumb{% if forloop.first %} is-active{% endif %}"
+              type="button"
+              role="tab"
+              data-ppp-thumb="{{ forloop.index0 }}"
+              aria-label="Ver foto {{ forloop.index }}"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            >
+              <img src="{{ img | image_url: width: 160 }}" alt="" width="160" height="217" loading="lazy">
+            </button>
+          {%- endfor -%}
+        </div>
+
+        <div class="ppp__stage">
+          <div class="ppp__flags">
+            {%- if is_sale -%}<span class="ppp__flag">Sale</span>{%- endif -%}
+            {%- if section.settings.badge != blank -%}<span class="ppp__flag ppp__flag--soft">{{ section.settings.badge }}</span>{%- endif -%}
+          </div>
+
+          <div class="ppp__slides" data-ppp-slides>
+            {%- for img in prod.images limit: 12 -%}
+              {%- liquid
+                # Las fotos del catálogo llevan el talle y el nombre de la modelo
+                # en el nombre del archivo (…-modelinfo-tiana-us2_…). Leerlo de
+                # ahí evita pedirle a la tienda un metacampo por producto.
+                assign u = img | image_url: width: 20
+                assign model_line = ''
+                if u contains 'modelinfo-'
+                  assign tail = u | split: 'modelinfo-' | last
+                  assign tag = tail | split: '_' | first
+                  assign parts = tag | split: '-'
+                  assign last_part = parts | last
+                  if last_part contains 'us'
+                    assign msize = last_part | remove: 'us' | remove: 'US'
+                    assign mname = parts | first | capitalize
+                    assign model_line = mname | append: ' ' | append: section.settings.model_verb | append: ' US ' | append: msize
+                  endif
+                endif
+                assign zoom_url = img | image_url: width: 1600
+              -%}
+              <figure
+                class="ppp__slide"
+                data-ppp-slide="{{ forloop.index0 }}"
+                data-ppp-zoom="{{ zoom_url }}"
+              >
+                <img
+                  src="{{ img | image_url: width: 900 }}"
+                  alt="{{ prod.title | escape }} · foto {{ forloop.index }}"
+                  width="900"
+                  height="1219"
+                  {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                >
+                {%- if model_line != blank -%}
+                  <figcaption class="ppp__modelinfo">{{ model_line }}</figcaption>
+                {%- endif -%}
+              </figure>
+            {%- endfor -%}
+          </div>
+
+          <div class="ppp__dots" data-ppp-dots>
+            {%- for img in prod.images limit: 12 -%}
+              <button class="ppp__dot{% if forloop.first %} is-active{% endif %}" type="button" data-ppp-dot="{{ forloop.index0 }}" aria-label="Foto {{ forloop.index }}"></button>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} ---------------- Columna de compra ---------------- {%- endcomment -%}
+      <div class="ppp__info">
+        <h1 class="ppp__title">{{ prod.title }}</h1>
+
+        <div class="ppp__priceline">
+          <span class="ppp__price{% if is_sale %} is-sale{% endif %}" data-ppp-price>{{ current.price | money }}</span>
+          {%- if is_sale -%}
+            <s class="ppp__was" data-ppp-was>{{ cap | money }}</s>
+            {%- assign off = cap | minus: current.price | times: 100 | divided_by: cap -%}
+            <span class="ppp__off" data-ppp-off>{{ off }}% off</span>
+          {%- else -%}
+            <s class="ppp__was" data-ppp-was hidden></s>
+            <span class="ppp__off" data-ppp-off hidden></span>
+          {%- endif -%}
+        </div>
+
+        {%- liquid
+          # `plus: 0` convierte el ajuste de texto en número: así un campo vacío
+          # vale 0 y la fila de estrellas desaparece sola en lugar de comparar
+          # una cadena contra un número.
+          assign rating = section.settings.rating_override | default: 0 | plus: 0
+          assign rating_count = section.settings.rating_count_override | default: 0 | plus: 0
+          assign mf_rating = prod.metafields.reviews.rating.value.rating | default: 0 | plus: 0
+          if mf_rating > 0
+            assign rating = mf_rating
+            assign rating_count = prod.metafields.reviews.rating_count.value | default: 0 | plus: 0
+          endif
+        -%}
+        {%- if rating > 0 -%}
+          {%- assign pct = rating | times: 20 -%}
+          <div class="ppp__rating">
+            <span class="ppp__stars" aria-hidden="true">★★★★★<i style="width: {{ pct }}%">★★★★★</i></span>
+            <span>{{ rating }}{% if rating_count > 0 %} · {{ rating_count }} {{ section.settings.reviews_word }}{% endif %}</span>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.promo_text != blank -%}
+          <p class="ppp__promo">{{ section.settings.promo_text }}</p>
+        {%- endif -%}
+
+        <p class="ppp__freeship" data-ppp-freeship {% unless qualifies %}hidden{% endunless %}>{{ section.settings.free_shipping_label }}</p>
+
+        {%- comment -%} Colores: la muestra actual la pinta Liquid y las hermanas
+        las añade el guion buscando el mismo nombre de modelo en el catálogo. {%- endcomment -%}
+        {%- if colour_pos > 0 -%}
+          {%- assign cidx = colour_pos | minus: 1 -%}
+          {%- assign sel_colour = current.options[cidx] -%}
+          {%- assign colour_base = prod.title | remove: sel_colour | strip -%}
+          <p class="ppp__optlabel">{{ section.settings.colour_label }}: <b data-ppp-colour-name>{{ sel_colour }}</b></p>
+          <div class="ppp__swatches" data-ppp-swatches data-ppp-colour-base="{{ colour_base | escape }}" data-ppp-handle="{{ prod.handle }}">
+            <a
+              class="ppp__swatch is-active"
+              href="{{ prod.url }}"
+              aria-current="true"
+              title="{{ sel_colour | escape }}"
+              style="background-image: url({{ prod.featured_image | image_url: width: 120 }});"
+            ><span class="visually-hidden"></span></a>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} ---------------- Talles ---------------- {%- endcomment -%}
+        {%- if size_pos > 0 -%}
+          {%- assign sidx = size_pos | minus: 1 -%}
+          {%- assign size_option = prod.options_with_values[sidx] -%}
+          <div class="ppp__sizehead">
+            <span class="ppp__optlabel" style="margin: 0;">{{ section.settings.size_label }}: <b data-ppp-size-name>{{ current.options[sidx] }}</b></span>
+            {%- if section.settings.size_guide != blank -%}
+              <button class="ppp__sizeguide" type="button" data-ppp-open-guide>{{ section.settings.size_guide_label }}</button>
+            {%- endif -%}
+          </div>
+
+          <div class="ppp__sizes" role="radiogroup" aria-label="{{ section.settings.size_label | escape }}">
+            {%- for value in size_option.values -%}
+              {%- liquid
+                assign v_id = 0
+                assign v_available = false
+                assign v_left = 0
+                for v in prod.variants
+                  if v.options[sidx] != value
+                    continue
+                  endif
+                  if colour_pos > 0
+                    assign cidx2 = colour_pos | minus: 1
+                    if v.options[cidx2] != sel_colour
+                      continue
+                    endif
+                  endif
+                  assign v_id = v.id
+                  assign v_available = v.available
+                  # El aviso de «quedan pocas» sólo tiene sentido si Shopify
+                  # lleva la cuenta: sin seguimiento de stock el número es 0 y
+                  # anunciarlo sería inventarse una urgencia.
+                  assign inv_managed = v.inventory_management | default: ''
+                  assign inv_left = v.inventory_quantity | default: 0 | plus: 0
+                  if inv_managed != '' and v.inventory_policy == 'deny' and inv_left > 0
+                    assign v_left = inv_left
+                  endif
+                  break
+                endfor
+                assign is_current = false
+                if v_id == current.id
+                  assign is_current = true
+                endif
+              -%}
+              <button
+                class="ppp__size{% if is_current %} is-active{% endif %}{% unless v_available %} is-out{% endunless %}"
+                type="button"
+                role="radio"
+                aria-checked="{% if is_current %}true{% else %}false{% endif %}"
+                data-ppp-size="{{ value | escape }}"
+                data-ppp-variant="{{ v_id }}"
+                data-ppp-available="{{ v_available }}"
+                data-ppp-left="{{ v_left }}"
+              >
+                {{ value }}
+                {%- if v_available and v_left > 0 and v_left <= section.settings.low_stock_at -%}
+                  <small>{{ section.settings.low_stock_short }}</small>
+                {%- endif -%}
+              </button>
+            {%- endfor -%}
+          </div>
+
+          <p class="ppp__stock" data-ppp-stock hidden></p>
+        {%- endif -%}
+
+        <p class="ppp__error" data-ppp-error hidden></p>
+
+        {%- form 'product', prod, id: 'ppp-form', class: 'ppp__form' -%}
+          <input type="hidden" name="id" value="{{ current.id }}" data-ppp-id>
+          <input type="hidden" name="quantity" value="1">
+          <button
+            class="ppp__atc"
+            type="submit"
+            data-ppp-atc
+            {% unless current.available %}disabled{% endunless %}
+          >{% if current.available %}{{ section.settings.atc_label }}{% else %}{{ section.settings.sold_out_label }}{% endif %}</button>
+
+          {%- comment -%}
+            Los plazos de Afterpay/Klarna/Shop Pay sólo existen dentro del
+            formulario de producto: `form` no está definido fuera de él.
+          {%- endcomment -%}
+          {%- if section.settings.show_terms -%}
+            <div class="ppp__terms">{{ form | payment_terms }}</div>
+          {%- endif -%}
+        {%- endform -%}
+
+        <button class="ppp__atc ppp__atc--notify" type="button" data-ppp-notify-open {% if current.available %}hidden{% endif %}>{{ section.settings.notify_label }}</button>
+
+        <div class="ppp__notify" data-ppp-notify hidden>
+          <p>{{ section.settings.notify_help }}</p>
+          {%- form 'customer', class: 'ppp__notify-form' -%}
+            <input type="hidden" name="contact[tags]" value="back-in-stock, {{ prod.handle }}">
+            <input type="hidden" name="contact[note]" value="{{ prod.title | escape }}">
+            <div class="ppp__notify-row">
+              <label class="visually-hidden" for="ppp-notify-email">Email</label>
+              <input id="ppp-notify-email" type="email" name="contact[email]" placeholder="{{ section.settings.notify_placeholder }}" required>
+              <button type="submit">{{ section.settings.notify_cta }}</button>
+            </div>
+          {%- endform -%}
+        </div>
+
+        {%- if section.settings.show_usps -%}
+          <div class="ppp__usps">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'usp' -%}
+                <div class="ppp__usp" {{ block.shopify_attributes }}>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    {%- case block.settings.icon -%}
+                      {%- when 'truck' -%}<path d="M2 6h11v9H2zM13 9h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.7"/><circle cx="17" cy="18" r="1.7"/>
+                      {%- when 'return' -%}<path d="M4 11a8 8 0 1 1 2.4 5.7"/><path d="M4 6v5h5"/>
+                      {%- when 'lock' -%}<rect x="4.5" y="10.5" width="15" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>
+                      {%- when 'card' -%}<rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19"/>
+                      {%- else -%}<circle cx="12" cy="12" r="9"/><path d="m8.5 12.3 2.4 2.4 4.6-5"/>
+                    {%- endcase -%}
+                  </svg>
+                  <span><b>{{ block.settings.title }}</b>{{ block.settings.text }}</span>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.eta_min > 0 -%}
+          <p
+            class="ppp__eta"
+            data-ppp-eta
+            data-ppp-eta-min="{{ section.settings.eta_min }}"
+            data-ppp-eta-max="{{ section.settings.eta_max }}"
+            data-ppp-eta-tpl="{{ section.settings.eta_text | escape }}"
+          ><em>{{ section.settings.eta_fallback }}</em></p>
+        {%- endif -%}
+
+        {%- comment -%} ---------------- Acordeones ---------------- {%- endcomment -%}
+        <div class="ppp__acc" data-ppp-acc>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'accordion' -%}
+              {%- liquid
+                assign body = block.settings.content
+                if block.settings.source == 'description'
+                  assign body = prod.description
+                endif
+                if block.settings.page != blank
+                  assign page_body = pages[block.settings.page].content | default: ''
+                  if page_body != blank
+                    assign body = page_body
+                  endif
+                endif
+              -%}
+              <div class="ppp__acc-item{% if block.settings.open %} is-open{% endif %}" {{ block.shopify_attributes }}>
+                <button class="ppp__acc-head" type="button" aria-expanded="{% if block.settings.open %}true{% else %}false{% endif %}">{{ block.settings.heading }}</button>
+                <div class="ppp__acc-body" {% unless block.settings.open %}hidden{% endunless %}>
+                  {{ body }}
+                  {%- if block.settings.show_zip -%}
+                    <div class="ppp__zip">
+                      <label class="visually-hidden" for="ppp-zip-{{ block.id }}">{{ section.settings.zip_label }}</label>
+                      <input id="ppp-zip-{{ block.id }}" type="text" inputmode="numeric" placeholder="{{ section.settings.zip_label }}" data-ppp-zip>
+                      <button type="button" data-ppp-zip-go>{{ section.settings.zip_cta }}</button>
+                    </div>
+                    <p class="ppp__zip-out" data-ppp-zip-out hidden></p>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ---------------- Barra fija ---------------- {%- endcomment -%}
+  <div class="ppp__sticky" data-ppp-sticky>
+    <img src="{{ prod.featured_image | image_url: width: 120 }}" alt="" width="42" height="56">
+    <div class="ppp__sticky-txt">
+      <span class="ppp__sticky-title">{{ prod.title }}</span>
+      <span class="ppp__sticky-price" data-ppp-sticky-price>{{ current.price | money }}</span>
+      <span class="ppp__sticky-nudge" data-ppp-sticky-nudge {% unless qualifies %}hidden{% endunless %}>{{ section.settings.free_shipping_label }}</span>
+    </div>
+    {%- if size_pos > 0 -%}
+      {%- assign sidx3 = size_pos | minus: 1 -%}
+      <label class="visually-hidden" for="ppp-sticky-size">{{ section.settings.size_label }}</label>
+      <select id="ppp-sticky-size" data-ppp-sticky-size>
+        {%- for value in prod.options_with_values[sidx3].values -%}
+          {%- liquid
+            assign opt_available = false
+            for v in prod.variants
+              if v.options[sidx3] == value and v.available
+                assign opt_available = true
+                break
+              endif
+            endfor
+            assign is_sel = false
+            if current.options[sidx3] == value
+              assign is_sel = true
+            endif
+          -%}
+          <option
+            value="{{ value | escape }}"
+            {% if is_sel %}selected{% endif %}
+            {% unless opt_available %}disabled{% endunless %}
+          >{{ value }}{% unless opt_available %} — {{ section.settings.sold_out_label }}{% endunless %}</option>
+        {%- endfor -%}
+      </select>
+    {%- endif -%}
+    <button class="ppp__atc" type="button" data-ppp-sticky-atc>{{ section.settings.atc_label }}</button>
+  </div>
+
+  {%- if section.settings.size_guide != blank -%}
+    <div class="ppp__guide" data-ppp-guide hidden>
+      <div class="ppp__guide-backdrop" data-ppp-close-guide></div>
+      <div class="ppp__guide-panel" role="dialog" aria-modal="true" aria-label="{{ section.settings.size_guide_label | escape }}">
+        <button class="ppp__guide-close" type="button" data-ppp-close-guide aria-label="Cerrar">&times;</button>
+        <h2>{{ section.settings.size_guide_label }}</h2>
+        {{ section.settings.size_guide }}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="ppp__toast" data-ppp-toast role="status" aria-live="polite"></div>
+
+  <div class="ppp__zoom" data-ppp-zoombox aria-hidden="true">
+    <button class="ppp__zoom-close" type="button" data-ppp-zoom-close aria-label="Cerrar">&times;</button>
+    <img src="" alt="" data-ppp-zoom-img>
+  </div>
+
+  <script type="application/json" data-ppp-variants>{{ prod.variants | json }}</script>
+</section>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-ppp="{{ sid }}"]');
+    if (!root) return;
+
+    var moneyFormat = {{ shop.money_format | json }};
+    var variants = [];
+    try {
+      variants = JSON.parse(root.querySelector('[data-ppp-variants]').textContent);
+    } catch (err) {
+      variants = [];
+    }
+
+    function money(cents) {
+      // Cubre los cuatro marcadores de money_format de Shopify: el importe se
+      // recalcula al cambiar de talle y tiene que verse igual que el que pintó
+      // Liquid en la primera carga.
+      var value = (cents / 100).toFixed(2);
+      var parts = value.split('.');
+      var withSeps = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return moneyFormat
+        .replace(/\{\{\s*amount\s*\}\}/g, withSeps + '.' + parts[1])
+        .replace(/\{\{\s*amount_no_decimals\s*\}\}/g, withSeps)
+        .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ',' + parts[1])
+        .replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/g, parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.'));
+    }
+
+    /* ------------------------------------------------------------------ *
+     * Galería: carrete, puntos y lupa
+     * ------------------------------------------------------------------ */
+    var slidesBox = root.querySelector('[data-ppp-slides]');
+    var slides = Array.prototype.slice.call(root.querySelectorAll('[data-ppp-slide]'));
+    var thumbs = Array.prototype.slice.call(root.querySelectorAll('[data-ppp-thumb]'));
+    var dots = Array.prototype.slice.call(root.querySelectorAll('[data-ppp-dot]'));
+
+    function markActive(index) {
+      thumbs.forEach(function (t, i) {
+        t.classList.toggle('is-active', i === index);
+        t.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === index); });
+    }
+
+    function goTo(index) {
+      var target = slides[index];
+      if (!target) return;
+      // En escritorio la galería es una columna y el carrete no se desplaza en
+      // horizontal: ahí lo correcto es llevar la foto a la vista.
+      if (window.matchMedia('(min-width: 990px)').matches) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        slidesBox.scrollTo({ left: target.offsetLeft - slidesBox.offsetLeft, behavior: 'smooth' });
+      }
+      markActive(index);
+    }
+
+    thumbs.forEach(function (t, i) { t.addEventListener('click', function () { goTo(i); }); });
+    dots.forEach(function (d, i) { d.addEventListener('click', function () { goTo(i); }); });
+
+    if ('IntersectionObserver' in window && slides.length) {
+      var seen = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.55) {
+            markActive(slides.indexOf(entry.target));
+          }
+        });
+      }, { threshold: [0.55] });
+      slides.forEach(function (slide) { seen.observe(slide); });
+    }
+
+    var zoomBox = root.querySelector('[data-ppp-zoombox]');
+    var zoomImg = root.querySelector('[data-ppp-zoom-img]');
+
+    function openZoom(src, alt) {
+      zoomImg.src = src;
+      zoomImg.alt = alt || '';
+      zoomBox.classList.add('is-on');
+      zoomBox.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+    }
+
+    function closeZoom() {
+      zoomBox.classList.remove('is-on', 'is-mag');
+      zoomBox.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+    }
+
+    slides.forEach(function (slide) {
+      slide.addEventListener('click', function () {
+        if (!window.matchMedia('(min-width: 990px)').matches) return;
+        var img = slide.querySelector('img');
+        openZoom(slide.getAttribute('data-ppp-zoom'), img ? img.alt : '');
+      });
+    });
+
+    root.querySelector('[data-ppp-zoom-close]').addEventListener('click', closeZoom);
+    zoomImg.addEventListener('click', function () { zoomBox.classList.toggle('is-mag'); });
+    zoomImg.addEventListener('mousemove', function (event) {
+      if (!zoomBox.classList.contains('is-mag')) return;
+      var rect = zoomImg.getBoundingClientRect();
+      zoomImg.style.transformOrigin =
+        ((event.clientX - rect.left) / rect.width) * 100 + '% ' +
+        ((event.clientY - rect.top) / rect.height) * 100 + '%';
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeZoom();
+    });
+
+    /* ------------------------------------------------------------------ *
+     * Talles y variante seleccionada
+     * ------------------------------------------------------------------ */
+    var sizeButtons = Array.prototype.slice.call(root.querySelectorAll('[data-ppp-size]'));
+    var idField = root.querySelector('[data-ppp-id]');
+    var atc = root.querySelector('[data-ppp-atc]');
+    var priceEl = root.querySelector('[data-ppp-price]');
+    var wasEl = root.querySelector('[data-ppp-was]');
+    var offEl = root.querySelector('[data-ppp-off]');
+    var stockEl = root.querySelector('[data-ppp-stock]');
+    var errorEl = root.querySelector('[data-ppp-error]');
+    var sizeName = root.querySelector('[data-ppp-size-name]');
+    var stickySize = root.querySelector('[data-ppp-sticky-size]');
+    var stickyPrice = root.querySelector('[data-ppp-sticky-price]');
+    var notifyOpen = root.querySelector('[data-ppp-notify-open]');
+    var notifyBox = root.querySelector('[data-ppp-notify]');
+    var freeShip = root.querySelector('[data-ppp-freeship]');
+    var freeShipMin = {{ free_ship_min | default: 0 }};
+    var lowStockAt = {{ section.settings.low_stock_at | default: 0 }};
+    var strings = {
+      lowStock: {{ section.settings.low_stock_text | json }},
+      pickSize: {{ section.settings.pick_size_error | json }},
+      added: {{ section.settings.added_toast | json }},
+      addError: {{ section.settings.add_error | json }},
+      atc: {{ section.settings.atc_label | json }},
+      soldOut: {{ section.settings.sold_out_label | json }}
+    };
+
+    var selected = variants.filter(function (v) {
+      return String(v.id) === String(idField.value);
+    })[0] || null;
+
+    function variantForSize(value) {
+      var match = sizeButtons.filter(function (b) { return b.getAttribute('data-ppp-size') === value; })[0];
+      if (!match) return null;
+      var id = match.getAttribute('data-ppp-variant');
+      return variants.filter(function (v) { return String(v.id) === String(id); })[0] || null;
+    }
+
+    function paint(variant) {
+      selected = variant;
+      if (!variant) return;
+
+      idField.value = variant.id;
+      if (sizeName) sizeName.textContent = variant.title.split(' / ')[0];
+
+      priceEl.textContent = money(variant.price);
+      priceEl.classList.toggle('is-sale', variant.compare_at_price > variant.price);
+      if (stickyPrice) stickyPrice.textContent = money(variant.price);
+
+      if (variant.compare_at_price > variant.price) {
+        wasEl.hidden = false;
+        wasEl.textContent = money(variant.compare_at_price);
+        offEl.hidden = false;
+        offEl.textContent = Math.round(((variant.compare_at_price - variant.price) / variant.compare_at_price) * 100) + '% off';
+      } else {
+        wasEl.hidden = true;
+        offEl.hidden = true;
+      }
+
+      if (freeShip) freeShip.hidden = !(freeShipMin > 0 && variant.price >= freeShipMin);
+
+      atc.disabled = !variant.available;
+      atc.textContent = variant.available ? strings.atc : strings.soldOut;
+      if (notifyOpen) notifyOpen.hidden = variant.available;
+      if (notifyBox && variant.available) notifyBox.hidden = true;
+
+      // Sólo se anuncia stock bajo cuando la tienda lleva el inventario de esa
+      // variante: si no lo lleva, `inventory_management` viene vacío.
+      var left = variant.inventory_management && variant.inventory_policy === 'deny' ? variant.inventory_quantity : 0;
+      if (stockEl) {
+        if (variant.available && left > 0 && left <= lowStockAt) {
+          stockEl.hidden = false;
+          stockEl.textContent = strings.lowStock.replace('[count]', left);
+        } else {
+          stockEl.hidden = true;
+        }
+      }
+
+      errorEl.hidden = true;
+
+      if (history.replaceState) {
+        var url = new URL(window.location.href);
+        url.searchParams.set('variant', variant.id);
+        history.replaceState({}, '', url.toString());
+      }
+    }
+
+    sizeButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        if (button.getAttribute('data-ppp-available') !== 'true') {
+          // Un talle agotado no se descarta en silencio: se selecciona igual y
+          // se ofrece el aviso de reposición, que es la venta que queda.
+          sizeButtons.forEach(function (b) { b.classList.remove('is-active'); b.setAttribute('aria-checked', 'false'); });
+          button.classList.add('is-active');
+          button.setAttribute('aria-checked', 'true');
+          paint(variantForSize(button.getAttribute('data-ppp-size')));
+          if (notifyBox) notifyBox.hidden = false;
+          return;
+        }
+        sizeButtons.forEach(function (b) { b.classList.remove('is-active'); b.setAttribute('aria-checked', 'false'); });
+        button.classList.add('is-active');
+        button.setAttribute('aria-checked', 'true');
+        if (stickySize) stickySize.value = button.getAttribute('data-ppp-size');
+        paint(variantForSize(button.getAttribute('data-ppp-size')));
+      });
+    });
+
+    if (stickySize) {
+      stickySize.addEventListener('change', function () {
+        var target = sizeButtons.filter(function (b) {
+          return b.getAttribute('data-ppp-size') === stickySize.value;
+        })[0];
+        if (target) target.click();
+      });
+    }
+
+    if (notifyOpen && notifyBox) {
+      notifyOpen.addEventListener('click', function () {
+        notifyBox.hidden = false;
+        var field = notifyBox.querySelector('input[type="email"]');
+        if (field) field.focus();
+      });
+    }
+
+    /* ------------------------------------------------------------------ *
+     * Añadir a la bolsa
+     * ------------------------------------------------------------------ */
+    var toast = root.querySelector('[data-ppp-toast]');
+    var toastTimer = null;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('is-on');
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(function () { toast.classList.remove('is-on'); }, 2600);
+    }
+
+    function addToBag() {
+      if (!selected) {
+        errorEl.hidden = false;
+        errorEl.textContent = strings.pickSize;
+        return;
+      }
+
+      atc.disabled = true;
+
+      fetch('{{ routes.cart_add_url }}.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ items: [{ id: selected.id, quantity: 1 }] })
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error('cart');
+          return fetch('{{ routes.cart_url }}.js', { headers: { Accept: 'application/json' } });
+        })
+        .then(function (response) { return response.json(); })
+        .then(function (cart) {
+          atc.disabled = false;
+          // Dos avisos porque conviven dos cabeceras: la del tema base abre su
+          // cajón con `cart:open` y la de esta réplica sólo repinta el contador.
+          document.dispatchEvent(new CustomEvent('pp:cart-updated', { detail: cart }));
+          document.dispatchEvent(new CustomEvent('cart:updated', { detail: cart }));
+          if (document.querySelector('cart-drawer')) {
+            document.dispatchEvent(new CustomEvent('cart:open'));
+          } else {
+            showToast(strings.added);
+          }
+        })
+        .catch(function () {
+          atc.disabled = false;
+          errorEl.hidden = false;
+          errorEl.textContent = strings.addError;
+        });
+    }
+
+    var form = root.querySelector('.ppp__form');
+    if (form) {
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        addToBag();
+      });
+    }
+
+    var stickyAtc = root.querySelector('[data-ppp-sticky-atc]');
+    if (stickyAtc) {
+      stickyAtc.addEventListener('click', function () {
+        if (selected && !selected.available) {
+          root.querySelector('.ppp__sizes').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+        addToBag();
+      });
+    }
+
+    /* ------------------------------------------------------------------ *
+     * Barra fija: aparece cuando el botón principal se va de pantalla
+     * ------------------------------------------------------------------ */
+    var sticky = root.querySelector('[data-ppp-sticky]');
+    if (sticky && 'IntersectionObserver' in window) {
+      var watcher = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          sticky.classList.toggle('is-on', !entry.isIntersecting && entry.boundingClientRect.top < 0);
+        });
+      }, { threshold: [0] });
+      watcher.observe(atc);
+    }
+
+    /* ------------------------------------------------------------------ *
+     * Fecha estimada de entrega
+     * ------------------------------------------------------------------ */
+    var eta = root.querySelector('[data-ppp-eta]');
+    if (eta) {
+      var min = parseInt(eta.getAttribute('data-ppp-eta-min'), 10) || 0;
+      var max = parseInt(eta.getAttribute('data-ppp-eta-max'), 10) || min;
+
+      function addBusinessDays(days) {
+        var date = new Date();
+        var added = 0;
+        while (added < days) {
+          date.setDate(date.getDate() + 1);
+          var day = date.getDay();
+          if (day !== 0 && day !== 6) added += 1;
+        }
+        return date;
+      }
+
+      var fmt = new Intl.DateTimeFormat(document.documentElement.lang || 'en', { weekday: 'short', day: 'numeric', month: 'short' });
+      eta.innerHTML = eta.getAttribute('data-ppp-eta-tpl')
+        .replace('[from]', '<b>' + fmt.format(addBusinessDays(min)) + '</b>')
+        .replace('[to]', '<b>' + fmt.format(addBusinessDays(max)) + '</b>');
+    }
+
+    /* ------------------------------------------------------------------ *
+     * Acordeones
+     * ------------------------------------------------------------------ */
+    Array.prototype.slice.call(root.querySelectorAll('.ppp__acc-item')).forEach(function (item) {
+      var head = item.querySelector('.ppp__acc-head');
+      var body = item.querySelector('.ppp__acc-body');
+      head.addEventListener('click', function () {
+        var open = item.classList.toggle('is-open');
+        head.setAttribute('aria-expanded', open ? 'true' : 'false');
+        body.hidden = !open;
+      });
+    });
+
+    var guide = root.querySelector('[data-ppp-guide]');
+    var guideOpen = root.querySelector('[data-ppp-open-guide]');
+    if (guide && guideOpen) {
+      guideOpen.addEventListener('click', function () { guide.hidden = false; });
+      Array.prototype.slice.call(root.querySelectorAll('[data-ppp-close-guide]')).forEach(function (node) {
+        node.addEventListener('click', function () { guide.hidden = true; });
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') guide.hidden = true;
+      });
+    }
+
+    var zipGo = root.querySelector('[data-ppp-zip-go]');
+    if (zipGo) {
+      zipGo.addEventListener('click', function () {
+        var field = root.querySelector('[data-ppp-zip]');
+        var out = root.querySelector('[data-ppp-zip-out]');
+        if (!field || !out) return;
+        if (!field.value.trim()) {
+          out.hidden = false;
+          out.textContent = {{ section.settings.zip_empty | json }};
+          return;
+        }
+        out.hidden = false;
+        // El plazo no depende del código postal en esta tienda: se repite el
+        // mismo rango que arriba en lugar de fingir un cálculo por zona.
+        out.innerHTML = eta ? eta.innerHTML : '';
+      });
+    }
+
+    /* ------------------------------------------------------------------ *
+     * Otros colores del mismo modelo
+     * ------------------------------------------------------------------ */
+    var swatches = root.querySelector('[data-ppp-swatches]');
+    if (swatches && window.fetch) {
+      var base = (swatches.getAttribute('data-ppp-colour-base') || '').trim();
+      var here = swatches.getAttribute('data-ppp-handle');
+      if (base.length > 3) {
+        fetch('{{ routes.predictive_search_url }}.json?q=' + encodeURIComponent(base) +
+              '&resources[type]=product&resources[limit]=10', { headers: { Accept: 'application/json' } })
+          .then(function (response) { return response.json(); })
+          .then(function (data) {
+            var found = ((data.resources || {}).results || {}).products || [];
+            var lower = base.toLowerCase();
+            found.forEach(function (item) {
+              if (item.handle === here) return;
+              if (item.title.toLowerCase().indexOf(lower) !== 0) return;
+              var label = item.title.slice(base.length).trim() || item.title;
+              var link = document.createElement('a');
+              link.className = 'ppp__swatch';
+              link.href = item.url;
+              link.title = label;
+              if (item.featured_image && item.featured_image.url) {
+                link.style.backgroundImage = 'url(' + item.featured_image.url + ')';
+              }
+              link.setAttribute('aria-label', label);
+              swatches.appendChild(link);
+            });
+          })
+          .catch(function () {
+            /* Sin respuesta se queda sólo el color actual, que ya está pintado. */
+          });
+      }
+    }
+  })();
+</script>
+
+{%- comment -%}
+  Datos estructurados: sin ellos Google no muestra precio ni disponibilidad en
+  el resultado de búsqueda, que es tráfico cualificado que se pierde antes de
+  llegar a la ficha.
+{%- endcomment -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": {{ prod.title | json }},
+    "description": {{ prod.description | strip_html | truncate: 400 | json }},
+    "sku": {{ current.sku | json }},
+    "brand": { "@type": "Brand", "name": {{ prod.vendor | json }} },
+    "image": [{% for img in prod.images limit: 5 %}{{ img | image_url: width: 1200 | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+    "offers": {
+      "@type": "Offer",
+      "url": {{ shop.url | append: prod.url | json }},
+      "priceCurrency": {{ cart.currency.iso_code | default: 'USD' | json }},
+      "price": {{ current.price | divided_by: 100.0 | json }},
+      "availability": "https://schema.org/{% if current.available %}InStock{% else %}OutOfStock{% endif %}"
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "PP · Ficha producto",
+  "tag": "section",
+  "class": "pp-product",
+  "settings": [
+    { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 1100, "max": 1800, "step": 20, "default": 1600 },
+    { "type": "range", "id": "info_width", "label": "Ancho de la columna de compra (px)", "min": 340, "max": 520, "step": 10, "default": 420 },
+    { "type": "text", "id": "badge", "label": "Etiqueta sobre la foto", "info": "Por ejemplo «Best seller». Dejalo vacío para no mostrar ninguna." },
+
+    { "type": "header", "content": "Precio y reseñas" },
+    { "type": "text", "id": "promo_text", "label": "Franja de promoción", "default": "40% OFF EVERYTHING* CODE: TAKE40" },
+    { "type": "text", "id": "reviews_word", "label": "Palabra para las reseñas", "default": "reviews" },
+    { "type": "text", "id": "rating_override", "label": "Puntuación manual", "info": "Sólo se usa si el producto no tiene el metacampo reviews.rating. Escribí aquí únicamente una nota que refleje reseñas reales; un número inventado hace que la ficha mienta." },
+    { "type": "text", "id": "rating_count_override", "label": "Número de reseñas manual" },
+
+    { "type": "header", "content": "Opciones" },
+    { "type": "text", "id": "colour_label", "label": "Etiqueta del color", "default": "Colour" },
+    { "type": "text", "id": "size_label", "label": "Etiqueta del talle", "default": "Size" },
+    { "type": "text", "id": "size_guide_label", "label": "Enlace de la guía de talles", "default": "Size guide" },
+    { "type": "richtext", "id": "size_guide", "label": "Guía de talles", "default": "<p>US 0 = AU 4 · US 2 = AU 6 · US 4 = AU 8 · US 6 = AU 10 · US 8 = AU 12 · US 10 = AU 14 · US 12 = AU 16</p>" },
+    { "type": "range", "id": "low_stock_at", "label": "Avisar de stock bajo desde", "min": 0, "max": 20, "step": 1, "default": 5, "info": "El aviso sólo aparece si Shopify lleva el inventario de esa variante." },
+    { "type": "text", "id": "low_stock_text", "label": "Aviso de stock bajo", "default": "Quedan sólo [count] unidades de este talle" },
+    { "type": "text", "id": "low_stock_short", "label": "Aviso corto en el botón del talle", "default": "Pocas" },
+    { "type": "text", "id": "pick_size_error", "label": "Error al no elegir talle", "default": "Elegí un talle para continuar" },
+
+    { "type": "header", "content": "Compra" },
+    { "type": "text", "id": "atc_label", "label": "Botón de compra", "default": "ADD TO BAG" },
+    { "type": "text", "id": "sold_out_label", "label": "Botón sin stock", "default": "SOLD OUT" },
+    { "type": "text", "id": "added_toast", "label": "Aviso de añadido", "default": "Añadido a la bolsa" },
+    { "type": "text", "id": "add_error", "label": "Error al añadir", "default": "No pudimos añadirlo. Probá otra vez." },
+    { "type": "checkbox", "id": "show_terms", "label": "Mostrar plazos de pago (Afterpay, Klarna, Shop Pay)", "default": true },
+
+    { "type": "header", "content": "Aviso de reposición" },
+    { "type": "text", "id": "notify_label", "label": "Botón", "default": "NOTIFY ME WHEN AVAILABLE" },
+    { "type": "text", "id": "notify_help", "label": "Texto de ayuda", "default": "Dejanos tu email y te avisamos apenas vuelva este talle." },
+    { "type": "text", "id": "notify_placeholder", "label": "Marcador del campo", "default": "tu@email.com" },
+    { "type": "text", "id": "notify_cta", "label": "Botón de envío", "default": "Avisarme" },
+
+    { "type": "header", "content": "Envío" },
+    { "type": "range", "id": "free_shipping_min", "label": "Envío gratis desde", "min": 0, "max": 300, "step": 5, "default": 60, "unit": "$" },
+    { "type": "text", "id": "free_shipping_label", "label": "Aviso de envío gratis", "default": "QUALIFIES FOR FREE SHIPPING" },
+    { "type": "range", "id": "eta_min", "label": "Entrega · mínimo (días hábiles)", "min": 0, "max": 20, "step": 1, "default": 3 },
+    { "type": "range", "id": "eta_max", "label": "Entrega · máximo (días hábiles)", "min": 0, "max": 30, "step": 1, "default": 7 },
+    { "type": "text", "id": "eta_text", "label": "Texto de entrega", "default": "Pedilo hoy y llega entre el [from] y el [to]", "info": "[from] y [to] se reemplazan por las fechas calculadas." },
+    { "type": "text", "id": "eta_fallback", "label": "Texto sin JavaScript", "default": "Entrega estimada en 3 a 7 días hábiles" },
+    { "type": "text", "id": "zip_label", "label": "Campo de código postal", "default": "Código postal" },
+    { "type": "text", "id": "zip_cta", "label": "Botón del código postal", "default": "Calcular" },
+    { "type": "text", "id": "zip_empty", "label": "Error de código postal", "default": "Escribí tu código postal" },
+
+    { "type": "header", "content": "Confianza" },
+    { "type": "checkbox", "id": "show_usps", "label": "Mostrar la fila de garantías", "default": true },
+    { "type": "text", "id": "model_verb", "label": "Verbo del cartel de la modelo", "default": "wears", "info": "Se lee del nombre del archivo de cada foto: «tiana-us2» da «Tiana wears US 2»." }
+  ],
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "Garantía",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icono", "default": "truck",
+          "options": [
+            { "value": "truck", "label": "Camión" },
+            { "value": "return", "label": "Devolución" },
+            { "value": "lock", "label": "Candado" },
+            { "value": "card", "label": "Tarjeta" },
+            { "value": "check", "label": "Tilde" }
+          ] },
+        { "type": "text", "id": "title", "label": "Título", "default": "Envío gratis" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "En pedidos desde $60" }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Desplegable",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Título", "default": "Description" },
+        { "type": "select", "id": "source", "label": "Contenido", "default": "custom",
+          "options": [
+            { "value": "custom", "label": "El texto de abajo" },
+            { "value": "description", "label": "La descripción del producto" }
+          ] },
+        { "type": "richtext", "id": "content", "label": "Texto" },
+        { "type": "page", "id": "page", "label": "Página", "info": "Si elegís una página, su contenido reemplaza al texto de arriba." },
+        { "type": "checkbox", "id": "show_zip", "label": "Añadir el cálculo por código postal", "default": false },
+        { "type": "checkbox", "id": "open", "label": "Abierto al cargar", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PP · Ficha producto",
+      "blocks": [
+        { "type": "usp", "settings": { "icon": "truck", "title": "Envío gratis", "text": "En pedidos desde $60" } },
+        { "type": "usp", "settings": { "icon": "return", "title": "Devoluciones fáciles", "text": "30 días para cambiarlo" } },
+        { "type": "usp", "settings": { "icon": "lock", "title": "Pago seguro", "text": "Cifrado de extremo a extremo" } },
+        { "type": "usp", "settings": { "icon": "card", "title": "Pagá en cuotas", "text": "Afterpay y Klarna" } },
+        { "type": "accordion", "settings": { "heading": "Description", "source": "description", "open": true } },
+        { "type": "accordion", "settings": { "heading": "Size & fit", "source": "custom" } },
+        { "type": "accordion", "settings": { "heading": "Fast shipping", "source": "custom", "show_zip": true } },
+        { "type": "accordion", "settings": { "heading": "Easy returns", "source": "custom" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

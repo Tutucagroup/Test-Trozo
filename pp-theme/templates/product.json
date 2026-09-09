@@ -1,0 +1,248 @@
+{
+  "sections": {
+    "main": {
+      "type": "pp-product",
+      "blocks": {
+        "usp1": {
+          "type": "usp",
+          "settings": {
+            "icon": "truck",
+            "title": "Envío gratis desde $60",
+            "text": "Llega en 3 a 7 días hábiles"
+          }
+        },
+        "usp2": {
+          "type": "usp",
+          "settings": {
+            "icon": "return",
+            "title": "30 días para devolverlo",
+            "text": "Cambios y devoluciones simples"
+          }
+        },
+        "usp3": {
+          "type": "usp",
+          "settings": {
+            "icon": "card",
+            "title": "Pagá en 4 cuotas",
+            "text": "Afterpay, Klarna y Shop Pay"
+          }
+        },
+        "usp4": {
+          "type": "usp",
+          "settings": {
+            "icon": "lock",
+            "title": "Pago seguro",
+            "text": "Tus datos viajan cifrados"
+          }
+        },
+        "acc1": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Description",
+            "source": "description",
+            "content": "",
+            "page": "",
+            "show_zip": false,
+            "open": true
+          }
+        },
+        "acc2": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Size & fit",
+            "source": "custom",
+            "content": "<ul><li>El talle de la foto figura en el cartel de cada imagen.</li><li>Corte ajustado: si estás entre dos talles, llevá el mayor.</li><li>Tela sin elastano en el cuerpo, forrada.</li><li>¿Dudas? Abrí la guía de talles arriba del selector.</li></ul>",
+            "page": "",
+            "show_zip": false,
+            "open": false
+          }
+        },
+        "acc3": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Fast shipping",
+            "source": "custom",
+            "content": "<p>Envío estándar gratis en pedidos desde $60. Los pedidos hechos antes de las 14 h salen el mismo día hábil.</p>",
+            "page": "",
+            "show_zip": true,
+            "open": false
+          }
+        },
+        "acc4": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Easy returns",
+            "source": "custom",
+            "content": "<p>Tenés 30 días desde que lo recibís para devolverlo. La prenda tiene que volver sin usar y con su etiqueta. Gestionás la devolución desde tu cuenta en dos pasos.</p>",
+            "page": "",
+            "show_zip": false,
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "usp1",
+        "usp2",
+        "usp3",
+        "usp4",
+        "acc1",
+        "acc2",
+        "acc3",
+        "acc4"
+      ],
+      "settings": {
+        "max_width": 1600,
+        "info_width": 420,
+        "badge": "",
+        "promo_text": "40% OFF EVERYTHING* CODE: TAKE40",
+        "reviews_word": "reviews",
+        "rating_override": "",
+        "rating_count_override": "",
+        "colour_label": "Colour",
+        "size_label": "Size",
+        "size_guide_label": "Size guide",
+        "size_guide": "<p><strong>Equivalencias</strong></p><p>US 0 = AU 4 = UK 4 · US 2 = AU 6 = UK 6 · US 4 = AU 8 = UK 8 · US 6 = AU 10 = UK 10 · US 8 = AU 12 = UK 12 · US 10 = AU 14 = UK 14 · US 12 = AU 16 = UK 16</p><p>Las medidas son de la prenda sin estirar. Si estás entre dos talles y el corte es ajustado, llevá el mayor.</p>",
+        "low_stock_at": 5,
+        "low_stock_text": "Quedan sólo [count] unidades de este talle",
+        "low_stock_short": "Pocas",
+        "pick_size_error": "Elegí un talle para continuar",
+        "atc_label": "ADD TO BAG",
+        "sold_out_label": "SOLD OUT",
+        "added_toast": "Añadido a la bolsa",
+        "add_error": "No pudimos añadirlo. Probá otra vez.",
+        "show_terms": true,
+        "notify_label": "NOTIFY ME WHEN AVAILABLE",
+        "notify_help": "Dejanos tu email y te avisamos apenas vuelva este talle.",
+        "notify_placeholder": "tu@email.com",
+        "notify_cta": "Avisarme",
+        "free_shipping_min": 60,
+        "free_shipping_label": "QUALIFIES FOR FREE SHIPPING",
+        "eta_min": 3,
+        "eta_max": 7,
+        "eta_text": "Pedilo hoy y llega entre el [from] y el [to]",
+        "eta_fallback": "Entrega estimada en 3 a 7 días hábiles",
+        "zip_label": "Código postal",
+        "zip_cta": "Calcular",
+        "zip_empty": "Escribí tu código postal",
+        "show_usps": true,
+        "model_verb": "wears"
+      }
+    },
+    "also_like": {
+      "type": "pp-product-rail",
+      "settings": {
+        "title": "YOU MAY ALSO LIKE",
+        "source": "related",
+        "collection": "mini-dresses",
+        "products_shown": 8,
+        "columns": 4,
+        "max_width": 1600,
+        "bg_color": "#FFFFFF",
+        "padding_top": 52,
+        "padding_bottom": 20
+      }
+    },
+    "best": {
+      "type": "pp-product-rail",
+      "settings": {
+        "title": "OUR BEST SELLERS",
+        "source": "collection",
+        "collection": "best-seller",
+        "products_shown": 8,
+        "columns": 4,
+        "max_width": 1600,
+        "bg_color": "#FAF7F5",
+        "padding_top": 44,
+        "padding_bottom": 44
+      }
+    },
+    "feed": {
+      "type": "pp-feed",
+      "blocks": {
+        "f1": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/fee.png",
+            "caption": "Shop the look",
+            "link": "shopify://collections/new-dresses"
+          }
+        },
+        "f2": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/ss.png",
+            "caption": "Shop the look",
+            "link": "shopify://collections/mini-dresses"
+          }
+        },
+        "f3": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/image_4jjj.png",
+            "caption": "Shop the look",
+            "link": "shopify://collections/going-out-dresses"
+          }
+        },
+        "f4": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/f10.12_-_PARTY7474.png",
+            "caption": "Shop the look",
+            "link": "shopify://collections/party-dresses"
+          }
+        },
+        "f5": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/Image24-shortsheros.png",
+            "caption": "Shop the look",
+            "link": "shopify://collections/best-seller"
+          }
+        },
+        "f6": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/s10.12_-_PARTY7279.png",
+            "caption": "Shop the look",
+            "link": "shopify://collections/fall-dresses"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6"
+      ],
+      "settings": {
+        "title": "SHOP THE FEED",
+        "subtitle": "Etiquetanos en Instagram para aparecer acá",
+        "max_width": 1600,
+        "padding_top": 30,
+        "padding_bottom": 34,
+        "bg_color": "#FFFFFF",
+        "text_color": "#000000"
+      }
+    },
+    "recent": {
+      "type": "pp-recently-viewed",
+      "settings": {
+        "title": "RECENTLY VIEWED",
+        "products_shown": 8,
+        "columns": 4,
+        "max_width": 1600,
+        "padding_top": 12,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "main",
+    "also_like",
+    "best",
+    "feed",
+    "recent"
+  ]
+}
