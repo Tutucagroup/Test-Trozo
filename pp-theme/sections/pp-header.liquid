@@ -8,7 +8,12 @@
 
 {%- liquid
   assign sid = section.id
-  assign menu = section.settings.menu
+  comment
+    Un ajuste `link_list` entrega el objeto del menú en esta versión de la API y
+    el handle en otras. `default` cubre los dos casos: si la búsqueda no resuelve
+    se conserva el valor original.
+  endcomment
+  assign menu = linklists[section.settings.menu] | default: section.settings.menu
 -%}
 
 <header class="pph pph--{{ sid }}" data-pph="{{ sid }}">
@@ -336,9 +341,15 @@
     top: -6px;
     height: 6px;
   }
+  /* Se abre al pasar el ratón. El `:hover` de CSS ya basta en un navegador de
+     escritorio; la clase `is-open` la pone el guion para sostener el panel
+     mientras se cruza el hueco y para poder abrirlo con un toque en pantallas
+     táctiles, donde `:hover` no existe. */
   .pph--{{ sid }} .pph__nav-item:hover .pph__drop,
+  .pph--{{ sid }} .pph__nav-item.is-open .pph__drop,
   .pph--{{ sid }} .pph__nav-item:focus-within .pph__drop { opacity: 1; visibility: visible; }
-  .pph--{{ sid }} .pph__nav-item:hover .pph__nav-link { text-decoration: underline; text-underline-offset: 4px; }
+  .pph--{{ sid }} .pph__nav-item:hover .pph__nav-link,
+  .pph--{{ sid }} .pph__nav-item.is-open .pph__nav-link { text-decoration: underline; text-underline-offset: 4px; }
 
   .pph--{{ sid }} .pph__drop-list { display: flex; flex-direction: column; gap: 2px; }
   .pph--{{ sid }} .pph__drop a {
@@ -492,6 +503,65 @@
         if (event.key === 'Escape' && !drawer.hidden) setOpen(false);
       });
     }
+
+    {%- comment -%}
+      El desplegable se abre con `:hover` en CSS; esto lo refuerza. Al entrar en
+      el elemento se marca `is-open` y al salir se retira con un respiro, de modo
+      que un desvío del ratón al bajar hacia el panel no lo cierre de golpe. En
+      pantallas táctiles no hay `:hover`: allí el primer toque sobre un enlace
+      con hijos abre las subcategorías en vez de navegar, y el segundo ya entra.
+    {%- endcomment -%}
+    var items = Array.prototype.slice.call(header.querySelectorAll('.pph__nav-item.has-children'));
+    var closeTimer = null;
+    var coarse = window.matchMedia && window.matchMedia('(hover: none)').matches;
+
+    function closeAll(except) {
+      items.forEach(function (item) {
+        if (item === except) return;
+        item.classList.remove('is-open');
+        var trigger = item.querySelector('.pph__nav-link');
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    function openItem(item) {
+      window.clearTimeout(closeTimer);
+      closeAll(item);
+      item.classList.add('is-open');
+      var trigger = item.querySelector('.pph__nav-link');
+      if (trigger) trigger.setAttribute('aria-expanded', 'true');
+    }
+
+    items.forEach(function (item) {
+      var trigger = item.querySelector('.pph__nav-link');
+      if (trigger) {
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.setAttribute('aria-haspopup', 'true');
+      }
+
+      item.addEventListener('mouseenter', function () { openItem(item); });
+      item.addEventListener('mouseleave', function () {
+        window.clearTimeout(closeTimer);
+        closeTimer = window.setTimeout(function () { closeAll(null); }, 160);
+      });
+      item.addEventListener('focusin', function () { openItem(item); });
+
+      if (coarse && trigger) {
+        trigger.addEventListener('click', function (event) {
+          if (!item.classList.contains('is-open')) {
+            event.preventDefault();
+            openItem(item);
+          }
+        });
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeAll(null);
+    });
+    document.addEventListener('click', function (event) {
+      if (!header.contains(event.target)) closeAll(null);
+    });
 
     // El contador del carrito lo pinta Liquid en la primera carga; si el tema
     // expone la API de secciones, se refresca tras añadir sin recargar.

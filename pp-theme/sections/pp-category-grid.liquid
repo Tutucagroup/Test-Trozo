@@ -19,13 +19,18 @@
     <div class="ppcg__grid">
       {%- for block in section.blocks -%}
         {%- comment -%}
+          El ajuste `collection` entrega el handle en esta versión de la API y
+          el objeto en otras: se resuelve contra `collections` y, si no hay
+          coincidencia, se conserva el valor original, de modo que la pieza
+          funciona en ambos casos.
+
           La pieza puede apuntar a una colección y quedarse sin más ajustes: el
           rótulo, el destino y la foto salen de ella. Así la rejilla sigue viva
           cuando cambia el surtido, en vez de congelar una imagen de campaña.
           Cualquier valor propio del bloque manda sobre el de la colección.
         {%- endcomment -%}
         {%- liquid
-          assign coll = block.settings.collection
+          assign coll = collections[block.settings.collection] | default: block.settings.collection
           assign fallback = blank
           if coll != blank
             assign fallback = coll.image | default: coll.products.first.featured_image

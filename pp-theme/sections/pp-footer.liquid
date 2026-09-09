@@ -23,7 +23,7 @@
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'menu' -%}
-            {%- assign menu = block.settings.menu -%}
+            {%- assign menu = linklists[block.settings.menu] | default: block.settings.menu -%}
             {%- if menu.links.size > 0 -%}
               <div class="ppft__col" {{ block.shopify_attributes }}>
                 <button class="ppft__col-head" type="button" data-ppft-toggle aria-expanded="false">

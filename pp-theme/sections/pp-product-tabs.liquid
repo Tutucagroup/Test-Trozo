@@ -21,7 +21,14 @@
     {%- if section.blocks.size > 1 -%}
       <div class="ppt__tabs" role="tablist" aria-label="{{ section.settings.title | escape }}">
         {%- for block in section.blocks -%}
-          {%- assign coll = block.settings.collection -%}
+          {%- comment -%}
+            Un ajuste `collection` no devuelve lo mismo en todas las versiones de
+            la API de temas: aquí entrega el handle y hay que buscarlo en
+            `collections`, mientras que otras entregan ya el objeto. Se resuelve
+            el handle y, si la búsqueda no da nada, se conserva lo que había, de
+            modo que la sección funciona en ambos casos en vez de quedar vacía.
+          {%- endcomment -%}
+          {%- assign coll = collections[block.settings.collection] | default: block.settings.collection -%}
           <button
             class="ppt__tab{% if forloop.first %} is-active{% endif %}"
             type="button"
@@ -35,7 +42,7 @@
     {%- endif -%}
 
     {%- for block in section.blocks -%}
-      {%- assign coll = block.settings.collection -%}
+      {%- assign coll = collections[block.settings.collection] | default: block.settings.collection -%}
       <div
         class="ppt__panel{% if forloop.first %} is-active{% endif %}"
         data-ppt-panel="{{ forloop.index0 }}"

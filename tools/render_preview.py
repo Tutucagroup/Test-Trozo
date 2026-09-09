@@ -256,7 +256,10 @@ def resolve_settings(settings: dict, section_type: str) -> dict:
     out = BlankDict()
     for key, val in settings.items():
         if key == "collection" and isinstance(val, str) and val:
-            out[key] = COLLECTIONS.get(val)
+            # Shopify entrega aquí el handle, no el objeto: la sección tiene que
+            # buscarlo en `collections`. Devolverlo ya resuelto ocultaba justo el
+            # fallo que dejaba las secciones de producto vacías en la tienda.
+            out[key] = val
         elif key == "product" and isinstance(val, str) and val:
             out[key] = PRODUCTS.get(val)
         elif key == "menu" and isinstance(val, str) and val:

@@ -1,6 +1,13 @@
 import { chromium } from 'playwright';
 import { resolve } from 'node:path';
-const b = await chromium.launch();
+
+// La salida a internet de este entorno pasa por un proxy: sin pasárselo a
+// Chromium las fotos del CDN y las tipografías se quedan colgadas y la
+// navegación agota el tiempo. `curl` ya lo usa por estas mismas variables.
+const PROXY = process.env.HTTPS_PROXY || process.env.https_proxy;
+const LAUNCH = PROXY ? { proxy: { server: PROXY } } : {};
+
+const b = await chromium.launch(LAUNCH);
 for (const vp of [{n:'desktop',w:1440,h:950},{n:'mobile',w:390,h:844}]) {
   const c = await b.newContext({viewport:{width:vp.w,height:vp.h}});
   const p = await c.newPage();
