@@ -54,7 +54,9 @@
         "text_color": "#000000",
         "border_color": "#E5E5E5",
         "sale_color": "#E80404",
-        "logo_file": "logo.svg"
+        "logo_file": "logo.svg",
+        "mega_threshold": 6,
+        "mega_rows": 6
       }
     }
   },

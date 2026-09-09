@@ -117,37 +117,29 @@
         "g1": {
           "type": "cell",
           "settings": {
-            "image": "shopify://shop_images/Block_19_4c6ff8d1-77a5-4b10-aa8c-51f5523d6e64.png",
-            "image_mobile": "shopify://shop_images/Mob_Block_17_81fd97d0-eea0-403d-a938-a3e47fc4c1dd.png",
-            "label": "Dresses you need",
-            "link": "shopify://collections/dresses"
+            "collection": "mini-dresses",
+            "label": "Mini dresses"
           }
         },
         "g2": {
           "type": "cell",
           "settings": {
-            "image": "shopify://shop_images/Block_20_c5551e76-dfb2-42a3-9ec9-376bf0f396cb.png",
-            "image_mobile": "shopify://shop_images/Mob_Block_18_623bf140-2f83-407a-90ca-c1d91467f308.png",
-            "label": "The fall shop",
-            "link": "shopify://collections/fall-dresses"
+            "collection": "midi-dresses",
+            "label": "Midi dresses"
           }
         },
         "g3": {
           "type": "cell",
           "settings": {
-            "image": "shopify://shop_images/Block_18_aeadd548-513e-44ee-b6d2-69709cd04d22.png",
-            "image_mobile": "shopify://shop_images/Mob_Block_19_781954b7-80e9-4b7b-aded-07bc42d663e7.png",
-            "label": "Trending now",
-            "link": "shopify://collections/going-out-dresses"
+            "collection": "maxi-dresses",
+            "label": "Maxi dresses"
           }
         },
         "g4": {
           "type": "cell",
           "settings": {
-            "image": "shopify://shop_images/Block_21_9843f41e-2df2-4875-be8d-a1908eae8be3.png",
-            "image_mobile": "shopify://shop_images/Mob_Block_20_b2cbea65-71e1-45e1-91cc-83b054d76925.png",
-            "label": "Shop back to school",
-            "link": "shopify://collections/party-dresses"
+            "collection": "formal-fancy-dresses",
+            "label": "Formal & fancy"
           }
         }
       },
@@ -165,7 +157,10 @@
         "bg_color": "#FFFFFF",
         "text_color": "#000000",
         "pill_bg": "#FFFFFF",
-        "pill_text": "#000000"
+        "pill_text": "#000000",
+        "ratio": "1 / 1",
+        "ratio_mobile": "4 / 5",
+        "focus": "center top"
       }
     },
     "product_tabs": {
@@ -294,6 +289,33 @@
         "text_color": "#000000",
         "body_color": "#4A4A4A"
       }
+    },
+    "best_sellers": {
+      "type": "pp-product-tabs",
+      "blocks": {
+        "b1": {
+          "type": "tab",
+          "settings": {
+            "collection": "best-seller",
+            "label": "Best Sellers"
+          }
+        }
+      },
+      "block_order": [
+        "b1"
+      ],
+      "settings": {
+        "title": "Best Sellers",
+        "products_shown": 12,
+        "columns": 4,
+        "show_button": true,
+        "button_label": "Shop all best sellers",
+        "max_width": 1600,
+        "padding_top": 30,
+        "padding_bottom": 34,
+        "bg_color": "#FFFFFF",
+        "text_color": "#000000"
+      }
     }
   },
   "order": [
@@ -301,6 +323,7 @@
     "hero",
     "category_carousel",
     "category_grid",
+    "best_sellers",
     "product_tabs",
     "feed",
     "about"

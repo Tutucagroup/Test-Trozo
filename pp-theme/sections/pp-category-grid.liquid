@@ -18,14 +18,36 @@
 
     <div class="ppcg__grid">
       {%- for block in section.blocks -%}
-        {%- assign desktop = block.settings.image -%}
-        {%- assign mobile = block.settings.image_mobile | default: desktop -%}
-        <a class="ppcg__cell" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+        {%- comment -%}
+          La pieza puede apuntar a una colección y quedarse sin más ajustes: el
+          rótulo, el destino y la foto salen de ella. Así la rejilla sigue viva
+          cuando cambia el surtido, en vez de congelar una imagen de campaña.
+          Cualquier valor propio del bloque manda sobre el de la colección.
+        {%- endcomment -%}
+        {%- liquid
+          assign coll = block.settings.collection
+          assign fallback = blank
+          if coll != blank
+            assign fallback = coll.image | default: coll.products.first.featured_image
+          endif
+
+          assign desktop = block.settings.image | default: fallback
+          assign mobile = block.settings.image_mobile | default: desktop
+          assign label = block.settings.label
+          if label == blank
+            assign label = coll.title
+          endif
+          assign target = block.settings.link
+          if target == blank
+            assign target = coll.url
+          endif
+        -%}
+        <a class="ppcg__cell" href="{{ target | default: '#' }}" {{ block.shopify_attributes }}>
           {%- if mobile != blank -%}
             <img
               class="ppcg__img ppcg__img--mobile"
               src="{{ mobile | image_url: width: 900 }}"
-              alt="{{ block.settings.label | escape }}"
+              alt="{{ label | escape }}"
               width="854"
               height="900"
               loading="lazy"
@@ -35,15 +57,15 @@
             <img
               class="ppcg__img ppcg__img--desktop"
               src="{{ desktop | image_url: width: 1400 }}"
-              alt="{{ block.settings.label | escape }}"
+              alt="{{ label | escape }}"
               width="960"
               height="851"
               loading="lazy"
             >
           {%- endif -%}
 
-          {%- if block.settings.label != blank -%}
-            <span class="ppcg__pill">{{ block.settings.label }} <span aria-hidden="true">&gt;</span></span>
+          {%- if label != blank -%}
+            <span class="ppcg__pill">{{ label }} <span aria-hidden="true">&gt;</span></span>
           {%- endif -%}
         </a>
       {%- endfor -%}
@@ -89,7 +111,14 @@
     background: #f1f1f1;
     text-decoration: none;
   }
-  .ppcg--{{ sid }} .ppcg__img { display: block; width: 100%; height: auto; }
+  .ppcg--{{ sid }} .ppcg__cell { aspect-ratio: {{ section.settings.ratio_mobile }}; }
+  .ppcg--{{ sid }} .ppcg__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ section.settings.focus }};
+  }
   .ppcg--{{ sid }} .ppcg__img--desktop { display: none; }
 
   .ppcg--{{ sid }} .ppcg__pill {
@@ -115,6 +144,7 @@
 
   @media screen and (min-width: 750px) {
     .ppcg--{{ sid }} .ppcg__grid { grid-template-columns: 1fr 1fr; }
+    .ppcg--{{ sid }} .ppcg__cell { aspect-ratio: {{ section.settings.ratio }}; }
     .ppcg--{{ sid }} .ppcg__img--mobile { display: none; }
     .ppcg--{{ sid }} .ppcg__img--desktop { display: block; }
     .ppcg--{{ sid }} .ppcg__title { font-size: 26px; margin-bottom: 18px; }
@@ -132,6 +162,19 @@
     { "type": "header", "content": "Diseño" },
     { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 1100, "max": 1900, "step": 20, "default": 1700 },
     { "type": "range", "id": "gap", "label": "Separación (px)", "min": 0, "max": 24, "step": 2, "default": 8 },
+    { "type": "text", "id": "ratio", "label": "Proporción en escritorio", "info": "Formato ancho/alto, p. ej. 960/851 o 4/5.", "default": "960 / 851" },
+    { "type": "text", "id": "ratio_mobile", "label": "Proporción en móvil", "default": "854 / 900" },
+    {
+      "type": "select",
+      "id": "focus",
+      "label": "Zona visible al recortar",
+      "default": "center top",
+      "options": [
+        { "value": "center top", "label": "Arriba" },
+        { "value": "center center", "label": "Centro" },
+        { "value": "center bottom", "label": "Abajo" }
+      ]
+    },
     { "type": "range", "id": "padding_top", "label": "Espacio superior (px)", "min": 0, "max": 100, "step": 2, "default": 8 },
     { "type": "range", "id": "padding_bottom", "label": "Espacio inferior (px)", "min": 0, "max": 100, "step": 2, "default": 34 },
     { "type": "header", "content": "Colores" },
@@ -145,10 +188,11 @@
       "type": "cell",
       "name": "Pieza",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Imagen de escritorio" },
+        { "type": "collection", "id": "collection", "label": "Colección", "info": "Con esto basta: el rótulo, el enlace y la foto salen de la colección." },
+        { "type": "image_picker", "id": "image", "label": "Imagen de escritorio", "info": "Opcional. Reemplaza a la foto de la colección." },
         { "type": "image_picker", "id": "image_mobile", "label": "Imagen de móvil", "info": "Si se deja vacía se reutiliza la de escritorio." },
-        { "type": "text", "id": "label", "label": "Etiqueta", "default": "Shop now" },
-        { "type": "url", "id": "link", "label": "Enlace" }
+        { "type": "text", "id": "label", "label": "Etiqueta", "info": "Vacío = nombre de la colección." },
+        { "type": "url", "id": "link", "label": "Enlace", "info": "Vacío = la colección." }
       ]
     }
   ],

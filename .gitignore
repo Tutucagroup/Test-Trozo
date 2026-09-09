@@ -12,3 +12,4 @@ tools/pp_staged_compact.json
 tools/pp_staged_targets.json
 tools/pp_staged_input.json
 tools/pp_upsert_input.json
+__pycache__/

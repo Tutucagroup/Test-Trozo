@@ -86,13 +86,37 @@
           {%- if lowered contains 'sale' or lowered contains 'oferta' -%}
             {%- assign is_sale = true -%}
           {%- endif -%}
-          <li class="pph__nav-item{% if link.links.size > 0 %} has-children{% endif %}">
-            <a class="pph__nav-link{% if is_sale %} is-sale{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+          {%- comment -%}
+            Una lista larga en una sola columna se sale de la pantalla por abajo,
+            así que a partir del umbral el desplegable pasa a panel de ancho
+            completo y reparte los enlaces en columnas.
+          {%- endcomment -%}
+          {%- assign is_mega = false -%}
+          {%- assign mega_threshold = section.settings.mega_threshold | default: 6 -%}
+          {%- if link.links.size > mega_threshold -%}
+            {%- assign is_mega = true -%}
+          {%- endif -%}
+          <li class="pph__nav-item{% if link.links.size > 0 %} has-children{% endif %}{% if is_mega %} is-mega{% endif %}">
+            <a class="pph__nav-link{% if is_sale %} is-sale{% endif %}" href="{{ link.url }}">
+              {{ link.title }}
+              {%- if link.links.size > 0 -%}
+                <svg class="pph__nav-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              {%- endif -%}
+            </a>
             {%- if link.links.size > 0 -%}
-              <div class="pph__drop">
-                <ul>
+              <div class="pph__drop{% if is_mega %} pph__drop--mega{% endif %}">
+                <ul class="pph__drop-list">
                   {%- for child in link.links -%}
-                    <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                    <li>
+                      <a href="{{ child.url }}">{{ child.title }}</a>
+                      {%- if child.links.size > 0 -%}
+                        <ul class="pph__drop-sub">
+                          {%- for grandchild in child.links -%}
+                            <li><a href="{{ grandchild.url }}">{{ grandchild.title }}</a></li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </li>
                   {%- endfor -%}
                 </ul>
               </div>
@@ -260,7 +284,7 @@
   }
 
   /* Navegación de escritorio */
-  .pph--{{ sid }} .pph__nav { display: none; border-top: 1px solid var(--pph-line); }
+  .pph--{{ sid }} .pph__nav { position: relative; display: none; border-top: 1px solid var(--pph-line); }
   .pph--{{ sid }} .pph__nav-list {
     display: flex;
     align-items: center;
@@ -281,24 +305,42 @@
     text-transform: uppercase;
     white-space: nowrap;
   }
-  .pph--{{ sid }} .pph__nav-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .pph--{{ sid }} .pph__nav-link { display: flex; align-items: center; gap: 4px; }
+  .pph--{{ sid }} .pph__nav-item.has-children .pph__nav-caret { display: block; }
   .pph--{{ sid }} .pph__nav-link.is-sale { color: var(--pph-sale); }
+
+  .pph--{{ sid }} .pph__nav-caret { display: none; width: 8px; height: 8px; fill: none; stroke: currentColor; stroke-width: 2.6; }
 
   .pph--{{ sid }} .pph__drop {
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    min-width: 190px;
-    padding: 12px 16px;
+    z-index: 2;
+    min-width: 200px;
+    padding: 16px 20px;
     background: var(--pph-bg);
     border: 1px solid var(--pph-line);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.15s ease;
   }
+  /* Puente invisible sobre el hueco entre el enlace y el panel: sin él, el
+     desplegable se cierra al cruzar ese píxel con el ratón. */
+  .pph--{{ sid }} .pph__drop::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -6px;
+    height: 6px;
+  }
   .pph--{{ sid }} .pph__nav-item:hover .pph__drop,
   .pph--{{ sid }} .pph__nav-item:focus-within .pph__drop { opacity: 1; visibility: visible; }
+  .pph--{{ sid }} .pph__nav-item:hover .pph__nav-link { text-decoration: underline; text-underline-offset: 4px; }
+
+  .pph--{{ sid }} .pph__drop-list { display: flex; flex-direction: column; gap: 2px; }
   .pph--{{ sid }} .pph__drop a {
     display: block;
     padding: 5px 0;
@@ -306,6 +348,29 @@
     white-space: nowrap;
   }
   .pph--{{ sid }} .pph__drop a:hover { text-decoration: underline; }
+  .pph--{{ sid }} .pph__drop-sub a { padding: 3px 0; font-size: 11.5px; color: #6a6a6a; }
+
+  /* Panel ancho: el elemento pasa a `position: static` para que el desplegable
+     se posicione contra la barra de navegación y no contra el enlace. */
+  .pph--{{ sid }} .pph__nav-item.is-mega { position: static; }
+  .pph--{{ sid }} .pph__drop--mega {
+    left: 0;
+    right: 0;
+    transform: none;
+    padding: 22px 0 26px;
+    border-left: 0;
+    border-right: 0;
+  }
+  .pph--{{ sid }} .pph__drop--mega .pph__drop-list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat({{ section.settings.mega_rows | default: 6 }}, auto);
+    justify-content: start;
+    gap: 2px 44px;
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
 
   /* Tira desplazable de móvil */
   .pph--{{ sid }} .pph__chips { border-top: 1px solid var(--pph-line); }
@@ -452,6 +517,8 @@
     { "type": "link_list", "id": "menu", "label": "Menú", "default": "main-menu" },
     { "type": "checkbox", "id": "sticky", "label": "Fijar al hacer scroll", "default": true },
     { "type": "range", "id": "max_width", "label": "Ancho máximo (px)", "min": 1100, "max": 1800, "step": 20, "default": 1600 },
+    { "type": "range", "id": "mega_threshold", "label": "Enlaces para pasar a panel ancho", "min": 4, "max": 14, "step": 1, "default": 6 },
+    { "type": "range", "id": "mega_rows", "label": "Filas del panel ancho", "min": 3, "max": 10, "step": 1, "default": 6 },
     { "type": "header", "content": "Utilidades" },
     { "type": "checkbox", "id": "show_currency", "label": "Mostrar selector de moneda", "default": true },
     { "type": "text", "id": "currency_label", "label": "Moneda", "default": "USD" },
