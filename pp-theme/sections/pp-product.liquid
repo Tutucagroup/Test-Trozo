@@ -46,6 +46,15 @@
   if free_ship_min > 0 and current.price >= free_ship_min
     assign qualifies = true
   endif
+  # Quedarse callado cuando el producto no llega al envío gratis desaprovecha
+  # el momento: decir cuánto falta convierte el umbral en un motivo para sumar
+  # otra prenda en lugar de en una condición que nadie ve.
+  assign away = free_ship_min | minus: current.price
+  assign away_money = away | money
+  assign free_ship_line = section.settings.free_shipping_label
+  unless qualifies
+    assign free_ship_line = section.settings.free_shipping_away | replace: '[amount]', away_money
+  endunless
 
   # Migas de pan: la colección de llegada si existe y, si no, la primera del
   # producto. Se resuelve con `default` en vez de comparar contra `blank`
@@ -179,6 +188,9 @@
     text-align: center;
   }
   .ppp__freeship { margin: 10px 0 0; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #167a3d; }
+  /* Lo que falta para el envío gratis no es una buena noticia todavía: en negro
+     informa, en verde parecería que ya está conseguido. */
+  .ppp__freeship.is-away { color: #000; }
 
   .ppp__optlabel { margin: 18px 0 8px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ppp-mute); }
   .ppp__optlabel b { color: #000; font-weight: 600; }
@@ -333,6 +345,7 @@
   .ppp__sticky select { padding: 11px 8px; border: 1px solid var(--ppp-line); font-size: 12px; font-family: inherit; background: #fff; }
   .ppp__sticky .ppp__atc { width: auto; margin: 0; padding: 13px 20px; white-space: nowrap; }
   .ppp__sticky-nudge { display: none; font-size: 10px; color: #167a3d; font-weight: 600; }
+  .ppp__sticky-nudge.is-away { color: #000; }
 
   /* --- Aviso de añadido --- */
   .ppp__toast {
@@ -436,7 +449,7 @@
 
 <section class="ppp ppp--{{ sid }}" data-ppp="{{ sid }}">
   <div class="ppp__inner">
-    <nav class="ppp__crumbs" aria-label="Migas de pan">
+    <nav class="ppp__crumbs" aria-label="Breadcrumb">
       <a href="{{ routes.root_url }}">Home</a>
       <span aria-hidden="true">/</span>
       {%- if crumb_title != blank -%}
@@ -449,14 +462,14 @@
     <div class="ppp__grid">
       {%- comment -%} ---------------- Galería ---------------- {%- endcomment -%}
       <div class="ppp__media">
-        <div class="ppp__rail" role="tablist" aria-label="Fotos del producto">
+        <div class="ppp__rail" role="tablist" aria-label="Product photos">
           {%- for img in prod.images limit: 12 -%}
             <button
               class="ppp__thumb{% if forloop.first %} is-active{% endif %}"
               type="button"
               role="tab"
               data-ppp-thumb="{{ forloop.index0 }}"
-              aria-label="Ver foto {{ forloop.index }}"
+              aria-label="View photo {{ forloop.index }}"
               aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
             >
               <img src="{{ img | image_url: width: 160 }}" alt="" width="160" height="217" loading="lazy">
@@ -470,10 +483,10 @@
             {%- if section.settings.badge != blank -%}<span class="ppp__flag ppp__flag--soft">{{ section.settings.badge }}</span>{%- endif -%}
           </div>
 
-          <button class="ppp__arrow ppp__arrow--prev" type="button" data-ppp-prev aria-label="Foto anterior">
+          <button class="ppp__arrow ppp__arrow--prev" type="button" data-ppp-prev aria-label="Previous photo">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg>
           </button>
-          <button class="ppp__arrow ppp__arrow--next" type="button" data-ppp-next aria-label="Foto siguiente">
+          <button class="ppp__arrow ppp__arrow--next" type="button" data-ppp-next aria-label="Next photo">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg>
           </button>
 
@@ -505,7 +518,7 @@
               >
                 <img
                   src="{{ img | image_url: width: 900 }}"
-                  alt="{{ prod.title | escape }} · foto {{ forloop.index }}"
+                  alt="{{ prod.title | escape }} · photo {{ forloop.index }}"
                   width="900"
                   height="1219"
                   {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
@@ -519,7 +532,7 @@
 
           <div class="ppp__dots" data-ppp-dots>
             {%- for img in prod.images limit: 12 -%}
-              <button class="ppp__dot{% if forloop.first %} is-active{% endif %}" type="button" data-ppp-dot="{{ forloop.index0 }}" aria-label="Foto {{ forloop.index }}"></button>
+              <button class="ppp__dot{% if forloop.first %} is-active{% endif %}" type="button" data-ppp-dot="{{ forloop.index0 }}" aria-label="Photo {{ forloop.index }}"></button>
             {%- endfor -%}
           </div>
         </div>
@@ -565,7 +578,9 @@
           <p class="ppp__promo">{{ section.settings.promo_text }}</p>
         {%- endif -%}
 
-        <p class="ppp__freeship" data-ppp-freeship {% unless qualifies %}hidden{% endunless %}>{{ section.settings.free_shipping_label }}</p>
+        {%- if free_ship_min > 0 -%}
+          <p class="ppp__freeship{% unless qualifies %} is-away{% endunless %}" data-ppp-freeship>{{ free_ship_line }}</p>
+        {%- endif -%}
 
         {%- comment -%} Colores: la muestra actual la pinta Liquid y las hermanas
         las añade el guion buscando el mismo nombre de modelo en el catálogo. {%- endcomment -%}
@@ -760,7 +775,7 @@
     <div class="ppp__sticky-txt">
       <span class="ppp__sticky-title">{{ prod.title }}</span>
       <span class="ppp__sticky-price" data-ppp-sticky-price>{{ current.price | money }}</span>
-      <span class="ppp__sticky-nudge" data-ppp-sticky-nudge {% unless qualifies %}hidden{% endunless %}>{{ section.settings.free_shipping_label }}</span>
+      <span class="ppp__sticky-nudge{% unless qualifies %} is-away{% endunless %}" data-ppp-sticky-nudge {% if free_ship_min == 0 %}hidden{% endif %}>{{ free_ship_line }}</span>
     </div>
     {%- if size_pos > 0 -%}
       {%- assign sidx3 = size_pos | minus: 1 -%}
@@ -795,7 +810,7 @@
     <div class="ppp__guide" data-ppp-guide hidden>
       <div class="ppp__guide-backdrop" data-ppp-close-guide></div>
       <div class="ppp__guide-panel" role="dialog" aria-modal="true" aria-label="{{ section.settings.size_guide_label | escape }}">
-        <button class="ppp__guide-close" type="button" data-ppp-close-guide aria-label="Cerrar">&times;</button>
+        <button class="ppp__guide-close" type="button" data-ppp-close-guide aria-label="Close">&times;</button>
         <h2>{{ section.settings.size_guide_label }}</h2>
         {{ section.settings.size_guide }}
       </div>
@@ -805,7 +820,7 @@
   <div class="ppp__toast" data-ppp-toast role="status" aria-live="polite"></div>
 
   <div class="ppp__zoom" data-ppp-zoombox aria-hidden="true">
-    <button class="ppp__zoom-close" type="button" data-ppp-zoom-close aria-label="Cerrar">&times;</button>
+    <button class="ppp__zoom-close" type="button" data-ppp-zoom-close aria-label="Close">&times;</button>
     <img src="" alt="" data-ppp-zoom-img>
   </div>
 
@@ -948,6 +963,7 @@
     var notifyOpen = root.querySelector('[data-ppp-notify-open]');
     var notifyBox = root.querySelector('[data-ppp-notify]');
     var freeShip = root.querySelector('[data-ppp-freeship]');
+    var stickyNudge = root.querySelector('[data-ppp-sticky-nudge]');
     var freeShipMin = {{ free_ship_min | default: 0 }};
     var lowStockAt = {{ section.settings.low_stock_at | default: 0 }};
     var strings = {
@@ -956,7 +972,9 @@
       added: {{ section.settings.added_toast | json }},
       addError: {{ section.settings.add_error | json }},
       atc: {{ section.settings.atc_label | json }},
-      soldOut: {{ section.settings.sold_out_label | json }}
+      soldOut: {{ section.settings.sold_out_label | json }},
+      freeShip: {{ section.settings.free_shipping_label | json }},
+      freeShipAway: {{ section.settings.free_shipping_away | json }}
     };
 
     var selected = variants.filter(function (v) {
@@ -991,7 +1009,18 @@
         offEl.hidden = true;
       }
 
-      if (freeShip) freeShip.hidden = !(freeShipMin > 0 && variant.price >= freeShipMin);
+      if (freeShip && freeShipMin > 0) {
+        var reached = variant.price >= freeShipMin;
+        var line = reached
+          ? strings.freeShip
+          : strings.freeShipAway.replace('[amount]', money(freeShipMin - variant.price));
+        freeShip.textContent = line;
+        freeShip.classList.toggle('is-away', !reached);
+        if (stickyNudge) {
+          stickyNudge.textContent = line;
+          stickyNudge.classList.toggle('is-away', !reached);
+        }
+      }
 
       atc.disabled = !variant.available;
       atc.textContent = variant.available ? strings.atc : strings.soldOut;
@@ -1279,7 +1308,7 @@
     { "type": "text", "id": "badge", "label": "Etiqueta sobre la foto", "info": "Por ejemplo «Best seller». Dejalo vacío para no mostrar ninguna." },
 
     { "type": "header", "content": "Precio y reseñas" },
-    { "type": "text", "id": "promo_text", "label": "Franja de promoción", "default": "40% OFF EVERYTHING* CODE: TAKE40" },
+    { "type": "text", "id": "promo_text", "label": "Franja de promoción", "info": "Se oculta sola si la dejás vacía." },
     { "type": "text", "id": "reviews_word", "label": "Palabra para las reseñas", "default": "reviews" },
     { "type": "text", "id": "rating_override", "label": "Puntuación manual", "info": "Sólo se usa si el producto no tiene el metacampo reviews.rating. Escribí aquí únicamente una nota que refleje reseñas reales; un número inventado hace que la ficha mienta." },
     { "type": "text", "id": "rating_count_override", "label": "Número de reseñas manual" },
@@ -1288,35 +1317,36 @@
     { "type": "text", "id": "colour_label", "label": "Etiqueta del color", "default": "Colour" },
     { "type": "text", "id": "size_label", "label": "Etiqueta del talle", "default": "Size" },
     { "type": "text", "id": "size_guide_label", "label": "Enlace de la guía de talles", "default": "Size guide" },
-    { "type": "richtext", "id": "size_guide", "label": "Guía de talles", "default": "<p>US 0 = AU 4 · US 2 = AU 6 · US 4 = AU 8 · US 6 = AU 10 · US 8 = AU 12 · US 10 = AU 14 · US 12 = AU 16</p>" },
+    { "type": "richtext", "id": "size_guide", "label": "Guía de talles", "default": "<p>US 0 = AU 4 = UK 4 · US 2 = AU 6 = UK 6 · US 4 = AU 8 = UK 8 · US 6 = AU 10 = UK 10 · US 8 = AU 12 = UK 12 · US 10 = AU 14 = UK 14 · US 12 = AU 16 = UK 16</p>" },
     { "type": "range", "id": "low_stock_at", "label": "Avisar de stock bajo desde", "min": 0, "max": 20, "step": 1, "default": 5, "info": "El aviso sólo aparece si Shopify lleva el inventario de esa variante." },
-    { "type": "text", "id": "low_stock_text", "label": "Aviso de stock bajo", "default": "Quedan sólo [count] unidades de este talle" },
-    { "type": "text", "id": "low_stock_short", "label": "Aviso corto en el botón del talle", "default": "Pocas" },
-    { "type": "text", "id": "pick_size_error", "label": "Error al no elegir talle", "default": "Elegí un talle para continuar" },
+    { "type": "text", "id": "low_stock_text", "label": "Aviso de stock bajo", "default": "Only [count] left in this size" },
+    { "type": "text", "id": "low_stock_short", "label": "Aviso corto en el botón del talle", "default": "Low stock" },
+    { "type": "text", "id": "pick_size_error", "label": "Error al no elegir talle", "default": "Choose a size to continue" },
 
     { "type": "header", "content": "Compra" },
     { "type": "text", "id": "atc_label", "label": "Botón de compra", "default": "ADD TO BAG" },
     { "type": "text", "id": "sold_out_label", "label": "Botón sin stock", "default": "SOLD OUT" },
-    { "type": "text", "id": "added_toast", "label": "Aviso de añadido", "default": "Añadido a la bolsa" },
-    { "type": "text", "id": "add_error", "label": "Error al añadir", "default": "No pudimos añadirlo. Probá otra vez." },
+    { "type": "text", "id": "added_toast", "label": "Aviso de añadido", "default": "Added to your bag" },
+    { "type": "text", "id": "add_error", "label": "Error al añadir", "default": "We couldn't add it. Please try again." },
     { "type": "checkbox", "id": "show_terms", "label": "Mostrar plazos de pago (Afterpay, Klarna, Shop Pay)", "default": true },
 
     { "type": "header", "content": "Aviso de reposición" },
     { "type": "text", "id": "notify_label", "label": "Botón", "default": "NOTIFY ME WHEN AVAILABLE" },
-    { "type": "text", "id": "notify_help", "label": "Texto de ayuda", "default": "Dejanos tu email y te avisamos apenas vuelva este talle." },
-    { "type": "text", "id": "notify_placeholder", "label": "Marcador del campo", "default": "tu@email.com" },
-    { "type": "text", "id": "notify_cta", "label": "Botón de envío", "default": "Avisarme" },
+    { "type": "text", "id": "notify_help", "label": "Texto de ayuda", "default": "Leave your email and we'll tell you the moment this size is back." },
+    { "type": "text", "id": "notify_placeholder", "label": "Marcador del campo", "default": "you@email.com" },
+    { "type": "text", "id": "notify_cta", "label": "Botón de envío", "default": "Notify me" },
 
     { "type": "header", "content": "Envío" },
-    { "type": "range", "id": "free_shipping_min", "label": "Envío gratis desde", "min": 0, "max": 300, "step": 5, "default": 60, "unit": "$" },
+    { "type": "range", "id": "free_shipping_min", "label": "Envío gratis desde", "min": 0, "max": 300, "step": 5, "default": 100, "unit": "$" },
     { "type": "text", "id": "free_shipping_label", "label": "Aviso de envío gratis", "default": "QUALIFIES FOR FREE SHIPPING" },
+    { "type": "text", "id": "free_shipping_away", "label": "Aviso de cuánto falta", "default": "[amount] away from free shipping", "info": "[amount] se reemplaza por lo que falta para llegar al mínimo." },
     { "type": "range", "id": "eta_min", "label": "Entrega · mínimo (días hábiles)", "min": 0, "max": 20, "step": 1, "default": 3 },
     { "type": "range", "id": "eta_max", "label": "Entrega · máximo (días hábiles)", "min": 0, "max": 30, "step": 1, "default": 7 },
-    { "type": "text", "id": "eta_text", "label": "Texto de entrega", "default": "Pedilo hoy y llega entre el [from] y el [to]", "info": "[from] y [to] se reemplazan por las fechas calculadas." },
-    { "type": "text", "id": "eta_fallback", "label": "Texto sin JavaScript", "default": "Entrega estimada en 3 a 7 días hábiles" },
-    { "type": "text", "id": "zip_label", "label": "Campo de código postal", "default": "Código postal" },
-    { "type": "text", "id": "zip_cta", "label": "Botón del código postal", "default": "Calcular" },
-    { "type": "text", "id": "zip_empty", "label": "Error de código postal", "default": "Escribí tu código postal" },
+    { "type": "text", "id": "eta_text", "label": "Texto de entrega", "default": "Order today and it arrives between [from] and [to]", "info": "[from] y [to] se reemplazan por las fechas calculadas." },
+    { "type": "text", "id": "eta_fallback", "label": "Texto sin JavaScript", "default": "Estimated delivery in 3 to 7 business days" },
+    { "type": "text", "id": "zip_label", "label": "Campo de código postal", "default": "ZIP code" },
+    { "type": "text", "id": "zip_cta", "label": "Botón del código postal", "default": "Check" },
+    { "type": "text", "id": "zip_empty", "label": "Error de código postal", "default": "Enter your ZIP code" },
 
     { "type": "header", "content": "Confianza" },
     { "type": "checkbox", "id": "show_usps", "label": "Mostrar la fila de garantías", "default": true },
@@ -1335,8 +1365,8 @@
             { "value": "card", "label": "Tarjeta" },
             { "value": "check", "label": "Tilde" }
           ] },
-        { "type": "text", "id": "title", "label": "Título", "default": "Envío gratis" },
-        { "type": "text", "id": "text", "label": "Texto", "default": "En pedidos desde $60" }
+        { "type": "text", "id": "title", "label": "Título", "default": "Free shipping" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "On orders over $100" }
       ]
     },
     {
@@ -1360,10 +1390,10 @@
     {
       "name": "PP · Ficha producto",
       "blocks": [
-        { "type": "usp", "settings": { "icon": "truck", "title": "Envío gratis", "text": "En pedidos desde $60" } },
-        { "type": "usp", "settings": { "icon": "return", "title": "Devoluciones fáciles", "text": "30 días para cambiarlo" } },
-        { "type": "usp", "settings": { "icon": "lock", "title": "Pago seguro", "text": "Cifrado de extremo a extremo" } },
-        { "type": "usp", "settings": { "icon": "card", "title": "Pagá en cuotas", "text": "Afterpay y Klarna" } },
+        { "type": "usp", "settings": { "icon": "truck", "title": "Free shipping over $100", "text": "Arrives in 3–7 business days" } },
+        { "type": "usp", "settings": { "icon": "return", "title": "30-day returns", "text": "Easy exchanges and refunds" } },
+        { "type": "usp", "settings": { "icon": "lock", "title": "Secure checkout", "text": "Your details are encrypted" } },
+        { "type": "usp", "settings": { "icon": "card", "title": "Pay in 4 instalments", "text": "Afterpay, Klarna and Shop Pay" } },
         { "type": "accordion", "settings": { "heading": "Description", "source": "description", "open": true } },
         { "type": "accordion", "settings": { "heading": "Size & fit", "source": "custom" } },
         { "type": "accordion", "settings": { "heading": "Fast shipping", "source": "custom", "show_zip": true } },

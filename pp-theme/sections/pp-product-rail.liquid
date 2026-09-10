@@ -85,10 +85,10 @@
     <div class="pprail__head">
       <h2 class="pprail__title">{{ section.settings.title }}</h2>
       <div class="pprail__nav">
-        <button class="pprail__arrow" type="button" data-pprail-prev aria-label="Anterior">
+        <button class="pprail__arrow" type="button" data-pprail-prev aria-label="Previous">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg>
         </button>
-        <button class="pprail__arrow" type="button" data-pprail-next aria-label="Siguiente">
+        <button class="pprail__arrow" type="button" data-pprail-next aria-label="Next">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg>
         </button>
       </div>
@@ -105,7 +105,7 @@
         {%- endfor -%}
       </ul>
     {%- else -%}
-      <p class="pprail__empty">Elegí una colección con productos para esta sección.</p>
+      <p class="pprail__empty">Pick a collection with products for this section.</p>
       <ul class="pprail__list" data-pprail-list hidden></ul>
     {%- endif -%}
   </div>

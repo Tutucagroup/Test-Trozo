@@ -7,32 +7,32 @@
           "type": "usp",
           "settings": {
             "icon": "truck",
-            "title": "Envío gratis desde $60",
-            "text": "Llega en 3 a 7 días hábiles"
+            "title": "Free shipping over $100",
+            "text": "Arrives in 3–7 business days"
           }
         },
         "usp2": {
           "type": "usp",
           "settings": {
             "icon": "return",
-            "title": "30 días para devolverlo",
-            "text": "Cambios y devoluciones simples"
+            "title": "30-day returns",
+            "text": "Easy exchanges and refunds"
           }
         },
         "usp3": {
           "type": "usp",
           "settings": {
             "icon": "card",
-            "title": "Pagá en 4 cuotas",
-            "text": "Afterpay, Klarna y Shop Pay"
+            "title": "Pay in 4 instalments",
+            "text": "Afterpay, Klarna and Shop Pay"
           }
         },
         "usp4": {
           "type": "usp",
           "settings": {
             "icon": "lock",
-            "title": "Pago seguro",
-            "text": "Tus datos viajan cifrados"
+            "title": "Secure checkout",
+            "text": "Your details are encrypted"
           }
         },
         "acc1": {
@@ -51,7 +51,7 @@
           "settings": {
             "heading": "Size & fit",
             "source": "custom",
-            "content": "<ul><li>El talle de la foto figura en el cartel de cada imagen.</li><li>Corte ajustado: si estás entre dos talles, llevá el mayor.</li><li>Tela sin elastano en el cuerpo, forrada.</li><li>¿Dudas? Abrí la guía de talles arriba del selector.</li></ul>",
+            "content": "<ul><li>The size worn is printed on the caption of every photo.</li><li>Fitted cut — if you are between sizes, take the larger one.</li><li>Non-stretch fabric, fully lined.</li><li>Not sure? Open the size guide above the size selector.</li></ul>",
             "page": "",
             "show_zip": false,
             "open": false
@@ -62,7 +62,7 @@
           "settings": {
             "heading": "Fast shipping",
             "source": "custom",
-            "content": "<p>Envío estándar gratis en pedidos desde $60. Los pedidos hechos antes de las 14 h salen el mismo día hábil.</p>",
+            "content": "<p>Free standard shipping on every order over $100. Orders placed before 2pm ship the same business day.</p>",
             "page": "",
             "show_zip": true,
             "open": false
@@ -73,7 +73,7 @@
           "settings": {
             "heading": "Easy returns",
             "source": "custom",
-            "content": "<p>Tenés 30 días desde que lo recibís para devolverlo. La prenda tiene que volver sin usar y con su etiqueta. Gestionás la devolución desde tu cuenta en dos pasos.</p>",
+            "content": "<p>You have 30 days from delivery to send it back. Items must return unworn and with their tags on. You start the return from your account in two steps.</p>",
             "page": "",
             "show_zip": false,
             "open": false
@@ -94,38 +94,39 @@
         "max_width": 1600,
         "info_width": 420,
         "badge": "",
-        "promo_text": "40% OFF EVERYTHING* CODE: TAKE40",
+        "promo_text": "",
         "reviews_word": "reviews",
         "rating_override": "",
         "rating_count_override": "",
         "colour_label": "Colour",
         "size_label": "Size",
         "size_guide_label": "Size guide",
-        "size_guide": "<p><strong>Equivalencias</strong></p><p>US 0 = AU 4 = UK 4 · US 2 = AU 6 = UK 6 · US 4 = AU 8 = UK 8 · US 6 = AU 10 = UK 10 · US 8 = AU 12 = UK 12 · US 10 = AU 14 = UK 14 · US 12 = AU 16 = UK 16</p><p>Las medidas son de la prenda sin estirar. Si estás entre dos talles y el corte es ajustado, llevá el mayor.</p>",
+        "size_guide": "<p><strong>Size conversions</strong></p><p>US 0 = AU 4 = UK 4 · US 2 = AU 6 = UK 6 · US 4 = AU 8 = UK 8 · US 6 = AU 10 = UK 10 · US 8 = AU 12 = UK 12 · US 10 = AU 14 = UK 14 · US 12 = AU 16 = UK 16</p><p>Measurements are taken flat and unstretched. If you are between sizes and the cut is fitted, take the larger one.</p>",
         "low_stock_at": 5,
-        "low_stock_text": "Quedan sólo [count] unidades de este talle",
-        "low_stock_short": "Pocas",
-        "pick_size_error": "Elegí un talle para continuar",
+        "low_stock_text": "Only [count] left in this size",
+        "low_stock_short": "Low stock",
+        "pick_size_error": "Choose a size to continue",
         "atc_label": "ADD TO BAG",
         "sold_out_label": "SOLD OUT",
-        "added_toast": "Añadido a la bolsa",
-        "add_error": "No pudimos añadirlo. Probá otra vez.",
+        "added_toast": "Added to your bag",
+        "add_error": "We couldn't add it. Please try again.",
         "show_terms": true,
         "notify_label": "NOTIFY ME WHEN AVAILABLE",
-        "notify_help": "Dejanos tu email y te avisamos apenas vuelva este talle.",
-        "notify_placeholder": "tu@email.com",
-        "notify_cta": "Avisarme",
-        "free_shipping_min": 60,
+        "notify_help": "Leave your email and we'll tell you the moment this size is back.",
+        "notify_placeholder": "you@email.com",
+        "notify_cta": "Notify me",
+        "free_shipping_min": 100,
         "free_shipping_label": "QUALIFIES FOR FREE SHIPPING",
         "eta_min": 3,
         "eta_max": 7,
-        "eta_text": "Pedilo hoy y llega entre el [from] y el [to]",
-        "eta_fallback": "Entrega estimada en 3 a 7 días hábiles",
-        "zip_label": "Código postal",
-        "zip_cta": "Calcular",
-        "zip_empty": "Escribí tu código postal",
+        "eta_text": "Order today and it arrives between [from] and [to]",
+        "eta_fallback": "Estimated delivery in 3 to 7 business days",
+        "zip_label": "ZIP code",
+        "zip_cta": "Check",
+        "zip_empty": "Enter your ZIP code",
         "show_usps": true,
-        "model_verb": "wears"
+        "model_verb": "wears",
+        "free_shipping_away": "[amount] away from free shipping"
       }
     },
     "also_like": {
@@ -218,7 +219,7 @@
       ],
       "settings": {
         "title": "SHOP THE FEED",
-        "subtitle": "Etiquetanos en Instagram para aparecer acá",
+        "subtitle": "Tag us to be featured",
         "max_width": 1600,
         "padding_top": 30,
         "padding_bottom": 34,

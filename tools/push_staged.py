@@ -47,7 +47,13 @@ def main() -> int:
             print(f"  FALTA  {staged_name} -> {src}")
             continue
 
-        print(f"  {'(dry) ' if dry else ''}{src.relative_to(ROOT)}  ({src.stat().st_size} B)")
+        # THEME_DIR no siempre cuelga del repositorio (por ejemplo al subir un
+        # archivo generado fuera de él), así que la ruta corta es un adorno.
+        try:
+            shown = src.relative_to(ROOT)
+        except ValueError:
+            shown = src
+        print(f"  {'(dry) ' if dry else ''}{shown}  ({src.stat().st_size} B)")
         if dry:
             ok += 1
             continue

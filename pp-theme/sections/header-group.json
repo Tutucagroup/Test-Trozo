@@ -8,14 +8,14 @@
         "m1": {
           "type": "message",
           "settings": {
-            "text": "Mystery student discount \u2014 unlock yours",
+            "text": "Mystery student discount — unlock yours",
             "link": "shopify://collections/sale-dresses"
           }
         },
         "m2": {
           "type": "message",
           "settings": {
-            "text": "Free shipping on orders over $50"
+            "text": "Free shipping on orders over $100"
           }
         },
         "m3": {

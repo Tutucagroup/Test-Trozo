@@ -471,8 +471,11 @@ def render_page(env: Environment, pipeline, title: str, out_name: str, extra=Non
             failures.append((key, conf["type"], exc))
             print(f"  FAIL {key:18s} {conf['type']}: {exc}")
 
+    # La tienda sirve en inglés; la vista previa tiene que declarar lo mismo
+    # porque las fechas de entrega se formatean según el idioma del documento.
+    lang = os.environ.get("PREVIEW_LANG", "en")
     page = f"""<!doctype html>
-<html lang="es">
+<html lang="{lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
