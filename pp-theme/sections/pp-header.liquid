@@ -248,10 +248,15 @@
   .pph--{{ sid }} .pph__caret { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 2.4; }
 
   .pph--{{ sid }} .pph__logo { display: flex; align-items: center; justify-content: center; }
+  /* El tope de altura es lo que permite subir un logo casi cuadrado sin que la
+     barra crezca con él: el ancho manda, y si la imagen no cabe a lo alto se
+     encoge dentro de la caja en lugar de estirarla. */
   .pph--{{ sid }} .pph__logo img {
     display: block;
     width: {{ section.settings.logo_width_mobile }}px;
     height: auto;
+    max-height: 38px;
+    object-fit: contain;
   }
   .pph--{{ sid }} .pph__wordmark {
     font-size: 17px;
@@ -409,7 +414,7 @@
     .pph--{{ sid }} .pph__icon--wish, .pph--{{ sid }} .pph__icon--account { display: grid; }
     .pph--{{ sid }} .pph__nav { display: block; }
     .pph--{{ sid }} .pph__inner { padding: 14px 24px; }
-    .pph--{{ sid }} .pph__logo img { width: {{ section.settings.logo_width }}px; }
+    .pph--{{ sid }} .pph__logo img { width: {{ section.settings.logo_width }}px; max-height: 48px; }
     .pph--{{ sid }} .pph__side { gap: 18px; }
   }
 
