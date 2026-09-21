@@ -1,6 +1,8 @@
 {
   "sections": {
     "main": { "type": "main-product" },
+    "franja": { "type": "product-marquee" },
+    "detalles": { "type": "product-details" },
     "recomendados": {
       "type": "product-recommendations",
       "settings": {
@@ -11,7 +13,8 @@
         "show_view_all": true,
         "show_dots": true
       }
-    }
+    },
+    "cierre": { "type": "product-cta" }
   },
-  "order": ["main", "recomendados"]
+  "order": ["main", "franja", "detalles", "recomendados", "cierre"]
 }

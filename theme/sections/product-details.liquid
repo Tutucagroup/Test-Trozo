@@ -1,0 +1,107 @@
+{%- comment -%}
+  Bloques de contenido de la ficha, armados con la copia del producto:
+  beneficios, modo de uso, "Ideal para" y "Tip Krika".
+{%- endcomment -%}
+{%- liquid
+  assign marca_pros = '<strong>Por qué te va a gustar</strong></p>'
+  assign marca_uso = '<strong>Modo de uso</strong></p>'
+
+  if product.description contains marca_pros
+    assign pros_html = product.description | split: marca_pros | last | split: '<ul>' | last | split: '</ul>' | first
+    assign pros = pros_html | split: '<li>'
+  endif
+
+  if product.description contains marca_uso
+    assign pasos_html = product.description | split: marca_uso | last | split: '<ol>' | last | split: '</ol>' | first
+    assign pasos = pasos_html | split: '<li>'
+  endif
+
+  if product.description contains '<strong>Ideal para:</strong>'
+    assign ideal = product.description | split: '<strong>Ideal para:</strong>' | last | split: '</p>' | first | strip
+  endif
+
+  if product.description contains '<strong>Tip Krika:</strong>'
+    assign tip = product.description | split: '<strong>Tip Krika:</strong>' | last | split: '</p>' | first | strip
+  endif
+-%}
+
+{%- if pros.size > 1 and section.settings.show_benefits -%}
+  <section class="k-section k-pdp-block">
+    <div class="k-wrap k-pdp-block__inner">
+      <header class="k-pdp-block__head">
+        <h2 class="k-pdp-block__title">{{ section.settings.benefits_title }}</h2>
+        {%- if section.settings.benefits_sub != blank -%}
+          <p class="k-pdp-block__sub">{{ section.settings.benefits_sub }}</p>
+        {%- endif -%}
+      </header>
+      <div class="k-cards">
+        {%- for pro in pros -%}
+          {%- assign texto = pro | split: '</li>' | first | strip -%}
+          {%- if texto == blank -%}{%- continue -%}{%- endif -%}
+          <article class="k-cards__item">
+            <span class="k-cards__icon">{% render 'icon', name: 'check' %}</span>
+            <p>{{ texto }}</p>
+          </article>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{%- if pasos.size > 1 and section.settings.show_steps -%}
+  <section class="k-section k-pdp-block k-pdp-block--soft">
+    <div class="k-wrap k-pdp-block__inner">
+      <header class="k-pdp-block__head">
+        <h2 class="k-pdp-block__title">{{ section.settings.steps_title }}</h2>
+        {%- if section.settings.steps_sub != blank -%}
+          <p class="k-pdp-block__sub">{{ section.settings.steps_sub }}</p>
+        {%- endif -%}
+      </header>
+      <ol class="k-steps">
+        {%- for paso in pasos -%}
+          {%- assign texto = paso | split: '</li>' | first | strip -%}
+          {%- if texto == blank -%}{%- continue -%}{%- endif -%}
+          <li class="k-steps__item"><p>{{ texto }}</p></li>
+        {%- endfor -%}
+      </ol>
+    </div>
+  </section>
+{%- endif -%}
+
+{%- if ideal != blank or tip != blank -%}
+  <section class="k-section k-pdp-block k-pdp-block--tight">
+    <div class="k-wrap k-pdp-block__inner">
+      <div class="k-notes">
+        {%- if ideal != blank -%}
+          <div class="k-note-card">
+            <span class="k-note-card__label">Ideal para</span>
+            <p>{{ ideal }}</p>
+          </div>
+        {%- endif -%}
+        {%- if tip != blank -%}
+          <div class="k-note-card k-note-card--tip">
+            <span class="k-note-card__label">Tip Krika</span>
+            <p>{{ tip }}</p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Detalles del producto",
+  "tag": "div",
+  "settings": [
+    { "type": "checkbox", "id": "show_benefits", "label": "Mostrar beneficios", "default": true },
+    { "type": "text", "id": "benefits_title", "label": "Título de beneficios", "default": "Por qué te va a gustar" },
+    { "type": "text", "id": "benefits_sub", "label": "Subtítulo de beneficios" },
+    { "type": "header", "content": "Modo de uso" },
+    { "type": "checkbox", "id": "show_steps", "label": "Mostrar modo de uso", "default": true },
+    { "type": "text", "id": "steps_title", "label": "Título del modo de uso", "default": "Cómo se usa" },
+    { "type": "text", "id": "steps_sub", "label": "Subtítulo del modo de uso", "default": "Paso a paso para sacarle el máximo provecho." }
+  ],
+  "presets": [{ "name": "Detalles del producto" }]
+}
+{% endschema %}

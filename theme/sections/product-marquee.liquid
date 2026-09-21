@@ -1,0 +1,37 @@
+{%- comment -%} Franja con beneficios que se desplaza en bucle. {%- endcomment -%}
+{%- liquid
+  assign items = section.settings.items | split: ','
+-%}
+
+{%- if items.size > 0 -%}
+  <div class="k-marquee" aria-label="{{ section.settings.items | escape }}">
+    <div class="k-marquee__track">
+      {%- for repeat in (1..2) -%}
+        <div class="k-marquee__group"{% if repeat == 2 %} aria-hidden="true"{% endif %}>
+          {%- for item in items -%}
+            {%- assign texto = item | strip -%}
+            {%- if texto == blank -%}{%- continue -%}{%- endif -%}
+            <span class="k-marquee__item">{{ texto }}</span>
+            <span class="k-marquee__dot"></span>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Franja de beneficios",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "items",
+      "label": "Beneficios separados por coma",
+      "default": "Envíos a todo Colombia, Compra segura, Marcas originales, Atención por WhatsApp"
+    }
+  ],
+  "presets": [{ "name": "Franja de beneficios" }]
+}
+{% endschema %}

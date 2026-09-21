@@ -1,0 +1,46 @@
+{%- comment -%} Cierre de la ficha: repite el llamado a la acción. {%- endcomment -%}
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+-%}
+
+<section class="k-section k-final">
+  <div class="k-wrap k-final__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="k-final__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    <h2 class="k-final__title">{{ section.settings.title }}</h2>
+    {%- if section.settings.text != blank -%}
+      <p class="k-final__text">{{ section.settings.text }}</p>
+    {%- endif -%}
+
+    {%- if product.available -%}
+      {%- form 'product', product, data-ajax-add: 'true', class: 'k-final__form' -%}
+        <input type="hidden" name="id" value="{{ variant.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="k-btn k-btn--primary k-btn--lg">
+          {% render 'icon', name: 'bag' %} Agregar a la bolsa
+        </button>
+      {%- endform -%}
+    {%- else -%}
+      <a class="k-btn k-btn--ghost k-btn--lg" href="{{ routes.all_products_collection_url }}">Ver otros productos</a>
+    {%- endif -%}
+
+    {%- if section.settings.micro != blank -%}
+      <p class="k-final__micro">{{ section.settings.micro }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cierre de producto",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Krika Cosmetics" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Súmalo a tu rutina" },
+    { "type": "text", "id": "text", "label": "Texto", "default": "Agrégalo a la bolsa y completa tu pedido con el resto de tus favoritos." },
+    { "type": "text", "id": "micro", "label": "Línea fina", "default": "Compra segura · Envíos a todo Colombia" }
+  ],
+  "presets": [{ "name": "Cierre de producto" }]
+}
+{% endschema %}

@@ -5,83 +5,227 @@
     assign on_sale = true
   endif
   assign p_alt = product.title | escape
+  assign form_id = 'KProductForm-' | append: section.id
+
+  comment
+    Las descripciones del catálogo siguen un formato fijo: título, intro,
+    [Tono], "Por qué te va a gustar" + <ul>, "Modo de uso" + <ol>,
+    "Ideal para:" y "Tip Krika:". De ahí salen el título, el subtítulo y los
+    bullets de la ficha. Si un producto no sigue ese formato se muestra la
+    descripción completa tal cual.
+  endcomment
+  assign marca_pros = '<strong>Por qué te va a gustar</strong></p>'
+  assign tiene_copy = false
+
+  if product.description contains marca_pros
+    assign tiene_copy = true
+    assign cabeza = product.description | split: marca_pros | first
+    assign parrafos = cabeza | split: '<p>'
+    assign titulo = parrafos[1] | remove: '<strong>' | split: '</strong>' | first | strip
+    assign intro = parrafos[2] | split: '</p>' | first | strip
+    assign pros_html = product.description | split: marca_pros | last | split: '<ul>' | last | split: '</ul>' | first
+    assign pros = pros_html | split: '<li>'
+  endif
+
+  if titulo == blank
+    assign titulo = product.title
+  endif
+
+  assign tono_label = ''
+  if product.description contains '<strong>Tono:</strong>'
+    assign tono_label = 'Tono'
+    assign tono = product.description | split: '<strong>Tono:</strong>' | last | split: '</p>' | first | strip
+  elsif product.description contains '<strong>Referencia:</strong>'
+    assign tono_label = 'Referencia'
+    assign tono = product.description | split: '<strong>Referencia:</strong>' | last | split: '</p>' | first | strip
+  endif
 -%}
 
 <div class="k-wrap">
-  <div class="k-product">
-    <div class="k-product__gallery">
-      {%- if product.featured_media -%}
-        {{ product.featured_media | image_url: width: 1000 | image_tag: width: 1000, loading: 'eager', id: 'KProductMainImage', alt: p_alt }}
-      {%- else -%}
-        {{ 'product-1' | placeholder_svg_tag }}
-      {%- endif -%}
+  <div class="k-pdp">
+    <div class="k-pdp__gallery">
+      <div class="k-pdp__stage">
+        {%- if product.featured_media -%}
+          {{ product.featured_media | image_url: width: 1000 | image_tag: width: 1000, height: 1000, loading: 'eager', id: 'KProductMainImage', alt: p_alt }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag }}
+        {%- endif -%}
+        {%- if on_sale -%}
+          <span class="k-pdp__badge">-{{ variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round }}%</span>
+        {%- endif -%}
+      </div>
 
       {%- if product.media.size > 1 -%}
-        <div class="k-product__thumbs">
+        <div class="k-pdp__thumbs" data-pdp-thumbs>
           {%- for media in product.media limit: 8 -%}
-            <img src="{{ media | image_url: width: 160 }}" alt="{{ p_alt }}" width="68" height="68" loading="lazy"
-                 onclick="document.getElementById('KProductMainImage').src='{{ media | image_url: width: 1000 }}'">
+            <button type="button" class="k-pdp__thumb{% if forloop.first %} is-active{% endif %}"
+                    aria-label="Ver imagen {{ forloop.index }}"
+                    data-full="{{ media | image_url: width: 1000 }}">
+              <img src="{{ media | image_url: width: 180 }}" alt="{{ p_alt }}" width="76" height="76" loading="lazy">
+            </button>
           {%- endfor -%}
         </div>
       {%- endif -%}
     </div>
 
-    <div>
-      {%- if product.vendor != blank -%}<span class="k-card__vendor">{{ product.vendor }}</span>{%- endif -%}
-      <h1 class="k-product__title">{{ product.title }}</h1>
+    <div class="k-pdp__info">
+      {%- if product.type != blank or product.vendor != blank -%}
+        <div class="k-pdp__eyebrow">
+          <span class="k-pdp__eyebrow-dot"></span>
+          {{ product.type | default: product.vendor }}{% if product.type != blank and product.vendor != blank %} · {{ product.vendor }}{% endif %}
+        </div>
+      {%- endif -%}
 
-      <div class="k-product__price">
-        {%- if variant.price > 0 -%}
-          {{ variant.price | money }}
-          {%- if on_sale -%}<del>{{ variant.compare_at_price | money }}</del>{%- endif -%}
-        {%- else -%}
-          Precio a consultar
+      <h1 class="k-pdp__title">{{ titulo }}</h1>
+
+      {%- if intro != blank -%}
+        <p class="k-pdp__intro">{{ intro }}</p>
+      {%- endif -%}
+
+      {%- if tiene_copy -%}
+        <ul class="k-pdp__checks">
+          {%- assign vistos = 0 -%}
+          {%- for pro in pros -%}
+            {%- assign texto = pro | split: '</li>' | first | strip -%}
+            {%- if texto == blank -%}{%- continue -%}{%- endif -%}
+            {%- if vistos >= 3 -%}{%- break -%}{%- endif -%}
+            <li>
+              <span class="k-pdp__check">{% render 'icon', name: 'check' %}</span>
+              <span>{{ texto }}</span>
+            </li>
+            {%- assign vistos = vistos | plus: 1 -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      <div class="k-pdp__buy">
+        {%- if section.settings.buy_badge != blank -%}
+          <div class="k-pdp__buy-head">{{ section.settings.buy_badge }}</div>
         {%- endif -%}
-      </div>
 
-      {%- form 'product', product, data-ajax-add: 'true', class: 'k-product__form' -%}
-        {%- unless product.has_only_default_variant -%}
-          <div class="k-product__variants">
-            <label for="KVariantSelect">Presentación</label>
-            <select id="KVariantSelect" name="id">
-              {%- for v in product.variants -%}
-                <option value="{{ v.id }}" {% if v == variant %}selected{% endif %} {% unless v.available %}disabled{% endunless %}>
-                  {{ v.title }}{% if v.price > 0 %} — {{ v.price | money }}{% endif %}{% unless v.available %} (agotado){% endunless %}
-                </option>
-              {%- endfor -%}
-            </select>
-          </div>
-        {%- else -%}
-          <input type="hidden" name="id" value="{{ variant.id }}">
-        {%- endunless -%}
-
-        <div class="k-card__qty">
-          <span>Cantidad</span>
-          <div class="k-qty" data-qty>
-            <button type="button" data-qty-step="-1" aria-label="Quitar uno">&minus;</button>
-            <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="Cantidad">
-            <button type="button" data-qty-step="1" aria-label="Agregar uno">&plus;</button>
-          </div>
+        <div class="k-pdp__price">
+          {%- if variant.price > 0 -%}
+            <span class="k-pdp__price-now">{{ variant.price | money }}</span>
+            {%- if on_sale -%}<del>{{ variant.compare_at_price | money }}</del>{%- endif -%}
+          {%- else -%}
+            <span class="k-pdp__price-now k-pdp__price-now--ask">Precio a consultar</span>
+          {%- endif -%}
         </div>
 
-        <button type="submit" class="k-btn k-btn--primary k-btn--full"{% unless product.available %} disabled{% endunless %}>
-          {% if product.available %}{% render 'icon', name: 'bag' %} Agregar a la bolsa{% else %}Agotado{% endif %}
-        </button>
-        <a class="k-btn k-btn--ghost k-btn--full" href="{{ routes.cart_url }}">Ver mi bolsa</a>
-      {%- endform -%}
+        {%- form 'product', product, id: form_id, data-ajax-add: 'true', class: 'k-pdp__form' -%}
+          {%- unless product.has_only_default_variant -%}
+            <div class="k-pdp__variants">
+              <label for="KVariantSelect">Presentación</label>
+              <select id="KVariantSelect" name="id">
+                {%- for v in product.variants -%}
+                  <option value="{{ v.id }}" {% if v == variant %}selected{% endif %} {% unless v.available %}disabled{% endunless %}>
+                    {{ v.title }}{% if v.price > 0 %} — {{ v.price | money }}{% endif %}{% unless v.available %} (agotado){% endunless %}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ variant.id }}">
+          {%- endunless -%}
 
-      <div class="k-product__meta">
-        {%- if variant.sku != blank -%}<div>SKU: {{ variant.sku }}</div>{%- endif -%}
-        {%- if product.type != blank -%}<div>Categoría: {{ product.type }}</div>{%- endif -%}
+          <div class="k-pdp__qty-row">
+            <span>Cantidad</span>
+            <div class="k-qty" data-qty>
+              <button type="button" data-qty-step="-1" aria-label="Quitar uno">&minus;</button>
+              <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="Cantidad">
+              <button type="button" data-qty-step="1" aria-label="Agregar uno">&plus;</button>
+            </div>
+          </div>
+
+          <button type="submit" class="k-btn k-btn--primary k-btn--full k-btn--lg"{% unless product.available %} disabled{% endunless %}>
+            {% if product.available %}{% render 'icon', name: 'bag' %} Agregar a la bolsa{% else %}Agotado{% endif %}
+          </button>
+          <a class="k-btn k-btn--ghost k-btn--full" href="{{ routes.cart_url }}">Ver mi bolsa</a>
+        {%- endform -%}
       </div>
 
-      {%- if product.description != blank -%}
-        <div class="k-product__desc rte">{{ product.description }}</div>
+      {%- if section.settings.trust_1 != blank or section.settings.trust_2 != blank or section.settings.trust_3 != blank -%}
+        <ul class="k-pdp__trust">
+          {%- assign trust_items = section.settings.trust_1 | append: '|' | append: section.settings.trust_2 | append: '|' | append: section.settings.trust_3 | split: '|' -%}
+          {%- for item in trust_items -%}
+            {%- assign texto = item | strip -%}
+            {%- if texto == blank -%}{%- continue -%}{%- endif -%}
+            <li>{% render 'icon', name: 'check' %} {{ texto }}</li>
+          {%- endfor -%}
+        </ul>
       {%- endif -%}
+
+      <div class="k-pdp__specs">
+        {%- if variant.sku != blank -%}<span class="k-chip">SKU {{ variant.sku }}</span>{%- endif -%}
+        {%- if tono != blank -%}<span class="k-chip">{{ tono_label }} {{ tono }}</span>{%- endif -%}
+        {%- if product.type != blank -%}<span class="k-chip">{{ product.type }}</span>{%- endif -%}
+      </div>
+
+      {%- unless tiene_copy -%}
+        {%- if product.description != blank -%}
+          <div class="k-pdp__rte rte">{{ product.description }}</div>
+        {%- endif -%}
+      {%- endunless -%}
     </div>
   </div>
 </div>
 
+{%- if section.settings.show_sticky and product.available -%}
+  <div class="k-sticky" data-sticky-buy hidden>
+    <div class="k-wrap k-sticky__inner">
+      <div class="k-sticky__media">
+        {%- if product.featured_media -%}
+          <img src="{{ product.featured_media | image_url: width: 120 }}" alt="{{ p_alt }}" width="46" height="46" loading="lazy">
+        {%- endif -%}
+      </div>
+      <div class="k-sticky__text">
+        <span class="k-sticky__name">{{ titulo }}</span>
+        {%- if variant.price > 0 -%}<span class="k-sticky__price">{{ variant.price | money }}</span>{%- endif -%}
+      </div>
+      <button type="submit" form="{{ form_id }}" class="k-btn k-btn--primary k-sticky__btn">
+        {% render 'icon', name: 'bag' %} Agregar
+      </button>
+    </div>
+  </div>
+{%- endif -%}
+
+<script>
+  (function () {
+    var thumbs = document.querySelector('[data-pdp-thumbs]');
+    var main = document.getElementById('KProductMainImage');
+    if (thumbs && main) {
+      thumbs.addEventListener('click', function (e) {
+        var button = e.target.closest('.k-pdp__thumb');
+        if (!button) return;
+        main.src = button.dataset.full;
+        main.removeAttribute('srcset');
+        thumbs.querySelectorAll('.k-pdp__thumb').forEach(function (b) { b.classList.remove('is-active'); });
+        button.classList.add('is-active');
+      });
+    }
+
+    var sticky = document.querySelector('[data-sticky-buy]');
+    var form = document.getElementById('{{ form_id }}');
+    if (sticky && form && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        sticky.hidden = entries[0].isIntersecting;
+      }).observe(form);
+    }
+  })();
+</script>
+
 {% schema %}
-{ "name": "Producto", "tag": "section", "settings": [] }
+{
+  "name": "Producto",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "buy_badge", "label": "Etiqueta sobre el precio", "default": "Envíos a todo Colombia" },
+    { "type": "header", "content": "Garantías bajo el botón" },
+    { "type": "text", "id": "trust_1", "label": "Garantía 1", "default": "Compra 100% segura" },
+    { "type": "text", "id": "trust_2", "label": "Garantía 2", "default": "Envíos a todo el país" },
+    { "type": "text", "id": "trust_3", "label": "Garantía 3", "default": "Atención por WhatsApp" },
+    { "type": "header", "content": "Barra fija" },
+    { "type": "checkbox", "id": "show_sticky", "label": "Mostrar barra de compra fija al bajar", "default": true }
+  ]
+}
 {% endschema %}
