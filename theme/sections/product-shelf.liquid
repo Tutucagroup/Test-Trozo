@@ -28,26 +28,11 @@
     </div>
 
     {%- if products.size > 0 -%}
-      <div class="k-carousel" data-carousel data-loop="false">
-        <div class="k-carousel__viewport">
-          <div class="k-carousel__track" data-carousel-track>
-            {%- for product in products limit: limit -%}
-              <div class="k-carousel__slide">
-                {% render 'product-card', product: product, show_add: section.settings.show_add %}
-              </div>
-            {%- endfor -%}
-          </div>
-        </div>
-        <button class="k-carousel__arrow k-carousel__arrow--prev" type="button" data-carousel-prev aria-label="Anterior">
-          {% render 'icon', name: 'arrow-left' %}
-        </button>
-        <button class="k-carousel__arrow k-carousel__arrow--next" type="button" data-carousel-next aria-label="Siguiente">
-          {% render 'icon', name: 'arrow-right' %}
-        </button>
-        {%- if section.settings.show_dots -%}
-          <div class="k-carousel__dots" data-carousel-dots></div>
-        {%- endif -%}
-      </div>
+      {% render 'product-carousel',
+          products: products,
+          limit: limit,
+          show_add: section.settings.show_add,
+          show_dots: section.settings.show_dots %}
     {%- else -%}
       <p style="color:var(--k-muted)">Selecciona una colección con productos para esta vitrina.</p>
     {%- endif -%}

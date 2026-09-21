@@ -1,0 +1,40 @@
+{%- comment -%}
+  Carrusel de tarjetas de producto.
+  Parámetros: products (obligatorio), limit, show_add, show_dots, exclude (producto a omitir)
+{%- endcomment -%}
+{%- liquid
+  if limit == nil
+    assign limit = 8
+  endif
+  if show_add == nil
+    assign show_add = true
+  endif
+  if show_dots == nil
+    assign show_dots = true
+  endif
+  assign shown = 0
+-%}
+
+<div class="k-carousel" data-carousel data-loop="false">
+  <div class="k-carousel__viewport">
+    <div class="k-carousel__track" data-carousel-track>
+      {%- for item in products -%}
+        {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+        {%- if exclude.id != blank and item.id == exclude.id -%}{%- continue -%}{%- endif -%}
+        <div class="k-carousel__slide">
+          {% render 'product-card', product: item, show_add: show_add %}
+        </div>
+        {%- assign shown = shown | plus: 1 -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  <button class="k-carousel__arrow k-carousel__arrow--prev" type="button" data-carousel-prev aria-label="Anterior">
+    {% render 'icon', name: 'arrow-left' %}
+  </button>
+  <button class="k-carousel__arrow k-carousel__arrow--next" type="button" data-carousel-next aria-label="Siguiente">
+    {% render 'icon', name: 'arrow-right' %}
+  </button>
+  {%- if show_dots -%}
+    <div class="k-carousel__dots" data-carousel-dots></div>
+  {%- endif -%}
+</div>

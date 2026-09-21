@@ -1,0 +1,119 @@
+{%- comment -%}
+  "Completa tu rutina" — carrusel de productos relacionados al pie de la ficha.
+  Usa la API de recomendaciones de Shopify y, mientras esa respuesta llega (o si
+  no devuelve nada), muestra productos de la colección más específica del producto.
+{%- endcomment -%}
+{%- liquid
+  assign limit = section.settings.products_to_show
+
+  comment
+    La colección de respaldo puede fijarse a mano; si no, se elige la colección
+    más específica del producto que tenga suficientes artículos para el carrusel.
+    En la respuesta de /recommendations/products no hace falta calcularla.
+  endcomment
+  unless recommendations.performed
+    assign source = section.settings.collection
+    if source.id == blank
+      assign source = collections[section.settings.collection]
+    endif
+
+    if source.id == blank
+      assign min_needed = limit | plus: 1
+      assign tight_count = 999999
+      assign widest_count = 1
+      for group in product.collections
+        if group.all_products_count >= min_needed and group.all_products_count < tight_count
+          assign tight_count = group.all_products_count
+          assign source = group
+        endif
+        if group.all_products_count > widest_count
+          assign widest_count = group.all_products_count
+          assign widest = group
+        endif
+      endfor
+      if source.id == blank
+        assign source = widest
+      endif
+    endif
+  endunless
+-%}
+
+{%- if recommendations.performed -%}
+  {%- if recommendations.products_count > 0 -%}
+    <div class="k-recs__inner" data-recs-inner>
+      {% render 'product-carousel',
+          products: recommendations.products,
+          limit: limit,
+          show_add: section.settings.show_add,
+          show_dots: section.settings.show_dots,
+          exclude: product %}
+    </div>
+  {%- endif -%}
+
+{%- elsif source.id != blank -%}
+  <section
+    class="k-section k-shelf k-recs"
+    id="KRecs-{{ section.id }}"
+    data-recs-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ limit }}&intent=related"
+  >
+    <div class="k-wrap">
+      <div class="k-section__head">
+        <div>
+          <h2 class="k-section__title">{{ section.settings.title }}</h2>
+          {%- if section.settings.subtitle != blank -%}
+            <p class="k-section__sub">{{ section.settings.subtitle }}</p>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.show_view_all -%}
+          <a class="k-section__link" href="{{ source.url }}">Ver todo &rsaquo;</a>
+        {%- endif -%}
+      </div>
+
+      <div class="k-recs__inner" data-recs-inner>
+        {% render 'product-carousel',
+            products: source.products,
+            limit: limit,
+            show_add: section.settings.show_add,
+            show_dots: section.settings.show_dots,
+            exclude: product %}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var root = document.getElementById('KRecs-{{ section.id }}');
+      if (!root || !root.dataset.recsUrl) return;
+
+      fetch(root.dataset.recsUrl)
+        .then(function (response) { return response.ok ? response.text() : Promise.reject(); })
+        .then(function (html) {
+          var fresh = new DOMParser().parseFromString(html, 'text/html').querySelector('[data-recs-inner]');
+          if (!fresh || !fresh.querySelector('.k-card')) return;
+          var target = root.querySelector('[data-recs-inner]');
+          target.innerHTML = fresh.innerHTML;
+          if (window.Krika && window.Krika.hydrate) window.Krika.hydrate(target);
+        })
+        .catch(function () {
+          /* Sin recomendaciones se conserva el carrusel de respaldo. */
+        });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Completa tu rutina",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Completa tu rutina" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo", "default": "Productos que combinan con el que estás viendo." },
+    { "type": "collection", "id": "collection", "label": "Colección de respaldo", "info": "Opcional. Si se deja vacía se usa la categoría del producto." },
+    { "type": "range", "id": "products_to_show", "min": 4, "max": 10, "step": 1, "label": "Productos a mostrar", "default": 10 },
+    { "type": "checkbox", "id": "show_add", "label": "Mostrar botón \"Agregar a la bolsa\"", "default": true },
+    { "type": "checkbox", "id": "show_view_all", "label": "Mostrar enlace \"Ver todo\"", "default": true },
+    { "type": "checkbox", "id": "show_dots", "label": "Mostrar puntos", "default": true }
+  ],
+  "presets": [{ "name": "Completa tu rutina" }]
+}
+{% endschema %}

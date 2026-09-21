@@ -1,6 +1,17 @@
 {
   "sections": {
-    "main": { "type": "main-product" }
+    "main": { "type": "main-product" },
+    "recomendados": {
+      "type": "product-recommendations",
+      "settings": {
+        "title": "Completa tu rutina",
+        "subtitle": "Productos que combinan con el que estás viendo.",
+        "products_to_show": 10,
+        "show_add": true,
+        "show_view_all": true,
+        "show_dots": true
+      }
+    }
   },
-  "order": ["main"]
+  "order": ["main", "recomendados"]
 }

@@ -269,6 +269,14 @@
     initUgc();
   }
 
+  /* Rehidrata contenido insertado por fetch (recomendaciones de producto). */
+  window.Krika = window.Krika || {};
+  window.Krika.hydrate = function (scope) {
+    var root = scope || document;
+    root.querySelectorAll('[data-carousel]').forEach(function (el) { new Carousel(el); });
+    initQty(root);
+  };
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 

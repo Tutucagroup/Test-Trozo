@@ -205,6 +205,9 @@ h1,h2,h3,h4{font-family:var(--k-font-heading);font-weight:var(--k-font-heading-w
 .k-section__link:hover{text-decoration:underline}
 .k-section__sub{color:var(--k-muted);margin:4px 0 0;font-size:14px}
 
+/* ---------- Completa tu rutina (ficha de producto) ---------- */
+.k-recs{background:var(--k-soft);border-top:1px solid var(--k-line);margin-top:10px}
+
 /* ---------- Tarjeta de producto ---------- */
 .k-shelf .k-carousel__slide{flex:0 0 78%;padding:0 6px}
 @media(min-width:600px){.k-shelf .k-carousel__slide{flex-basis:42%}}
