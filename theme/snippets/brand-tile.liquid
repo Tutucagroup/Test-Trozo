@@ -1,0 +1,39 @@
+{%- comment -%}
+  Tarjeta de marca.
+  Parámetros: brand_name (obligatorio), brand_image, brand_image_url, brand_link (opcionales)
+
+  Si no se entrega imagen se intenta con el archivo `krika-marca-<handle>.png` de
+  Contenido → Archivos; si ese archivo no existe, la tarjeta cae automáticamente
+  al nombre tipográfico mediante el `onerror` del <img>.
+{%- endcomment -%}
+{%- liquid
+  assign brand_alt = brand_name | escape
+  assign src = ''
+
+  if brand_image_url != blank
+    assign src = brand_image_url
+    unless src contains '://'
+      assign src = src | file_url
+    endunless
+  else
+    assign brand_handle = brand_name | handle
+    assign guess = 'krika-marca-' | append: brand_handle | append: '.png'
+    assign src = guess | file_url
+  endif
+
+  assign url = brand_link
+  if url == blank
+    assign encoded = brand_name | url_encode
+    assign url = routes.root_url | append: 'collections/vendors?q=' | append: encoded
+  endif
+-%}
+
+<a class="k-brand" href="{{ url }}" title="{{ brand_alt }}">
+  {%- if brand_image != blank -%}
+    {{ brand_image | image_url: width: 400 | image_tag: width: 400, loading: 'lazy', alt: brand_alt, class: 'k-brand__logo' }}
+  {%- else -%}
+    <img class="k-brand__logo" src="{{ src }}" alt="{{ brand_alt }}" loading="lazy"
+         onerror="this.closest('.k-brand').classList.add('k-brand--text');this.remove()">
+  {%- endif -%}
+  <span class="k-brand__name">{{ brand_name }}</span>
+</a>

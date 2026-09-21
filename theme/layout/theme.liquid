@@ -50,6 +50,7 @@
         --k-pink: {{ settings.k_color_primary }};
         --k-pink-dark: {{ settings.k_color_primary | color_darken: 10 }};
         --k-pink-soft: {{ settings.k_color_primary | color_lighten: 45 }};
+        --k-pink-pale: {{ settings.k_color_primary | color_mix: '#FFFFFF', 8 }};
         --k-ink: {{ settings.k_color_text }};
         --k-muted: {{ settings.k_color_text | color_lighten: 28 }};
         --k-line: {{ settings.k_color_text | color_lighten: 72 }};

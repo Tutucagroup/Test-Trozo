@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "main-brands" }
+  },
+  "order": ["main"]
+}

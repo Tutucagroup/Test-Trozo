@@ -1,0 +1,46 @@
+{%- comment -%} Índice A–Z de todas las marcas del catálogo {%- endcomment -%}
+<div class="k-wrap">
+  <div class="k-collection__head">
+    <h1 class="k-collection__title">{{ section.settings.title | default: page.title | default: 'Todas las marcas' }}</h1>
+    {%- if page.content != blank -%}
+      <div class="k-collection__desc rte">{{ page.content }}</div>
+    {%- elsif section.settings.intro != blank -%}
+      <p class="k-collection__desc">{{ section.settings.intro }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- assign vendors = shop.vendors -%}
+  {%- if vendors.size > 0 -%}
+    <p class="k-count" style="padding-bottom:18px">{{ vendors.size }} marcas</p>
+
+    {%- if section.settings.show_logos -%}
+      <div class="k-brands-grid">
+        {%- for vendor in vendors -%}
+          {% render 'brand-tile', brand_name: vendor %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <ul class="k-brands-az">
+        {%- for vendor in vendors -%}
+          <li><a href="{{ routes.root_url }}collections/vendors?q={{ vendor | url_encode }}">{{ vendor }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  {%- else -%}
+    <p style="color:var(--k-muted);padding:30px 0">
+      Aún no hay marcas visibles. Publica productos en el canal Tienda online para que aparezcan aquí.
+    </p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Marcas",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Todas las marcas" },
+    { "type": "text", "id": "intro", "label": "Texto introductorio", "default": "Explora el catálogo por marca." },
+    { "type": "checkbox", "id": "show_logos", "label": "Mostrar logos", "default": true }
+  ]
+}
+{% endschema %}

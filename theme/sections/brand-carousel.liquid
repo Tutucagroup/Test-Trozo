@@ -1,36 +1,67 @@
-{%- comment -%} Carrusel de marcas aliadas {%- endcomment -%}
-{%- if section.blocks.size > 0 -%}
+{%- comment -%}
+  Carrusel de marcas.
+  Modo "automatico": recorre todas las marcas (vendors) del catálogo publicado.
+  Modo "manual": usa los bloques configurados en el editor.
+  Cada tarjeta enlaza a todos los productos de esa marca.
+{%- endcomment -%}
+{%- liquid
+  assign is_auto = false
+  if section.settings.source == 'automatic'
+    assign is_auto = true
+  endif
+
+  assign vendors = shop.vendors
+  assign limit = section.settings.max_brands
+
+  assign show_section = false
+  if is_auto
+    if vendors.size > 0
+      assign show_section = true
+    endif
+  else
+    if section.blocks.size > 0
+      assign show_section = true
+    endif
+  endif
+-%}
+
+{%- if show_section -%}
   <section class="k-section k-brands">
     <div class="k-wrap">
-      {%- if section.settings.title != blank -%}
-        <div class="k-section__head">
-          <h2 class="k-section__title{% if section.settings.title_dark %} k-section__title--ink{% endif %}">{{ section.settings.title }}</h2>
+      <div class="k-section__head">
+        <div>
+          {%- if section.settings.title != blank -%}
+            <h2 class="k-section__title{% if section.settings.title_dark %} k-section__title--ink{% endif %}">{{ section.settings.title }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subtitle != blank -%}
+            <p class="k-section__sub">{{ section.settings.subtitle }}</p>
+          {%- endif -%}
         </div>
-      {%- endif -%}
+        {%- if section.settings.all_url != blank -%}
+          <a class="k-section__link" href="{{ section.settings.all_url }}">Ver todas las marcas &rsaquo;</a>
+        {%- endif -%}
+      </div>
 
       <div class="k-carousel" data-carousel data-loop="true" data-autoplay="{{ section.settings.autoplay | times: 1000 }}">
         <div class="k-carousel__viewport">
           <div class="k-carousel__track" data-carousel-track>
-            {%- for block in section.blocks -%}
-              {%- liquid
-                assign brand_src = block.settings.image_url
-                unless brand_src contains '://'
-                  assign brand_src = brand_src | file_url
-                endunless
-                assign brand_alt = block.settings.name | escape
-              -%}
-              <div class="k-carousel__slide" {{ block.shopify_attributes }}>
-                <a class="k-brand" href="{{ block.settings.link | default: routes.all_products_collection_url }}">
-                  {%- if block.settings.image != blank -%}
-                    {{ block.settings.image | image_url: width: 400 | image_tag: width: 400, loading: 'lazy', alt: brand_alt }}
-                  {%- elsif block.settings.image_url != blank -%}
-                    <img src="{{ brand_src }}" alt="{{ brand_alt }}" loading="lazy">
-                  {%- else -%}
-                    <span style="font-weight:700;color:var(--k-muted)">{{ block.settings.name }}</span>
-                  {%- endif -%}
-                </a>
-              </div>
-            {%- endfor -%}
+            {%- if is_auto -%}
+              {%- for vendor in vendors limit: limit -%}
+                <div class="k-carousel__slide">
+                  {% render 'brand-tile', brand_name: vendor %}
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              {%- for block in section.blocks -%}
+                <div class="k-carousel__slide" {{ block.shopify_attributes }}>
+                  {% render 'brand-tile',
+                      brand_name: block.settings.name,
+                      brand_image: block.settings.image,
+                      brand_image_url: block.settings.image_url,
+                      brand_link: block.settings.link %}
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
           </div>
         </div>
         <button class="k-carousel__arrow k-carousel__arrow--prev" type="button" data-carousel-prev aria-label="Anterior">
@@ -49,10 +80,21 @@
   "name": "Carrusel de marcas",
   "tag": "section",
   "class": "k-brands-section",
-  "max_blocks": 20,
+  "max_blocks": 50,
   "settings": [
     { "type": "text", "id": "title", "label": "Título", "default": "Nuestras marcas" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo" },
     { "type": "checkbox", "id": "title_dark", "label": "Título en color oscuro", "default": true },
+    {
+      "type": "select", "id": "source", "label": "Origen de las marcas", "default": "automatic",
+      "info": "Automático toma todas las marcas del catálogo publicado y enlaza a sus productos.",
+      "options": [
+        { "value": "automatic", "label": "Automático (todas las marcas)" },
+        { "value": "manual", "label": "Manual (bloques)" }
+      ]
+    },
+    { "type": "range", "id": "max_brands", "min": 6, "max": 60, "step": 2, "label": "Máx. marcas en el carrusel", "default": 40 },
+    { "type": "url", "id": "all_url", "label": "Enlace \"Ver todas las marcas\"" },
     { "type": "range", "id": "autoplay", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Cambiar cada", "default": 4 }
   ],
   "blocks": [
@@ -62,11 +104,11 @@
       "settings": [
         { "type": "text", "id": "name", "label": "Nombre" },
         { "type": "image_picker", "id": "image", "label": "Logo" },
-        { "type": "text", "id": "image_url", "label": "URL del logo" },
-        { "type": "url", "id": "link", "label": "Enlace" }
+        { "type": "text", "id": "image_url", "label": "URL o nombre de archivo del logo" },
+        { "type": "url", "id": "link", "label": "Enlace", "info": "Si se deja vacío enlaza a todos los productos de la marca." }
       ]
     }
   ],
-  "presets": [{ "name": "Carrusel de marcas", "blocks": [{ "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }] }]
+  "presets": [{ "name": "Carrusel de marcas" }]
 }
 {% endschema %}

@@ -80,17 +80,15 @@
 
     "brands": {
       "type": "brand-carousel",
-      "blocks": {
-        "m1": { "type": "brand", "settings": { "name": "Recamier Professional", "image_url": "krika-marca-recamier.png", "link": "/search?q=recamier&type=product" } },
-        "m2": { "type": "brand", "settings": { "name": "Kura", "image_url": "krika-marca-kura.png", "link": "/search?q=kura&type=product" } },
-        "m3": { "type": "brand", "settings": { "name": "Pili", "image_url": "krika-marca-pili.png", "link": "/search?q=pili&type=product" } },
-        "m4": { "type": "brand", "settings": { "name": "Schwarzkopf Professional", "image_url": "krika-marca-schwarzkopf.png", "link": "/search?q=schwarzkopf&type=product" } },
-        "m5": { "type": "brand", "settings": { "name": "Masglo", "image_url": "krika-marca-masglo.png", "link": "/search?q=masglo&type=product" } },
-        "m6": { "type": "brand", "settings": { "name": "L'Mar", "image_url": "krika-marca-lmar.png", "link": "/search?q=lmar&type=product" } },
-        "m7": { "type": "brand", "settings": { "name": "L'Oréal Professionnel", "image_url": "krika-marca-loreal.png", "link": "/search?q=loreal&type=product" } }
-      },
-      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6", "m7"],
-      "settings": { "title": "Nuestras marcas", "title_dark": true, "autoplay": 4 }
+      "settings": {
+        "title": "Nuestras marcas",
+        "subtitle": "Toca una marca para ver todos sus productos.",
+        "title_dark": true,
+        "source": "automatic",
+        "max_brands": 40,
+        "all_url": "/pages/marcas",
+        "autoplay": 4
+      }
     },
 
     "ugc": {

@@ -11,7 +11,7 @@ Tienda: `piiv22-sv.myshopify.com` · Tema: **Krika — Réplica VTEX** (sin publ
 | Orden | Sección | Archivo |
 |---|---|---|
 | 1 | Barra de anuncios rotativa (3 mensajes) | `sections/announcement-bar.liquid` |
-| 2 | Cabecera fija + menú de categorías | `sections/header.liquid` |
+| 2 | Cabecera fija + mega-menú de categorías | `sections/header.liquid` |
 | 3 | Carrusel principal (7 diapositivas, 3 por vista en escritorio) | `sections/hero-carousel.liquid` |
 | 4 | Vitrina «15 Días de Belleza. 💄» | `sections/product-shelf.liquid` |
 | 5 | Fila de 3 banners promocionales | `sections/banner-grid.liquid` |
@@ -24,6 +24,39 @@ Tienda: `piiv22-sv.myshopify.com` · Tema: **Krika — Réplica VTEX** (sin publ
 
 Cabecera y pie se montan como *section groups*: `sections/header-group.json` y
 `sections/footer-group.json`.
+
+## Mega-menú
+
+La barra de categorías lee el menú `main-menu` de *Contenido → Navegación* y
+admite **tres niveles**: categoría → columna → subcategoría.
+
+- **Escritorio**: al pasar el ratón sobre una categoría se despliega un panel a
+  todo el ancho con una columna por subcategoría de segundo nivel y sus enlaces
+  debajo, más un botón «Ver todo …». Funciona sin JavaScript (CSS `:hover` +
+  `:focus-within`, accesible por teclado).
+- **Móvil**: el mismo árbol se despliega en el cajón lateral con `<details>`
+  anidados.
+
+Para cambiar el menú basta editar `main-menu` en el admin; el tema no necesita
+tocarse.
+
+## Marcas
+
+`sections/brand-carousel.liquid` tiene dos modos:
+
+- **Automático** (el del home): recorre todas las marcas del catálogo publicado
+  y cada tarjeta enlaza a *todos* los productos de esa marca
+  (`/collections/vendors?q=<marca>`).
+- **Manual**: bloques configurables con logo y enlace propios.
+
+El logo se resuelve así, en orden: imagen del bloque → URL/nombre de archivo del
+bloque → **`krika-marca-<handle-de-la-marca>.png` en Contenido → Archivos**. Si
+no existe ninguno, la tarjeta muestra el nombre de la marca como logotipo
+tipográfico. Para añadir un logo nuevo basta subir el archivo con ese nombre;
+no hay que tocar código.
+
+La página **/pages/marcas** (`sections/main-brands.liquid` +
+`templates/page.marcas.json`) lista todas las marcas del catálogo.
 
 ## Carrusel UGC
 
@@ -59,15 +92,26 @@ Configurable en *Personalizar → Configuración del tema* (ajustes con prefijo 
 `krika-banner-{moco,anyeluz,pili}.png`,
 `krika-marca-{recamier,kura,pili,schwarzkopf,masglo,lmar,loreal}.png`
 
-**Colecciones automáticas** (regla `Tipo de producto contiene …`):
+**Colecciones automáticas** (162 en total, todas publicadas en Tienda online):
 
-- Vitrinas del home: `15-dias-de-belleza`, `el-regalo-perfecto`,
+- Vitrinas del home (4): `15-dias-de-belleza`, `el-regalo-perfecto`,
   `dale-poder-a-tu-estilo`, `para-ellos`
-- Categorías del menú: `capilar`, `maquillaje`, `corporal`, `facial`,
+- Categorías de primer nivel (9): `capilar`, `maquillaje`, `corporal`, `facial`,
   `manicure-pedicure`, `aseo-personal`, `electricos`, `fragancias`, `barberia`
+- Subcategorías del mega-menú (149): 45 columnas de segundo nivel y 104 hojas de
+  tercer nivel, replicando el árbol de categorías de krika.co. Casi todas usan la
+  regla `Tipo de producto es igual a …` contra los 181 tipos del catálogo, de
+  modo que se llenan solas; unas pocas (Metalizados, Esponjas, Maletas, Balacas,
+  Cuchillas, Postsolar, Patilleras, Talcos, Anti Acné, Contorno de Ojos,
+  Antiedad, Despigmentante) usan coincidencia por título.
 
-**Menús** (Contenido → Navegación): `main-menu` (categorías, con DESCUENTOS
-destacado), `footer-categorias`, `footer-unete-krika`, `footer-tyc`.
+El árbol completo y las reglas están en `docs/categorias.py` para poder
+regenerarlas.
+
+**Menús** (Contenido → Navegación): `main-menu` (árbol de 3 niveles con
+DESCUENTOS destacado), `footer-categorias`, `footer-unete-krika`, `footer-tyc`.
+
+**Páginas**: `Marcas` (`/pages/marcas`, plantilla `page.marcas`).
 
 ## Pendientes del catálogo (fuera del alcance del tema)
 
@@ -78,9 +122,14 @@ destacado), `footer-categorias`, `footer-unete-krika`, `footer-tyc`.
   (de 8.569 activos), así que las vitrinas se ven vacías o muy cortas hasta que
   se publique el catálogo.
 - El inventario está en 0 en los productos muestreados.
-- Las reglas de las colecciones de categoría usan coincidencias por texto sobre
-  el tipo de producto; conviene afinarlas en el admin (p. ej. «POLVO» arrastra
-  productos capilares hacia Maquillaje).
+- Las colecciones de primer nivel (Capilar, Maquillaje, …) usan coincidencia
+  parcial sobre el tipo de producto y arrastran algún producto de más (p. ej.
+  «POLVO» lleva polvos decolorantes a Maquillaje). Las subcategorías del
+  mega-menú sí usan coincidencia exacta y son precisas.
+- **Logos de marca**: krika.co solo publica 11 logos y ninguna de sus 403 marcas
+  tiene imagen en su catálogo VTEX, así que las demás marcas se muestran con
+  logotipo tipográfico. Para añadir un logo real basta subir el archivo a
+  Contenido → Archivos con el nombre `krika-marca-<handle>.png`.
 
 ## Publicar el tema
 

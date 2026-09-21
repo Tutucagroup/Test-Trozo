@@ -1,4 +1,4 @@
-{%- comment -%} Cabecera fija: logo, buscador, cuenta, favoritos, bolsa y menú de categorías {%- endcomment -%}
+{%- comment -%} Cabecera fija: logo, buscador, cuenta, favoritos, bolsa y mega-menú de categorías {%- endcomment -%}
 <header class="k-header" style="background:{{ section.settings.bg }}">
   <div class="k-wrap k-header__main">
     <button class="k-header__burger" type="button" data-drawer-open aria-label="Abrir menú">
@@ -46,8 +46,32 @@
     <div class="k-wrap">
       <ul class="k-nav__list">
         {%- for link in section.settings.menu.links -%}
-          <li class="k-nav__item{% if forloop.first and section.settings.highlight_first %} k-nav__item--highlight{% endif %}">
-            <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+          <li class="k-nav__item{% if forloop.first and section.settings.highlight_first %} k-nav__item--highlight{% endif %}{% if link.links.size > 0 %} k-nav__item--has-mega{% endif %}">
+            <a href="{{ link.url }}"{% if link.current or link.child_current %} aria-current="page"{% endif %}
+               {% if link.links.size > 0 %}aria-haspopup="true" aria-expanded="false"{% endif %}>{{ link.title }}</a>
+
+            {%- if link.links.size > 0 -%}
+              <div class="k-mega">
+                <div class="k-wrap">
+                  <div class="k-mega__cols">
+                    {%- for child in link.links -%}
+                      <div class="k-mega__col">
+                        <a class="k-mega__col-title" href="{{ child.url }}">{{ child.title }}</a>
+                        {%- if child.links.size > 0 -%}
+                          <ul class="k-mega__links">
+                            {%- for grandchild in child.links -%}
+                              <li><a href="{{ grandchild.url }}">{{ grandchild.title }}</a></li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
+                      </div>
+                    {%- endfor -%}
+                  </div>
+
+                  <a class="k-mega__all" href="{{ link.url }}">Ver todo {{ link.title }} &rsaquo;</a>
+                </div>
+              </div>
+            {%- endif -%}
           </li>
         {%- endfor -%}
       </ul>
@@ -63,10 +87,27 @@
   </div>
   <div class="k-drawer__body">
     {%- for link in section.settings.menu.links -%}
-      <a class="k-drawer__link" href="{{ link.url }}">{{ link.title }}</a>
-      {%- for child in link.links -%}
-        <a class="k-drawer__link" href="{{ child.url }}" style="padding-left:34px;font-weight:400">{{ child.title }}</a>
-      {%- endfor -%}
+      {%- if link.links.size > 0 -%}
+        <details class="k-drawer__group">
+          <summary class="k-drawer__link">{{ link.title }}{% render 'icon', name: 'arrow-right' %}</summary>
+          <a class="k-drawer__link k-drawer__link--all" href="{{ link.url }}">Ver todo {{ link.title }}</a>
+          {%- for child in link.links -%}
+            {%- if child.links.size > 0 -%}
+              <details class="k-drawer__group k-drawer__group--sub">
+                <summary class="k-drawer__link k-drawer__link--l2">{{ child.title }}{% render 'icon', name: 'arrow-right' %}</summary>
+                <a class="k-drawer__link k-drawer__link--all k-drawer__link--l3" href="{{ child.url }}">Ver todo {{ child.title }}</a>
+                {%- for grandchild in child.links -%}
+                  <a class="k-drawer__link k-drawer__link--l3" href="{{ grandchild.url }}">{{ grandchild.title }}</a>
+                {%- endfor -%}
+              </details>
+            {%- else -%}
+              <a class="k-drawer__link k-drawer__link--l2" href="{{ child.url }}">{{ child.title }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </details>
+      {%- else -%}
+        <a class="k-drawer__link" href="{{ link.url }}">{{ link.title }}</a>
+      {%- endif -%}
     {%- endfor -%}
     <a class="k-drawer__link" href="{{ routes.account_url }}">{% if customer %}Mi cuenta{% else %}Entrar / Registrarme{% endif %}</a>
   </div>
@@ -80,7 +121,7 @@
   "settings": [
     { "type": "image_picker", "id": "logo", "label": "Logo (opcional)", "info": "Si se deja vacío se usa el logo de Krika cargado en Archivos." },
     { "type": "color", "id": "bg", "label": "Color de fondo", "default": "#EB0284" },
-    { "type": "link_list", "id": "menu", "label": "Menú de categorías", "default": "main-menu" },
+    { "type": "link_list", "id": "menu", "label": "Menú de categorías", "default": "main-menu", "info": "Admite 3 niveles: categoría → columna → subcategoría." },
     { "type": "checkbox", "id": "highlight_first", "label": "Resaltar el primer elemento del menú", "default": true },
     { "type": "checkbox", "id": "show_search", "label": "Mostrar buscador", "default": true },
     { "type": "checkbox", "id": "show_wishlist", "label": "Mostrar favoritos", "default": true },
