@@ -283,26 +283,97 @@ def descripcion(prod):
 # Salida CSV para importar en Shopify
 # --------------------------------------------------------------------------
 
-COLUMNAS = ['Handle', 'Title', 'Body (HTML)']
+# Shopify exige las columnas de opcion de variante al actualizar un producto
+# que tiene variantes; sin ellas la importacion falla con
+# "Product options input is required when updating variants".
+COLUMNAS = ['Handle', 'Title', 'Body (HTML)', 'Option1 Name', 'Option1 Value']
 
-def exporta(rows, destino, por_archivo=2000):
+LIMITE_SHOPIFY = 15 * 1024 * 1024   # tamaño maximo que acepta el importador
+
+def carga_opciones(ruta):
+    """handle -> [(nombre_opcion, valor_opcion), ...] desde el export de variantes."""
+    if not ruta or not os.path.exists(ruta):
+        return {}
+    prods, variantes = {}, {}
+    for linea in open(ruta, encoding='utf-8'):
+        o = json.loads(linea)
+        if 'handle' in o:
+            prods[o['id']] = o['handle']
+        elif '__parentId' in o:
+            variantes.setdefault(o['__parentId'], []).append(o)
+    mapa = {}
+    for pid, handle in prods.items():
+        filas = []
+        for v in variantes.get(pid, []):
+            op = (v.get('selectedOptions') or [{}])[0]
+            filas.append((op.get('name') or 'Title', op.get('value') or 'Default Title'))
+        mapa[handle] = filas or [('Title', 'Default Title')]
+    return mapa
+
+def filas_csv(rows, opciones):
+    """Una fila por variante. Title y Body solo en la primera fila de cada producto."""
+    out = []
+    for r in rows:
+        for i, (on, ov) in enumerate(opciones.get(r['handle'], [('Title', 'Default Title')])):
+            out.append({
+                'Handle': r['handle'],
+                'Title': r['title'] if i == 0 else '',
+                'Body (HTML)': r['body'] if i == 0 else '',
+                'Option1 Name': on,
+                'Option1 Value': ov,
+            })
+    return out
+
+def escribe(filas, ruta):
+    with open(ruta, 'w', encoding='utf-8-sig', newline='') as f:
+        w = csv.DictWriter(f, fieldnames=COLUMNAS)
+        w.writeheader()
+        w.writerows(filas)
+    return os.path.getsize(ruta)
+
+def exporta(rows, destino, opciones, nombre='krika-descripciones', un_archivo=False):
+    """Escribe el CSV. Si entra por debajo del limite de Shopify va en un solo
+    archivo; si no, se parte en el minimo numero de archivos necesario."""
     os.makedirs(destino, exist_ok=True)
-    archivos = []
-    for i in range(0, len(rows), por_archivo):
-        lote = rows[i:i + por_archivo]
-        ruta = os.path.join(destino, 'krika-descripciones-%02d.csv' % (i // por_archivo + 1))
-        with open(ruta, 'w', encoding='utf-8-sig', newline='') as f:
-            w = csv.DictWriter(f, fieldnames=COLUMNAS)
-            w.writeheader()
-            for r in lote:
-                w.writerow({'Handle': r['handle'], 'Title': r['title'], 'Body (HTML)': r['body']})
-        archivos.append((ruta, len(lote), os.path.getsize(ruta)))
-    return archivos
+    filas = filas_csv(rows, opciones)
+
+    ruta = os.path.join(destino, nombre + '.csv')
+    size = escribe(filas, ruta)
+    if size <= LIMITE_SHOPIFY or un_archivo:
+        return [(ruta, len(filas), size)]
+
+    os.remove(ruta)
+    partes = 2
+    while True:                      # buscar el minimo numero de partes que entre
+        corte = -(-len(rows) // partes)
+        lotes = [rows[i:i + corte] for i in range(0, len(rows), partes and corte)]
+        archivos, ok = [], True
+        for n, lote in enumerate(lotes, 1):
+            r = os.path.join(destino, '%s-%02d.csv' % (nombre, n))
+            s = escribe(filas_csv(lote, opciones), r)
+            archivos.append((r, len(lote), s))
+            if s > LIMITE_SHOPIFY:
+                ok = False
+        if ok:
+            return archivos
+        for r, _, _ in archivos:
+            os.remove(r)
+        partes += 1
 
 def main():
-    origen = sys.argv[1] if len(sys.argv) > 1 else 'products.jsonl'
-    destino = sys.argv[2] if len(sys.argv) > 2 else 'csv'
+    args = [a for a in sys.argv[1:] if not a.startswith('--')]
+    origen = args[0] if args else 'products.jsonl'
+    destino = args[1] if len(args) > 1 else 'csv'
+    variantes = args[2] if len(args) > 2 else 'variants.jsonl'
     solo_vacios = '--solo-vacios' in sys.argv
+    if '--sin-fabricante' in sys.argv:
+        globals()['MIN_FABRICANTE'] = 10 ** 9   # no adjuntar el texto original
+    nombre = 'krika-descripciones'
+    for a in sys.argv:
+        if a.startswith('--nombre='):
+            nombre = a.split('=', 1)[1]
+
+    opciones = carga_opciones(variantes)
 
     prods = [json.loads(l) for l in open(origen, encoding='utf-8')]
     if solo_vacios:
@@ -315,11 +386,12 @@ def main():
             faltantes.add(p.get('productType') or '(sin tipo)')
         rows.append({'handle': p['handle'], 'title': p['title'], 'body': descripcion(p)})
 
-    archivos = exporta(rows, destino)
+    archivos = exporta(rows, destino, opciones, nombre=nombre)
     largos = sorted(len(plano(r['body'])) for r in rows)
     print('productos procesados: %d' % len(rows))
     print('largo del texto: min %d / mediana %d / max %d' %
           (largos[0], largos[len(largos) // 2], largos[-1]))
+    print('opciones de variante cargadas para %d productos' % len(opciones))
     if faltantes:
         print('tipos sin copy propio (usan el generico): %d -> %s'
               % (len(faltantes), sorted(faltantes)[:10]))
