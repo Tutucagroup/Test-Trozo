@@ -1,0 +1,23 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Tarjeta de regalo — {{ shop.name }}</title>
+    {{ 'krika.css' | asset_url | stylesheet_tag }}
+    <style>:root{--k-pink:#EB0284;--k-ink:#252628;--k-bg:#fff;--k-line:#E6E6EA;--k-muted:#6E6F73;--k-soft:#F6F6F8;--k-radius:10px;--k-page:1400px;--k-font-body:system-ui,sans-serif;--k-font-heading:system-ui,sans-serif}</style>
+  </head>
+  <body>
+    <main class="k-wrap" style="max-width:520px;text-align:center;padding:50px 16px">
+      <img src="{{ 'krika-logo-footer.png' | file_url }}" alt="{{ shop.name }}" width="170" style="margin:0 auto 22px">
+      <h1 class="k-collection__title">Tarjeta de regalo</h1>
+      <p style="font-size:30px;font-weight:700;margin:16px 0">{{ gift_card.balance | money }}</p>
+      {{ gift_card.qr_identifier }}
+      <p style="font-family:monospace;font-size:19px;letter-spacing:.14em;border:1px dashed var(--k-line);border-radius:10px;padding:14px;margin:18px 0">
+        {{ gift_card.code | format_code }}
+      </p>
+      <a class="k-btn k-btn--primary" href="{{ shop.url }}">Ir a la tienda</a>
+    </main>
+  </body>
+</html>

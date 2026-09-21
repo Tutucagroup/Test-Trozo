@@ -1,0 +1,68 @@
+{%- comment -%} Fila de banners promocionales (2 o 3 columnas) {%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <section class="k-section">
+    <div class="k-wrap">
+      {%- if section.settings.title != blank -%}
+        <div class="k-section__head">
+          <h2 class="k-section__title{% if section.settings.title_dark %} k-section__title--ink{% endif %}">{{ section.settings.title }}</h2>
+        </div>
+      {%- endif -%}
+
+      <div class="k-banners k-banners--{{ section.blocks.size | at_most: 3 }}">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign banner_src = block.settings.image_url
+            unless banner_src contains '://'
+              assign banner_src = banner_src | file_url
+            endunless
+            assign banner_alt = block.settings.alt | escape
+          -%}
+          <a class="k-banner" href="{{ block.settings.link | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 1200 | image_tag: width: 1200, loading: 'lazy', alt: banner_alt }}
+            {%- elsif block.settings.image_url != blank -%}
+              <img src="{{ banner_src }}" alt="{{ banner_alt }}" loading="lazy">
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {%- endif -%}
+
+            {%- if block.settings.heading != blank or block.settings.text != blank -%}
+              <div class="k-banner__caption">
+                {%- if block.settings.heading != blank -%}<h3>{{ block.settings.heading }}</h3>{%- endif -%}
+                {%- if block.settings.text != blank -%}<p style="margin:4px 0 0;font-size:13.5px">{{ block.settings.text }}</p>{%- endif -%}
+              </div>
+            {%- endif -%}
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Banners promocionales",
+  "tag": "section",
+  "class": "k-banner-section",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título" },
+    { "type": "checkbox", "id": "title_dark", "label": "Título en color oscuro", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "Banner",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagen" },
+        { "type": "text", "id": "image_url", "label": "URL de imagen", "info": "Se usa si no se elige una imagen." },
+        { "type": "text", "id": "alt", "label": "Texto alternativo" },
+        { "type": "text", "id": "heading", "label": "Título sobre la imagen" },
+        { "type": "text", "id": "text", "label": "Texto sobre la imagen" },
+        { "type": "url", "id": "link", "label": "Enlace" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Banners promocionales", "blocks": [{ "type": "banner" }, { "type": "banner" }, { "type": "banner" }] }]
+}
+{% endschema %}

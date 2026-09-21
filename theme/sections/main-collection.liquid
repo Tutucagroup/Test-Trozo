@@ -1,0 +1,57 @@
+{%- paginate collection.products by section.settings.per_page -%}
+  <div class="k-wrap">
+    <div class="k-collection__head">
+      <h1 class="k-collection__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="k-collection__desc rte">{{ collection.description }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="k-toolbar">
+      <span class="k-count">{{ collection.products_count }} producto{% if collection.products_count != 1 %}s{% endif %}</span>
+      <form method="get" action="{{ collection.url }}">
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        <label class="k-visually-hidden" for="KSortBy">Ordenar por</label>
+        <select id="KSortBy" name="sort_by" onchange="this.form.submit()">
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+          {%- endfor -%}
+        </select>
+      </form>
+    </div>
+
+    {%- if collection.products.size > 0 -%}
+      <div class="k-grid">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p style="color:var(--k-muted);padding:30px 0">No hay productos en esta categoría por el momento.</p>
+    {%- endif -%}
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="k-pagination" aria-label="Paginación">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">&lsaquo;</a>{%- endif -%}
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}">{{ part.title }}</a>
+          {%- else -%}
+            <span class="{% if part.title == paginate.current_page %}is-current{% endif %}">{{ part.title }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}">&rsaquo;</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Colección",
+  "tag": "section",
+  "settings": [
+    { "type": "range", "id": "per_page", "min": 12, "max": 48, "step": 4, "label": "Productos por página", "default": 24 }
+  ]
+}
+{% endschema %}

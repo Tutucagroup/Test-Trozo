@@ -1,0 +1,46 @@
+{
+  "name": "Pie de página",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "cats": {
+          "type": "menu",
+          "settings": {
+            "title": "Nuestras categorías",
+            "menu": "footer-categorias",
+            "extra_label": "Ver todo",
+            "extra_url": "/collections/all"
+          }
+        },
+        "unete": {
+          "type": "menu",
+          "settings": { "title": "Únete Krika", "menu": "footer-unete-krika" }
+        },
+        "tyc": {
+          "type": "menu",
+          "settings": { "title": "T&C Generales", "menu": "footer-tyc" }
+        },
+        "servicio": {
+          "type": "text",
+          "settings": {
+            "title": "Servicio al cliente",
+            "content": "<p><a href=\"https://www.glecolombia.com/es\" target=\"_blank\">Seguimiento de pedidos</a><br><a href=\"tel:+573336025001\">(+57) 333 6025 001</a><br><a href=\"https://sedeelectronica.sic.gov.co/\" target=\"_blank\">Superintendencia de Industria y Comercio</a><br><a href=\"https://sgi.krika.co/landing/pqrs-v1\" target=\"_blank\">Radicar PQRS</a></p>"
+          }
+        }
+      },
+      "block_order": ["cats", "unete", "tyc", "servicio"],
+      "settings": {
+        "tagline": "Belleza y cuidado personal para todo Colombia.",
+        "show_newsletter": true,
+        "facebook": "https://es-la.facebook.com/KrikaCosmetics/",
+        "instagram": "https://www.instagram.com/krikacosmetics/?hl=es",
+        "youtube": "https://www.youtube.com/@krikacosmeticos968",
+        "show_payments": true,
+        "legal_note": "Todos los precios incluyen IVA."
+      }
+    }
+  },
+  "order": ["footer"]
+}

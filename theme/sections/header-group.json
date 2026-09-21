@@ -1,0 +1,34 @@
+{
+  "name": "Cabecera",
+  "type": "header",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "blocks": {
+        "a1": { "type": "announcement", "settings": { "text": "Compra ahora y paga después con ADDI." } },
+        "a2": { "type": "announcement", "settings": { "text": "Envío GRATIS por compras iguales o superiores a $100.000 pesos." } },
+        "a3": { "type": "announcement", "settings": { "text": "Pide desde cualquier lugar de Colombia a un sólo clic! 💻" } }
+      },
+      "block_order": ["a1", "a2", "a3"],
+      "settings": {
+        "bg": "#EB0284",
+        "text_color": "#FFFFFF",
+        "speed": 5,
+        "show_arrows": true,
+        "show_dots": true
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "bg": "#EB0284",
+        "menu": "main-menu",
+        "highlight_first": true,
+        "show_search": true,
+        "show_wishlist": true,
+        "search_placeholder": "Buscar productos, marcas y más…"
+      }
+    }
+  },
+  "order": ["announcement", "header"]
+}

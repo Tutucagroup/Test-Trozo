@@ -1,0 +1,167 @@
+{%- comment -%}
+  Carrusel UGC (contenido generado por usuarios).
+  Cada tarjeta admite: vídeo subido a Shopify, vídeo externo (YouTube/Vimeo),
+  URL de vídeo mp4 o imagen. Formato vertical 9:16 tipo reel.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <section class="k-section k-ugc" {% if section.settings.background != blank %}style="background:{{ section.settings.background }}"{% endif %}>
+    <div class="k-wrap">
+      <div class="k-section__head">
+        <div>
+          <h2 class="k-section__title{% if section.settings.title_dark %} k-section__title--ink{% endif %}">{{ section.settings.title }}</h2>
+          {%- if section.settings.subtitle != blank -%}
+            <p class="k-section__sub">{{ section.settings.subtitle }}</p>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.link_label != blank and section.settings.link_url != blank -%}
+          <a class="k-section__link" href="{{ section.settings.link_url }}" target="_blank" rel="noopener">{{ section.settings.link_label }} &rsaquo;</a>
+        {%- endif -%}
+      </div>
+
+      <div class="k-carousel" data-carousel data-loop="false">
+        <div class="k-carousel__viewport">
+          <div class="k-carousel__track" data-carousel-track>
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign ugc_product = block.settings.product
+                assign ugc_img = block.settings.image_url
+                unless ugc_img contains '://'
+                  assign ugc_img = ugc_img | file_url
+                endunless
+                assign ugc_vid = block.settings.video_url
+                unless ugc_vid contains '://'
+                  assign ugc_vid = ugc_vid | file_url
+                endunless
+                assign ugc_alt = block.settings.caption | default: 'Contenido de la comunidad Krika' | escape
+                assign cta_url = block.settings.link
+                if cta_url == blank and ugc_product != blank
+                  assign cta_url = ugc_product.url
+                endif
+              -%}
+
+              <div class="k-carousel__slide" {{ block.shopify_attributes }}>
+                <div class="k-ugc__card" data-ugc-card>
+                  {%- if block.settings.external_video != blank -%}
+                    {{ block.settings.external_video | external_video_tag: loading: 'lazy' }}
+
+                  {%- elsif block.settings.video != blank -%}
+                    {{ block.settings.video | video_tag:
+                        image_size: '600x',
+                        playsinline: true,
+                        muted: section.settings.muted,
+                        loop: section.settings.loop_videos,
+                        controls: false }}
+                    <span class="k-ugc__play">{% render 'icon', name: 'play' %}</span>
+
+                  {%- elsif block.settings.video_url != blank -%}
+                    <video playsinline preload="metadata"
+                           {% if section.settings.muted %}muted{% endif %}
+                           {% if section.settings.loop_videos %}loop{% endif %}
+                           {% if block.settings.poster != blank %}poster="{{ block.settings.poster | image_url: width: 800 }}"{% endif %}>
+                      <source src="{{ ugc_vid }}" type="video/mp4">
+                    </video>
+                    <span class="k-ugc__play">{% render 'icon', name: 'play' %}</span>
+
+                  {%- elsif block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 800 | image_tag: width: 800, loading: 'lazy', alt: ugc_alt }}
+
+                  {%- elsif block.settings.image_url != blank -%}
+                    <img src="{{ ugc_img }}" alt="{{ ugc_alt }}" loading="lazy">
+
+                  {%- else -%}
+                    {{ 'lifestyle-2' | placeholder_svg_tag }}
+                  {%- endif -%}
+
+                  {%- if block.settings.tag != blank -%}
+                    <span class="k-ugc__tag">{{ block.settings.tag }}</span>
+                  {%- endif -%}
+
+                  {%- if block.settings.author != blank or block.settings.caption != blank -%}
+                    <div class="k-ugc__overlay">
+                      {%- if block.settings.author != blank -%}
+                        <span class="k-ugc__author">{% render 'icon', name: 'instagram' %} {{ block.settings.author }}</span>
+                      {%- endif -%}
+                      {%- if block.settings.caption != blank -%}
+                        <p class="k-ugc__caption">{{ block.settings.caption }}</p>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if section.settings.show_cta and cta_url != blank -%}
+                    <a class="k-ugc__cta" href="{{ cta_url }}" data-ugc-cta>
+                      {% render 'icon', name: 'bag' %}
+                      {{ block.settings.link_label | default: 'Comprar el look' }}
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        {%- if section.blocks.size > 1 -%}
+          <button class="k-carousel__arrow k-carousel__arrow--prev" type="button" data-carousel-prev aria-label="Anterior">
+            {% render 'icon', name: 'arrow-left' %}
+          </button>
+          <button class="k-carousel__arrow k-carousel__arrow--next" type="button" data-carousel-next aria-label="Siguiente">
+            {% render 'icon', name: 'arrow-right' %}
+          </button>
+          {%- if section.settings.show_dots -%}
+            <div class="k-carousel__dots" data-carousel-dots></div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Carrusel UGC",
+  "tag": "section",
+  "class": "k-ugc-section",
+  "max_blocks": 20,
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "La comunidad Krika ✨" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo", "default": "Vídeos y fotos reales de quienes ya compraron en Krika." },
+    { "type": "checkbox", "id": "title_dark", "label": "Título en color oscuro", "default": false },
+    { "type": "color", "id": "background", "label": "Color de fondo", "default": "#F6F6F8" },
+    { "type": "text", "id": "link_label", "label": "Texto del enlace", "default": "Síguenos en Instagram" },
+    { "type": "url", "id": "link_url", "label": "URL del enlace" },
+    { "type": "header", "content": "Reproducción" },
+    { "type": "checkbox", "id": "muted", "label": "Silenciar vídeos", "default": true },
+    { "type": "checkbox", "id": "loop_videos", "label": "Repetir vídeos", "default": true },
+    { "type": "checkbox", "id": "show_cta", "label": "Mostrar botón de compra", "default": true },
+    { "type": "checkbox", "id": "show_dots", "label": "Mostrar puntos", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Publicación",
+      "settings": [
+        { "type": "header", "content": "Contenido (usa una de las opciones)" },
+        { "type": "video", "id": "video", "label": "Vídeo subido a Shopify" },
+        { "type": "video_url", "id": "external_video", "label": "Vídeo de YouTube o Vimeo", "accept": ["youtube", "vimeo"] },
+        { "type": "text", "id": "video_url", "label": "URL de un vídeo MP4" },
+        { "type": "image_picker", "id": "poster", "label": "Miniatura del vídeo MP4" },
+        { "type": "image_picker", "id": "image", "label": "Imagen" },
+        { "type": "text", "id": "image_url", "label": "URL de imagen" },
+        { "type": "header", "content": "Texto" },
+        { "type": "text", "id": "author", "label": "Autor", "default": "@krikacosmetics" },
+        { "type": "text", "id": "caption", "label": "Descripción" },
+        { "type": "text", "id": "tag", "label": "Etiqueta", "default": "UGC" },
+        { "type": "header", "content": "Compra" },
+        { "type": "product", "id": "product", "label": "Producto destacado" },
+        { "type": "url", "id": "link", "label": "Enlace personalizado", "info": "Tiene prioridad sobre el producto." },
+        { "type": "text", "id": "link_label", "label": "Texto del botón", "default": "Comprar el look" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carrusel UGC",
+      "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }, { "type": "item" }, { "type": "item" }]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,15 @@
+<div class="k-wrap">
+  <article class="k-rte">
+    {%- assign a_alt = article.title | escape -%}
+    <h1>{{ article.title }}</h1>
+    <p style="color:var(--k-muted);font-size:13px">{{ article.published_at | date: '%d/%m/%Y' }}</p>
+    {%- if article.image -%}
+      {{ article.image | image_url: width: 1200 | image_tag: width: 1200, loading: 'eager', alt: a_alt }}
+    {%- endif -%}
+    {{ article.content }}
+  </article>
+</div>
+
+{% schema %}
+{ "name": "Artículo", "tag": "section", "settings": [] }
+{% endschema %}

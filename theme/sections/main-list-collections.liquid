@@ -1,0 +1,20 @@
+<div class="k-wrap">
+  <div class="k-collection__head"><h1 class="k-collection__title">{{ page_title | default: 'Categorías' }}</h1></div>
+  <div class="k-banners k-banners--3" style="padding-bottom:40px">
+    {%- for collection in collections -%}
+      {%- assign c_alt = collection.title | escape -%}
+      <a class="k-banner" href="{{ collection.url }}">
+        {%- if collection.featured_image -%}
+          {{ collection.featured_image | image_url: width: 800 | image_tag: width: 800, loading: 'lazy', alt: c_alt }}
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag }}
+        {%- endif -%}
+        <div class="k-banner__caption"><h3>{{ collection.title }}</h3></div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Lista de colecciones", "tag": "section", "settings": [] }
+{% endschema %}

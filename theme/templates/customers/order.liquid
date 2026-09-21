@@ -1,0 +1,21 @@
+<div class="k-wrap" style="padding:36px 0 70px">
+  <h1 class="k-collection__title">Pedido {{ order.name }}</h1>
+  <p style="color:var(--k-muted);font-size:13.5px">{{ order.created_at | date: '%d/%m/%Y' }} · {{ order.financial_status_label }} · {{ order.fulfillment_status_label }}</p>
+
+  {%- for line in order.line_items -%}
+    {%- assign l_alt = line.title | escape -%}
+    <div class="k-cart__row" style="grid-template-columns:70px 1fr auto">
+      {%- if line.image -%}{{ line.image | image_url: width: 140 | image_tag: width: 140, loading: 'lazy', alt: l_alt }}{%- else -%}<div></div>{%- endif -%}
+      <div><span class="k-cart__name">{{ line.title }}</span><div style="color:var(--k-muted);font-size:12.5px">x{{ line.quantity }}</div></div>
+      <div style="font-weight:700">{{ line.final_line_price | money }}</div>
+    </div>
+  {%- endfor -%}
+
+  <div class="k-cart__foot">
+    <div style="color:var(--k-muted)">Envío: {{ order.shipping_price | money }}</div>
+    <div class="k-cart__total">Total: {{ order.total_price | money }}</div>
+  </div>
+
+  <div style="margin-top:24px;color:var(--k-muted);font-size:13.5px">{{ order.shipping_address | format_address }}</div>
+  <a class="k-btn k-btn--ghost" style="margin-top:18px" href="{{ routes.account_url }}">Volver a mi cuenta</a>
+</div>

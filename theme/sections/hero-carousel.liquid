@@ -1,0 +1,93 @@
+{%- comment -%} Carrusel principal del home (réplica del slider de krika.co) {%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <section class="k-hero">
+  <div class="k-wrap">
+  <div class="k-carousel" data-carousel data-loop="true"
+       data-autoplay="{{ section.settings.autoplay | times: 1000 }}">
+    <div class="k-carousel__viewport">
+      <div class="k-carousel__track" data-carousel-track>
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign desktop = block.settings.image
+            assign mobile = block.settings.image_mobile | default: block.settings.image
+            assign desktop_url = block.settings.image_url
+            assign mobile_url = block.settings.image_mobile_url | default: block.settings.image_url
+            unless desktop_url contains '://'
+              assign desktop_url = desktop_url | file_url
+            endunless
+            unless mobile_url contains '://'
+              assign mobile_url = mobile_url | file_url
+            endunless
+            assign eagerness = 'lazy'
+            if forloop.first
+              assign eagerness = 'eager'
+            endif
+            assign slide_alt = block.settings.alt | default: 'Promoción Krika' | escape
+          -%}
+          <div class="k-carousel__slide" {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.link | default: routes.all_products_collection_url }}"
+               aria-label="{{ slide_alt }}">
+              {%- if desktop != blank -%}
+                {{ desktop | image_url: width: 2000 | image_tag:
+                    class: 'k-hero__img--desktop', width: 2000,
+                    loading: eagerness, sizes: '100vw', alt: slide_alt }}
+                {{ mobile | image_url: width: 900 | image_tag:
+                    class: 'k-hero__img--mobile', width: 900, loading: 'lazy', alt: slide_alt }}
+              {%- elsif desktop_url != blank -%}
+                <img class="k-hero__img--desktop" src="{{ desktop_url }}"
+                     alt="{{ slide_alt }}"
+                     {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+                <img class="k-hero__img--mobile" src="{{ mobile_url }}"
+                     alt="{{ slide_alt }}" loading="lazy">
+              {%- else -%}
+                {{ 'lifestyle-1' | placeholder_svg_tag }}
+              {%- endif -%}
+            </a>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if section.blocks.size > 1 -%}
+      <button class="k-carousel__arrow k-carousel__arrow--prev" type="button" data-carousel-prev aria-label="Anterior">
+        {% render 'icon', name: 'arrow-left' %}
+      </button>
+      <button class="k-carousel__arrow k-carousel__arrow--next" type="button" data-carousel-next aria-label="Siguiente">
+        {% render 'icon', name: 'arrow-right' %}
+      </button>
+      {%- if section.settings.show_dots -%}
+        <div class="k-carousel__dots" data-carousel-dots style="margin-top:12px"></div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+  </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Carrusel principal",
+  "tag": "section",
+  "class": "k-hero-section",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "range", "id": "autoplay", "min": 0, "max": 12, "step": 1, "unit": "s", "label": "Cambiar cada", "default": 6 },
+    { "type": "checkbox", "id": "show_dots", "label": "Mostrar puntos", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Diapositiva",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagen de escritorio" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Imagen móvil" },
+        { "type": "text", "id": "image_url", "label": "URL de imagen de escritorio", "info": "Se usa si no se elige una imagen. Admite GIF animados." },
+        { "type": "text", "id": "image_mobile_url", "label": "URL de imagen móvil" },
+        { "type": "text", "id": "alt", "label": "Texto alternativo", "default": "Promoción Krika" },
+        { "type": "url", "id": "link", "label": "Enlace" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Carrusel principal", "blocks": [{ "type": "slide" }, { "type": "slide" }, { "type": "slide" }] }]
+}
+{% endschema %}

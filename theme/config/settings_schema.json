@@ -1,0 +1,40 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Krika — Réplica VTEX",
+    "theme_version": "1.0.0",
+    "theme_author": "Tutuca Group",
+    "theme_documentation_url": "https://www.krika.co/",
+    "theme_support_url": "https://www.krika.co/"
+  },
+  {
+    "name": "Colores",
+    "settings": [
+      { "type": "color", "id": "k_color_primary", "label": "Color principal (magenta Krika)", "default": "#EB0284" },
+      { "type": "color", "id": "k_color_accent", "label": "Color de acento", "default": "#FF167D" },
+      { "type": "color", "id": "k_color_text", "label": "Color de texto", "default": "#252628" },
+      { "type": "color", "id": "k_color_background", "label": "Fondo", "default": "#FFFFFF" }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      { "type": "font_picker", "id": "k_type_body_font", "label": "Texto", "default": "assistant_n4" },
+      { "type": "font_picker", "id": "k_type_heading_font", "label": "Títulos", "default": "assistant_n7" }
+    ]
+  },
+  {
+    "name": "Diseño",
+    "settings": [
+      { "type": "range", "id": "k_page_width", "min": 1100, "max": 1600, "step": 20, "unit": "px", "label": "Ancho máximo", "default": 1400 },
+      { "type": "range", "id": "k_corner_radius", "min": 0, "max": 20, "step": 1, "unit": "px", "label": "Redondeo de esquinas", "default": 10 },
+      { "type": "image_picker", "id": "k_favicon", "label": "Favicon" }
+    ]
+  },
+  {
+    "name": "Contacto",
+    "settings": [
+      { "type": "text", "id": "k_whatsapp_number", "label": "WhatsApp (con indicativo)", "default": "573336025001", "info": "Deja vacío para ocultar el botón flotante." }
+    ]
+  }
+]

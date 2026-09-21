@@ -1,0 +1,64 @@
+{%- comment -%}
+  Tarjeta de producto.
+  Parámetros: product (obligatorio), show_add (bool, por defecto true)
+{%- endcomment -%}
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign on_sale = false
+  if variant.compare_at_price > variant.price
+    assign on_sale = true
+  endif
+  if show_add == nil
+    assign show_add = true
+  endif
+-%}
+
+<div class="k-card">
+  <a class="k-card__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 480 | image_tag:
+          loading: 'lazy', width: 480, height: 480, alt: product.featured_media.alt | default: product.title | escape }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'k-placeholder' }}
+    {%- endif -%}
+
+    {%- if on_sale -%}
+      <span class="k-card__badge">-{{ variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round }}%</span>
+    {%- elsif product.available == false -%}
+      <span class="k-card__badge k-card__badge--out">Agotado</span>
+    {%- endif -%}
+  </a>
+
+  <div class="k-card__body">
+    {%- if product.vendor != blank -%}
+      <span class="k-card__vendor">{{ product.vendor }}</span>
+    {%- endif -%}
+    <a class="k-card__title" href="{{ product.url }}">{{ product.title }}</a>
+
+    <div class="k-card__price">
+      {%- if variant.price > 0 -%}
+        <span class="money">{{ variant.price | money }}</span>
+        {%- if on_sale -%}<del>{{ variant.compare_at_price | money }}</del>{%- endif -%}
+      {%- else -%}
+        <span class="money">Precio a consultar</span>
+      {%- endif -%}
+    </div>
+
+    {%- if show_add -%}
+      {%- form 'product', product, data-ajax-add: 'true', class: 'k-card__form' -%}
+        <input type="hidden" name="id" value="{{ variant.id }}">
+        <div class="k-card__qty">
+          <span>Cantidad</span>
+          <div class="k-qty" data-qty>
+            <button type="button" data-qty-step="-1" aria-label="Quitar uno">&minus;</button>
+            <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="Cantidad">
+            <button type="button" data-qty-step="1" aria-label="Agregar uno">&plus;</button>
+          </div>
+        </div>
+        <button type="submit" class="k-btn k-btn--primary k-btn--full"{% unless product.available %} disabled{% endunless %}>
+          {% if product.available %}{% render 'icon', name: 'bag' %} Agregar a la bolsa{% else %}Agotado{% endif %}
+        </button>
+      {%- endform -%}
+    {%- endif -%}
+  </div>
+</div>

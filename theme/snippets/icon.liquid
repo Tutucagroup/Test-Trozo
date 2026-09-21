@@ -1,0 +1,36 @@
+{%- comment -%}
+  Iconos en línea.
+  Uso: {% render 'icon', name: 'cart' %}
+{%- endcomment -%}
+{%- case name -%}
+  {%- when 'search' -%}
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  {%- when 'user' -%}
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5S20 17 20 21"/></svg>
+  {%- when 'heart' -%}
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5l-1.4-1.3C5.4 14.5 2.5 11.9 2.5 8.7 2.5 6.1 4.5 4 7.1 4c1.5 0 2.9.7 3.9 1.9C12 4.7 13.4 4 14.9 4 17.5 4 19.5 6.1 19.5 8.7c0 3.2-2.9 5.8-8.1 10.5z"/></svg>
+  {%- when 'cart' -%}
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h13l-1.3 9.2a2 2 0 01-2 1.8H9.3a2 2 0 01-2-1.8L6 7z"/><path d="M9 7V5.8A3 3 0 0112 3a3 3 0 013 2.8V7"/><path d="M3.5 4.5H6"/></svg>
+  {%- when 'menu' -%}
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  {%- when 'close' -%}
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  {%- when 'arrow-left' -%}
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  {%- when 'arrow-right' -%}
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+  {%- when 'play' -%}
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+  {%- when 'bag' -%}
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h13l-1.3 9.2a2 2 0 01-2 1.8H9.3a2 2 0 01-2-1.8L6 7z"/><path d="M9 7V5.8A3 3 0 0112 3a3 3 0 013 2.8V7"/></svg>
+  {%- when 'whatsapp' -%}
+    <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.7 6.4L3 29l6.8-1.8c1.8 1 3.9 1.5 6.2 1.5 7.2 0 13-5.8 13-13S23.2 3 16 3zm0 23.6c-2 0-3.9-.5-5.5-1.5l-.4-.2-4 1.1 1.1-3.9-.3-.4a10.5 10.5 0 1119.1-6.1c0 5.8-4.7 10.5-10.5 10.5zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a8.6 8.6 0 01-2.5-1.6 9.6 9.6 0 01-1.8-2.2c-.2-.3 0-.5.1-.7l.5-.6.3-.5a.6.6 0 000-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 00-.9.4A3.6 3.6 0 008.4 13a6.3 6.3 0 001.3 3.3 14.3 14.3 0 005.5 4.9c.8.3 1.4.5 1.8.7a4.4 4.4 0 002 .1 3.3 3.3 0 002.1-1.5 2.7 2.7 0 00.2-1.5c-.1-.2-.3-.3-.6-.4z"/></svg>
+  {%- when 'facebook' -%}
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M14 8.5V7c0-.8.2-1.2 1.3-1.2H17V3h-2.5C11.7 3 11 4.5 11 6.6v1.9H9V12h2v9h3v-9h2.3l.4-3.5H14z"/></svg>
+  {%- when 'instagram' -%}
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+  {%- when 'youtube' -%}
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M22.5 7.3a2.7 2.7 0 00-1.9-1.9C18.9 5 12 5 12 5s-6.9 0-8.6.4a2.7 2.7 0 00-1.9 1.9A28 28 0 001 12a28 28 0 00.5 4.7 2.7 2.7 0 001.9 1.9C5.1 19 12 19 12 19s6.9 0 8.6-.4a2.7 2.7 0 001.9-1.9A28 28 0 0023 12a28 28 0 00-.5-4.7zM9.8 15.2V8.8l5.6 3.2z"/></svg>
+  {%- when 'tiktok' -%}
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M16.5 3h-2.7v12.1a2.4 2.4 0 11-1.8-2.3V10a5.3 5.3 0 104.5 5.2V9.1a6.4 6.4 0 003.5 1V7.4a3.7 3.7 0 01-3.5-3.7z"/></svg>
+{%- endcase -%}

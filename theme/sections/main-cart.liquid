@@ -1,0 +1,49 @@
+<div class="k-wrap k-cart">
+  {%- if cart.item_count == 0 -%}
+    <div class="k-empty">
+      <h1>Tu bolsa está vacía</h1>
+      <p style="color:var(--k-muted);margin-bottom:22px">Descubre nuestras categorías y encuentra tus favoritos.</p>
+      <a class="k-btn k-btn--primary" href="{{ routes.all_products_collection_url }}">Seguir comprando</a>
+    </div>
+  {%- else -%}
+    <h1 class="k-collection__title" style="margin-bottom:10px">Mi bolsa</h1>
+    <form action="{{ routes.cart_url }}" method="post" novalidate>
+      {%- for item in cart.items -%}
+        {%- assign i_alt = item.title | escape -%}
+        <div class="k-cart__row">
+          <a href="{{ item.url }}">
+            {%- if item.image -%}
+              {{ item.image | image_url: width: 200 | image_tag: width: 200, loading: 'lazy', alt: i_alt }}
+            {%- endif -%}
+          </a>
+          <div>
+            <a class="k-cart__name" href="{{ item.url }}">{{ item.product.title }}</a>
+            {%- unless item.variant.title contains 'Default' -%}
+              <div style="color:var(--k-muted);font-size:12.5px">{{ item.variant.title }}</div>
+            {%- endunless -%}
+            <a class="k-cart__remove" href="{{ item.url_to_remove }}">Quitar</a>
+          </div>
+          <div class="k-qty" data-qty>
+            <button type="button" data-qty-step="-1" aria-label="Quitar uno">&minus;</button>
+            <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" onchange="this.form.submit()" aria-label="Cantidad">
+            <button type="button" data-qty-step="1" aria-label="Agregar uno">&plus;</button>
+          </div>
+          <div style="font-weight:700;white-space:nowrap">{{ item.final_line_price | money }}</div>
+        </div>
+      {%- endfor -%}
+
+      <div class="k-cart__foot">
+        <div class="k-cart__total">Total: {{ cart.total_price | money }}</div>
+        <p style="color:var(--k-muted);font-size:12.5px;margin:0">Los impuestos y el envío se calculan al finalizar la compra.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+          <button type="submit" name="update" class="k-btn k-btn--ghost">Actualizar</button>
+          <button type="submit" name="checkout" class="k-btn k-btn--primary">Finalizar compra</button>
+        </div>
+      </div>
+    </form>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{ "name": "Carrito", "tag": "section", "settings": [] }
+{% endschema %}

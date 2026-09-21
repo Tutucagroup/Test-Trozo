@@ -1,0 +1,74 @@
+{%- comment -%} Vitrina de productos en carrusel (réplica de los "shelves" de krika.co) {%- endcomment -%}
+{%- liquid
+  comment
+    El ajuste "collection" puede llegar como objeto (editor) o como handle (plantilla JSON).
+  endcomment
+  assign shelf = section.settings.collection
+  if shelf.id == blank
+    assign shelf = collections[section.settings.collection]
+  endif
+  assign products = shelf.products
+  assign limit = section.settings.products_to_show
+-%}
+
+<section class="k-section k-shelf">
+  <div class="k-wrap">
+    <div class="k-section__head">
+      <div>
+        <h2 class="k-section__title{% if section.settings.title_dark %} k-section__title--ink{% endif %}">
+          {{ section.settings.title | default: shelf.title }}
+        </h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="k-section__sub">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+      {%- if shelf.id != blank and section.settings.show_view_all -%}
+        <a class="k-section__link" href="{{ shelf.url }}">Ver todo &rsaquo;</a>
+      {%- endif -%}
+    </div>
+
+    {%- if products.size > 0 -%}
+      <div class="k-carousel" data-carousel data-loop="false">
+        <div class="k-carousel__viewport">
+          <div class="k-carousel__track" data-carousel-track>
+            {%- for product in products limit: limit -%}
+              <div class="k-carousel__slide">
+                {% render 'product-card', product: product, show_add: section.settings.show_add %}
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+        <button class="k-carousel__arrow k-carousel__arrow--prev" type="button" data-carousel-prev aria-label="Anterior">
+          {% render 'icon', name: 'arrow-left' %}
+        </button>
+        <button class="k-carousel__arrow k-carousel__arrow--next" type="button" data-carousel-next aria-label="Siguiente">
+          {% render 'icon', name: 'arrow-right' %}
+        </button>
+        {%- if section.settings.show_dots -%}
+          <div class="k-carousel__dots" data-carousel-dots></div>
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      <p style="color:var(--k-muted)">Selecciona una colección con productos para esta vitrina.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Vitrina de productos",
+  "tag": "section",
+  "class": "k-shelf-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "15 Días de Belleza. 💄" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo" },
+    { "type": "collection", "id": "collection", "label": "Colección" },
+    { "type": "range", "id": "products_to_show", "min": 4, "max": 24, "step": 1, "label": "Productos a mostrar", "default": 12 },
+    { "type": "checkbox", "id": "show_add", "label": "Mostrar botón \"Agregar a la bolsa\"", "default": true },
+    { "type": "checkbox", "id": "show_view_all", "label": "Mostrar enlace \"Ver todo\"", "default": true },
+    { "type": "checkbox", "id": "show_dots", "label": "Mostrar puntos", "default": true },
+    { "type": "checkbox", "id": "title_dark", "label": "Título en color oscuro", "default": false }
+  ],
+  "presets": [{ "name": "Vitrina de productos" }]
+}
+{% endschema %}

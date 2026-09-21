@@ -1,0 +1,72 @@
+{%- comment -%} Carrusel de marcas aliadas {%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <section class="k-section k-brands">
+    <div class="k-wrap">
+      {%- if section.settings.title != blank -%}
+        <div class="k-section__head">
+          <h2 class="k-section__title{% if section.settings.title_dark %} k-section__title--ink{% endif %}">{{ section.settings.title }}</h2>
+        </div>
+      {%- endif -%}
+
+      <div class="k-carousel" data-carousel data-loop="true" data-autoplay="{{ section.settings.autoplay | times: 1000 }}">
+        <div class="k-carousel__viewport">
+          <div class="k-carousel__track" data-carousel-track>
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign brand_src = block.settings.image_url
+                unless brand_src contains '://'
+                  assign brand_src = brand_src | file_url
+                endunless
+                assign brand_alt = block.settings.name | escape
+              -%}
+              <div class="k-carousel__slide" {{ block.shopify_attributes }}>
+                <a class="k-brand" href="{{ block.settings.link | default: routes.all_products_collection_url }}">
+                  {%- if block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 400 | image_tag: width: 400, loading: 'lazy', alt: brand_alt }}
+                  {%- elsif block.settings.image_url != blank -%}
+                    <img src="{{ brand_src }}" alt="{{ brand_alt }}" loading="lazy">
+                  {%- else -%}
+                    <span style="font-weight:700;color:var(--k-muted)">{{ block.settings.name }}</span>
+                  {%- endif -%}
+                </a>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+        <button class="k-carousel__arrow k-carousel__arrow--prev" type="button" data-carousel-prev aria-label="Anterior">
+          {% render 'icon', name: 'arrow-left' %}
+        </button>
+        <button class="k-carousel__arrow k-carousel__arrow--next" type="button" data-carousel-next aria-label="Siguiente">
+          {% render 'icon', name: 'arrow-right' %}
+        </button>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Carrusel de marcas",
+  "tag": "section",
+  "class": "k-brands-section",
+  "max_blocks": 20,
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Nuestras marcas" },
+    { "type": "checkbox", "id": "title_dark", "label": "Título en color oscuro", "default": true },
+    { "type": "range", "id": "autoplay", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Cambiar cada", "default": 4 }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Marca",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Nombre" },
+        { "type": "image_picker", "id": "image", "label": "Logo" },
+        { "type": "text", "id": "image_url", "label": "URL del logo" },
+        { "type": "url", "id": "link", "label": "Enlace" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Carrusel de marcas", "blocks": [{ "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }, { "type": "brand" }] }]
+}
+{% endschema %}

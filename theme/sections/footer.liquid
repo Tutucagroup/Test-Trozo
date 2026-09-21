@@ -1,0 +1,129 @@
+{%- comment -%} Pie de página: logo, redes, columnas de enlaces, newsletter y medios de pago {%- endcomment -%}
+<footer class="k-footer">
+  <div class="k-wrap">
+    <div class="k-footer__cols">
+      <div>
+        <a class="k-footer__logo" href="{{ routes.root_url }}">
+          {%- if section.settings.logo != blank -%}
+            {%- assign logo_alt = shop.name | escape -%}
+            {{ section.settings.logo | image_url: width: 400 | image_tag: width: 400, loading: 'lazy', alt: logo_alt }}
+          {%- else -%}
+            <img src="{{ 'krika-logo-footer.png' | file_url }}" alt="{{ shop.name | escape }}" width="400" height="164" loading="lazy">
+          {%- endif -%}
+        </a>
+
+        {%- if section.settings.tagline != blank -%}
+          <p style="color:var(--k-muted);margin-top:12px;max-width:280px">{{ section.settings.tagline }}</p>
+        {%- endif -%}
+
+        <div class="k-social">
+          {%- if section.settings.facebook != blank -%}
+            <a href="{{ section.settings.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon', name: 'facebook' %}</a>
+          {%- endif -%}
+          {%- if section.settings.instagram != blank -%}
+            <a href="{{ section.settings.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a>
+          {%- endif -%}
+          {%- if section.settings.youtube != blank -%}
+            <a href="{{ section.settings.youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{% render 'icon', name: 'youtube' %}</a>
+          {%- endif -%}
+          {%- if section.settings.tiktok != blank -%}
+            <a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', name: 'tiktok' %}</a>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.show_newsletter -%}
+          {%- form 'customer', class: 'k-newsletter' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input type="email" name="contact[email]" placeholder="Tu correo electrónico" required aria-label="Correo electrónico">
+            <button type="submit" class="k-btn k-btn--primary">Unirme</button>
+            {%- if form.posted_successfully? -%}
+              <p class="k-note k-note--success" style="margin-top:8px">¡Gracias por suscribirte!</p>
+            {%- endif -%}
+          {%- endform -%}
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'menu' -%}
+            <div {{ block.shopify_attributes }}>
+              <h3 class="k-footer__title">{{ block.settings.title }}</h3>
+              <ul class="k-footer__links">
+                {%- for link in block.settings.menu.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+                {%- if block.settings.extra_label != blank and block.settings.extra_url != blank -%}
+                  <li><a href="{{ block.settings.extra_url }}"><strong>{{ block.settings.extra_label }}</strong></a></li>
+                {%- endif -%}
+              </ul>
+            </div>
+          {%- when 'text' -%}
+            <div {{ block.shopify_attributes }}>
+              <h3 class="k-footer__title">{{ block.settings.title }}</h3>
+              <div class="k-footer__links">{{ block.settings.content }}</div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_payments -%}
+      <div class="k-footer__pay">
+        <h3 class="k-footer__title">Medios de pago</h3>
+        {%- if section.settings.payments_image != blank -%}
+          {{ section.settings.payments_image | image_url: width: 900 | image_tag: width: 900, loading: 'lazy', alt: 'Medios de pago' }}
+        {%- else -%}
+          <img src="{{ 'krika-medios-pago.png' | file_url }}" alt="Medios de pago" width="900" height="120" loading="lazy">
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="k-footer__bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }}, {{ shop.name }}</span>
+      <span>{{ section.settings.legal_note }}</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de página",
+  "tag": "footer",
+  "class": "k-footer-section",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo del pie (opcional)" },
+    { "type": "text", "id": "tagline", "label": "Descripción breve", "default": "Belleza y cuidado personal para todo Colombia." },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Mostrar suscripción", "default": true },
+    { "type": "header", "content": "Redes sociales" },
+    { "type": "url", "id": "facebook", "label": "Facebook" },
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "url", "id": "youtube", "label": "YouTube" },
+    { "type": "url", "id": "tiktok", "label": "TikTok" },
+    { "type": "header", "content": "Medios de pago" },
+    { "type": "checkbox", "id": "show_payments", "label": "Mostrar medios de pago", "default": true },
+    { "type": "image_picker", "id": "payments_image", "label": "Imagen de medios de pago (opcional)" },
+    { "type": "header", "content": "Legal" },
+    { "type": "text", "id": "legal_note", "label": "Nota legal", "default": "Todos los precios incluyen IVA." }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Columna de enlaces",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Nuestras categorías" },
+        { "type": "link_list", "id": "menu", "label": "Menú" },
+        { "type": "text", "id": "extra_label", "label": "Enlace destacado" },
+        { "type": "url", "id": "extra_url", "label": "URL del enlace destacado" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Columna de texto",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Servicio al cliente" },
+        { "type": "richtext", "id": "content", "label": "Contenido" }
+      ]
+    }
+  ]
+}
+{% endschema %}

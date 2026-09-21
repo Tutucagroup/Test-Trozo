@@ -1,0 +1,70 @@
+{%- comment -%} Barra de anuncios rotativa (réplica del slider superior de krika.co) {%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <div class="k-announce" data-announce data-speed="{{ section.settings.speed | times: 1000 }}"
+       style="background:{{ section.settings.bg }};color:{{ section.settings.text_color }}">
+    <div class="k-wrap" style="position:relative">
+      {%- if section.settings.show_arrows and section.blocks.size > 1 -%}
+        <button class="k-announce__nav k-announce__nav--prev" type="button" data-announce-prev aria-label="Anuncio anterior">
+          {% render 'icon', name: 'arrow-left' %}
+        </button>
+        <button class="k-announce__nav k-announce__nav--next" type="button" data-announce-next aria-label="Anuncio siguiente">
+          {% render 'icon', name: 'arrow-right' %}
+        </button>
+      {%- endif -%}
+
+      <div class="k-announce__viewport">
+        <div class="k-announce__track" data-announce-track>
+          {%- for block in section.blocks -%}
+            <div class="k-announce__slide" {{ block.shopify_attributes }}>
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}"><p>{{ block.settings.text }}</p></a>
+              {%- else -%}
+                <p>{{ block.settings.text }}</p>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- if section.settings.show_dots and section.blocks.size > 1 -%}
+        <div class="k-announce__dots" data-announce-dots></div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Barra de anuncios",
+  "tag": "section",
+  "class": "k-announce-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Fondo", "default": "#EB0284" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#FFFFFF" },
+    { "type": "range", "id": "speed", "min": 0, "max": 12, "step": 1, "unit": "s", "label": "Cambiar cada", "default": 5 },
+    { "type": "checkbox", "id": "show_arrows", "label": "Mostrar flechas", "default": true },
+    { "type": "checkbox", "id": "show_dots", "label": "Mostrar puntos", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Anuncio",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Compra ahora y paga después con ADDI." },
+        { "type": "url", "id": "link", "label": "Enlace" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barra de anuncios",
+      "blocks": [
+        { "type": "announcement", "settings": { "text": "Compra ahora y paga después con ADDI." } },
+        { "type": "announcement", "settings": { "text": "Envío GRATIS por compras iguales o superiores a $100.000 pesos." } },
+        { "type": "announcement", "settings": { "text": "Pide desde cualquier lugar de Colombia a un sólo clic! 💻" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

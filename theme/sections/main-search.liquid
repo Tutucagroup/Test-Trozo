@@ -1,0 +1,45 @@
+{%- paginate search.results by 24 -%}
+  <div class="k-wrap">
+    <div class="k-collection__head">
+      <h1 class="k-collection__title">
+        {%- if search.performed -%}Resultados para “{{ search.terms }}”{%- else -%}Buscar{%- endif -%}
+      </h1>
+    </div>
+
+    <form class="k-form" action="{{ routes.search_url }}" method="get" role="search" style="margin:0 0 24px">
+      <input type="hidden" name="type" value="product">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="¿Qué estás buscando?" aria-label="Buscar">
+      <button type="submit" class="k-btn k-btn--primary">Buscar</button>
+    </form>
+
+    {%- if search.performed -%}
+      <p class="k-count" style="padding-bottom:16px">{{ search.results_count }} resultado{% if search.results_count != 1 %}s{% endif %}</p>
+      {%- if search.results_count > 0 -%}
+        <div class="k-grid">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item %}
+            {%- else -%}
+              <a class="k-card" href="{{ item.url }}"><div class="k-card__body"><span class="k-card__title">{{ item.title }}</span></div></a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p style="color:var(--k-muted)">No encontramos resultados. Prueba con otra palabra.</p>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="k-pagination" aria-label="Paginación">
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>
+          {%- else -%}<span class="{% if part.title == paginate.current_page %}is-current{% endif %}">{{ part.title }}</span>{%- endif -%}
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{ "name": "Búsqueda", "tag": "section", "settings": [] }
+{% endschema %}

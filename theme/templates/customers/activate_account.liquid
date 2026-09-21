@@ -1,0 +1,12 @@
+<div class="k-wrap" style="padding:44px 0 70px">
+  <h1 class="k-collection__title" style="text-align:center;margin-bottom:22px">Activar cuenta</h1>
+  {%- form 'activate_customer_password', class: 'k-form' -%}
+    {%- if form.errors -%}<p class="k-note k-note--error">{{ form.errors | default_errors }}</p>{%- endif -%}
+    <div><label for="ActPass">Contraseña</label>
+      <input type="password" id="ActPass" name="customer[password]" autocomplete="new-password" required></div>
+    <div><label for="ActPassConf">Confirmar contraseña</label>
+      <input type="password" id="ActPassConf" name="customer[password_confirmation]" autocomplete="new-password" required></div>
+    <button type="submit" class="k-btn k-btn--primary">Activar</button>
+    <button type="submit" name="decline" class="k-btn k-btn--ghost">Rechazar invitación</button>
+  {%- endform -%}
+</div>

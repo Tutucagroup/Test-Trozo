@@ -1,0 +1,87 @@
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign on_sale = false
+  if variant.compare_at_price > variant.price
+    assign on_sale = true
+  endif
+  assign p_alt = product.title | escape
+-%}
+
+<div class="k-wrap">
+  <div class="k-product">
+    <div class="k-product__gallery">
+      {%- if product.featured_media -%}
+        {{ product.featured_media | image_url: width: 1000 | image_tag: width: 1000, loading: 'eager', id: 'KProductMainImage', alt: p_alt }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag }}
+      {%- endif -%}
+
+      {%- if product.media.size > 1 -%}
+        <div class="k-product__thumbs">
+          {%- for media in product.media limit: 8 -%}
+            <img src="{{ media | image_url: width: 160 }}" alt="{{ p_alt }}" width="68" height="68" loading="lazy"
+                 onclick="document.getElementById('KProductMainImage').src='{{ media | image_url: width: 1000 }}'">
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div>
+      {%- if product.vendor != blank -%}<span class="k-card__vendor">{{ product.vendor }}</span>{%- endif -%}
+      <h1 class="k-product__title">{{ product.title }}</h1>
+
+      <div class="k-product__price">
+        {%- if variant.price > 0 -%}
+          {{ variant.price | money }}
+          {%- if on_sale -%}<del>{{ variant.compare_at_price | money }}</del>{%- endif -%}
+        {%- else -%}
+          Precio a consultar
+        {%- endif -%}
+      </div>
+
+      {%- form 'product', product, data-ajax-add: 'true', class: 'k-product__form' -%}
+        {%- unless product.has_only_default_variant -%}
+          <div class="k-product__variants">
+            <label for="KVariantSelect">Presentación</label>
+            <select id="KVariantSelect" name="id">
+              {%- for v in product.variants -%}
+                <option value="{{ v.id }}" {% if v == variant %}selected{% endif %} {% unless v.available %}disabled{% endunless %}>
+                  {{ v.title }}{% if v.price > 0 %} — {{ v.price | money }}{% endif %}{% unless v.available %} (agotado){% endunless %}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        {%- else -%}
+          <input type="hidden" name="id" value="{{ variant.id }}">
+        {%- endunless -%}
+
+        <div class="k-card__qty">
+          <span>Cantidad</span>
+          <div class="k-qty" data-qty>
+            <button type="button" data-qty-step="-1" aria-label="Quitar uno">&minus;</button>
+            <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="Cantidad">
+            <button type="button" data-qty-step="1" aria-label="Agregar uno">&plus;</button>
+          </div>
+        </div>
+
+        <button type="submit" class="k-btn k-btn--primary k-btn--full"{% unless product.available %} disabled{% endunless %}>
+          {% if product.available %}{% render 'icon', name: 'bag' %} Agregar a la bolsa{% else %}Agotado{% endif %}
+        </button>
+        <a class="k-btn k-btn--ghost k-btn--full" href="{{ routes.cart_url }}">Ver mi bolsa</a>
+      {%- endform -%}
+
+      <div class="k-product__meta">
+        {%- if variant.sku != blank -%}<div>SKU: {{ variant.sku }}</div>{%- endif -%}
+        {%- if product.type != blank -%}<div>Categoría: {{ product.type }}</div>{%- endif -%}
+      </div>
+
+      {%- if product.description != blank -%}
+        <div class="k-product__desc rte">{{ product.description }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Producto", "tag": "section", "settings": [] }
+{% endschema %}

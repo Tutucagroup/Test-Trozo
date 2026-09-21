@@ -1,0 +1,90 @@
+{%- comment -%} Cabecera fija: logo, buscador, cuenta, favoritos, bolsa y menú de categorías {%- endcomment -%}
+<header class="k-header" style="background:{{ section.settings.bg }}">
+  <div class="k-wrap k-header__main">
+    <button class="k-header__burger" type="button" data-drawer-open aria-label="Abrir menú">
+      {% render 'icon', name: 'menu' %}
+    </button>
+
+    <a class="k-header__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+      {%- if section.settings.logo != blank -%}
+        {%- assign logo_alt = shop.name | escape -%}
+        {{ section.settings.logo | image_url: width: 400 | image_tag: width: 400, loading: 'eager', alt: logo_alt }}
+      {%- else -%}
+        <img src="{{ 'krika-logo-header.png' | file_url }}" alt="{{ shop.name | escape }}" width="400" height="158" loading="eager">
+      {%- endif -%}
+    </a>
+
+    {%- if section.settings.show_search -%}
+      <form class="k-search" action="{{ routes.search_url }}" method="get" role="search">
+        <input type="hidden" name="type" value="product">
+        <input class="k-search__input" type="search" name="q" value="{{ search.terms | escape }}"
+               placeholder="{{ section.settings.search_placeholder }}" aria-label="Buscar">
+        <button class="k-search__submit" type="submit" aria-label="Buscar">{% render 'icon', name: 'search' %}</button>
+      </form>
+    {%- endif -%}
+
+    <div class="k-header__actions">
+      <a class="k-header__action" href="{{ routes.account_url }}">
+        {% render 'icon', name: 'user' %}
+        <span class="k-header__action-label">{% if customer %}{{ customer.first_name | default: 'Mi cuenta' }}{% else %}Entrar{% endif %}</span>
+      </a>
+
+      {%- if section.settings.show_wishlist -%}
+        <a class="k-header__action" href="{{ routes.account_url }}" aria-label="Favoritos">
+          {% render 'icon', name: 'heart' %}
+        </a>
+      {%- endif -%}
+
+      <a class="k-header__action" href="{{ routes.cart_url }}" aria-label="Bolsa de compras">
+        {% render 'icon', name: 'cart' %}
+        <span class="k-cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  <nav class="k-nav" aria-label="Categorías">
+    <div class="k-wrap">
+      <ul class="k-nav__list">
+        {%- for link in section.settings.menu.links -%}
+          <li class="k-nav__item{% if forloop.first and section.settings.highlight_first %} k-nav__item--highlight{% endif %}">
+            <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<div class="k-overlay" data-drawer-overlay></div>
+<aside class="k-drawer" data-mobile-drawer aria-label="Menú de categorías">
+  <div class="k-drawer__head">
+    <strong>Categorías</strong>
+    <button type="button" data-drawer-close aria-label="Cerrar menú">{% render 'icon', name: 'close' %}</button>
+  </div>
+  <div class="k-drawer__body">
+    {%- for link in section.settings.menu.links -%}
+      <a class="k-drawer__link" href="{{ link.url }}">{{ link.title }}</a>
+      {%- for child in link.links -%}
+        <a class="k-drawer__link" href="{{ child.url }}" style="padding-left:34px;font-weight:400">{{ child.title }}</a>
+      {%- endfor -%}
+    {%- endfor -%}
+    <a class="k-drawer__link" href="{{ routes.account_url }}">{% if customer %}Mi cuenta{% else %}Entrar / Registrarme{% endif %}</a>
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Cabecera",
+  "tag": "header",
+  "class": "k-header-section",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (opcional)", "info": "Si se deja vacío se usa el logo de Krika cargado en Archivos." },
+    { "type": "color", "id": "bg", "label": "Color de fondo", "default": "#EB0284" },
+    { "type": "link_list", "id": "menu", "label": "Menú de categorías", "default": "main-menu" },
+    { "type": "checkbox", "id": "highlight_first", "label": "Resaltar el primer elemento del menú", "default": true },
+    { "type": "checkbox", "id": "show_search", "label": "Mostrar buscador", "default": true },
+    { "type": "checkbox", "id": "show_wishlist", "label": "Mostrar favoritos", "default": true },
+    { "type": "text", "id": "search_placeholder", "label": "Texto del buscador", "default": "Buscar productos, marcas y más…" }
+  ]
+}
+{% endschema %}

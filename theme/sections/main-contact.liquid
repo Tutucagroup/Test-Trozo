@@ -1,0 +1,38 @@
+<div class="k-wrap">
+  <article class="k-rte">
+    <h1>{{ page.title | default: 'Contáctanos' }}</h1>
+    {{ page.content }}
+
+    {%- form 'contact', class: 'k-form', id: 'KContactForm' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="k-note k-note--success">¡Gracias! Te responderemos muy pronto.</p>
+      {%- elsif form.errors -%}
+        <p class="k-note k-note--error">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+
+      <div><label for="KContactName">Nombre</label>
+        <input type="text" id="KContactName" name="contact[name]" autocomplete="name" required></div>
+      <div><label for="KContactEmail">Correo electrónico</label>
+        <input type="email" id="KContactEmail" name="contact[email]" autocomplete="email" required></div>
+      <div><label for="KContactPhone">Teléfono</label>
+        <input type="tel" id="KContactPhone" name="contact[phone]" autocomplete="tel"></div>
+      <div><label for="KContactBody">Mensaje</label>
+        <textarea id="KContactBody" name="contact[body]" rows="5" required></textarea></div>
+      <button type="submit" class="k-btn k-btn--primary">Enviar mensaje</button>
+    {%- endform -%}
+
+    {%- if section.settings.whatsapp_note != blank -%}
+      <p style="color:var(--k-muted);font-size:13.5px;text-align:center">{{ section.settings.whatsapp_note }}</p>
+    {%- endif -%}
+  </article>
+</div>
+
+{% schema %}
+{
+  "name": "Contacto",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "whatsapp_note", "label": "Nota bajo el formulario", "default": "También puedes escribirnos por WhatsApp al (+57) 333 6025 001." }
+  ]
+}
+{% endschema %}

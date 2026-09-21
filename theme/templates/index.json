@@ -1,0 +1,130 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-carousel",
+      "blocks": {
+        "s1": { "type": "slide", "settings": { "image_url": "krika-hero-1-desk.png", "image_mobile_url": "krika-hero-1-mob.png", "alt": "Kit corazón: contorno de ojos y bio-retinol", "link": "/collections/facial" } },
+        "s2": { "type": "slide", "settings": { "image_url": "krika-hero-2-desk.gif", "alt": "Keratin Repair", "link": "/collections/capilar" } },
+        "s3": { "type": "slide", "settings": { "image_url": "krika-hero-3-desk.gif", "alt": "Bio-Oil para manchas en la piel", "link": "/collections/corporal" } },
+        "s4": { "type": "slide", "settings": { "image_url": "krika-hero-4-desk.gif", "alt": "Bio-Oil", "link": "/collections/corporal" } },
+        "s5": { "type": "slide", "settings": { "image_url": "krika-hero-5-desk.png", "alt": "Pinza Conair aire frío", "link": "/collections/electricos" } },
+        "s6": { "type": "slide", "settings": { "image_url": "krika-hero-6-desk.png", "alt": "Raia", "link": "/collections/capilar" } },
+        "s7": { "type": "slide", "settings": { "image_url": "krika-hero-7-desk.png", "alt": "Tocobo", "link": "/collections/facial" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6", "s7"],
+      "settings": { "autoplay": 6, "show_dots": true }
+    },
+
+    "shelf_belleza": {
+      "type": "product-shelf",
+      "settings": {
+        "title": "15 Días de Belleza. 💄",
+        "collection": "15-dias-de-belleza",
+        "products_to_show": 12,
+        "show_add": true,
+        "show_view_all": true,
+        "show_dots": true,
+        "title_dark": false
+      }
+    },
+
+    "banners": {
+      "type": "banner-grid",
+      "blocks": {
+        "b1": { "type": "banner", "settings": { "image_url": "krika-banner-moco.png", "alt": "Gel fijador Moco de Gorila", "link": "/collections/capilar" } },
+        "b2": { "type": "banner", "settings": { "image_url": "krika-banner-anyeluz.png", "alt": "Shampoos Anyeluz", "link": "/collections/capilar" } },
+        "b3": { "type": "banner", "settings": { "image_url": "krika-banner-pili.png", "alt": "Pili: rutina para manchas", "link": "/collections/facial" } }
+      },
+      "block_order": ["b1", "b2", "b3"],
+      "settings": { "title": "" }
+    },
+
+    "shelf_regalo": {
+      "type": "product-shelf",
+      "settings": {
+        "title": "El regalo perfecto 🎁",
+        "collection": "el-regalo-perfecto",
+        "products_to_show": 12,
+        "show_add": true,
+        "show_view_all": true,
+        "show_dots": true,
+        "title_dark": true
+      }
+    },
+
+    "shelf_estilo": {
+      "type": "product-shelf",
+      "settings": {
+        "title": "Dale poder a tu estilo ✨",
+        "collection": "dale-poder-a-tu-estilo",
+        "products_to_show": 12,
+        "show_add": true,
+        "show_view_all": true,
+        "show_dots": true,
+        "title_dark": false
+      }
+    },
+
+    "shelf_ellos": {
+      "type": "product-shelf",
+      "settings": {
+        "title": "Para ellos 🧔",
+        "collection": "para-ellos",
+        "products_to_show": 12,
+        "show_add": true,
+        "show_view_all": true,
+        "show_dots": true,
+        "title_dark": true
+      }
+    },
+
+    "brands": {
+      "type": "brand-carousel",
+      "blocks": {
+        "m1": { "type": "brand", "settings": { "name": "Recamier Professional", "image_url": "krika-marca-recamier.png", "link": "/search?q=recamier&type=product" } },
+        "m2": { "type": "brand", "settings": { "name": "Kura", "image_url": "krika-marca-kura.png", "link": "/search?q=kura&type=product" } },
+        "m3": { "type": "brand", "settings": { "name": "Pili", "image_url": "krika-marca-pili.png", "link": "/search?q=pili&type=product" } },
+        "m4": { "type": "brand", "settings": { "name": "Schwarzkopf Professional", "image_url": "krika-marca-schwarzkopf.png", "link": "/search?q=schwarzkopf&type=product" } },
+        "m5": { "type": "brand", "settings": { "name": "Masglo", "image_url": "krika-marca-masglo.png", "link": "/search?q=masglo&type=product" } },
+        "m6": { "type": "brand", "settings": { "name": "L'Mar", "image_url": "krika-marca-lmar.png", "link": "/search?q=lmar&type=product" } },
+        "m7": { "type": "brand", "settings": { "name": "L'Oréal Professionnel", "image_url": "krika-marca-loreal.png", "link": "/search?q=loreal&type=product" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6", "m7"],
+      "settings": { "title": "Nuestras marcas", "title_dark": true, "autoplay": 4 }
+    },
+
+    "ugc": {
+      "type": "ugc-carousel",
+      "blocks": {
+        "u1": { "type": "item", "settings": { "author": "@krikacosmetics", "caption": "Sube aquí el reel de tu clienta.", "tag": "UGC", "link_label": "Comprar el look" } },
+        "u2": { "type": "item", "settings": { "author": "@krikacosmetics", "caption": "Añade un vídeo vertical 9:16 o una foto.", "tag": "UGC", "link_label": "Comprar el look" } },
+        "u3": { "type": "item", "settings": { "author": "@krikacosmetics", "caption": "Etiqueta el producto para que sea comprable.", "tag": "UGC", "link_label": "Comprar el look" } },
+        "u4": { "type": "item", "settings": { "author": "@krikacosmetics", "caption": "Admite vídeos de Shopify, YouTube, Vimeo o MP4.", "tag": "UGC", "link_label": "Comprar el look" } },
+        "u5": { "type": "item", "settings": { "author": "@krikacosmetics", "caption": "Arrastra para ver más contenido de la comunidad.", "tag": "UGC", "link_label": "Comprar el look" } }
+      },
+      "block_order": ["u1", "u2", "u3", "u4", "u5"],
+      "settings": {
+        "title": "La comunidad Krika ✨",
+        "subtitle": "Vídeos y fotos reales de quienes ya compraron en Krika.",
+        "title_dark": false,
+        "background": "#F6F6F8",
+        "link_label": "Síguenos en Instagram",
+        "link_url": "https://www.instagram.com/krikacosmetics/",
+        "muted": true,
+        "loop_videos": true,
+        "show_cta": true,
+        "show_dots": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "shelf_belleza",
+    "banners",
+    "shelf_regalo",
+    "shelf_estilo",
+    "shelf_ellos",
+    "brands",
+    "ugc"
+  ]
+}

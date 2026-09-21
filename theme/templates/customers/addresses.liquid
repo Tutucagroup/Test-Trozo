@@ -1,0 +1,27 @@
+<div class="k-wrap" style="padding:36px 0 70px">
+  <h1 class="k-collection__title" style="margin-bottom:18px">Mis direcciones</h1>
+
+  {%- paginate customer.addresses by 10 -%}
+    {%- for address in customer.addresses -%}
+      <div style="border:1px solid var(--k-line);border-radius:var(--k-radius);padding:16px;margin-bottom:14px">
+        <div style="font-size:13.5px">{{ address | format_address }}</div>
+        {%- form 'customer_address', address -%}
+          <button type="submit" class="k-cart__remove" name="_method" value="delete">Eliminar</button>
+        {%- endform -%}
+      </div>
+    {%- endfor -%}
+  {%- endpaginate -%}
+
+  <h2 style="font-size:18px;margin:26px 0 12px">Agregar dirección</h2>
+  {%- form 'customer_address', customer.new_address, class: 'k-form' -%}
+    <div><label for="AddrFirst">Nombre</label><input type="text" id="AddrFirst" name="address[first_name]"></div>
+    <div><label for="AddrLast">Apellido</label><input type="text" id="AddrLast" name="address[last_name]"></div>
+    <div><label for="Addr1">Dirección</label><input type="text" id="Addr1" name="address[address1]"></div>
+    <div><label for="AddrCity">Ciudad</label><input type="text" id="AddrCity" name="address[city]"></div>
+    <div><label for="AddrCountry">País</label><input type="text" id="AddrCountry" name="address[country]" value="Colombia"></div>
+    <div><label for="AddrPhone">Teléfono</label><input type="tel" id="AddrPhone" name="address[phone]"></div>
+    <button type="submit" class="k-btn k-btn--primary">Guardar dirección</button>
+  {%- endform -%}
+
+  <a class="k-btn k-btn--ghost" style="margin-top:18px" href="{{ routes.account_url }}">Volver a mi cuenta</a>
+</div>

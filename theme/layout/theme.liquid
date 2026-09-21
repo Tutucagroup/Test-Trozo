@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.k_color_primary }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.k_favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.k_favicon | image_url: width: 48 }}">
+    {%- else -%}
+      <link rel="icon" type="image/png" href="{{ 'krika-favicon.png' | file_url }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; Etiquetadas «{{ current_tags | join: ', ' }}»{% endif -%}
+      {%- if current_page != 1 %} &ndash; Página {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {{ content_for_header }}
+
+    {%- liquid
+      assign body_font = settings.k_type_body_font
+      assign heading_font = settings.k_type_heading_font
+      assign body_bold = body_font | font_modify: 'weight', 'bold'
+      assign body_italic = body_font | font_modify: 'style', 'italic'
+      assign heading_bold = heading_font | font_modify: 'weight', 'bold'
+    -%}
+    <style>
+      {{ body_font | font_face: font_display: 'swap' }}
+      {{ body_bold | font_face: font_display: 'swap' }}
+      {{ body_italic | font_face: font_display: 'swap' }}
+      {{ heading_font | font_face: font_display: 'swap' }}
+      {{ heading_bold | font_face: font_display: 'swap' }}
+
+      :root {
+        --k-font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+        --k-font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+        --k-font-body-weight: {{ body_font.weight }};
+        --k-font-heading-weight: {{ heading_font.weight }};
+
+        --k-pink: {{ settings.k_color_primary }};
+        --k-pink-dark: {{ settings.k_color_primary | color_darken: 10 }};
+        --k-pink-soft: {{ settings.k_color_primary | color_lighten: 45 }};
+        --k-ink: {{ settings.k_color_text }};
+        --k-muted: {{ settings.k_color_text | color_lighten: 28 }};
+        --k-line: {{ settings.k_color_text | color_lighten: 72 }};
+        --k-bg: {{ settings.k_color_background }};
+        --k-soft: {{ settings.k_color_text | color_lighten: 76 }};
+        --k-accent: {{ settings.k_color_accent }};
+        --k-radius: {{ settings.k_corner_radius }}px;
+        --k-page: {{ settings.k_page_width }}px;
+      }
+    </style>
+
+    {{ 'krika.css' | asset_url | stylesheet_tag }}
+    <script>document.documentElement.className = document.documentElement.className.replace('no-js','js');</script>
+    <script src="{{ 'krika.js' | asset_url }}" defer></script>
+  </head>
+
+  <body class="template-{{ template.name | handle }}{% if template.suffix %} template-suffix-{{ template.suffix | handle }}{% endif %}">
+    <a class="k-skip" href="#MainContent">Ir al contenido</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="k-main" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {%- if settings.k_whatsapp_number != blank -%}
+      <a class="k-whatsapp"
+         href="https://api.whatsapp.com/send/?phone={{ settings.k_whatsapp_number | remove: '+' | remove: ' ' | remove: '-' }}&text&type=phone_number&app_absent=0"
+         target="_blank" rel="noopener" aria-label="WhatsApp">
+        {% render 'icon', name: 'whatsapp' %}
+      </a>
+    {%- endif -%}
+
+    <div id="KCartDrawerHost"></div>
+  </body>
+</html>
