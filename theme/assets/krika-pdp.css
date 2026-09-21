@@ -1,0 +1,208 @@
+/* ==========================================================================
+   Krika Cosmetics — estilos de la ficha de producto
+   ========================================================================== */
+
+/* ---------- Completa tu rutina (ficha de producto) ---------- */
+.k-recs{background:var(--k-soft);border-top:1px solid var(--k-line);margin-top:10px}
+
+/* ---------- Ficha de producto ---------- */
+.k-pdp{display:grid;gap:26px;grid-template-columns:1fr;padding:26px 0 8px}
+@media(min-width:990px){.k-pdp{grid-template-columns:1.05fr 1fr;gap:52px;padding:36px 0 12px}}
+
+.k-pdp__stage{position:relative;border:1px solid var(--k-line);border-radius:16px;background:#fff;padding:18px;overflow:hidden}
+.k-pdp__stage img{width:100%;height:auto;aspect-ratio:1/1;object-fit:contain}
+.k-pdp__badge{
+  position:absolute;top:14px;left:14px;background:var(--k-pink);color:#fff;
+  font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;letter-spacing:.03em;
+}
+.k-pdp__thumbs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.k-pdp__thumb{
+  width:76px;height:76px;padding:6px;border:1px solid var(--k-line);border-radius:12px;background:#fff;
+  transition:border-color .16s ease,box-shadow .16s ease;
+}
+.k-pdp__thumb img{width:100%;height:100%;object-fit:contain}
+.k-pdp__thumb:hover{border-color:var(--k-pink)}
+.k-pdp__thumb.is-active{border-color:var(--k-pink);box-shadow:0 0 0 2px var(--k-pink-soft)}
+
+.k-pdp__info{display:flex;flex-direction:column;gap:14px}
+.k-pdp__eyebrow{
+  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  padding:7px 12px;border-radius:999px;background:var(--k-pink-soft);color:var(--k-pink);
+  font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+}
+.k-pdp__eyebrow-dot{width:6px;height:6px;border-radius:999px;background:var(--k-pink)}
+.k-pdp__title{font-size:26px;line-height:1.14;letter-spacing:-.02em}
+@media(min-width:750px){.k-pdp__title{font-size:31px}}
+.k-pdp__intro{margin:0;color:#4a4b50;font-size:15px;line-height:1.55;max-width:620px}
+
+.k-pdp__checks{display:flex;flex-direction:column;gap:7px;margin:2px 0 0}
+.k-pdp__checks li{
+  display:flex;align-items:flex-start;gap:10px;padding:10px 12px;
+  border:1px solid var(--k-line);border-radius:12px;background:#fff;font-size:13.5px;line-height:1.4;
+}
+.k-pdp__check{
+  flex:0 0 auto;width:20px;height:20px;margin-top:-1px;border-radius:999px;
+  background:var(--k-pink-soft);color:var(--k-pink);
+  display:flex;align-items:center;justify-content:center;
+}
+.k-pdp__check svg{width:12px;height:12px}
+
+.k-pdp__buy{border:1.5px solid var(--k-pink);border-radius:16px;overflow:hidden;background:#fff;margin-top:4px}
+.k-pdp__buy-head{
+  background:var(--k-pink);color:#fff;text-align:center;padding:8px 14px;
+  font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+}
+.k-pdp__price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:16px 18px 0}
+.k-pdp__price-now{font-size:27px;font-weight:700;color:var(--k-ink)}
+.k-pdp__price-now--ask{font-size:19px;color:var(--k-muted)}
+.k-pdp__price del{font-size:16px;color:var(--k-muted)}
+.k-pdp__form{display:flex;flex-direction:column;gap:12px;padding:14px 18px 18px}
+.k-pdp__variants label{
+  font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--k-muted);display:block;margin-bottom:5px;
+}
+.k-pdp__variants select{width:100%;border:1px solid var(--k-line);border-radius:10px;padding:11px 14px;font-size:14px;background:#fff}
+.k-pdp__qty-row{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:var(--k-muted)}
+.k-btn--lg{padding:15px 24px;font-size:15px}
+
+.k-pdp__trust{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:2px}
+.k-pdp__trust li{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--k-ink)}
+.k-pdp__trust svg{width:14px;height:14px;color:var(--k-pink)}
+
+.k-pdp__specs{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+.k-chip{
+  display:inline-flex;align-items:center;padding:5px 11px;border-radius:999px;
+  background:var(--k-soft);color:var(--k-muted);font-size:11.5px;font-weight:600;letter-spacing:.02em;
+}
+.k-pdp__rte{margin-top:10px;line-height:1.7;color:#3b3c40}
+.k-pdp__rte img{border-radius:var(--k-radius)}
+
+/* Barra de compra fija */
+.k-sticky{
+  position:fixed;left:0;right:0;bottom:0;z-index:44;background:#fff;
+  border-top:1px solid var(--k-line);box-shadow:0 -4px 18px rgba(0,0,0,.09);
+  padding:9px 0;
+}
+.k-sticky[hidden]{display:none}
+.k-sticky__inner{display:flex;align-items:center;gap:12px}
+.k-sticky__media img{width:46px;height:46px;object-fit:contain;border:1px solid var(--k-line);border-radius:10px;padding:3px}
+@media(max-width:600px){.k-sticky__media{display:none}}
+.k-sticky__text{display:flex;flex-direction:column;min-width:0;flex:1}
+.k-sticky__name{
+  font-size:13px;font-weight:600;line-height:1.25;
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
+}
+.k-sticky__price{font-size:15px;font-weight:700;color:var(--k-ink)}
+.k-sticky__btn{flex:0 0 auto;padding:12px 20px}
+
+/* Franja de beneficios */
+.k-marquee{background:var(--k-pink);color:#fff;overflow:hidden;padding:12px 0}
+.k-marquee__track{display:flex;width:max-content;animation:k-marquee 26s linear infinite}
+.k-marquee__group{display:flex;align-items:center}
+.k-marquee__item{
+  padding:0 16px;font-size:13px;font-weight:700;letter-spacing:.03em;white-space:nowrap;
+}
+.k-marquee__dot{width:5px;height:5px;border-radius:999px;background:#fff;opacity:.8;flex:0 0 auto}
+@keyframes k-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.k-marquee__track{animation:none}}
+
+/* Bloques de contenido de la ficha */
+.k-pdp-block--soft{background:var(--k-soft)}
+.k-pdp-block--tight{padding:0 0 10px}
+.k-pdp-block__inner{max-width:900px}
+.k-pdp-block__head{text-align:center;margin-bottom:22px}
+.k-pdp-block__title{font-size:22px;letter-spacing:-.02em}
+@media(min-width:750px){.k-pdp-block__title{font-size:26px}}
+.k-pdp-block__sub{margin:8px auto 0;max-width:560px;color:var(--k-muted);font-size:14px}
+
+.k-cards{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:600px){.k-cards{grid-template-columns:repeat(2,1fr)}}
+.k-cards__item{
+  display:flex;gap:11px;align-items:flex-start;background:#fff;
+  border:1px solid var(--k-line);border-radius:14px;padding:16px 15px;
+}
+.k-cards__item p{margin:0;font-size:13.5px;line-height:1.45;color:#4a4b50}
+.k-cards__icon{
+  flex:0 0 auto;width:32px;height:32px;border-radius:10px;
+  background:var(--k-pink-soft);color:var(--k-pink);
+  display:flex;align-items:center;justify-content:center;
+}
+
+.k-steps{display:grid;gap:12px;grid-template-columns:1fr;counter-reset:k-step}
+@media(min-width:600px){.k-steps{grid-template-columns:repeat(2,1fr)}}
+.k-steps__item{
+  position:relative;counter-increment:k-step;background:#fff;
+  border:1px solid var(--k-line);border-radius:14px;padding:18px 16px 16px 16px;
+}
+.k-steps__item::before{
+  content:counter(k-step);position:absolute;top:14px;right:14px;
+  width:26px;height:26px;border-radius:999px;background:var(--k-pink);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;
+}
+.k-steps__item p{margin:0;padding-right:32px;font-size:13.5px;line-height:1.45;color:#4a4b50}
+
+.k-notes{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:750px){.k-notes{grid-template-columns:repeat(2,1fr)}}
+.k-note-card{border:1px solid var(--k-line);border-left:3px solid var(--k-pink);border-radius:12px;padding:15px 16px;background:#fff}
+.k-note-card--tip{background:var(--k-pink-soft);border-color:transparent;border-left-color:var(--k-pink)}
+.k-note-card__label{
+  display:block;margin-bottom:5px;font-size:11px;font-weight:800;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--k-pink);
+}
+.k-note-card p{margin:0;font-size:13.5px;line-height:1.5;color:#4a4b50}
+
+/* Nota de precaución bajo el modo de uso */
+.k-caution{
+  margin:16px auto 0;max-width:620px;padding:13px 16px;border-radius:12px;
+  background:var(--k-pink-soft);color:var(--k-pink-dark);
+  font-size:13px;line-height:1.45;font-weight:600;text-align:center;
+}
+
+/* Tabla comparativa */
+.k-pdp-block__inner--narrow{max-width:760px}
+.k-compare{background:#fff;border:1px solid var(--k-line);border-radius:16px;overflow:hidden}
+.k-compare__row{display:grid;grid-template-columns:1.1fr 1fr 1fr;border-bottom:1px solid var(--k-line)}
+.k-compare__row:last-child{border-bottom:0}
+.k-compare__cell{padding:13px 12px;font-size:12.5px;line-height:1.35;color:#4a4b50;display:flex;align-items:center}
+.k-compare__cell strong{color:var(--k-ink);font-weight:800}
+.k-compare__row--head .k-compare__cell{
+  font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;background:var(--k-soft);
+}
+.k-compare__row--head .k-compare__cell strong{color:var(--k-ink)}
+.k-compare__cell--yes{color:var(--k-pink);font-weight:700}
+.k-compare__cell--no{color:var(--k-muted)}
+@media(max-width:600px){
+  .k-compare__cell{padding:11px 8px;font-size:11.5px}
+  .k-compare__row--head .k-compare__cell{font-size:10px}
+}
+
+/* Preguntas frecuentes */
+.k-faq__item{background:#fff;border:1px solid var(--k-line);border-radius:13px;margin-bottom:10px;overflow:hidden}
+.k-faq__item summary{
+  cursor:pointer;list-style:none;padding:15px 16px;display:flex;gap:12px;
+  justify-content:space-between;align-items:center;
+  font-size:14px;line-height:1.35;font-weight:700;color:var(--k-ink);
+}
+.k-faq__item summary::-webkit-details-marker{display:none}
+.k-faq__item summary::after{content:"+";font-size:20px;line-height:1;color:var(--k-pink);font-weight:400;flex:0 0 auto}
+.k-faq__item[open] summary::after{content:"\2013"}
+.k-faq__item[open] summary{color:var(--k-pink)}
+.k-faq__answer{padding:0 16px 15px;font-size:13.5px;line-height:1.55;color:#4a4b50}
+.k-faq__answer p{margin:0}
+.k-faq__answer a{color:var(--k-pink);text-decoration:underline}
+
+/* Cierre de la ficha */
+.k-final{background:var(--k-pink-soft);text-align:center}
+.k-final__inner{max-width:680px}
+.k-final__eyebrow{
+  display:inline-block;margin-bottom:12px;padding:6px 12px;border-radius:999px;background:#fff;
+  color:var(--k-pink);font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+}
+.k-final__title{font-size:24px;letter-spacing:-.02em}
+@media(min-width:750px){.k-final__title{font-size:28px}}
+.k-final__text{margin:10px auto 20px;max-width:520px;color:#4a4b50;font-size:14.5px;line-height:1.55}
+.k-final__form{display:flex;justify-content:center}
+.k-final__micro{margin:13px 0 0;font-size:12.5px;font-weight:600;color:var(--k-pink)}
+
+/* Se eleva para no taparse con la barra de compra fija. */
+body:has(.k-sticky:not([hidden])) .k-whatsapp{bottom:82px}

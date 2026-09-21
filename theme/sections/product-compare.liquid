@@ -1,0 +1,58 @@
+{%- comment -%}
+  Tabla comparativa. Cada bloque es una fila; los textos se cargan desde el
+  editor porque dependen de lo que el cliente quiera destacar.
+{%- endcomment -%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="k-section k-pdp-block">
+    <div class="k-wrap k-pdp-block__inner k-pdp-block__inner--narrow">
+      <header class="k-pdp-block__head">
+        <h2 class="k-pdp-block__title">{{ section.settings.title }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="k-pdp-block__sub">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </header>
+
+      <div class="k-compare">
+        <div class="k-compare__row k-compare__row--head">
+          <div class="k-compare__cell"></div>
+          <div class="k-compare__cell"><strong>{{ section.settings.col_a }}</strong></div>
+          <div class="k-compare__cell"><strong>{{ section.settings.col_b }}</strong></div>
+        </div>
+        {%- for block in section.blocks -%}
+          <div class="k-compare__row" {{ block.shopify_attributes }}>
+            <div class="k-compare__cell"><strong>{{ block.settings.label }}</strong></div>
+            <div class="k-compare__cell k-compare__cell--yes">{{ block.settings.value_a }}</div>
+            <div class="k-compare__cell k-compare__cell--no">{{ block.settings.value_b }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Tabla comparativa",
+  "tag": "div",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Comprar en Krika" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo", "default": "Lo que suma llevarlo acá y no en cualquier lado." },
+    { "type": "text", "id": "col_a", "label": "Columna 1", "default": "En Krika" },
+    { "type": "text", "id": "col_b", "label": "Columna 2", "default": "En otro lado" }
+  ],
+  "blocks": [
+    {
+      "type": "fila",
+      "name": "Fila",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Característica" },
+        { "type": "text", "id": "value_a", "label": "Valor columna 1" },
+        { "type": "text", "id": "value_b", "label": "Valor columna 2" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Tabla comparativa" }]
+}
+{% endschema %}

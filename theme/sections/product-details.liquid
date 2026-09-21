@@ -64,6 +64,10 @@
           <li class="k-steps__item"><p>{{ texto }}</p></li>
         {%- endfor -%}
       </ol>
+
+      {%- if section.settings.caution != blank -%}
+        <p class="k-caution">{{ section.settings.caution }}</p>
+      {%- endif -%}
     </div>
   </section>
 {%- endif -%}
@@ -100,7 +104,8 @@
     { "type": "header", "content": "Modo de uso" },
     { "type": "checkbox", "id": "show_steps", "label": "Mostrar modo de uso", "default": true },
     { "type": "text", "id": "steps_title", "label": "Título del modo de uso", "default": "Cómo se usa" },
-    { "type": "text", "id": "steps_sub", "label": "Subtítulo del modo de uso", "default": "Paso a paso para sacarle el máximo provecho." }
+    { "type": "text", "id": "steps_sub", "label": "Subtítulo del modo de uso", "default": "Paso a paso para sacarle el máximo provecho." },
+    { "type": "text", "id": "caution", "label": "Nota de precaución", "default": "Producto de uso externo. Si aparece irritación o molestia, suspende el uso y consulta con un profesional." }
   ],
   "presets": [{ "name": "Detalles del producto" }]
 }

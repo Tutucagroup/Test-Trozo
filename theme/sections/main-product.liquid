@@ -31,6 +31,14 @@
     assign titulo = product.title
   endif
 
+  comment
+    El subtítulo une la frase de apertura con el "Ideal para" para dar
+    un bloque de lectura más parecido al de una ficha de marca propia.
+  endcomment
+  if product.description contains '<strong>Ideal para:</strong>'
+    assign ideal = product.description | split: '<strong>Ideal para:</strong>' | last | split: '</p>' | first | strip
+  endif
+
   assign tono_label = ''
   if product.description contains '<strong>Tono:</strong>'
     assign tono_label = 'Tono'
@@ -72,14 +80,21 @@
       {%- if product.type != blank or product.vendor != blank -%}
         <div class="k-pdp__eyebrow">
           <span class="k-pdp__eyebrow-dot"></span>
-          {{ product.type | default: product.vendor }}{% if product.type != blank and product.vendor != blank %} · {{ product.vendor }}{% endif %}
+          {%- if product.type != blank -%}
+            {% render 'tipo', texto: product.type %}{% if product.vendor != blank %} · {{ product.vendor }}{% endif %}
+          {%- else -%}
+            {{ product.vendor }}
+          {%- endif -%}
         </div>
       {%- endif -%}
 
       <h1 class="k-pdp__title">{{ titulo }}</h1>
 
       {%- if intro != blank -%}
-        <p class="k-pdp__intro">{{ intro }}</p>
+        <p class="k-pdp__intro">
+          {{ intro }}
+          {%- if ideal != blank %} Ideal para {{ ideal }}{% endif -%}
+        </p>
       {%- endif -%}
 
       {%- if tiene_copy -%}
@@ -158,7 +173,7 @@
       <div class="k-pdp__specs">
         {%- if variant.sku != blank -%}<span class="k-chip">SKU {{ variant.sku }}</span>{%- endif -%}
         {%- if tono != blank -%}<span class="k-chip">{{ tono_label }} {{ tono }}</span>{%- endif -%}
-        {%- if product.type != blank -%}<span class="k-chip">{{ product.type }}</span>{%- endif -%}
+        {%- if product.type != blank -%}<span class="k-chip">{% render 'tipo', texto: product.type %}</span>{%- endif -%}
       </div>
 
       {%- unless tiene_copy -%}

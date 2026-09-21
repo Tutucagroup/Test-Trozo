@@ -1,0 +1,34 @@
+{%- comment -%}
+  Los tipos de producto llegan del ERP sin ñ ni tildes ("MAQUILLAJE UNAS",
+  "PESTANINA"). Este snippet los devuelve bien escritos solo para mostrarlos;
+  el valor real no se toca porque las colecciones automáticas filtran por él.
+  Uso: {% render 'tipo', texto: product.type %}
+{%- endcomment -%}
+{{- texto
+  | replace: 'UNAS', 'UÑAS'
+  | replace: 'PESTANAS', 'PESTAÑAS'
+  | replace: 'PESTANINA', 'PESTAÑINA'
+  | replace: 'BANO', 'BAÑO'
+  | replace: 'PANITOS', 'PAÑITOS'
+  | replace: 'SATIN', 'SATÍN'
+  | replace: 'ACRILICA', 'ACRÍLICA'
+  | replace: 'ACRILICOS', 'ACRÍLICOS'
+  | replace: 'ARTISTICO', 'ARTÍSTICO'
+  | replace: 'BALSAMO', 'BÁLSAMO'
+  | replace: 'BARBERIA', 'BARBERÍA'
+  | replace: 'BIFASICOS', 'BIFÁSICOS'
+  | replace: 'CAPSULAS', 'CÁPSULAS'
+  | replace: 'COLORACION', 'COLORACIÓN'
+  | replace: 'CORTACUTICULA', 'CORTACUTÍCULA'
+  | replace: 'CUTICULA', 'CUTÍCULA'
+  | replace: 'DEPILACION', 'DEPILACIÓN'
+  | replace: 'ELECTRICAS', 'ELÉCTRICAS'
+  | replace: 'ELECTRICOS', 'ELÉCTRICOS'
+  | replace: 'ESPATULAS', 'ESPÁTULAS'
+  | replace: 'LAPICES', 'LÁPICES'
+  | replace: 'LAPIZ', 'LÁPIZ'
+  | replace: 'MONOMEROS', 'MONÓMEROS'
+  | replace: 'PERFUMERIA', 'PERFUMERÍA'
+  | replace: 'TERAPEUTICO', 'TERAPÉUTICO'
+  | replace: 'TONICOS', 'TÓNICOS'
+-}}

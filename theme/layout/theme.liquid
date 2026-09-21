@@ -63,6 +63,9 @@
     </style>
 
     {{ 'krika.css' | asset_url | stylesheet_tag }}
+    {%- if template.name == 'product' -%}
+      {{ 'krika-pdp.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
     <script>document.documentElement.className = document.documentElement.className.replace('no-js','js');</script>
     <script src="{{ 'krika.js' | asset_url }}" defer></script>
   </head>

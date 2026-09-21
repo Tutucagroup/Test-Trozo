@@ -3,6 +3,50 @@
     "main": { "type": "main-product" },
     "franja": { "type": "product-marquee" },
     "detalles": { "type": "product-details" },
+    "comparativa": {
+      "type": "product-compare",
+      "blocks": {
+        "f1": { "type": "fila", "settings": { "label": "Variedad", "value_a": "Cientos de marcas en un mismo pedido", "value_b": "Catálogo acotado" } },
+        "f2": { "type": "fila", "settings": { "label": "Envíos", "value_a": "A todo Colombia", "value_b": "Cobertura parcial" } },
+        "f3": { "type": "fila", "settings": { "label": "Asesoría", "value_a": "Atención por WhatsApp", "value_b": "Sin acompañamiento" } },
+        "f4": { "type": "fila", "settings": { "label": "Pago", "value_a": "Compra 100% segura", "value_b": "Depende del canal" } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"]
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": {
+          "type": "pregunta",
+          "settings": {
+            "question": "¿Cómo son los envíos?",
+            "answer": "<p>Enviamos a todo Colombia. Los tiempos y costos según tu ciudad están en nuestra <a href=\"/policies/shipping-policy\">política de envíos</a>.</p>"
+          }
+        },
+        "q2": {
+          "type": "pregunta",
+          "settings": {
+            "question": "¿Puedo cambiar o devolver un producto?",
+            "answer": "<p>Sí, dentro de las condiciones que detallamos en la <a href=\"/policies/refund-policy\">política de cambios y devoluciones</a>.</p>"
+          }
+        },
+        "q3": {
+          "type": "pregunta",
+          "settings": {
+            "question": "¿Los productos son originales?",
+            "answer": "<p>Trabajamos directamente con las marcas y distribuidores autorizados que ves en cada ficha.</p>"
+          }
+        },
+        "q4": {
+          "type": "pregunta",
+          "settings": {
+            "question": "¿Cómo los contacto si tengo una duda?",
+            "answer": "<p>Escríbenos por WhatsApp desde el botón flotante que aparece en la esquina de la tienda.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"]
+    },
     "recomendados": {
       "type": "product-recommendations",
       "settings": {
@@ -16,5 +60,5 @@
     },
     "cierre": { "type": "product-cta" }
   },
-  "order": ["main", "franja", "detalles", "recomendados", "cierre"]
+  "order": ["main", "franja", "detalles", "comparativa", "faq", "recomendados", "cierre"]
 }

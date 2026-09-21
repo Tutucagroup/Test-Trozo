@@ -1,0 +1,40 @@
+{%- comment -%} Preguntas frecuentes en acordeón. {%- endcomment -%}
+
+{%- if section.blocks.size > 0 -%}
+  <section class="k-section k-pdp-block k-pdp-block--soft">
+    <div class="k-wrap k-pdp-block__inner k-pdp-block__inner--narrow">
+      <header class="k-pdp-block__head">
+        <h2 class="k-pdp-block__title">{{ section.settings.title }}</h2>
+      </header>
+
+      {%- for block in section.blocks -%}
+        <details class="k-faq__item" {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.question }}</summary>
+          <div class="k-faq__answer">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Preguntas frecuentes",
+  "tag": "div",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Preguntas frecuentes" }
+  ],
+  "blocks": [
+    {
+      "type": "pregunta",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Pregunta" },
+        { "type": "richtext", "id": "answer", "label": "Respuesta" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Preguntas frecuentes" }]
+}
+{% endschema %}
