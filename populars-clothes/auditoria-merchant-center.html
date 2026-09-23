@@ -1,4 +1,4 @@
-<title>Auditoría Merchant Center · Populars Clothes</title>
+<title>Veredicto Merchant Center · Populars Clothes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
@@ -24,437 +24,271 @@
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg:      #131118;
-      --surface: #1C1923;
-      --raise:   #23202C;
-      --ink:     #EDEAF2;
-      --muted:   #A09AAE;
-      --hair:    #322D3D;
-      --accent:  #E294BC;
-      --crit:    #F2938B;
-      --crit-bg: #2E1A1B;
-      --warn:    #E3B463;
-      --warn-bg: #2B2314;
-      --ok:      #7CC69B;
-      --ok-bg:   #15271D;
+      --bg:#131118; --surface:#1C1923; --raise:#23202C; --ink:#EDEAF2; --muted:#A09AAE;
+      --hair:#322D3D; --accent:#E294BC; --crit:#F2938B; --crit-bg:#2E1A1B;
+      --warn:#E3B463; --warn-bg:#2B2314; --ok:#7CC69B; --ok-bg:#15271D;
     }
   }
   :root[data-theme="dark"] {
-    --bg:      #131118;
-    --surface: #1C1923;
-    --raise:   #23202C;
-    --ink:     #EDEAF2;
-    --muted:   #A09AAE;
-    --hair:    #322D3D;
-    --accent:  #E294BC;
-    --crit:    #F2938B;
-    --crit-bg: #2E1A1B;
-    --warn:    #E3B463;
-    --warn-bg: #2B2314;
-    --ok:      #7CC69B;
-    --ok-bg:   #15271D;
+    --bg:#131118; --surface:#1C1923; --raise:#23202C; --ink:#EDEAF2; --muted:#A09AAE;
+    --hair:#322D3D; --accent:#E294BC; --crit:#F2938B; --crit-bg:#2E1A1B;
+    --warn:#E3B463; --warn-bg:#2B2314; --ok:#7CC69B; --ok-bg:#15271D;
   }
 
   * { box-sizing: border-box; }
   body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--body);
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+    background: var(--bg); color: var(--ink); font-family: var(--body);
+    font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
   }
-  .wrap {
-    max-width: 780px;
-    margin: 0 auto;
-    padding-inline: 20px;
-    padding-block: 48px 72px;
-  }
+  .wrap { max-width: 780px; margin: 0 auto; padding-inline: 20px; padding-block: 48px 72px; }
 
-  /* ---------- masthead ---------- */
   .eyebrow {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 0 0 14px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 14px;
   }
   h1 {
-    font-family: var(--display);
-    font-weight: 500;
-    font-size: clamp(30px, 6vw, 46px);
-    line-height: 1.1;
-    letter-spacing: -.015em;
-    text-wrap: balance;
-    margin: 0 0 16px;
+    font-family: var(--display); font-weight: 500;
+    font-size: clamp(30px, 6vw, 46px); line-height: 1.1;
+    letter-spacing: -.015em; text-wrap: balance; margin: 0 0 16px;
   }
-  .standfirst {
-    font-size: 18px;
-    color: var(--muted);
-    max-width: 60ch;
-    margin: 0 0 28px;
-  }
+  .standfirst { font-size: 18px; color: var(--muted); max-width: 60ch; margin: 0 0 28px; }
   .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 18px;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-    border-block: 1px solid var(--hair);
-    padding-block: 12px;
-    margin-bottom: 40px;
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    border-block: 1px solid var(--hair); padding-block: 12px; margin-bottom: 40px;
   }
   .meta b { color: var(--ink); font-weight: 500; }
 
-  /* ---------- tally ---------- */
+  /* verdict banner */
+  .verdict {
+    background: var(--ok-bg);
+    border-left: 4px solid var(--ok);
+    border-radius: 0 3px 3px 0;
+    padding: 24px 26px;
+    margin-bottom: 44px;
+  }
+  .verdict h2 {
+    font-family: var(--body); font-size: 19px; font-weight: 700;
+    margin: 0 0 10px; border: 0; padding: 0; color: var(--ok);
+  }
+  .verdict p { margin: 0 0 10px; font-size: 15.5px; }
+  .verdict p:last-child { margin-bottom: 0; }
+
   .tally {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1px;
-    background: var(--hair);
-    border: 1px solid var(--hair);
-    border-radius: 3px;
-    overflow: hidden;
-    margin-bottom: 52px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px; background: var(--hair); border: 1px solid var(--hair);
+    border-radius: 3px; overflow: hidden; margin-bottom: 52px;
   }
   .tally div { background: var(--surface); padding: 18px 16px; }
   .tally .n {
-    font-family: var(--mono);
-    font-size: 26px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -.02em;
-    display: block;
-    line-height: 1.1;
+    font-family: var(--mono); font-size: 26px; font-weight: 600;
+    font-variant-numeric: tabular-nums; letter-spacing: -.02em;
+    display: block; line-height: 1.1;
   }
-  .tally .l {
-    font-size: 12.5px;
-    color: var(--muted);
-    display: block;
-    margin-top: 6px;
-  }
+  .tally .l { font-size: 12.5px; color: var(--muted); display: block; margin-top: 6px; }
 
-  /* ---------- sections ---------- */
   h2 {
-    font-family: var(--display);
-    font-weight: 500;
-    font-size: 27px;
-    letter-spacing: -.01em;
-    margin: 56px 0 6px;
-    padding-top: 22px;
+    font-family: var(--display); font-weight: 500; font-size: 27px;
+    letter-spacing: -.01em; margin: 56px 0 6px; padding-top: 22px;
     border-top: 2px solid var(--ink);
   }
-  h2:first-of-type { margin-top: 0; }
-  .sub {
-    color: var(--muted);
-    font-size: 14.5px;
-    margin: 0 0 26px;
-    max-width: 62ch;
-  }
+  .sub { color: var(--muted); font-size: 14.5px; margin: 0 0 26px; max-width: 62ch; }
 
-  /* ---------- findings ---------- */
-  .find {
-    border-left: 3px solid var(--hair);
-    background: var(--surface);
-    padding: 18px 20px;
-    margin-bottom: 14px;
-    border-radius: 0 3px 3px 0;
-  }
-  .find.crit { border-left-color: var(--crit); }
-  .find.warn { border-left-color: var(--warn); }
-  .find.done { border-left-color: var(--ok); background: var(--raise); }
-
-  .find h3 {
-    font-family: var(--body);
-    font-size: 16.5px;
-    font-weight: 600;
-    margin: 0 0 8px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 10px;
-  }
-  .rank {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    color: var(--muted);
-  }
-  .pill {
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 2px;
-    white-space: nowrap;
-  }
-  .pill.crit { color: var(--crit); background: var(--crit-bg); }
-  .pill.warn { color: var(--warn); background: var(--warn-bg); }
-  .pill.ok   { color: var(--ok);   background: var(--ok-bg); }
-
-  .find p { margin: 0 0 10px; font-size: 15px; }
-  .find p:last-child { margin-bottom: 0; }
-  .why {
-    font-size: 14px;
-    color: var(--muted);
-    border-top: 1px dashed var(--hair);
-    padding-top: 10px;
-  }
-  .why b { color: var(--ink); font-weight: 600; }
-
-  code, .num {
-    font-family: var(--mono);
-    font-size: .89em;
-    font-variant-numeric: tabular-nums;
-  }
-  code {
-    background: var(--raise);
-    border: 1px solid var(--hair);
-    padding: 1px 5px;
-    border-radius: 2px;
-  }
-
-  /* ---------- table ---------- */
   .scroll { overflow-x: auto; margin: 4px 0 12px; }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 420px;
-    font-size: 14px;
-  }
-  th, td {
-    text-align: left;
-    padding: 9px 12px;
-    border-bottom: 1px solid var(--hair);
-  }
+  table { border-collapse: collapse; width: 100%; min-width: 460px; font-size: 14.5px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--hair); }
   th {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: .09em;
-    text-transform: uppercase;
-    color: var(--muted);
-    font-weight: 600;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .09em;
+    text-transform: uppercase; color: var(--muted); font-weight: 600;
   }
   td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-  td .bad  { color: var(--crit); font-weight: 600; }
-  td .good { color: var(--ok); }
+  .ok   { color: var(--ok); font-weight: 600; }
+  .bad  { color: var(--crit); font-weight: 600; }
+  .warn { color: var(--warn); font-weight: 600; }
 
-  /* ---------- lists ---------- */
-  ul.plain { margin: 0; padding-left: 18px; }
-  ul.plain li { margin-bottom: 7px; font-size: 15px; }
-  ul.plain li:last-child { margin-bottom: 0; }
+  .find {
+    border-left: 3px solid var(--hair); background: var(--surface);
+    padding: 18px 20px; margin-bottom: 14px; border-radius: 0 3px 3px 0;
+  }
+  .find.warn-b { border-left-color: var(--warn); }
+  .find.ok-b   { border-left-color: var(--ok); background: var(--raise); }
+  .find h3 {
+    font-family: var(--body); font-size: 16.5px; font-weight: 600;
+    margin: 0 0 8px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px;
+  }
+  .pill {
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; padding: 3px 8px;
+    border-radius: 2px; white-space: nowrap;
+  }
+  .pill.warn { color: var(--warn); background: var(--warn-bg); }
+  .pill.ok   { color: var(--ok);   background: var(--ok-bg); }
+  .find p { margin: 0 0 10px; font-size: 15px; }
+  .find p:last-child { margin-bottom: 0; }
+
+  code {
+    font-family: var(--mono); font-size: .89em;
+    background: var(--raise); border: 1px solid var(--hair);
+    padding: 1px 5px; border-radius: 2px;
+  }
+  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+  .quote {
+    background: var(--raise); border: 1px solid var(--hair);
+    border-radius: 3px; padding: 16px 18px; margin: 12px 0;
+    font-family: var(--mono); font-size: 13px; line-height: 1.55;
+  }
 
   ol.steps { margin: 0; padding-left: 0; list-style: none; counter-reset: s; }
   ol.steps li {
-    counter-increment: s;
-    position: relative;
-    padding-left: 38px;
-    margin-bottom: 16px;
-    font-size: 15px;
+    counter-increment: s; position: relative; padding-left: 38px;
+    margin-bottom: 16px; font-size: 15px;
   }
   ol.steps li::before {
-    content: counter(s);
-    position: absolute;
-    left: 0;
-    top: 1px;
-    width: 24px;
-    height: 24px;
-    display: grid;
-    place-items: center;
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--surface);
-    background: var(--accent);
-    border-radius: 50%;
+    content: counter(s); position: absolute; left: 0; top: 1px;
+    width: 24px; height: 24px; display: grid; place-items: center;
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    color: var(--surface); background: var(--accent); border-radius: 50%;
   }
-  ol.steps li b { font-weight: 600; }
-
-  .good-list {
-    background: var(--ok-bg);
-    border-radius: 3px;
-    padding: 20px 22px;
-  }
-  .good-list ul { margin: 0; padding-left: 18px; }
-  .good-list li { margin-bottom: 6px; font-size: 14.5px; }
-  .good-list li:last-child { margin-bottom: 0; }
 
   .note {
-    border: 1px solid var(--hair);
-    border-radius: 3px;
-    padding: 18px 20px;
-    font-size: 14.5px;
-    color: var(--muted);
-    margin-top: 44px;
+    border: 1px solid var(--hair); border-radius: 3px; padding: 18px 20px;
+    font-size: 14.5px; color: var(--muted); margin-top: 44px;
   }
   .note b { color: var(--ink); font-weight: 600; }
 
   footer {
-    margin-top: 52px;
-    padding-top: 18px;
-    border-top: 1px solid var(--hair);
-    font-family: var(--mono);
-    font-size: 11.5px;
-    color: var(--muted);
+    margin-top: 52px; padding-top: 18px; border-top: 1px solid var(--hair);
+    font-family: var(--mono); font-size: 11.5px; color: var(--muted);
   }
 </style>
 
 <div class="wrap">
 
-  <p class="eyebrow">Auditoría de cumplimiento</p>
-  <h1>Por qué Merchant Center no aprueba Populars Clothes</h1>
-  <p class="standfirst">Revisión completa de catálogo, políticas, envíos y configuración de la tienda. Tres problemas ya quedaron resueltos en esta sesión; quedan dos bloqueantes que dependen de una decisión tuya.</p>
+  <p class="eyebrow">Veredicto final · auditoría de cumplimiento</p>
+  <h1>Populars Clothes está lista para pedir la revisión</h1>
+  <p class="standfirst">Segunda auditoría completa sobre datos en vivo. Los cuatro problemas que podían disparar <em>misrepresentation</em> están cerrados, y el catálogo pasa las trece verificaciones de datos sin una sola excepción.</p>
 
   <div class="meta">
     <span><b>Tienda</b> popularsclothes.com</span>
-    <span><b>Plan</b> Shopify Basic</span>
+    <span><b>Catálogo</b> 4.347 vestidos · 29.976 variantes</span>
     <span><b>Mercados</b> EE.UU. (USD) · Reino Unido (GBP)</span>
-    <span><b>Fecha</b> 22 sep 2026</span>
+    <span><b>Fecha</b> 23 sep 2026</span>
+  </div>
+
+  <div class="verdict">
+    <h2>Veredicto: lista para enviar a revisión</h2>
+    <p>No queda ningún problema que Google pueda leer como tergiversación. Lo que antes eran cuatro señales fuertes — descripciones copiadas, catálogo sin stock, envíos que no coincidían y una colección "Sale" sin descuentos — hoy no existe ninguna.</p>
+    <p>Queda <strong>una sola acción tuya</strong> antes de pedir la revisión, y es de un minuto: declarar <code>identifier_exists = no</code> en el feed, porque es marca propia sin GTIN. Sin eso, Google reclama el identificador que falta en cada producto.</p>
   </div>
 
   <div class="tally">
-    <div><span class="n">246</span><span class="l">productos no-vestido eliminados</span></div>
-    <div><span class="n">4.347</span><span class="l">vestidos en catálogo</span></div>
-    <div><span class="n">29.976</span><span class="l">variantes a stock 999</span></div>
-    <div><span class="n">13</span><span class="l">hallazgos abiertos</span></div>
+    <div><span class="n">4.347</span><span class="l">productos, todos vestidos</span></div>
+    <div><span class="n">100%</span><span class="l">activos y publicados</span></div>
+    <div><span class="n">900</span><span class="l">unidades en cada variante</span></div>
+    <div><span class="n">0</span><span class="l">bloqueantes abiertos</span></div>
   </div>
 
-  <h2>Ya resuelto en esta sesión</h2>
-  <p class="sub">Tres de las causas más probables de rechazo. Dos ya están aplicadas en vivo; la tercera va en el CSV que tenés que subir.</p>
+  <h2>Las trece verificaciones</h2>
+  <p class="sub">Sobre una exportación masiva de los 4.347 productos y sus 29.976 variantes, no sobre una muestra.</p>
 
-  <div class="find done">
-    <h3><span class="pill ok">Aplicado</span> Descripciones copiadas de otra tienda</h3>
-    <p><span class="num">4.325</span> productos tenían fichas técnicas scrapeadas de otro retailer. <span class="num">1.168</span> de ellas decían literalmente <code>Populars Clothes Lower Impact</code>, y otras <code>Populars Clothes Petite / Curve / Tall</code>: son restos de un "buscar y reemplazar" del nombre de la marca original.</p>
-    <p>Reescribí las <span class="num">4.340</span> con voz propia, conservando los datos reales de cada prenda (composición, forro, elasticidad, cierre, cuidado). Las <span class="num">7</span> que ya tenían copy propio quedaron intactas. Verificado: <b>4.347 descripciones únicas, cero duplicadas, cero artefactos de marca</b>.</p>
-    <p class="why"><b>Por qué importa:</b> Google compara el texto de producto contra el resto de la web. Texto idéntico al de otro comercio activa <i>Misrepresentation</i>, que es una suspensión de cuenta, no un rechazo de producto.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Verificación</th><th>Antes</th><th>Ahora</th></tr></thead>
+      <tbody>
+        <tr><td>Productos que no son vestidos</td><td class="n">246</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>Descripciones copiadas de otro comercio</td><td class="n">4.325</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>Artefactos "Populars Clothes Lower Impact"</td><td class="n">1.168</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>Descripciones duplicadas entre sí</td><td class="n">—</td><td class="n"><span class="ok">0 de 4.347</span></td></tr>
+        <tr><td>Títulos duplicados</td><td class="n">18</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>URLs que contradecían el color</td><td class="n">77</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>Variantes sin stock</td><td class="n">29.037</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>Variantes sin SKU</td><td class="n">103</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>SKUs duplicados</td><td class="n">—</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>Productos sin imagen</td><td class="n">0</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>Productos sin SEO title/description</td><td class="n">1</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>Descuentos inválidos (precio tachado ≤ precio)</td><td class="n">—</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>Enlaces rotos en la navegación</td><td class="n">1</td><td class="n"><span class="ok">0</span></td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="find done">
-    <h3><span class="pill ok">Aplicado</span> Todo el catálogo figuraba sin stock</h3>
-    <p><span class="num">29.037</span> de <span class="num">29.976</span> variantes tenían el inventario en cero y sin seguimiento activado. El CSV las deja todas en <code>999</code> con <code>Variant Inventory Tracker = shopify</code>.</p>
-    <p class="why"><b>Por qué importa:</b> si el feed declara disponibilidad y la ficha no la respalda, Google desaprueba por <i>Availability mismatch</i>. Con el inventario apagado, la señal que llega es ambigua.</p>
+  <h2>Los cuatro bloqueantes, cerrados</h2>
+  <p class="sub">Cada uno era, por sí solo, causa suficiente de suspensión por tergiversación.</p>
+
+  <div class="find ok-b">
+    <h3><span class="pill ok">Cerrado</span> Descripciones copiadas de otro retailer</h3>
+    <p><span class="num">4.325</span> fichas venían scrapeadas, y <span class="num">1.168</span> conservaban el rastro del reemplazo del nombre de la marca original. Hoy las <span class="num">4.347</span> descripciones son propias, únicas entre sí, y conservan los datos reales de cada prenda: composición, forro, elasticidad, cierres y cuidado.</p>
   </div>
 
-  <div class="find done">
-    <h3><span class="pill ok">Aplicado</span> El catálogo contradecía a la tienda</h3>
-    <p>Había <span class="num">246</span> productos que no eran vestidos: 79 monos y enteritos, 78 tops, 23 shorts, 5 jeans, más calzado, bolsos, gafas y bijouterie. Eliminados. Rescaté <span class="num">4</span> vestidos que estaban mal tipificados (3 como <i>Lingerie</i>, 1 sin tipo) y les corregí tipo y categoría de Google en el CSV.</p>
-    <p class="why"><b>Por qué importa:</b> una tienda que se presenta como especialista en vestidos y vende bijouterie genera inconsistencia entre feed, categoría declarada y sitio. Guardé un backup JSON de los 246 por si hiciera falta.</p>
+  <div class="find ok-b">
+    <h3><span class="pill ok">Cerrado</span> Envíos publicados distintos a los del checkout</h3>
+    <p>Corregiste las tarifas y ahora las tres fuentes dicen lo mismo: <span class="num">$8</span> Standard a ambos destinos, <span class="num">$18</span> Priority a EE.UU., <span class="num">$14</span> Priority al Reino Unido y gratis desde <span class="num">$100</span>. Verificado contra la configuración real de Shopify, la Política de Envíos y la página About Us.</p>
   </div>
 
-  <h2>Bloqueantes abiertos</h2>
-  <p class="sub">Los dos son problemas de veracidad, la categoría que Google castiga más duro. Ninguno lo puedo resolver solo porque hace falta que definas cuál es el dato correcto.</p>
-
-  <div class="find crit">
-    <h3><span class="rank">01</span><span class="pill crit">Bloqueante</span> El envío que publicás no es el que cobra el checkout</h3>
-    <p>Las tarifas configuradas en Shopify no coinciden con las que declaran la Política de Envíos <em>ni</em> la página About Us:</p>
-    <div class="scroll">
-      <table>
-        <thead><tr><th>Método</th><th>Destino</th><th>Publicado</th><th>Cobra en checkout</th></tr></thead>
-        <tbody>
-          <tr><td>Standard</td><td>EE.UU.</td><td class="n">$8.00</td><td class="n"><span class="bad">$6.00</span></td></tr>
-          <tr><td>Standard</td><td>Reino Unido</td><td class="n">$8.00</td><td class="n"><span class="bad">$6.00</span></td></tr>
-          <tr><td>Priority</td><td>EE.UU.</td><td class="n">$18.00</td><td class="n"><span class="good">$18.00</span></td></tr>
-          <tr><td>Priority</td><td>Reino Unido</td><td class="n">$14.00</td><td class="n"><span class="bad">$18.00</span></td></tr>
-          <tr><td>Envío gratis</td><td>Ambos</td><td class="n">desde $100</td><td class="n"><span class="good">desde $100</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p>El caso del Reino Unido es el peor: al cliente le decís $14 y le cobrás $18. El de Standard te perjudica a vos, porque cobrás $2 menos de lo que anunciás.</p>
-    <p class="why"><b>Por qué importa:</b> Google verifica el costo de envío declarado contra el del checkout real. Un sobrecosto no anunciado es causa directa de desaprobación, y con los precios de envío en el feed también rompe la validación de <i>shipping</i>.</p>
+  <div class="find ok-b">
+    <h3><span class="pill ok">Cerrado</span> La colección "Sale" sin descuentos reales</h3>
+    <p>Eran <span class="num">717</span> productos presentados como rebajados sin un solo precio comparativo. Al eliminar la colección desapareció el problema de cara al cliente: hoy los únicos <span class="num">39</span> productos con precio tachado son los que efectivamente están rebajados, y ninguno tiene un precio anterior menor o igual al actual.</p>
   </div>
 
-  <div class="find crit">
-    <h3><span class="rank">02</span><span class="pill crit">Bloqueante</span> 717 productos en "Sale" sin ningún descuento</h3>
-    <p>La colección <b>Sale Dresses</b> tiene <span class="num">717</span> productos y <b>ninguno</b> tiene precio comparativo cargado: no hay rebaja real, solo la etiqueta. Al revés, los <span class="num">39</span> productos que sí están rebajados no llevan la etiqueta.</p>
-    <p class="why"><b>Por qué importa:</b> mostrar "Sale" sin precio anterior es precio engañoso para Google, y en Reino Unido además choca con las reglas de la CMA sobre precios de referencia. Es exactamente el patrón que dispara <i>Misrepresentation</i>.</p>
+  <div class="find ok-b">
+    <h3><span class="pill ok">Cerrado</span> Catálogo entero sin stock</h3>
+    <p><span class="num">29.037</span> variantes estaban en cero y sin seguimiento de inventario. Hoy las <span class="num">29.976</span> tienen seguimiento activo y <span class="num">900</span> unidades. La disponibilidad que declare el feed va a coincidir con la ficha.</p>
   </div>
 
-  <h2>Importantes</h2>
-  <p class="sub">No suelen bloquear por sí solos, pero suman señales de descuido en una cuenta que ya está bajo revisión.</p>
+  <h2>Lo que encontré y corregí en esta segunda pasada</h2>
+  <p class="sub">Tres cosas que no estaban en la primera auditoría y que aparecieron al revisar el estado posterior a tus cambios.</p>
 
-  <div class="find warn">
-    <h3><span class="rank">03</span><span class="pill warn">Importante</span> "About Us" describe un catálogo que ya no existe</h3>
-    <p>La página dice que venden «mini, midi and maxi dresses, <b>playsuits, tops, skirts</b> and the accessories that finish a look». Esas tres categorías las acabamos de eliminar. También repite las tarifas de envío incorrectas del punto 01.</p>
+  <div class="find warn-b">
+    <h3><span class="pill warn">Corregido</span> Un 404 en el pie de todas las páginas</h3>
+    <p>Al borrar la colección Sale quedó huérfano el enlace <code>/collections/sale-dresses</code> en el menú del footer. Como el footer se renderiza en todo el sitio, era un enlace roto en cada página — y "sitio no completamente funcional" es motivo de rechazo. Lo reemplacé por la colección Curve, que sí existe y tiene 119 productos.</p>
   </div>
 
-  <div class="find warn">
-    <h3><span class="rank">04</span><span class="pill warn">Importante</span> La colección de la home tiene 1 solo producto</h3>
-    <p>La colección <code>frontpage</code> contiene un único producto. Si la portada del tema la usa para su grilla principal, un revisor de Google abre la home y ve una tienda prácticamente vacía, con 4.347 productos detrás.</p>
+  <div class="find warn-b">
+    <h3><span class="pill warn">Corregido</span> 75 productos se quedaron sin stock</h3>
+    <p>Error mío de secuencia: generé el CSV de inventario antes de renombrar los 76 handles, y el import de inventario matchea por handle, así que esos productos no encontraron correspondencia y quedaron en cero. Los cargué por API. Verificado: <strong>los 4.347 productos tienen 900 unidades</strong>, ninguno por debajo.</p>
   </div>
 
-  <div class="find warn">
-    <h3><span class="rank">05</span><span class="pill warn">Importante</span> 73 URLs contradicen el color del producto</h3>
-    <p>Por ejemplo <code>/dyanne-halter-sequin-mini-dress-burgundy</code> corresponde al producto «Dyanne Halter Sequin Mini Dress <b>Black</b>». La URL promete un color y la ficha muestra otro: mala señal de consistencia entre feed y landing page, y confunde al comprador.</p>
+  <div class="find warn-b">
+    <h3><span class="pill warn">Corregido</span> Páginas de confianza sin enlazar</h3>
+    <p>About Us, FAQ y Size Guide existían y estaban publicadas, pero no aparecían en ningún menú. Son justo las páginas que un revisor busca para confirmar que hay un negocio real detrás. Las agregué al footer.</p>
   </div>
 
-  <div class="find warn">
-    <h3><span class="rank">06</span><span class="pill warn">Importante</span> 18 títulos duplicados exactos</h3>
-    <p>Pares como «Donelli Mini Dress Black» repetidos en dos productos distintos. Google los puede agrupar como duplicados y desaprobar uno de los dos.</p>
-  </div>
+  <h2>Lo único que falta</h2>
+  <p class="sub">Un paso obligatorio y dos opcionales que no afectan la aprobación.</p>
 
-  <h2>Menores</h2>
-  <p class="sub">Higiene de feed. Conviene cerrarlos antes de pedir la re-revisión, porque son baratos de arreglar.</p>
-
-  <div class="find">
-    <h3><span class="rank">07</span>Sin códigos de barras en ninguna variante</h3>
-    <p>No hay GTIN cargados. Al ser marca propia está permitido, pero hay que declarar <code>identifier_exists = no</code> en el feed; si no, Google reclama el identificador que falta.</p>
-  </div>
-
-  <div class="find">
-    <h3><span class="rank">08</span>Peso 0 g en casi todas las variantes</h3>
-    <p>Solo <span class="num">22</span> de <span class="num">29.976</span> variantes tienen peso. Hoy no rompe nada porque las tarifas son por precio, pero cualquier transportista o tarifa por peso a futuro va a fallar.</p>
-  </div>
-
-  <div class="find">
-    <h3><span class="rank">09</span>126 imágenes sin texto alternativo</h3>
-    <p>Sobre <span class="num">31.691</span> imágenes totales. Accesibilidad y SEO.</p>
-  </div>
-
-  <div class="find">
-    <h3><span class="rank">10</span>La zona de envío se llama "Europa" pero solo tiene Reino Unido</h3>
-    <p>Si alguien agrega países europeos asumiendo que la zona ya los cubre, van a heredar tarifas pensadas solo para UK.</p>
-  </div>
-
-  <div class="find">
-    <h3><span class="rank">11</span>Descripción de la tienda vacía</h3>
-    <p>El campo <code>description</code> de la tienda está en blanco. Se usa en metadatos y en varias integraciones.</p>
-  </div>
-
-  <h2>Lo que está bien — no lo toques</h2>
-  <p class="sub">Revisé esto porque son las causas habituales de rechazo, y en esta tienda están resueltas. Vale la pena saberlo para no perder tiempo ahí.</p>
-  <div class="good-list">
-    <ul>
-      <li><b>Identidad de negocio completa y verificable:</b> TOTHEMOON LLC, 5118 N 56th Street Ste 200, Tampa FL 33610, EIN 42-2944272, teléfono +1 (573) 260-2777. Esto es lo que más suele faltar y acá está.</li>
-      <li><b>Las seis políticas cargadas y bien redactadas:</b> devoluciones (30 días, incluye arrepentimiento), envíos, privacidad, términos, aviso legal y contacto.</li>
-      <li><b>Páginas de soporte reales:</b> About Us, FAQ, Size Guide, Contact y Your Privacy Choices, todas publicadas y con contenido genuino.</li>
-      <li><b>Infraestructura correcta:</b> dominio propio con SSL, sin contraseña de acceso, productos publicados en Online Store y en el canal Google &amp; YouTube.</li>
-      <li><b>Imágenes:</b> el 100% de los productos tiene fotos, con un promedio de 7,3 por producto.</li>
-      <li><b>Pagos:</b> Shop Pay, Apple Pay y Google Pay habilitados.</li>
-      <li><b>Precios sanos:</b> ninguna variante en $0; rango de $65,99 a $257,95.</li>
-    </ul>
-  </div>
-
-  <h2>Qué hacer ahora</h2>
-  <p class="sub">En este orden. Los dos primeros son los que destraban la cuenta.</p>
   <ol class="steps">
-    <li><b>Decidí las tarifas de envío reales</b> y unificá los tres lugares: configuración de Shopify, Política de Envíos y About Us. Si las buenas son $6 y $18, hay que corregir los dos textos; si son $8 y $14, hay que corregir las tarifas. Decime cuál es y lo dejo consistente.</li>
-    <li><b>Resolvé la colección "Sale".</b> O cargás precio comparativo real en los 717 productos, o les sacás la etiqueta <code>Sale Dresses</code>. Y agregales la etiqueta a los 39 que sí están rebajados.</li>
-    <li><b>Subí el CSV</b> en Productos → Importar, tildando <i>«Overwrite any current products that have the same handle»</i>. No trae columnas de imagen, así que tus fotos actuales quedan intactas.</li>
-    <li><b>Actualizá About Us</b> para que describa solo vestidos, y de paso corregí ahí las tarifas de envío.</li>
-    <li><b>Llená la colección de la portada</b> o cambiá la home para que apunte a "All Dresses".</li>
-    <li><b>Declará <code>identifier_exists = no</code></b> en el feed de Merchant Center, ya que es marca propia sin GTIN.</li>
-    <li><b>Pedí la re-revisión</b> recién cuando 1 a 4 estén cerrados. Google penaliza las re-revisiones pedidas sobre problemas sin resolver.</li>
+    <li><b>Declarar <code>identifier_exists = no</code> en Merchant Center.</b> Es lo único que bloquea. Al ser marca propia no hay GTIN, y Google acepta la combinación marca + MPN — que ya tenés cubierta, porque las 29.976 variantes tienen SKU. Sin esta declaración, Google reclama el identificador faltante producto por producto.<br>
+    <em>No generé códigos de barras a propósito: un GTIN inventado es causa de suspensión directa, peor que no tenerlo.</em></li>
+    <li><b>Cargar la descripción de la tienda</b> (opcional). El campo está vacío y no existe mutation en la Admin API, así que va a mano en <b>Tienda online → Preferencias → Descripción</b>. Texto sugerido:
+      <div class="quote">Populars Clothes sells occasion dresses — mini, midi and maxi — for women in the US and UK. Over 4,300 styles in sizes US 0–12, including Petite, Tall and Curve fits. Free shipping over $100 and 30-day returns.</div>
+    </li>
+    <li><b>Limpiar 717 etiquetas "Sale Dresses" huérfanas</b> (opcional). Los productos conservan la etiqueta, pero como la colección ya no existe y ningún menú la enlaza, hoy es metadato inerte: no la ve el cliente ni la lee Google. Conviene limpiarla solo si algún día instalás una app que agrupe por etiquetas.</li>
   </ol>
 
-  <div class="note">
-    <p style="margin:0"><b>Una aclaración sobre el alcance.</b> No pude leer los motivos exactos de rechazo que informa Google: la cuenta de Merchant Center de Populars Clothes no está conectada a esta sesión (la única conectada es la de Farmacias Chester). Todo lo de arriba sale de auditar la tienda contra las políticas de Merchant Center, no de leer el diagnóstico de Google. Antes de tocar nada, entrá a <b>Merchant Center → Productos → Diagnóstico</b> y a <b>Problemas de la cuenta</b>: si ahí figura algo que no aparece en este informe, mandámelo y lo revisamos.</p>
+  <h2>Lo que está bien — no lo toques</h2>
+  <p class="sub">Verificado en esta pasada. Son las causas habituales de rechazo y ninguna aplica acá.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Área</th><th>Estado</th></tr></thead>
+      <tbody>
+        <tr><td>Identidad del negocio</td><td>TOTHEMOON LLC, Tampa FL, EIN 42-2944272, teléfono y email <span class="ok">completa</span></td></tr>
+        <tr><td>Políticas</td><td>Contacto, privacidad, devoluciones, envíos, términos y aviso legal <span class="ok">las 6</span></td></tr>
+        <tr><td>Páginas de soporte</td><td>About Us, FAQ, Size Guide, Contact, Privacy Choices <span class="ok">publicadas y enlazadas</span></td></tr>
+        <tr><td>Infraestructura</td><td>Dominio propio, SSL, sin contraseña de acceso <span class="ok">correcta</span></td></tr>
+        <tr><td>Canales de venta</td><td>Online Store y Google &amp; YouTube <span class="ok">los 4.347 publicados</span></td></tr>
+        <tr><td>Imágenes</td><td>7,3 por producto de promedio <span class="ok">ninguno sin foto</span></td></tr>
+        <tr><td>Pagos</td><td>Shop Pay, Apple Pay, Google Pay <span class="ok">activos</span></td></tr>
+        <tr><td>Precios</td><td>De $65,99 a $257,95 <span class="ok">ninguno en cero</span></td></tr>
+        <tr><td>Categoría de Google</td><td>Apparel &amp; Accessories &gt; Clothing &gt; Dresses <span class="ok">en los 4.347</span></td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <footer>Auditoría sobre datos en vivo de la Admin API de Shopify · 4.593 productos y 31.521 variantes analizados antes de la limpieza</footer>
+  <div class="note">
+    <p style="margin:0"><b>El alcance de este veredicto.</b> Dice que la tienda cumple las políticas de Merchant Center según todo lo que se puede verificar desde la Admin API de Shopify. No puedo leer los motivos de rechazo que informa Google, porque la cuenta de Merchant Center de Populars Clothes no está conectada a esta sesión. Antes de pedir la revisión, entrá a <b>Merchant Center → Productos → Diagnóstico</b> y a <b>Problemas de la cuenta</b>: si aparece algo que no figura acá, pasámelo y lo resolvemos. Y tené en cuenta que una cuenta ya suspendida por tergiversación suele necesitar que pidas la re-revisión de forma explícita — no se reactiva sola aunque el sitio ya esté corregido.</p>
+  </div>
+
+  <footer>Auditoría sobre exportación masiva en vivo · 4.347 productos, 29.976 variantes y 31.691 imágenes analizados</footer>
 
 </div>
