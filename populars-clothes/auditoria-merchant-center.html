@@ -67,10 +67,12 @@
     padding: 24px 26px;
     margin-bottom: 44px;
   }
+  .verdict.stop { background: var(--crit-bg); border-left-color: var(--crit); }
   .verdict h2 {
     font-family: var(--body); font-size: 19px; font-weight: 700;
     margin: 0 0 10px; border: 0; padding: 0; color: var(--ok);
   }
+  .verdict.stop h2 { color: var(--crit); }
   .verdict p { margin: 0 0 10px; font-size: 15.5px; }
   .verdict p:last-child { margin-bottom: 0; }
 
@@ -165,9 +167,9 @@
 
 <div class="wrap">
 
-  <p class="eyebrow">Veredicto final · auditoría de cumplimiento</p>
-  <h1>Populars Clothes está lista para pedir la revisión</h1>
-  <p class="standfirst">Segunda auditoría completa sobre datos en vivo. Los cuatro problemas que podían disparar <em>misrepresentation</em> están cerrados, y el catálogo pasa las trece verificaciones de datos sin una sola excepción.</p>
+  <p class="eyebrow">Veredicto · auditoría de cumplimiento</p>
+  <h1>El catálogo está listo. El checkout no.</h1>
+  <p class="standfirst">Los cuatro problemas que podían disparar <em>misrepresentation</em> están cerrados y el catálogo pasa las trece verificaciones sin una sola excepción. Pero el botón de pago del checkout está roto, y eso bloquea todo lo demás.</p>
 
   <div class="meta">
     <span><b>Tienda</b> popularsclothes.com</span>
@@ -176,17 +178,40 @@
     <span><b>Fecha</b> 23 sep 2026</span>
   </div>
 
-  <div class="verdict">
-    <h2>Veredicto: lista para enviar a revisión</h2>
-    <p>No queda ningún problema que Google pueda leer como tergiversación. Lo que antes eran cuatro señales fuertes — descripciones copiadas, catálogo sin stock, envíos que no coincidían y una colección "Sale" sin descuentos — hoy no existe ninguna.</p>
-    <p>Queda <strong>una sola acción tuya</strong> antes de pedir la revisión, y es de un minuto: declarar <code>identifier_exists = no</code> en el feed, porque es marca propia sin GTIN. Sin eso, Google reclama el identificador que falta en cada producto.</p>
+  <div class="verdict stop">
+    <h2>No enviar a revisión todavía</h2>
+    <p>El botón de pagar del checkout no muestra su texto: en su lugar imprime <code>I18n Error: The value for "general.pay_now_button_label" was not a string. Found "" instead.</code> Un checkout que no se puede completar con confianza es rechazo directo, y además ningún trabajo de catálogo compensa perder las ventas mientras tanto.</p>
+    <p>El catálogo, las políticas y los envíos <strong>sí están listos</strong>. Falta esto y declarar <code>identifier_exists = no</code> en el feed. Con esas dos cosas hechas, se envía.</p>
   </div>
 
   <div class="tally">
     <div><span class="n">4.347</span><span class="l">productos, todos vestidos</span></div>
     <div><span class="n">100%</span><span class="l">activos y publicados</span></div>
     <div><span class="n">900</span><span class="l">unidades en cada variante</span></div>
-    <div><span class="n">0</span><span class="l">bloqueantes abiertos</span></div>
+    <div><span class="n">1</span><span class="l">bloqueante abierto: el checkout</span></div>
+  </div>
+
+  <h2>El botón de pagar</h2>
+  <p class="sub">Lo más urgente de todo lo que apareció en esta sesión, y lo único que no puedo arreglar yo: la herramienta bloquea escrituras sobre el tema publicado.</p>
+
+  <div class="find" style="border-left-color: var(--crit)">
+    <h3><span class="pill" style="color:var(--crit);background:var(--crit-bg)">Bloqueante</span> Seis textos del checkout quedaron vacíos</h3>
+    <p>El archivo <code>locales/en.default.json</code> del tema activo termina con un bloque <code>shopify.checkout</code> donde seis claves están guardadas como string vacío. El checkout pide el texto del botón, recibe <code>""</code> y en vez de un botón imprime el error.</p>
+    <p>No es solo el botón visible. Estas seis están vacías, y cada una rompe una parte distinta:</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Clave</th><th>Dónde rompe</th><th>Valor a poner</th></tr></thead>
+        <tbody>
+          <tr><td><code>general.pay_now_button_label</code></td><td>El botón de pagar <span class="bad">(el del error)</span></td><td>Pay now</td></tr>
+          <tr><td><code>general.complete_purchase_button_label</code></td><td>El mismo botón en otros flujos</td><td>Complete purchase</td></tr>
+          <tr><td><code>order_payment_collection.pay_now</code></td><td>Links de pago de facturas</td><td>Pay now</td></tr>
+          <tr><td><code>shipping.duties_and_taxes_options.ddp_title</code></td><td>Checkout del Reino Unido <span class="warn">(aranceles)</span></td><td>Duties and taxes included</td></tr>
+          <tr><td><code>tips.description</code></td><td>Propinas, si se activan</td><td>restaurar por defecto</td></tr>
+          <tr><td><code>payment.subscription_agreement_label_html</code></td><td>Suscripciones, si se activan</td><td>restaurar por defecto</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>La de aranceles importa especialmente porque vendés al Reino Unido: hoy está latente y rompe el checkout en cuanto el comprador llegue a esa opción.</p>
   </div>
 
   <h2>Las trece verificaciones</h2>
@@ -209,6 +234,7 @@
         <tr><td>Productos sin SEO title/description</td><td class="n">1</td><td class="n"><span class="ok">0</span></td></tr>
         <tr><td>Descuentos inválidos (precio tachado ≤ precio)</td><td class="n">—</td><td class="n"><span class="ok">0</span></td></tr>
         <tr><td>Enlaces rotos en la navegación</td><td class="n">1</td><td class="n"><span class="ok">0</span></td></tr>
+        <tr><td>Textos del checkout vacíos</td><td class="n">6</td><td class="n"><span class="bad">6 — pendiente</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -258,6 +284,17 @@
   <p class="sub">Un paso obligatorio y dos opcionales que no afectan la aprobación.</p>
 
   <ol class="steps">
+    <li><b>Arreglar los seis textos del checkout.</b> En el admin: <b>Tienda online → Temas → ⋯ (junto al tema activo) → Editar contenido predeterminado del tema</b>, y buscar "pay now". Ahí aparecen los campos vacíos de la tabla de arriba para completar. Si preferís tocar el código: <b>⋯ → Editar código → locales/en.default.json</b>, y reemplazar el bloque <code>"shopify"</code> del final por este, que además borra las tres claves que no necesitás para que Shopify use sus textos por defecto:
+      <div class="quote">"shopify": {<br>
+&nbsp;&nbsp;"checkout": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"general": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"complete_purchase_button_label": "Complete purchase",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"pay_now_button_label": "Pay now"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"order_payment_collection": { "pay_now": "Pay now" }<br>
+&nbsp;&nbsp;}<br>
+}</div>
+      <em>No lo pude hacer yo: la herramienta bloquea cualquier escritura sobre el tema publicado, por seguridad.</em></li>
     <li><b>Declarar <code>identifier_exists = no</code> en Merchant Center.</b> Es lo único que bloquea. Al ser marca propia no hay GTIN, y Google acepta la combinación marca + MPN — que ya tenés cubierta, porque las 29.976 variantes tienen SKU. Sin esta declaración, Google reclama el identificador faltante producto por producto.<br>
     <em>No generé códigos de barras a propósito: un GTIN inventado es causa de suspensión directa, peor que no tenerlo.</em></li>
     <li><b>Cargar la descripción de la tienda</b> (opcional). El campo está vacío y no existe mutation en la Admin API, así que va a mano en <b>Tienda online → Preferencias → Descripción</b>. Texto sugerido:
