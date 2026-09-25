@@ -1,0 +1,181 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "rating": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div style='display:flex;align-items:center;gap:8px;margin:4px 0 8px;font-family:inherit'><span style='color:#F5831F;font-size:17px;letter-spacing:1px'>★★★★★</span><span style='color:#555;font-size:14px;font-weight:600'>4.8/5 · +1.200 reseñas</span></div>"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "bullets": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<ul style='list-style:none;margin:16px 0 6px;padding:0;display:flex;flex-direction:column;gap:10px;font-family:inherit'>{%- assign _b = product.metafields.custom.bullets.value -%}{%- if _b != blank and _b.size > 0 -%}{%- for b in _b -%}<li style='display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#1a1a1a;font-weight:500;line-height:1.35'><span style='flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:#009B8E;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700'>✓</span><span>{{ b }}</span></li>{%- endfor -%}{%- else -%}<li style='display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#1a1a1a;font-weight:500;line-height:1.35'><span style='flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:#009B8E;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700'>✓</span><span>Producto <b>100% original</b> y garantizado</span></li><li style='display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#1a1a1a;font-weight:500;line-height:1.35'><span style='flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:#009B8E;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700'>✓</span><span>Envío gratis a todo el país</span></li><li style='display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#1a1a1a;font-weight:500;line-height:1.35'><span style='flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:#009B8E;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700'>✓</span><span>Asesoramiento farmacéutico</span></li>{%- endif -%}<li style='display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#1a1a1a;font-weight:500;line-height:1.35'><span style='flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:#009B8E;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700'>✓</span><span>Hasta <b>6 cuotas sin interés</b></span></li></ul>"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "trust": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div style='margin-top:12px;font-family:inherit'><div style='display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;background:#e6f5f3;border-radius:10px;font-size:13px;font-weight:700;color:#0b6f68'>Pago 100% seguro · Mercado Pago · Tarjetas</div><div style='display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px'><span style='width:9px;height:9px;border-radius:50%;background:#F5831F;display:inline-block'></span><span style='color:#222'><b style='color:#F5831F'>Atención</b> – Pocas unidades disponibles</span></div></div>"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Compartir"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "rating",
+        "title",
+        "price",
+        "bullets",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "trust",
+        "description",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "perfil-olfativo": {
+      "type": "perfil-olfativo",
+      "settings": {
+        "heading": "Acordes principales",
+        "subheading": "Perfil olfativo de la fragancia"
+      }
+    },
+    "marquee": {
+      "type": "chester-pdp-marquee",
+      "blocks": {
+        "b1": {
+          "type": "item",
+          "settings": {
+            "text": "Envío gratis a todo el país"
+          }
+        },
+        "b2": {
+          "type": "item",
+          "settings": {
+            "text": "Hasta 12 cuotas sin interés"
+          }
+        },
+        "b3": {
+          "type": "item",
+          "settings": {
+            "text": "Productos 100% originales"
+          }
+        },
+        "b4": {
+          "type": "item",
+          "settings": {
+            "text": "Farmacia habilitada"
+          }
+        },
+        "b5": {
+          "type": "item",
+          "settings": {
+            "text": "Atención personalizada"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ],
+      "settings": {}
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "También te puede interesar",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "main",
+    "perfil-olfativo",
+    "marquee",
+    "related-products"
+  ]
+}

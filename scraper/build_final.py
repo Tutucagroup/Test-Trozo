@@ -22,6 +22,12 @@ def clean(v):
     return _ILLEGAL.sub("", v) if isinstance(v, str) else v
 
 
+def norm_handle(h):
+    # Shopify colapsa guiones consecutivos y recorta los de los extremos.
+    # El archivo debe usar el handle REAL de Shopify para matchear en el MERGE.
+    return re.sub(r"-{2,}", "-", h or "").strip("-")
+
+
 def main():
     # tags nuevos por handle
     recat = {}
@@ -48,7 +54,7 @@ def main():
     ws = wb.active
     ws.title = "Products"
     headers = ["Handle", "Command", "Variant SKU", "Tags",
-               "Metafield: custom.bullets [list.single_line_text]"]
+               "Metafield: custom.bullets [list.single_line_text_field]"]
     for c, h in enumerate(headers, 1):
         ws.cell(1, c, h)
 
@@ -56,7 +62,7 @@ def main():
     n_tags = n_bul = 0
     for handle, rec in recat.items():
         sku = rec.get("sku")
-        ws.cell(r, 1, handle)
+        ws.cell(r, 1, norm_handle(handle))
         ws.cell(r, 2, "MERGE")
         ws.cell(r, 3, sku)
         ws.cell(r, 4, clean(rec["new_tags"]))
