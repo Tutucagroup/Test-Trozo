@@ -1,0 +1,67 @@
+# Brief de test de producto. Copialo por cada producto que quieras testear.
+
+product:
+  name: Corrector de Postura
+  # Opción A: el handle del producto que creaste en Shopify (se toma la URL y el estado)
+  shopify_handle: corrector-de-postura
+  # Opción B: URL directa de destino (pisa a shopify_handle)
+  # url: https://mitienda.com/products/corrector-de-postura
+  description: |
+    Corregí tu postura en minutos al día.
+    Cómodo, invisible bajo la ropa y ajustable.
+
+# De dónde salen los videos (se combinan en este orden: videos, videos_dir, export_file)
+kalodata:
+  export_file: kalodata_export_ejemplo.csv   # export CSV/XLSX de la pestaña Videos del producto
+  sort_by: revenue                           # revenue | views | sales
+  top_n: 3                                   # cuántos videos tomar del ranking
+  # videos_dir: videos/corrector              # o una carpeta con los .mp4 descargados (+ .txt con caption)
+  # columns:                                  # solo si tu export tiene otros nombres de columna
+  #   url: "Video Link"
+  #   caption: "Video Title"
+
+# videos:                                     # también podés listar videos a mano
+#   - path: videos/mi_ugc.mp4
+#     caption: "Texto del anuncio"
+
+test:
+  max_videos: 5
+
+campaign:
+  # abo_1_1_n | abo_1_n_1 | cbo_1_1_n | cbo_1_n_1 | custom
+  structure: abo_1_n_1
+  objective: OUTCOME_SALES
+  event: PURCHASE            # evento del pixel a optimizar (PURCHASE, ADD_TO_CART, INITIATED_CHECKOUT...)
+  daily_budget: 10           # en la moneda de la cuenta. ABO = por conjunto, CBO = total de campaña
+  countries: [AR]
+  age_min: 18
+  age_max: 65
+  advantage_audience: true
+  # genders: [2]             # 1 = hombres, 2 = mujeres
+  cta: SHOP_NOW
+  # start_time: "2026-10-07T00:00:00-0300"
+  naming:
+    campaign: "{fecha} | {producto} | TEST | {estructura}"
+    adset: "{producto} | {audiencia}"
+    ad: "{producto} | {video}"
+  # url_tags: "utm_source=facebook&utm_medium=paid&utm_campaign={{campaign.name}}&utm_content={{ad.name}}"
+
+  # Ejemplo de estructura custom (structure: custom):
+  # budget_level: adset      # adset = ABO, campaign = CBO
+  # adsets:
+  #   - audiencia: Broad
+  #     creatives: all
+  #   - audiencia: Mujeres 25-45
+  #     creatives: [1, 3]
+  #     daily_budget: 15
+  #     targeting: {genders: [2], age_min: 25, age_max: 45}
+
+copy:
+  use_kalodata_caption: true   # usa la descripción del video (sin hashtags/menciones)
+  # primary_texts:             # o tus propios textos (rotan entre videos)
+  #   - "Texto 1"
+  #   - "Texto 2"
+  headlines:
+    - Corrector de Postura
+    - Envío gratis hoy
+  description: Envío gratis a todo el país
