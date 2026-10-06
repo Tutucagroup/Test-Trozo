@@ -12,7 +12,17 @@ Shopify (tu producto)  ──►  URL + estado  ──────────�
                                  Campaña ► Conjuntos ► Anuncios (estructura que elijas)
 ```
 
-## Instalación
+## Abrirlo con doble clic
+
+1. Instalá Python desde [python.org](https://www.python.org/downloads/) (en Windows, marcá
+   "Add Python to PATH").
+2. Abrí la carpeta del proyecto y hacé doble clic en:
+   - **Mac:** `Abrir Product Tester.command` (la primera vez: clic derecho → Abrir → Abrir)
+   - **Windows:** `Abrir Product Tester.bat`
+3. La primera vez instala lo necesario y crea el archivo `.env`. Después se abre el navegador.
+   Dejá la ventana negra abierta mientras lo usás; cerrala para apagarlo.
+
+## Instalación manual
 
 ```bash
 pip install -r requirements.txt
