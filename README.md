@@ -31,7 +31,26 @@ y el pixel, y generá un token con `ads_management`, `ads_read`, `pages_read_eng
 `read_products` y `write_products` y copiá el token de Admin API. Es opcional: si no lo configurás,
 poné `product.url` en el brief.
 
-## Flujo de trabajo
+## Interfaz web
+
+```bash
+python -m product_tester web
+```
+
+Se abre `http://127.0.0.1:8765` en el navegador. Desde ahí:
+
+- arrastrás el export de Kalodata o los videos descargados y los ves en tarjetas con sus métricas;
+- editás el texto de cada anuncio o quitás los videos que no te gustan (entra el siguiente del ranking);
+- elegís la estructura con un clic, o armás conjuntos custom con audiencia, edad, género y videos;
+- ves el árbol de la campaña y una vista previa del anuncio como se ve en el feed;
+- lanzás (en pausa o activa) y seguís el progreso; al terminar te deja el link al Ads Manager;
+- guardás o abrís briefs `.yaml` y ves el historial de lanzamientos.
+
+La web corre solo en tu computadora (no acepta conexiones de afuera) y usa las mismas
+credenciales del `.env`. Lo que subís queda en la carpeta `workspace/`.
+Si querés otro puerto: `python -m product_tester web --port 9000`.
+
+## Flujo de trabajo (línea de comandos)
 
 1. **Kalodata:** en el producto que te interesa, abrí la pestaña *Videos* y exportá a CSV/XLSX,
    o descargá los videos a una carpeta. Kalodata no tiene API pública, así que este paso es manual.

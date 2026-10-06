@@ -1,0 +1,1080 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product Tester</title>
+<link rel="icon" href="data:,">
+<style>
+:root {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --surface-2: #f0f2f5;
+  --border: #e2e5ea;
+  --text: #15181e;
+  --muted: #646b78;
+  --accent: #3b5bdb;
+  --accent-soft: #e8edff;
+  --accent-text: #ffffff;
+  --ok: #1f8a4c;
+  --ok-soft: #e3f5ea;
+  --warn: #a35d00;
+  --warn-soft: #fff2dc;
+  --danger: #c92a2a;
+  --danger-soft: #fde8e8;
+  --shadow: 0 1px 2px rgba(16, 24, 40, .05), 0 1px 3px rgba(16, 24, 40, .06);
+  --radius: 12px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115;
+    --surface: #171a21;
+    --surface-2: #1f232c;
+    --border: #2a2f3a;
+    --text: #e8eaef;
+    --muted: #9aa1ae;
+    --accent: #7c93ff;
+    --accent-soft: #232b4a;
+    --accent-text: #0f1115;
+    --ok: #4cc382;
+    --ok-soft: #173325;
+    --warn: #f0a843;
+    --warn-soft: #3a2a12;
+    --danger: #ff7b7b;
+    --danger-soft: #3d1c1c;
+    --shadow: none;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: var(--accent); }
+
+/* ---------- header ---------- */
+header {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  max-width: 1400px; margin: 0 auto; padding: 12px 24px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+.brand-mark {
+  width: 32px; height: 32px; border-radius: 9px; background: var(--accent); color: var(--accent-text);
+  display: grid; place-items: center; font-weight: 700;
+}
+.brand h1 { font-size: 16px; margin: 0; line-height: 1.2; }
+.brand small { color: var(--muted); font-size: 12px; }
+.pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.pill {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px;
+  background: var(--surface-2); border: 1px solid var(--border); font-size: 12px; white-space: nowrap;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.pill.ok .dot { background: var(--ok); }
+.pill.bad .dot { background: var(--danger); }
+.pill.off .dot { background: var(--warn); }
+
+/* ---------- layout ---------- */
+main {
+  max-width: 1400px; margin: 0 auto; padding: 24px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 440px; gap: 24px; align-items: start;
+}
+.col { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.sticky { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow-y: auto; padding-bottom: 4px; scrollbar-width: thin; }
+@media (max-width: 1100px) {
+  main { grid-template-columns: minmax(0, 1fr); padding: 16px; }
+  .sticky { position: static; max-height: none; overflow: visible; }
+  .header-inner { padding: 12px 16px; }
+}
+
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 20px;
+}
+.card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.step {
+  width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
+  display: grid; place-items: center; font-weight: 700; font-size: 13px; flex: none;
+}
+.card-head h2 { font-size: 15px; margin: 0; }
+.card-head p { margin: 0; color: var(--muted); font-size: 13px; }
+.card-head .spacer { margin-left: auto; }
+
+/* ---------- forms ---------- */
+.grid { display: grid; gap: 12px; grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.s12 { grid-column: span 12; } .s8 { grid-column: span 8; } .s6 { grid-column: span 6; }
+.s4 { grid-column: span 4; } .s3 { grid-column: span 3; } .s2 { grid-column: span 2; }
+@media (max-width: 640px) { .s8, .s6, .s4, .s3 { grid-column: span 12; } .s2 { grid-column: span 6; } }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.field > span { font-size: 12px; font-weight: 600; color: var(--muted); }
+.field small { color: var(--muted); font-size: 12px; }
+input[type=text], input[type=number], input[type=url], select, textarea {
+  width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface); outline: none; transition: border-color .15s, box-shadow .15s;
+}
+textarea { resize: vertical; min-height: 64px; }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.row { display: flex; gap: 8px; align-items: center; }
+.row > .grow { flex: 1; min-width: 0; }
+.check { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+.check input { width: 16px; height: 16px; accent-color: var(--accent); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface); cursor: pointer; font-weight: 600; white-space: nowrap;
+  transition: background .15s, border-color .15s, opacity .15s;
+}
+.btn:hover { background: var(--surface-2); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.btn.primary:hover { filter: brightness(1.05); }
+.btn.danger { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 40%, var(--border)); }
+.btn.ghost { border-color: transparent; background: transparent; }
+.btn.ghost:hover { background: var(--surface-2); }
+.btn.sm { padding: 4px 10px; font-size: 12px; }
+.btn.block { width: 100%; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px;
+  font-size: 11px; font-weight: 700; letter-spacing: .02em; background: var(--surface-2); color: var(--muted);
+}
+.badge.ok { background: var(--ok-soft); color: var(--ok); }
+.badge.warn { background: var(--warn-soft); color: var(--warn); }
+.badge.bad { background: var(--danger-soft); color: var(--danger); }
+.badge.accent { background: var(--accent-soft); color: var(--accent); }
+
+.note {
+  border-radius: 8px; padding: 10px 12px; font-size: 13px; background: var(--surface-2); color: var(--muted);
+}
+.note.warn { background: var(--warn-soft); color: var(--warn); }
+.note.bad { background: var(--danger-soft); color: var(--danger); }
+.note.ok { background: var(--ok-soft); color: var(--ok); }
+.hidden { display: none !important; }
+
+/* ---------- dropzones ---------- */
+.drops { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 640px) { .drops { grid-template-columns: 1fr; } }
+.drop {
+  border: 1.5px dashed var(--border); border-radius: 10px; padding: 18px; text-align: center;
+  cursor: pointer; transition: border-color .15s, background .15s; background: var(--surface-2);
+}
+.drop:hover, .drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop b { display: block; margin-bottom: 2px; }
+.drop small { color: var(--muted); }
+.drop .file { margin-top: 8px; font-size: 12px; color: var(--ok); font-weight: 600; word-break: break-all; }
+
+/* ---------- videos ---------- */
+.videos { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
+.vcard { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); display: flex; flex-direction: column; }
+.vmedia { position: relative; aspect-ratio: 9 / 12; background: #000; }
+.vmedia video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vplaceholder {
+  position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 12px;
+  color: #cfd3da; background: linear-gradient(160deg, #2b2f3a, #12141a); text-decoration: none; font-size: 12px;
+}
+.vlabel {
+  position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,.7); color: #fff;
+  font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 6px;
+}
+.vrank { position: absolute; top: 8px; right: 8px; }
+.vbody { padding: 10px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.vmetrics { display: flex; gap: 10px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+.vmetrics b { color: var(--text); }
+.vbody textarea { font-size: 12px; min-height: 76px; }
+.vfoot { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+.vcreator { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.excluded { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.excluded > span { font-size: 12px; color: var(--muted); }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 3px 4px 3px 10px; border-radius: 999px;
+  background: var(--surface-2); border: 1px solid var(--border); font-size: 12px; max-width: 260px;
+}
+.chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.empty { text-align: center; color: var(--muted); padding: 28px 12px; }
+
+/* ---------- structure picker ---------- */
+.structs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+@media (max-width: 900px) { .structs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.struct {
+  border: 1.5px solid var(--border); border-radius: 10px; padding: 12px; cursor: pointer; text-align: left;
+  background: var(--surface); display: flex; flex-direction: column; gap: 8px; transition: border-color .15s, background .15s;
+}
+.struct:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--border)); }
+.struct.active { border-color: var(--accent); background: var(--accent-soft); }
+.struct b { font-size: 13px; }
+.struct small { color: var(--muted); font-size: 11.5px; line-height: 1.35; }
+.mini { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; }
+.mini .c { width: 46px; height: 8px; border-radius: 3px; background: var(--accent); }
+.mini .as { display: flex; gap: 4px; }
+.mini .a { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.mini .a > i { width: 18px; height: 7px; border-radius: 2px; background: color-mix(in srgb, var(--accent) 55%, transparent); }
+.mini .ads { display: flex; gap: 2px; }
+.mini .ads > i { width: 5px; height: 9px; border-radius: 1px; background: var(--muted); opacity: .6; }
+.mini .ads.v > i { width: 5px; height: 5px; }
+
+.adsets-editor { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.adset-row { border: 1px solid var(--border); border-radius: 10px; padding: 12px; background: var(--surface-2); }
+.adset-row .grid { margin-bottom: 10px; }
+.creative-picks { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.pick {
+  display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 12px; font-weight: 600;
+}
+.pick input { display: none; }
+.pick:has(input:checked) { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+
+details summary { cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 600; margin-top: 14px; }
+details[open] summary { margin-bottom: 12px; }
+
+/* ---------- preview ---------- */
+.summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+.stat { background: var(--surface-2); border-radius: 10px; padding: 10px 12px; }
+.stat small { display: block; color: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.stat b { font-size: 18px; font-variant-numeric: tabular-nums; }
+.tree { display: flex; flex-direction: column; gap: 8px; }
+.node { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; background: var(--surface); }
+.node.campaign { border-left: 4px solid var(--accent); }
+.node-kicker { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.node-title { font-weight: 600; word-break: break-word; }
+.node-meta { font-size: 12px; color: var(--muted); }
+.children { margin-left: 14px; padding-left: 12px; border-left: 2px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+.ads-list { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; }
+.adpill {
+  display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 8px; border: 1px solid transparent;
+  background: var(--surface-2); cursor: pointer; text-align: left; font-size: 12.5px; width: 100%;
+}
+.adpill:hover { border-color: var(--border); }
+.adpill.active { border-color: var(--accent); background: var(--accent-soft); }
+.adpill .tag { background: #000; color: #fff; font-weight: 700; font-size: 11px; padding: 1px 6px; border-radius: 4px; flex: none; }
+.adpill span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.phone {
+  margin: 16px auto 0; max-width: 280px; border: 1px solid var(--border); border-radius: 16px;
+  overflow: hidden; background: var(--surface);
+}
+.ph-head { display: flex; align-items: center; gap: 8px; padding: 10px 12px; }
+.avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); flex: none; }
+.ph-head b { display: block; font-size: 13px; line-height: 1.2; }
+.ph-head small { color: var(--muted); font-size: 11px; }
+.ph-text { padding: 0 12px 10px; font-size: 13px; white-space: pre-wrap; word-break: break-word; max-height: 140px; overflow: auto; }
+.ph-media { position: relative; aspect-ratio: 4 / 5; background: #000; }
+.ph-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ph-cta { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--surface-2); }
+.ph-cta > div { flex: 1; min-width: 0; }
+.ph-cta small { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ph-cta b { display: block; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ph-cta .btn { flex: none; }
+
+/* ---------- launch ---------- */
+.log {
+  margin-top: 12px; background: #0b0d11; color: #c9d1d9; border-radius: 8px; padding: 10px 12px;
+  font: 12px/1.6 var(--mono); max-height: 220px; overflow: auto; white-space: pre-wrap;
+}
+.launch-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+
+dialog {
+  border: 1px solid var(--border); border-radius: 14px; padding: 0; background: var(--surface); color: var(--text);
+  width: min(460px, calc(100vw - 32px)); box-shadow: 0 20px 50px rgba(0,0,0,.25);
+}
+dialog::backdrop { background: rgba(10, 12, 16, .45); }
+.dlg-body { padding: 20px; }
+.dlg-body h3 { margin: 0 0 8px; font-size: 16px; }
+.dlg-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--border); background: var(--surface-2); }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 13px; margin: 12px 0; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; font-weight: 600; word-break: break-word; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; font-weight: 700; }
+.table-wrap { overflow-x: auto; }
+.history { grid-column: 1 / -1; }
+.toast {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg);
+  padding: 10px 16px; border-radius: 10px; font-size: 13px; z-index: 50; box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark">PT</div>
+      <div><h1>Product Tester</h1><small>Kalodata → Meta Ads · Shopify</small></div>
+    </div>
+    <div class="pills">
+      <span class="pill" id="pill-meta"><span class="dot"></span><span>Meta: verificando…</span></span>
+      <span class="pill" id="pill-shopify"><span class="dot"></span><span>Shopify: verificando…</span></span>
+    </div>
+    <div class="row">
+      <button class="btn sm" id="btn-open">Abrir brief</button>
+      <button class="btn sm" id="btn-save">Guardar brief</button>
+      <input type="file" id="file-brief" accept=".yaml,.yml" class="hidden">
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="col">
+    <!-- 1. Producto -->
+    <section class="card">
+      <div class="card-head"><div class="step">1</div><div><h2>Producto</h2><p>Lo que vas a testear y a dónde apuntan los anuncios</p></div></div>
+      <div class="grid">
+        <label class="field s12"><span>Nombre</span>
+          <input type="text" data-bind="product.name" placeholder="Corrector de Postura"></label>
+        <label class="field s6"><span>Handle en Shopify</span>
+          <div class="row">
+            <input class="grow" type="text" data-bind="product.shopify_handle" placeholder="corrector-de-postura">
+            <button class="btn" id="btn-shopify">Verificar</button>
+          </div>
+          <small>La última parte de la URL del producto</small></label>
+        <label class="field s6"><span>…o URL de destino</span>
+          <input type="url" data-bind="product.url" placeholder="https://mitienda.com/products/…">
+          <small>Si la completás, se usa en vez del handle</small></label>
+        <div class="s12 hidden" id="shopify-result"></div>
+        <label class="field s12"><span>Descripción (texto de respaldo y borrador de Shopify)</span>
+          <textarea data-bind="product.description" rows="2"></textarea></label>
+      </div>
+    </section>
+
+    <!-- 2. Videos -->
+    <section class="card">
+      <div class="card-head"><div class="step">2</div><div><h2>Videos de Kalodata</h2><p>Subí el export de la pestaña Videos o los videos descargados</p></div></div>
+      <div class="drops">
+        <div class="drop" id="drop-export" tabindex="0">
+          <b>Export de Kalodata</b><small>CSV o XLSX · arrastrá o hacé clic</small>
+          <div class="file hidden"></div>
+          <input type="file" accept=".csv,.xlsx,.xlsm" class="hidden">
+        </div>
+        <div class="drop" id="drop-videos" tabindex="0">
+          <b>Videos descargados</b><small>.mp4 / .mov (+ .txt con el caption)</small>
+          <div class="file hidden"></div>
+          <input type="file" accept=".mp4,.mov,.m4v,.webm,.txt" multiple class="hidden">
+        </div>
+      </div>
+      <div class="grid" style="margin-top:12px">
+        <label class="field s4"><span>Ordenar por</span>
+          <select data-bind="kalodata.sort_by">
+            <option value="revenue">Ingresos</option><option value="views">Vistas</option><option value="sales">Unidades vendidas</option>
+          </select></label>
+        <label class="field s4"><span>Tomar los top</span>
+          <input type="number" min="1" max="20" data-bind="kalodata.top_n" data-type="number"></label>
+        <label class="field s4"><span>Máximo de videos</span>
+          <input type="number" min="1" max="50" data-bind="test.max_videos" data-type="number" placeholder="sin límite"></label>
+      </div>
+      <details>
+        <summary>Rutas en tu computadora (opcional)</summary>
+        <div class="grid">
+          <label class="field s6"><span>Archivo de export</span>
+            <input type="text" data-bind="kalodata.export_file" placeholder="/Users/vos/Descargas/kalodata.csv"></label>
+          <label class="field s6"><span>Carpeta de videos</span>
+            <input type="text" data-bind="kalodata.videos_dir" placeholder="/Users/vos/Descargas/videos"></label>
+        </div>
+      </details>
+      <div id="videos"></div>
+    </section>
+
+    <!-- 3. Estructura -->
+    <section class="card">
+      <div class="card-head"><div class="step">3</div><div><h2>Estructura y presupuesto</h2><p>Cómo se reparte el test en la cuenta</p></div></div>
+      <div class="structs" id="structs"></div>
+      <div class="grid">
+        <label class="field s4"><span id="budget-label">Presupuesto diario por conjunto</span>
+          <input type="number" min="1" step="any" data-bind="campaign.daily_budget" data-type="number"></label>
+        <label class="field s4 hidden" id="budget-level-field"><span>Presupuesto en</span>
+          <select data-bind="campaign.budget_level">
+            <option value="adset">Conjunto (ABO)</option><option value="campaign">Campaña (CBO)</option>
+          </select></label>
+        <label class="field s4"><span>Países</span>
+          <input type="text" data-bind="campaign.countries" data-type="list" placeholder="AR, UY"></label>
+        <label class="field s4"><span>Evento a optimizar</span>
+          <select data-bind="campaign.event">
+            <option value="PURCHASE">Compra</option><option value="INITIATED_CHECKOUT">Inicio de pago</option>
+            <option value="ADD_TO_CART">Agregar al carrito</option><option value="VIEW_CONTENT">Ver contenido</option>
+          </select></label>
+        <label class="field s3"><span>Edad mín.</span>
+          <input type="number" min="18" max="65" data-bind="campaign.age_min" data-type="number"></label>
+        <label class="field s3"><span>Edad máx.</span>
+          <input type="number" min="18" max="65" data-bind="campaign.age_max" data-type="number"></label>
+        <label class="field s3"><span>Género</span>
+          <select data-bind="campaign.genders" data-type="genders">
+            <option value="">Todos</option><option value="1">Hombres</option><option value="2">Mujeres</option>
+          </select></label>
+        <label class="field s3"><span>Botón</span>
+          <select data-bind="campaign.cta">
+            <option value="SHOP_NOW">Comprar</option><option value="BUY_NOW">Comprar ahora</option>
+            <option value="ORDER_NOW">Pedir ahora</option><option value="GET_OFFER">Obtener oferta</option>
+            <option value="LEARN_MORE">Más información</option>
+          </select></label>
+        <div class="s12"><label class="check"><input type="checkbox" data-bind="campaign.advantage_audience">
+          Público Advantage+ (Meta amplía la audiencia; se desactiva solo en conjuntos con edad o género restringidos)</label></div>
+      </div>
+      <div id="custom-editor" class="hidden" style="margin-top:16px"></div>
+      <details>
+        <summary>Nombres y UTMs</summary>
+        <div class="grid">
+          <label class="field s12"><span>Campaña</span><input type="text" data-bind="campaign.naming.campaign"></label>
+          <label class="field s6"><span>Conjunto</span><input type="text" data-bind="campaign.naming.adset"></label>
+          <label class="field s6"><span>Anuncio</span><input type="text" data-bind="campaign.naming.ad"></label>
+          <small class="s12" style="color:var(--muted)">Variables: {fecha} {producto} {estructura} {audiencia} {adset_n} {video} {ad_n}</small>
+          <label class="field s12"><span>Parámetros de URL</span>
+            <input type="text" data-bind="campaign.url_tags" placeholder="utm_source=facebook&utm_medium=paid&utm_campaign={{campaign.name}}&utm_content={{ad.name}}"></label>
+        </div>
+      </details>
+    </section>
+
+    <!-- 4. Textos -->
+    <section class="card">
+      <div class="card-head"><div class="step">4</div><div><h2>Textos</h2><p>Por defecto, el caption de cada video sin hashtags. Podés editarlo en la tarjeta del video.</p></div></div>
+      <div class="grid">
+        <label class="field s6"><span>Títulos (uno por línea, rotan entre videos)</span>
+          <textarea data-bind="copy.headlines" data-type="lines" rows="3" placeholder="Corrector de Postura&#10;Envío gratis hoy"></textarea></label>
+        <label class="field s6"><span>Textos principales propios (opcional, uno por línea)</span>
+          <textarea data-bind="copy.primary_texts" data-type="lines" rows="3" placeholder="Si completás esto, reemplaza a los captions"></textarea></label>
+        <label class="field s8"><span>Descripción del link</span>
+          <input type="text" data-bind="copy.description" placeholder="Envío gratis a todo el país"></label>
+        <div class="field s4" style="justify-content:flex-end"><label class="check"><input type="checkbox" data-bind="copy.use_kalodata_caption"> Usar caption de Kalodata</label></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Vista previa + lanzar -->
+  <div class="col sticky">
+    <section class="card">
+      <div class="card-head"><div><h2>Vista previa</h2><p id="preview-sub">Así se va a crear en Meta</p></div></div>
+      <div id="preview"><div class="empty">Subí el export de Kalodata o tus videos para ver la campaña.</div></div>
+    </section>
+    <section class="card">
+      <div class="card-head"><div><h2>Lanzar</h2><p>La campaña se crea en pausa salvo que elijas activarla</p></div></div>
+      <div class="note warn">Los videos de Kalodata son de creadores de TikTok. Usalos solo con permiso: un reclamo de propiedad intelectual puede deshabilitar la cuenta publicitaria.</div>
+      <div class="launch-buttons">
+        <button class="btn primary" id="btn-launch" disabled>Crear en pausa</button>
+        <button class="btn danger" id="btn-launch-active" disabled>Crear y activar</button>
+      </div>
+      <div id="launch-hint" class="note" style="margin-top:10px">Completá el brief para habilitar.</div>
+      <div id="job" class="hidden"></div>
+    </section>
+  </div>
+
+  <section class="card history">
+    <div class="card-head"><div><h2>Historial</h2><p>Lanzamientos guardados en runs/</p></div>
+      <div class="spacer"></div><button class="btn sm" id="btn-runs">Actualizar</button></div>
+    <div id="runs" class="table-wrap"><div class="empty">Todavía no hay lanzamientos.</div></div>
+  </section>
+</main>
+
+<dialog id="confirm">
+  <div class="dlg-body">
+    <h3 id="confirm-title">¿Crear la campaña?</h3>
+    <div id="confirm-body"></div>
+  </div>
+  <div class="dlg-foot">
+    <button class="btn" value="cancel" id="confirm-cancel">Cancelar</button>
+    <button class="btn primary" id="confirm-ok">Confirmar</button>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+
+const STRUCTURES = [
+  { id: "abo_1_1_n", title: "ABO 1-1-N", desc: "1 conjunto con todos los videos. Validás el producto.", adsets: 1, ads: 3 },
+  { id: "abo_1_n_1", title: "ABO 1-N-1", desc: "1 conjunto por video, gasto parejo. Testeás creativos.", adsets: 3, ads: 1 },
+  { id: "cbo_1_1_n", title: "CBO 1-1-N", desc: "Presupuesto de campaña, 1 conjunto con todos.", adsets: 1, ads: 3 },
+  { id: "cbo_1_n_1", title: "CBO 1-N-1", desc: "Meta reparte el gasto entre conjuntos por video.", adsets: 3, ads: 1 },
+  { id: "custom", title: "Custom", desc: "Armás tus conjuntos, audiencias y videos.", adsets: 2, ads: 2 },
+];
+const CTA_LABELS = { SHOP_NOW: "Comprar", BUY_NOW: "Comprar ahora", ORDER_NOW: "Pedir ahora", GET_OFFER: "Obtener oferta", LEARN_MORE: "Más información" };
+const GENDER_LABELS = { 1: "Hombres", 2: "Mujeres" };
+
+const DEFAULT_BRIEF = () => ({
+  product: { name: "", shopify_handle: "", url: "", description: "" },
+  kalodata: { export_file: "", videos_dir: "", sort_by: "revenue", top_n: 5, exclude: [] },
+  test: { max_videos: null },
+  campaign: {
+    structure: "abo_1_n_1", objective: "OUTCOME_SALES", event: "PURCHASE", daily_budget: 10,
+    budget_level: "adset", countries: ["AR"], age_min: 18, age_max: 65, genders: [],
+    advantage_audience: true, cta: "SHOP_NOW", url_tags: "",
+    naming: { campaign: "{fecha} | {producto} | TEST | {estructura}", adset: "{producto} | {audiencia}", ad: "{producto} | {video}" },
+    adsets: [],
+  },
+  copy: { use_kalodata_caption: true, headlines: [], primary_texts: [], description: "", by_video: {} },
+});
+
+const state = {
+  brief: DEFAULT_BRIEF(),
+  status: null,
+  plan: null, creatives: [], total: 0, planError: null,
+  excludedInfo: {},
+  selectedAd: "0-0",
+  shopifyProduct: null,
+  videosDir: null,
+  videosKey: "",
+  job: null,
+};
+
+/* ---------------- utils ---------------- */
+const $ = (sel, el = document) => el.querySelector(sel);
+const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const nf = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 2 });
+const compact = new Intl.NumberFormat("es-AR", { notation: "compact", maximumFractionDigits: 1 });
+const money = (v) => (v == null ? "—" : `${state.status?.meta?.currency ? state.status.meta.currency + " " : "$"}${nf.format(v)}`);
+
+function getPath(obj, path) { return path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), obj); }
+function setPath(obj, path, val) {
+  const keys = path.split(".");
+  let o = obj;
+  keys.slice(0, -1).forEach((k) => { if (o[k] == null || typeof o[k] !== "object") o[k] = {}; o = o[k]; });
+  o[keys[keys.length - 1]] = val;
+}
+function deepMerge(base, extra) {
+  const out = structuredClone(base);
+  for (const [k, v] of Object.entries(extra || {})) {
+    if (v && typeof v === "object" && !Array.isArray(v) && out[k] && typeof out[k] === "object" && !Array.isArray(out[k])) out[k] = deepMerge(out[k], v);
+    else out[k] = v;
+  }
+  return out;
+}
+async function api(path, opts = {}) {
+  const res = await fetch(path, opts);
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || res.statusText);
+  return data;
+}
+const postJSON = (path, body) => api(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+function toast(msg, ms = 2800) {
+  const el = document.createElement("div");
+  el.className = "toast"; el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), ms);
+}
+function hasSource() {
+  const b = state.brief;
+  return Boolean(b.kalodata.export_file || b.kalodata.videos_dir || (b.videos && b.videos.length));
+}
+
+/* ---------------- binding ---------------- */
+function readInput(el) {
+  const t = el.dataset.type;
+  if (el.type === "checkbox") return el.checked;
+  const v = el.value;
+  if (t === "number") return v === "" ? null : Number(v);
+  if (t === "list") return v.split(",").map((s) => s.trim().toUpperCase()).filter(Boolean);
+  if (t === "lines") return v.split("\n").map((s) => s.trim()).filter(Boolean);
+  if (t === "genders") return v ? [Number(v)] : [];
+  return v;
+}
+function writeInput(el, val) {
+  const t = el.dataset.type;
+  if (el.type === "checkbox") { el.checked = Boolean(val); return; }
+  if (t === "list") el.value = (val || []).join(", ");
+  else if (t === "lines") el.value = (val || []).join("\n");
+  else if (t === "genders") el.value = val && val.length === 1 ? String(val[0]) : "";
+  else el.value = val ?? "";
+}
+function fillForm() {
+  $$("[data-bind]").forEach((el) => writeInput(el, getPath(state.brief, el.dataset.bind)));
+  renderStructures();
+}
+document.addEventListener("input", (e) => {
+  const el = e.target.closest("[data-bind]");
+  if (!el) return;
+  // las listas se aplican al salir del campo para no pelear con el cursor
+  if (el.dataset.type === "lines" || el.dataset.type === "list") return;
+  setPath(state.brief, el.dataset.bind, readInput(el));
+  onBriefChange(el.dataset.bind);
+});
+document.addEventListener("change", (e) => {
+  const el = e.target.closest("[data-bind]");
+  if (!el) return;
+  setPath(state.brief, el.dataset.bind, readInput(el));
+  onBriefChange(el.dataset.bind);
+});
+function onBriefChange(path) {
+  if (path.startsWith("campaign.structure") || path === "campaign.budget_level") renderStructures();
+  if (path === "product.shopify_handle") { state.shopifyProduct = null; $("#shopify-result").classList.add("hidden"); }
+  schedulePlan();
+}
+
+/* ---------------- status ---------------- */
+async function loadStatus() {
+  try {
+    state.status = await api("/api/status");
+  } catch (e) {
+    state.status = { meta: { ok: false, error: e.message }, shopify: { ok: false, error: e.message } };
+  }
+  const setPill = (id, label, s, okText) => {
+    const el = $(id);
+    el.className = "pill " + (s.ok ? "ok" : s.configured === false ? "off" : "bad");
+    el.lastElementChild.textContent = `${label}: ${s.ok ? okText : s.configured === false ? "sin configurar" : "error"}`;
+    el.title = s.ok ? "" : s.error || "";
+  };
+  const m = state.status.meta, s = state.status.shopify;
+  setPill("#pill-meta", "Meta", m, `${m.name || m.account_id} · ${m.currency || ""}`);
+  setPill("#pill-shopify", "Shopify", s, s.domain || s.name || "");
+  renderPreview();
+  updateLaunchState();
+}
+
+/* ---------------- shopify ---------------- */
+$("#btn-shopify").addEventListener("click", async (e) => {
+  e.preventDefault();
+  const handle = state.brief.product.shopify_handle.trim();
+  const box = $("#shopify-result");
+  if (!handle) { toast("Escribí el handle del producto"); return; }
+  box.classList.remove("hidden");
+  box.innerHTML = `<div class="note">Buscando en Shopify…</div>`;
+  try {
+    const p = await postJSON("/api/shopify/product", { handle });
+    state.shopifyProduct = p;
+    const cls = p.status === "ACTIVE" ? "ok" : "warn";
+    box.innerHTML = `<div class="note ${cls}"><b>${esc(p.title)}</b> · <span class="badge ${cls}">${esc(p.status)}</span>
+      ${p.price ? ` · precio ${esc(p.price)}` : ""} ${p.totalInventory != null ? ` · stock ${esc(p.totalInventory)}` : ""}<br>
+      <a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.url)}</a>
+      ${p.status !== "ACTIVE" ? "<br>Publicalo en Shopify antes de activar la campaña." : ""}</div>`;
+    renderPreview();
+    updateLaunchState();
+  } catch (err) {
+    state.shopifyProduct = null;
+    box.innerHTML = `<div class="note bad">${esc(err.message)}</div>`;
+  }
+});
+
+/* ---------------- uploads ---------------- */
+async function uploadFile(file, dir = "") {
+  const res = await fetch(`/api/upload?name=${encodeURIComponent(file.name)}&dir=${encodeURIComponent(dir)}`, { method: "POST", body: file });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || "No se pudo subir " + file.name);
+  return data;
+}
+function setupDrop(id, onFiles) {
+  const zone = $(id), input = $("input", zone);
+  zone.addEventListener("click", () => input.click());
+  zone.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); input.click(); } });
+  input.addEventListener("change", () => { if (input.files.length) onFiles([...input.files]); input.value = ""; });
+  zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("over"); });
+  zone.addEventListener("dragleave", () => zone.classList.remove("over"));
+  zone.addEventListener("drop", (e) => { e.preventDefault(); zone.classList.remove("over"); if (e.dataTransfer.files.length) onFiles([...e.dataTransfer.files]); });
+}
+function setDropLabel(id, text) {
+  const el = $(".file", $(id));
+  el.textContent = text || "";
+  el.classList.toggle("hidden", !text);
+}
+setupDrop("#drop-export", async ([file]) => {
+  setDropLabel("#drop-export", "Subiendo…");
+  try {
+    const up = await uploadFile(file);
+    state.brief.kalodata.export_file = up.path;
+    state.brief.kalodata.exclude = [];
+    state.excludedInfo = {};
+    fillForm();
+    setDropLabel("#drop-export", "✓ " + up.name);
+    schedulePlan(0);
+  } catch (e) { setDropLabel("#drop-export", ""); toast(e.message); }
+});
+setupDrop("#drop-videos", async (files) => {
+  state.videosDir = state.videosDir || "videos-" + Date.now();
+  let done = 0;
+  try {
+    for (const f of files) {
+      setDropLabel("#drop-videos", `Subiendo ${done + 1} de ${files.length}…`);
+      await uploadFile(f, state.videosDir);
+      done++;
+    }
+    state.brief.kalodata.videos_dir = "uploads/" + state.videosDir;
+    fillForm();
+    const n = files.filter((f) => !f.name.endsWith(".txt")).length;
+    setDropLabel("#drop-videos", `✓ ${n} video${n === 1 ? "" : "s"} subido${n === 1 ? "" : "s"}`);
+    schedulePlan(0);
+  } catch (e) { setDropLabel("#drop-videos", ""); toast(e.message); }
+});
+
+/* ---------------- plan ---------------- */
+let planTimer = null, planSeq = 0;
+function schedulePlan(delay = 450) {
+  clearTimeout(planTimer);
+  planTimer = setTimeout(refreshPlan, delay);
+}
+async function refreshPlan() {
+  const seq = ++planSeq;
+  if (!hasSource()) {
+    state.plan = null; state.creatives = []; state.planError = null;
+  } else if (!state.brief.product.name.trim()) {
+    state.plan = null; state.planError = "Poné el nombre del producto para armar la campaña.";
+  } else {
+    try {
+      const res = await postJSON("/api/plan", state.brief);
+      if (seq !== planSeq) return;
+      state.plan = res.plan; state.creatives = res.creatives; state.total = res.total_daily_budget; state.planError = null;
+    } catch (e) {
+      if (seq !== planSeq) return;
+      state.plan = null; state.planError = e.message;
+    }
+  }
+  renderVideos();
+  renderPreview();
+  renderCustomEditor();
+  updateLaunchState();
+}
+
+/* ---------------- videos ---------------- */
+function metric(label, value, fmt = compact) {
+  return value == null ? "" : `<span>${label} <b>${fmt.format(value)}</b></span>`;
+}
+function mediaHTML(c, autoplay = false) {
+  if (c.media_url) {
+    return `<video src="${esc(c.media_url)}" muted playsinline preload="metadata" ${autoplay ? "controls" : ""}
+      onmouseenter="this.play().catch(()=>{})" onmouseleave="this.pause()"
+      onerror="this.outerHTML='<div class=&quot;vplaceholder&quot;>No se pudo cargar el video</div>'"></video>`;
+  }
+  return `<a class="vplaceholder" href="${esc(c.url)}" target="_blank" rel="noopener">Ver video original ↗<br><small>se descarga al lanzar</small></a>`;
+}
+function renderVideos() {
+  const box = $("#videos");
+  const excluded = state.brief.kalodata.exclude || [];
+  const key = state.creatives.map((c) => c.source).join("|") + "#" + excluded.join("|");
+  if (key === state.videosKey && box.childElementCount) return;
+  state.videosKey = key;
+  if (!state.creatives.length && !excluded.length) { box.innerHTML = ""; return; }
+  const byVideo = state.brief.copy.by_video || {};
+  const cards = state.creatives.map((c, i) => {
+    const m = c.metrics || {};
+    const text = byVideo[c.source]?.primary_text ?? c.primary_text;
+    return `<article class="vcard">
+      <div class="vmedia">${mediaHTML(c)}<span class="vlabel">${esc(c.label.split("-")[0])}</span>
+        ${m.revenue != null ? `<span class="badge accent vrank">#${i + 1}</span>` : ""}</div>
+      <div class="vbody">
+        <div class="vmetrics">${metric("💰", m.revenue)}${metric("👁", m.views)}${metric("🛒", m.sales)}</div>
+        <label class="field"><span>Texto del anuncio</span>
+          <textarea data-video-copy="${esc(c.source)}">${esc(text)}</textarea></label>
+        <div class="vfoot"><span class="vcreator">${esc(c.creator || (c.kind === "file" ? c.label : ""))}</span>
+          <button class="btn ghost sm" data-exclude="${esc(c.source)}" data-label="${esc(c.label)}">Quitar</button></div>
+      </div></article>`;
+  }).join("");
+  const ex = excluded.length ? `<div class="excluded"><span>Quitados:</span>${excluded.map((s) => {
+    const info = state.excludedInfo[s] || {};
+    return `<span class="chip"><span title="${esc(s)}">${esc(info.caption || s.split("/").pop())}</span>
+      <button class="btn ghost sm" data-include="${esc(s)}">Volver a incluir</button></span>`;
+  }).join("")}</div>` : "";
+  box.innerHTML = (cards ? `<div class="videos">${cards}</div>` : "") + ex;
+}
+$("#videos").addEventListener("input", (e) => {
+  const ta = e.target.closest("[data-video-copy]");
+  if (!ta) return;
+  const by = state.brief.copy.by_video || (state.brief.copy.by_video = {});
+  by[ta.dataset.videoCopy] = { ...(by[ta.dataset.videoCopy] || {}), primary_text: ta.value };
+  schedulePlan();
+});
+$("#videos").addEventListener("click", (e) => {
+  const ex = e.target.closest("[data-exclude]");
+  const inc = e.target.closest("[data-include]");
+  const k = state.brief.kalodata;
+  if (ex) {
+    const c = state.creatives.find((x) => x.source === ex.dataset.exclude);
+    state.excludedInfo[ex.dataset.exclude] = { caption: (c?.primary_text || c?.label || "").slice(0, 40) };
+    k.exclude = [...new Set([...(k.exclude || []), ex.dataset.exclude])];
+    schedulePlan(0);
+  } else if (inc) {
+    k.exclude = (k.exclude || []).filter((s) => s !== inc.dataset.include);
+    schedulePlan(0);
+  }
+});
+
+/* ---------------- structures ---------------- */
+function miniDiagram(s) {
+  const ads = (n) => `<span class="ads">${"<i></i>".repeat(n)}</span>`;
+  const adsets = Array.from({ length: s.adsets }, () => `<span class="a"><i></i>${ads(s.ads)}</span>`).join("");
+  return `<span class="mini"><span class="c"></span><span class="as">${adsets}</span></span>`;
+}
+function renderStructures() {
+  const cur = state.brief.campaign.structure;
+  $("#structs").innerHTML = STRUCTURES.map((s) => `<button type="button" class="struct ${s.id === cur ? "active" : ""}" data-struct="${s.id}">
+      ${miniDiagram(s)}<b>${s.title}</b><small>${s.desc}</small></button>`).join("");
+  const custom = cur === "custom";
+  const level = custom ? state.brief.campaign.budget_level : cur.startsWith("cbo") ? "campaign" : "adset";
+  $("#budget-label").textContent = level === "campaign" ? "Presupuesto diario de campaña" : "Presupuesto diario por conjunto";
+  $("#budget-level-field").classList.toggle("hidden", !custom);
+  $("#custom-editor").classList.toggle("hidden", !custom);
+  renderCustomEditor();
+}
+$("#structs").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-struct]");
+  if (!b) return;
+  const camp = state.brief.campaign;
+  camp.structure = b.dataset.struct;
+  if (camp.structure === "custom" && !camp.adsets.length) {
+    camp.adsets = [{ audiencia: "Broad", creatives: "all", daily_budget: null, targeting: {} }];
+  }
+  renderStructures();
+  schedulePlan(0);
+});
+
+function renderCustomEditor() {
+  const box = $("#custom-editor");
+  const camp = state.brief.campaign;
+  if (camp.structure !== "custom") { box.innerHTML = ""; return; }
+  const abo = camp.budget_level !== "campaign";
+  const labels = state.creatives.map((c) => c.label.split("-")[0]);
+  box.innerHTML = `<div class="field"><span>Conjuntos</span></div><div class="adsets-editor">${camp.adsets.map((a, i) => {
+    const t = a.targeting || {};
+    const all = a.creatives === "all" || a.creatives == null;
+    const picks = labels.map((l, j) => `<label class="pick"><input type="checkbox" data-pick="${j + 1}" ${!all && (a.creatives || []).includes(j + 1) ? "checked" : ""}>${esc(l)}</label>`).join("");
+    return `<div class="adset-row" data-i="${i}">
+      <div class="grid">
+        <label class="field ${abo ? "s4" : "s6"}"><span>Audiencia</span><input type="text" data-a="audiencia" value="${esc(a.audiencia || "")}"></label>
+        ${abo ? `<label class="field s2"><span>Presupuesto</span><input type="number" step="any" data-a="daily_budget" value="${esc(a.daily_budget ?? "")}" placeholder="${esc(camp.daily_budget ?? "")}"></label>` : ""}
+        <label class="field s2"><span>Género</span><select data-a="genders">
+          <option value="">Como la campaña</option><option value="1" ${t.genders?.[0] === 1 ? "selected" : ""}>Hombres</option><option value="2" ${t.genders?.[0] === 2 ? "selected" : ""}>Mujeres</option></select></label>
+        <label class="field s2"><span>Edad mín.</span><input type="number" data-a="age_min" value="${esc(t.age_min ?? "")}"></label>
+        <label class="field s2"><span>Edad máx.</span><input type="number" data-a="age_max" value="${esc(t.age_max ?? "")}"></label>
+      </div>
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap">
+        <div class="creative-picks"><label class="pick"><input type="checkbox" data-pick="all" ${all ? "checked" : ""}>Todos</label>${picks}</div>
+        <button class="btn ghost sm" data-remove="${i}" ${camp.adsets.length === 1 ? "disabled" : ""}>Eliminar</button>
+      </div></div>`;
+  }).join("")}</div><button class="btn sm" id="add-adset" style="margin-top:10px">+ Agregar conjunto</button>`;
+}
+$("#custom-editor").addEventListener("input", (e) => {
+  const row = e.target.closest(".adset-row");
+  const field = e.target.dataset.a;
+  if (!row || !field) return;
+  const a = state.brief.campaign.adsets[Number(row.dataset.i)];
+  a.targeting = a.targeting || {};
+  const v = e.target.value;
+  if (field === "audiencia") a.audiencia = v;
+  else if (field === "daily_budget") a.daily_budget = v === "" ? null : Number(v);
+  else if (field === "genders") { if (v) a.targeting.genders = [Number(v)]; else delete a.targeting.genders; }
+  else { if (v === "") delete a.targeting[field]; else a.targeting[field] = Number(v); }
+  schedulePlan();
+});
+$("#custom-editor").addEventListener("change", (e) => {
+  const row = e.target.closest(".adset-row");
+  if (!row || !e.target.dataset.pick) return;
+  const a = state.brief.campaign.adsets[Number(row.dataset.i)];
+  if (e.target.dataset.pick === "all") {
+    a.creatives = e.target.checked ? "all" : [];
+  } else {
+    const picked = $$("[data-pick]", row).filter((x) => x.dataset.pick !== "all" && x.checked).map((x) => Number(x.dataset.pick));
+    a.creatives = picked.length ? picked : "all";
+  }
+  renderCustomEditor();
+  schedulePlan(0);
+});
+$("#custom-editor").addEventListener("click", (e) => {
+  const camp = state.brief.campaign;
+  if (e.target.id === "add-adset") {
+    camp.adsets.push({ audiencia: `Conjunto ${camp.adsets.length + 1}`, creatives: "all", daily_budget: null, targeting: {} });
+  } else if (e.target.dataset.remove != null) {
+    camp.adsets.splice(Number(e.target.dataset.remove), 1);
+  } else return;
+  renderCustomEditor();
+  schedulePlan(0);
+});
+
+/* ---------------- preview ---------------- */
+function destinationURL() {
+  return state.brief.product.url || state.shopifyProduct?.url || "";
+}
+function targetingText(t) {
+  const parts = [(t.geo_locations?.countries || []).join(", "), `${t.age_min}-${t.age_max}`];
+  if (t.genders?.length) parts.push(t.genders.map((g) => GENDER_LABELS[g]).join("/"));
+  if (t.targeting_automation?.advantage_audience) parts.push("Advantage+");
+  return parts.filter(Boolean).join(" · ");
+}
+function renderPreview() {
+  const box = $("#preview");
+  if (state.planError) { box.innerHTML = `<div class="note bad">${esc(state.planError)}</div>`; return; }
+  if (!state.plan) { box.innerHTML = `<div class="empty">Subí el export de Kalodata o tus videos para ver la campaña.</div>`; return; }
+  const p = state.plan;
+  const nAds = p.adsets.reduce((n, a) => n + a.ads.length, 0);
+  const cbo = p.budget_level === "campaign";
+  const [si, ai] = state.selectedAd.split("-").map(Number);
+  const tree = `<div class="tree">
+    <div class="node campaign"><div class="node-kicker">Campaña · ${cbo ? "CBO" : "ABO"} · Ventas</div>
+      <div class="node-title">${esc(p.name)}</div>
+      ${cbo ? `<div class="node-meta">${money(p.daily_budget)} por día</div>` : ""}</div>
+    <div class="children">${p.adsets.map((a, i) => `<div class="node">
+      <div class="node-kicker">Conjunto ${i + 1}</div>
+      <div class="node-title">${esc(a.name)}</div>
+      <div class="node-meta">${esc(targetingText(a.targeting))}${a.daily_budget ? ` · ${money(a.daily_budget)}/día` : ""}</div>
+      <div class="ads-list">${a.ads.map((ad, j) => {
+        const c = state.creatives[ad.creative_index];
+        return `<button class="adpill ${i === si && j === ai ? "active" : ""}" data-ad="${i}-${j}">
+          <span class="tag">${esc(c.label.split("-")[0])}</span><span>${esc(ad.name)}</span></button>`;
+      }).join("")}</div></div>`).join("")}</div></div>`;
+
+  const adset = p.adsets[si] || p.adsets[0];
+  const ad = (adset && (adset.ads[ai] || adset.ads[0])) || null;
+  const c = ad ? state.creatives[ad.creative_index] : null;
+  let host = "tu-tienda.com";
+  try { if (destinationURL()) host = new URL(destinationURL()).host; } catch (_) {}
+  const phone = c ? `<div class="phone">
+      <div class="ph-head"><div class="avatar"></div><div><b>Tu página</b><small>Publicidad</small></div></div>
+      <div class="ph-text">${esc(c.primary_text)}</div>
+      <div class="ph-media">${mediaHTML(c, true)}</div>
+      <div class="ph-cta"><div><small>${esc(host)}</small><b>${esc(c.headline)}</b>${c.description ? `<small style="text-transform:none">${esc(c.description)}</small>` : ""}</div>
+        <span class="btn sm">${esc(CTA_LABELS[state.brief.campaign.cta] || "Comprar")}</span></div></div>` : "";
+
+  box.innerHTML = `<div class="summary">
+      <div class="stat"><small>Conjuntos</small><b>${p.adsets.length}</b></div>
+      <div class="stat"><small>Anuncios</small><b>${nAds}</b></div>
+      <div class="stat"><small>Gasto/día</small><b>${money(state.total)}</b></div>
+    </div>${tree}${phone}`;
+  $("#preview-sub").textContent = destinationURL() ? `Destino: ${destinationURL()}` : "Así se va a crear en Meta";
+}
+$("#preview").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-ad]");
+  if (!b) return;
+  state.selectedAd = b.dataset.ad;
+  renderPreview();
+});
+
+/* ---------------- launch ---------------- */
+function launchBlocker() {
+  if (state.job && state.job.status === "running") return "Hay un lanzamiento en curso.";
+  if (!state.status) return "Verificando conexión con Meta…";
+  if (!state.status.meta?.ok) return state.status.meta?.configured === false
+    ? "Configurá las credenciales de Meta en el archivo .env y reiniciá."
+    : `Meta respondió con un error: ${state.status.meta?.error || ""}`;
+  if (!state.plan) return "Completá el brief para habilitar.";
+  if (!state.brief.product.url && !state.brief.product.shopify_handle) return "Falta el handle de Shopify o la URL de destino.";
+  if (!state.brief.product.url && !state.status.shopify?.ok) return "Para usar el handle necesitás Shopify configurado; si no, poné la URL.";
+  return "";
+}
+function updateLaunchState() {
+  const reason = launchBlocker();
+  $("#btn-launch").disabled = Boolean(reason);
+  $("#btn-launch-active").disabled = Boolean(reason);
+  const hint = $("#launch-hint");
+  hint.textContent = reason;
+  hint.classList.toggle("hidden", !reason);
+}
+function confirmLaunch(activate) {
+  const p = state.plan;
+  const nAds = p.adsets.reduce((n, a) => n + a.ads.length, 0);
+  $("#confirm-title").textContent = activate ? "¿Crear y activar la campaña?" : "¿Crear la campaña en pausa?";
+  $("#confirm-body").innerHTML = `<dl class="kv">
+      <dt>Cuenta</dt><dd>${esc(state.status.meta.name || "")} (${esc(state.status.meta.account_id)})</dd>
+      <dt>Campaña</dt><dd>${esc(p.name)}</dd>
+      <dt>Estructura</dt><dd>${p.adsets.length} conjunto(s) · ${nAds} anuncio(s)</dd>
+      <dt>Gasto diario</dt><dd>${money(state.total)}</dd>
+      <dt>Destino</dt><dd>${esc(destinationURL() || state.brief.product.shopify_handle)}</dd></dl>
+    ${activate ? `<div class="note warn">Empieza a gastar apenas Meta apruebe los anuncios.</div>` : `<div class="note">Queda en pausa. La activás desde el Ads Manager.</div>`}`;
+  const ok = $("#confirm-ok");
+  ok.textContent = activate ? "Crear y activar" : "Crear en pausa";
+  ok.className = "btn " + (activate ? "danger" : "primary");
+  const dlg = $("#confirm");
+  return new Promise((resolve) => {
+    const done = (v) => { dlg.close(); ok.onclick = null; $("#confirm-cancel").onclick = null; resolve(v); };
+    ok.onclick = () => done(true);
+    $("#confirm-cancel").onclick = () => done(false);
+    dlg.oncancel = () => resolve(false);
+    dlg.showModal();
+  });
+}
+async function startLaunch(activate) {
+  if (!(await confirmLaunch(activate))) return;
+  try {
+    const { job_id } = await postJSON("/api/launch", { brief: state.brief, activate });
+    state.job = { id: job_id, status: "running", logs: [] };
+    renderJob();
+    updateLaunchState();
+    pollJob(job_id);
+  } catch (e) { toast(e.message, 5000); }
+}
+async function pollJob(id) {
+  try {
+    state.job = await api(`/api/jobs/${id}`);
+  } catch (e) { state.job = { ...state.job, status: "failed", error: e.message }; }
+  renderJob();
+  if (state.job.status === "running") setTimeout(() => pollJob(id), 1500);
+  else { updateLaunchState(); loadRuns(); }
+}
+function renderJob() {
+  const box = $("#job"), j = state.job;
+  box.classList.remove("hidden");
+  let head = `<div class="note" style="margin-top:12px">Creando en Meta… no cierres esta ventana.</div>`;
+  if (j.status === "done") {
+    head = `<div class="note ok" style="margin-top:12px"><b>Listo.</b> Campaña ${j.activate ? "activada" : "creada en pausa"}.
+      ${j.ads_manager_url ? `<br><a href="${esc(j.ads_manager_url)}" target="_blank" rel="noopener">Abrir en el Ads Manager ↗</a>` : ""}</div>`;
+  } else if (j.status === "failed") {
+    head = `<div class="note bad" style="margin-top:12px"><b>Error:</b> ${esc(j.error)}<br>Lo creado quedó registrado en el historial.</div>`;
+  }
+  box.innerHTML = head + `<div class="log">${esc((j.logs || []).join("\n") || "Preparando…")}</div>`;
+  const log = $(".log", box); log.scrollTop = log.scrollHeight;
+}
+$("#btn-launch").addEventListener("click", () => startLaunch(false));
+$("#btn-launch-active").addEventListener("click", () => startLaunch(true));
+
+/* ---------------- history ---------------- */
+const STATUS_BADGE = { paused: ["En pausa", "accent"], active: ["Activa", "ok"], failed: ["Falló", "bad"], running: ["En curso", "warn"] };
+async function loadRuns() {
+  const box = $("#runs");
+  try {
+    const { runs } = await api("/api/runs");
+    if (!runs.length) { box.innerHTML = `<div class="empty">Todavía no hay lanzamientos.</div>`; return; }
+    box.innerHTML = `<table><thead><tr><th>Fecha</th><th>Producto</th><th>Campaña</th><th>Anuncios</th><th>Estado</th><th></th></tr></thead><tbody>
+      ${runs.map((r) => {
+        const [label, cls] = STATUS_BADGE[r.status] || [r.status, ""];
+        return `<tr><td>${esc((r.started_at || "").replace("T", " "))}</td><td>${esc(r.product)}</td>
+          <td>${esc(r.campaign_name || "—")}${r.error ? `<br><small style="color:var(--danger)">${esc(r.error)}</small>` : ""}</td>
+          <td>${r.ads}</td><td><span class="badge ${cls}">${esc(label)}</span></td>
+          <td>${r.ads_manager_url ? `<a href="${esc(r.ads_manager_url)}" target="_blank" rel="noopener">Ads Manager ↗</a>` : ""}</td></tr>`;
+      }).join("")}</tbody></table>`;
+  } catch (e) { box.innerHTML = `<div class="note bad">${esc(e.message)}</div>`; }
+}
+$("#btn-runs").addEventListener("click", loadRuns);
+
+/* ---------------- brief open/save ---------------- */
+$("#btn-save").addEventListener("click", async () => {
+  try {
+    const { yaml } = await postJSON("/api/brief/yaml", state.brief);
+    const slug = (state.brief.product.name || "brief").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([yaml], { type: "text/yaml" }));
+    a.download = `brief-${slug || "producto"}.yaml`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  } catch (e) { toast(e.message); }
+});
+$("#btn-open").addEventListener("click", () => $("#file-brief").click());
+$("#file-brief").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  e.target.value = "";
+  if (!file) return;
+  try {
+    const parsed = await postJSON("/api/brief/parse", { text: await file.text() });
+    state.brief = deepMerge(DEFAULT_BRIEF(), parsed);
+    state.excludedInfo = {}; state.shopifyProduct = null; state.videosKey = "";
+    fillForm();
+    setDropLabel("#drop-export", state.brief.kalodata.export_file ? "✓ " + state.brief.kalodata.export_file.split("/").pop() : "");
+    setDropLabel("#drop-videos", state.brief.kalodata.videos_dir ? "✓ " + state.brief.kalodata.videos_dir : "");
+    toast("Brief cargado. Las rutas relativas se buscan en la carpeta workspace/.");
+    schedulePlan(0);
+  } catch (err) { toast(err.message, 5000); }
+});
+
+/* ---------------- init ---------------- */
+fillForm();
+loadStatus();
+loadRuns();
+</script>
+</body>
+</html>

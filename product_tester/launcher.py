@@ -129,7 +129,7 @@ def launch(brief, meta, shopify=None, activate=False, force=False, runs_dir="run
 
         # 3) Creativos: uno por video (se reutiliza si el video aparece en varios conjuntos).
         creative_ids = {}
-        url_tags = camp_cfg.get("url_tags", DEFAULT_URL_TAGS)
+        url_tags = camp_cfg.get("url_tags") or DEFAULT_URL_TAGS
         for ci in used:
             c = creatives[ci]
             primary, headline, description = build_copy(brief, c, ci)
@@ -141,7 +141,7 @@ def launch(brief, meta, shopify=None, activate=False, force=False, runs_dir="run
                 primary_text=primary,
                 headline=headline,
                 description=description,
-                cta=camp_cfg.get("cta", "SHOP_NOW"),
+                cta=camp_cfg.get("cta") or "SHOP_NOW",
                 url_tags=url_tags,
             )
 
@@ -149,8 +149,8 @@ def launch(brief, meta, shopify=None, activate=False, force=False, runs_dir="run
         for adset in plan.adsets:
             adset_id = meta.create_adset(
                 campaign_id, adset.name, adset.targeting, adset.daily_budget,
-                event=camp_cfg.get("event", "PURCHASE"),
-                start_time=camp_cfg.get("start_time"),
+                event=camp_cfg.get("event") or "PURCHASE",
+                start_time=camp_cfg.get("start_time") or None,
                 status="ACTIVE",
             )
             run.data["adsets"].append({"id": adset_id, "name": adset.name})

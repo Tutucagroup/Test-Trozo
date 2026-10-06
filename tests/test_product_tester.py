@@ -99,6 +99,16 @@ class TestStructures(unittest.TestCase):
         self.assertEqual(women.targeting["geo_locations"], {"countries": ["AR"]})
         self.assertNotIn("genders", broad.targeting)
 
+    def test_restricted_audience_disables_advantage(self):
+        b = brief("custom", adsets=[
+            {"audiencia": "Broad"},
+            {"audiencia": "Mujeres", "targeting": {"genders": [2]}},
+            {"audiencia": "Jóvenes", "targeting": {"age_max": 34}},
+        ])
+        plan = build_plan(b, creatives(1))
+        flags = [a.targeting["targeting_automation"]["advantage_audience"] for a in plan.adsets]
+        self.assertEqual(flags, [1, 0, 0])
+
     def test_custom_bad_index(self):
         b = brief("custom", adsets=[{"creatives": [5]}])
         with self.assertRaises(ConfigError):

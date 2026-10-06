@@ -80,6 +80,16 @@ def base_targeting(camp):
     return targeting
 
 
+def _apply_audience_rules(targeting):
+    """Con Advantage+ audience, Meta toma edad máx. y género como sugerencias.
+    Si el conjunto restringe edad o género, se desactiva para que se respete."""
+    restricted = (targeting.get("genders") or targeting.get("age_max", 65) < 65
+                  or targeting.get("age_min", 18) > 25)
+    if restricted and targeting.get("targeting_automation", {}).get("advantage_audience"):
+        targeting["targeting_automation"] = {"advantage_audience": 0}
+    return targeting
+
+
 def _select(spec, n):
     """'all' o lista de índices 1-based -> lista de índices 0-based."""
     if spec in (None, "all"):
@@ -117,7 +127,7 @@ def build_plan(brief, creatives, today=None):
             adset_specs = [{"audiencia": c.label, "creatives": [i + 1]}
                            for i, c in enumerate(creatives)]
 
-    naming = {**DEFAULT_NAMING, **(camp.get("naming") or {})}
+    naming = {**DEFAULT_NAMING, **{k: v for k, v in (camp.get("naming") or {}).items() if v}}
     product_name = brief["product"]["name"]
     ctx = {
         "fecha": (today or dt.date.today()).strftime("%Y-%m-%d"),
@@ -139,7 +149,7 @@ def build_plan(brief, creatives, today=None):
         actx = {**ctx, "audiencia": audiencia, "adset_n": n}
         adset = PlannedAdSet(
             name=naming["adset"].format_map(_SafeDict(actx)),
-            targeting=_deep_merge(targeting, spec.get("targeting")),
+            targeting=_apply_audience_rules(_deep_merge(targeting, spec.get("targeting"))),
             daily_budget=float(spec.get("daily_budget") or budget) if budget_level == "adset" else None,
         )
         for ad_n, ci in enumerate(_select(spec.get("creatives"), len(creatives)), start=1):

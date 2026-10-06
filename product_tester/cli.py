@@ -6,6 +6,7 @@ CLI:
   python -m product_tester launch brief.yaml --activate
   python -m product_tester shopify <handle>         estado y URL del producto
   python -m product_tester shopify-draft brief.yaml crea el producto como borrador
+  python -m product_tester web                      interfaz web local en el navegador
 """
 
 import argparse
@@ -116,6 +117,11 @@ def cmd_shopify_draft(args):
         print(f"Agregá 'shopify_handle: {created['handle']}' al brief.")
 
 
+def cmd_web(args):
+    from .web import serve
+    serve(port=args.port, open_browser=not args.no_browser)
+
+
 def main(argv=None):
     load_dotenv()
     parser = argparse.ArgumentParser(prog="product_tester",
@@ -142,6 +148,11 @@ def main(argv=None):
     p = sub.add_parser("shopify-draft", help="crea el producto del brief como borrador")
     p.add_argument("brief")
     p.set_defaults(func=cmd_shopify_draft)
+
+    p = sub.add_parser("web", help="abre la interfaz web local")
+    p.add_argument("--port", type=int, default=8765)
+    p.add_argument("--no-browser", action="store_true", help="no abrir el navegador")
+    p.set_defaults(func=cmd_web)
 
     args = parser.parse_args(argv)
     try:

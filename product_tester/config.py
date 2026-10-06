@@ -84,9 +84,17 @@ def load_brief(path):
     if not p.exists():
         raise ConfigError(f"No existe el brief: {path}")
     brief = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
-    if "product" not in brief or not brief["product"].get("name"):
+    return normalize_brief(brief, p.parent)
+
+
+def normalize_brief(brief, base_dir):
+    """Valida lo mínimo y fija la carpeta base para resolver rutas relativas."""
+    if not isinstance(brief, dict):
+        raise ConfigError("El brief tiene que ser un objeto")
+    brief = dict(brief)
+    if not (brief.get("product") or {}).get("name"):
         raise ConfigError("El brief necesita product.name")
-    brief["_base_dir"] = str(p.parent.resolve())
+    brief["_base_dir"] = str(Path(base_dir).resolve())
     return brief
 
 

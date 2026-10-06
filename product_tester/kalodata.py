@@ -41,6 +41,11 @@ class Creative:
     creator: str = ""
     metrics: dict = field(default_factory=dict)
 
+    @property
+    def source(self):
+        """Identificador estable del video (path local o URL)."""
+        return self.path or self.url
+
 
 def parse_metric(value):
     """'$1.2K' -> 1200.0, '3,4M' -> 3400000.0, '12,345.6' -> 12345.6, '' -> 0."""
@@ -101,7 +106,7 @@ def _find_column(headers, candidates):
     return None
 
 
-def from_export(path, columns=None, sort_by="revenue", top_n=5):
+def from_export(path, columns=None, sort_by="revenue", top_n=5, exclude=()):
     rows = _read_rows(path)
     if not rows:
         return []
@@ -119,7 +124,7 @@ def from_export(path, columns=None, sort_by="revenue", top_n=5):
     creatives = []
     for row in rows:
         url = str(row.get(mapping["url"]) or "").strip()
-        if not url:
+        if not url or url in exclude:
             continue
         metrics = {k: parse_metric(row.get(mapping[k])) for k in ("revenue", "views", "sales")
                    if mapping[k]}
@@ -136,12 +141,14 @@ def from_export(path, columns=None, sort_by="revenue", top_n=5):
     return creatives[:top_n] if top_n else creatives
 
 
-def from_directory(path):
+def from_directory(path, exclude=()):
     path = Path(path)
     if not path.is_dir():
         raise ConfigError(f"No existe la carpeta de videos: {path}")
     creatives = []
     for video in sorted(p for p in path.iterdir() if p.suffix.lower() in VIDEO_EXTS):
+        if str(video) in exclude:
+            continue
         caption_file = video.with_suffix(".txt")
         caption = caption_file.read_text(encoding="utf-8").strip() if caption_file.exists() else ""
         creatives.append(Creative(label=video.stem, path=str(video), caption=caption))
@@ -150,10 +157,17 @@ def from_directory(path):
 
 def collect_creatives(brief):
     """Junta los creativos de todas las fuentes del brief, en orden:
-    lista manual, carpeta, export. Asigna labels V1, V2, ..."""
+    lista manual, carpeta, export. Asigna labels V1, V2, ...
+
+    kalodata.exclude: lista de videos (path o URL) a descartar; en el export
+    se descartan antes del top N, así se completa con el siguiente del ranking."""
+    kd = brief.get("kalodata") or {}
+    exclude = set(kd.get("exclude") or [])
     creatives = []
     for item in brief.get("videos") or []:
         path = resolve_path(brief, item.get("path"))
+        if (str(path) if path else item.get("url", "")) in exclude:
+            continue
         creatives.append(Creative(
             label=item.get("label", ""),
             url=item.get("url", ""),
@@ -161,15 +175,15 @@ def collect_creatives(brief):
             caption=item.get("caption", ""),
         ))
 
-    kd = brief.get("kalodata") or {}
     if kd.get("videos_dir"):
-        creatives.extend(from_directory(resolve_path(brief, kd["videos_dir"])))
+        creatives.extend(from_directory(resolve_path(brief, kd["videos_dir"]), exclude))
     if kd.get("export_file"):
         creatives.extend(from_export(
             resolve_path(brief, kd["export_file"]),
             columns=kd.get("columns"),
             sort_by=kd.get("sort_by", "revenue"),
             top_n=kd.get("top_n", 5),
+            exclude=exclude,
         ))
 
     max_videos = (brief.get("test") or {}).get("max_videos")
