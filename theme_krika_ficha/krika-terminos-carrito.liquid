@@ -1,0 +1,123 @@
+{%- comment -%}
+  Casilla obligatoria "Acepto términos, condiciones y política de tratamiento de datos".
+  - Se inserta sola antes de cada botón de pago del carrito (página /cart y carrito lateral).
+  - Sin la casilla marcada no se puede ir al checkout (botón, enlaces y pagos express bloqueados).
+  - Al marcarla se guarda como atributo del carrito, que pasa al pedido:
+    Admin → Pedido → "Detalles adicionales" → "Acepto términos y tratamiento de datos".
+  Se renderiza una vez desde layout/theme.liquid antes de </body>.
+{%- endcomment -%}
+{%- liquid
+  assign kt_attr = 'Acepto términos y tratamiento de datos'
+  assign kt_terms = shop.terms_of_service.url | default: '/policies/terms-of-service'
+  assign kt_privacy = shop.privacy_policy.url | default: '/policies/privacy-policy'
+-%}
+<template id="kt-terms-tpl">
+  <div class="kt-terms" data-kt-terms>
+    <label class="kt-terms__label">
+      <input type="checkbox" class="kt-terms__input" data-kt-input>
+      <span class="kt-terms__text">
+        Acepto los <a href="{{ kt_terms }}" target="_blank" rel="noopener">Términos y Condiciones</a> y la
+        <a href="{{ kt_privacy }}" target="_blank" rel="noopener">Política de Tratamiento de Datos</a>.
+      </span>
+    </label>
+    <p class="kt-terms__error" data-kt-error hidden>Para continuar con la compra debes aceptar los términos y la política de tratamiento de datos.</p>
+  </div>
+</template>
+<style>
+  .kt-terms{margin:0 0 12px;text-align:left;font-size:13px;line-height:1.4}
+  .kt-terms__label{display:flex;gap:8px;align-items:flex-start;cursor:pointer}
+  .kt-terms__input{flex:0 0 auto;width:18px;height:18px;margin:1px 0 0;accent-color:#000;cursor:pointer}
+  .kt-terms__text a{text-decoration:underline}
+  .kt-terms__error{margin:6px 0 0;color:#d72c0d;font-size:12px}
+  .kt-terms.is-error .kt-terms__input{outline:2px solid #d72c0d;outline-offset:1px}
+  .kt-terms-locked{opacity:.5;filter:grayscale(1);pointer-events:none}
+  .kt-terms-wrap{position:relative}
+</style>
+<script>
+(function () {
+  var ATTR = {{ kt_attr | json }};
+  var CHECKOUT = '[name="checkout"], a[href^="/checkout"], a[href*="/checkout?"], a[href$="/checkout"]';
+  var EXPRESS = '.additional-checkout-buttons, shopify-accelerated-checkout-cart, .dynamic-checkout__content';
+  var accepted = false;
+
+  function stamp() {
+    try {
+      return 'Sí — ' + new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota', hour12: false }) + ' (hora Colombia)';
+    } catch (e) { return 'Sí — ' + new Date().toISOString(); }
+  }
+
+  function save(value) {
+    var body = { attributes: {} };
+    body.attributes[ATTR] = value;
+    return fetch('/cart/update.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(body)
+    }).catch(function () {});
+  }
+
+  function boxes() { return document.querySelectorAll('[data-kt-terms]'); }
+
+  function render() {
+    boxes().forEach(function (b) {
+      b.querySelector('[data-kt-input]').checked = accepted;
+      if (accepted) { b.classList.remove('is-error'); b.querySelector('[data-kt-error]').hidden = true; }
+    });
+    document.querySelectorAll(EXPRESS).forEach(function (el) {
+      if (el.closest('form[action*="/cart/add"]')) return;
+      el.classList.toggle('kt-terms-locked', !accepted);
+    });
+  }
+
+  function showError() {
+    boxes().forEach(function (b) { b.classList.add('is-error'); b.querySelector('[data-kt-error]').hidden = false; });
+    var first = boxes()[0];
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function isCartCheckout(el) {
+    // Solo botones de pago del carrito, no el "Comprar ahora" de la ficha de producto.
+    return !el.closest('form[action*="/cart/add"]');
+  }
+
+  function inject() {
+    var tpl = document.getElementById('kt-terms-tpl');
+    if (!tpl) return;
+    document.querySelectorAll(CHECKOUT).forEach(function (btn) {
+      if (!isCartCheckout(btn)) return;
+      var host = btn.closest('form') || btn.parentElement;
+      if (!host || host.querySelector('[data-kt-terms]')) return;
+      btn.parentElement.insertBefore(tpl.content.cloneNode(true), btn);
+    });
+    render();
+  }
+
+  document.addEventListener('change', function (e) {
+    if (!e.target.matches('[data-kt-input]')) return;
+    accepted = e.target.checked;
+    render();
+    save(accepted ? stamp() : '');
+  });
+
+  function block(e) {
+    if (accepted) return;
+    var el = e.target.closest ? e.target.closest(CHECKOUT) : null;
+    if (!el && e.type === 'submit' && e.submitter && e.submitter.matches(CHECKOUT)) el = e.submitter;
+    if (!el || !isCartCheckout(el)) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    showError();
+  }
+  document.addEventListener('click', block, true);
+  document.addEventListener('submit', block, true);
+
+  fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+    .then(function (r) { return r.json(); })
+    .then(function (cart) { accepted = !!(cart.attributes && cart.attributes[ATTR]); render(); })
+    .catch(function () {});
+
+  new MutationObserver(function () { inject(); })
+    .observe(document.documentElement, { childList: true, subtree: true });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject); else inject();
+})();
+</script>
