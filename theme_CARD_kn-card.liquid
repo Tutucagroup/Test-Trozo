@@ -13,20 +13,18 @@
     assign on_sale = true
     assign pct = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round
   endif
-  # --- Cyber display (metafield custom.cyber_sale_price + ventana de fechas) ---
-  assign cyber_start = '2026-10-20' | date: '%s' | plus: 0
-  assign cyber_end = '2026-11-10' | date: '%s' | plus: 0
-  assign cyber_now = 'now' | date: '%s' | plus: 0
-  assign cyber_sale = v.metafields.custom.cyber_sale_price.value
+  # --- Descuento dinamico: lee los metafields de Discount Display (se sincroniza solo con la seccion Descuentos) ---
+  assign dd = v.metafields.discount_display.data.value
+  assign dd_sale = dd.discounted_price_cents
   assign disp_price = v.price
   assign disp_compare = v.compare_at_price
   assign disp_on_sale = on_sale
   assign disp_pct = pct
-  if cyber_now >= cyber_start and cyber_now < cyber_end and cyber_sale != blank and cyber_sale > 0 and cyber_sale < v.price
-    assign disp_price = cyber_sale
+  if dd_sale != blank and dd_sale > 0 and dd_sale < v.price
+    assign disp_price = dd_sale
     assign disp_compare = v.price
     assign disp_on_sale = true
-    assign disp_pct = v.price | minus: cyber_sale | times: 100.0 | divided_by: v.price | round
+    assign disp_pct = v.price | minus: dd_sale | times: 100.0 | divided_by: v.price | round
   endif
   assign img_loading = 'lazy'
   if eager

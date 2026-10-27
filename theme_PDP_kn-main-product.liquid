@@ -5,28 +5,18 @@
     assign on_sale = true
     assign pct = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round
   endif
-  # --- Cyber display (lee metafield custom.cyber_sale_price; ventana de fechas) ---
-  assign cyber_start = '2026-10-20' | date: '%s' | plus: 0
-  assign cyber_end = '2026-11-10' | date: '%s' | plus: 0
-  assign cyber_now = 'now' | date: '%s' | plus: 0
-  assign cyber_window = false
-  if cyber_now >= cyber_start and cyber_now < cyber_end
-    assign cyber_window = true
-  endif
-  assign cyber_sale = v.metafields.custom.cyber_sale_price.value
-  assign cyber_on = false
-  if cyber_window and cyber_sale != blank and cyber_sale > 0 and cyber_sale < v.price
-    assign cyber_on = true
-  endif
+  # --- Descuento dinamico: lee los metafields de Discount Display (se sincroniza solo con la seccion Descuentos) ---
+  assign dd = v.metafields.discount_display.data.value
+  assign dd_sale = dd.discounted_price_cents
   assign disp_price = v.price
   assign disp_compare = v.compare_at_price
   assign disp_on_sale = on_sale
   assign disp_pct = pct
-  if cyber_on
-    assign disp_price = cyber_sale
+  if dd_sale != blank and dd_sale > 0 and dd_sale < v.price
+    assign disp_price = dd_sale
     assign disp_compare = v.price
     assign disp_on_sale = true
-    assign disp_pct = v.price | minus: cyber_sale | times: 100.0 | divided_by: v.price | round
+    assign disp_pct = v.price | minus: dd_sale | times: 100.0 | divided_by: v.price | round
   endif
   assign p_alt = product.title | escape
   assign form_id = 'KnForm-' | append: section.id
@@ -199,7 +189,7 @@
                     data-title="{{ x.title | escape }}" data-sku="{{ x.sku | escape }}" data-ean="{{ x.barcode | escape }}" data-available="{{ x.available }}"
                     data-price="{{ x.price | money | escape }}" data-price-raw="{{ x.price }}" data-net="{{ xnet | money | escape }}"
                     data-compare="{{ x.compare_at_price | money | escape }}" data-compare-raw="{{ x.compare_at_price | default: 0 }}"
-                    data-cyber="{% if cyber_window %}{{ x.metafields.custom.cyber_sale_price.value | money | escape }}{% endif %}" data-cyber-raw="{% if cyber_window %}{{ x.metafields.custom.cyber_sale_price.value | default: 0 }}{% else %}0{% endif %}"
+                    data-cyber="{{ x.metafields.discount_display.data.value.discounted_price_cents | money | escape }}" data-cyber-raw="{{ x.metafields.discount_display.data.value.discounted_price_cents | default: 0 }}"
                     data-media="{{ x.featured_media.id }}">
                   {%- if xi -%}<img src="{{ xi | image_url: width: 80 }}" alt="" width="32" height="32" loading="lazy">{%- else -%}<span class="kn-vp__ph" aria-hidden="true">{{ x.title | slice: 0, 2 | upcase }}</span>{%- endif -%}
                   <span>{{ x.title }}</span>
