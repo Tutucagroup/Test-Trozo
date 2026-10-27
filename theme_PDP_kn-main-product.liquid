@@ -202,7 +202,7 @@
         <div>
           <div class="kn-info__price" data-pdp-price>
             {%- if disp_on_sale -%}<del>{{ disp_compare | money }}</del>{%- endif -%}
-            <strong>{{ disp_price | money }}</strong>
+            <strong{% if disp_on_sale %} style="color:#F77F00"{% endif %}>{{ disp_price | money }}</strong>
             {%- if disp_on_sale -%}<span class="kn-off">-{{ disp_pct }}%</span>{%- endif -%}
           </div>
           <div class="kn-info__tax">
@@ -344,12 +344,14 @@
       var h = '';
       if (cyb > 0 && cyb < val) {
         h += '<del>' + d.price + '</del>';
-        h += '<strong>' + d.cyber + '</strong>';
+        h += '<strong style="color:#F77F00">' + d.cyber + '</strong>';
         h += '<span class="kn-off">-' + Math.round((val - cyb) * 100 / val) + '%</span>';
+      } else if (cmp > val) {
+        h += '<del>' + d.compare + '</del>';
+        h += '<strong style="color:#F77F00">' + d.price + '</strong>';
+        h += '<span class="kn-off">-' + Math.round((cmp - val) * 100 / cmp) + '%</span>';
       } else {
-        if (cmp > val) h += '<del>' + d.compare + '</del>';
         h += '<strong>' + d.price + '</strong>';
-        if (cmp > val) h += '<span class="kn-off">-' + Math.round((cmp - val) * 100 / cmp) + '%</span>';
       }
       price.innerHTML = h;
       if (net) net.textContent = 'Precio sin impuestos nacionales: ' + d.net;

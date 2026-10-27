@@ -62,7 +62,7 @@
     {%- if product.available -%}
       <div class="kn-price">
         {%- if disp_on_sale -%}<del>{{ disp_compare | money }}</del>{%- endif -%}
-        <span class="kn-price__now">{%- if product.price_varies -%}Desde {% endif -%}{{ disp_price | money }}</span>
+        <span class="kn-price__now"{% if disp_on_sale %} style="color:#F77F00"{% endif %}>{%- if product.price_varies -%}Desde {% endif -%}{{ disp_price | money }}</span>
         {%- render 'kn-net', price: disp_price -%}
       </div>
       <div class="kn-card__cta">
