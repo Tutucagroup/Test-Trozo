@@ -1,0 +1,93 @@
+{%- comment -%}
+  Tarjeta de producto Chester.
+  Parámetros: product (obligatorio), eager (bool, opcional)
+  - Foto siempre en un cuadrado (sin recortar), favorito, marca, título a 2 líneas.
+  - Precio, precio anterior tachado, % de descuento y precio sin impuestos nacionales.
+  - Con stock: «Agregar» (una sola presentación) o «Ver opciones» (varias).
+  - Sin stock: aviso + «Avisame» por WhatsApp.
+{%- endcomment -%}
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign on_sale = false
+  if v.compare_at_price > v.price
+    assign on_sale = true
+    assign pct = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round
+  endif
+  # --- Cyber display (metafield custom.cyber_sale_price + ventana de fechas) ---
+  assign cyber_start = '2026-10-20' | date: '%s' | plus: 0
+  assign cyber_end = '2026-11-10' | date: '%s' | plus: 0
+  assign cyber_now = 'now' | date: '%s' | plus: 0
+  assign cyber_sale = v.metafields.custom.cyber_sale_price.value
+  assign disp_price = v.price
+  assign disp_compare = v.compare_at_price
+  assign disp_on_sale = on_sale
+  assign disp_pct = pct
+  if cyber_now >= cyber_start and cyber_now < cyber_end and cyber_sale != blank and cyber_sale > 0 and cyber_sale < v.price
+    assign disp_price = cyber_sale
+    assign disp_compare = v.price
+    assign disp_on_sale = true
+    assign disp_pct = v.price | minus: cyber_sale | times: 100.0 | divided_by: v.price | round
+  endif
+  assign img_loading = 'lazy'
+  if eager
+    assign img_loading = 'eager'
+  endif
+  assign title_alt = product.title | escape
+  assign second = product.media[1].preview_image
+  assign rating = product.metafields.reviews.rating.value
+  assign wa = settings.k_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
+-%}
+<article class="kn-card">
+  <a class="kn-card__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+    {%- if product.featured_media -%}
+      {{ product.featured_media.preview_image | image_url: width: 480 | image_tag: loading: img_loading, width: 480, height: 480, sizes: '(min-width: 1280px) 260px, (min-width: 990px) 22vw, (min-width: 600px) 31vw, 46vw', widths: '240,360,480', alt: title_alt }}
+      {%- if second -%}{{ second | image_url: width: 480 | image_tag: loading: 'lazy', width: 480, height: 480, sizes: '(min-width: 990px) 22vw, 46vw', widths: '240,360,480', alt: '' }}{%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+    <span class="kn-stamps">
+      {%- if disp_on_sale -%}<span class="kn-stamp kn-stamp--accent">-{{ disp_pct }}%</span>{%- endif -%}
+      {%- if product.tags contains 'lanzamiento' -%}<span class="kn-stamp">Lanzamiento</span>
+      {%- elsif product.tags contains 'mas-vendido' -%}<span class="kn-stamp">Más vendido</span>
+      {%- elsif product.tags contains 'combo' -%}<span class="kn-stamp">Combo</span>{%- endif -%}
+    </span>
+  </a>
+  <button type="button" class="kn-fav" data-fav="{{ product.handle }}" aria-pressed="false" aria-label="Guardar {{ title_alt }} en favoritos">{% render 'icon', name: 'heart' %}</button>
+
+  <div class="kn-card__body">
+    <div class="kn-card__brand">
+      <span>{{ product.vendor }}</span>
+      {%- if rating -%}<span class="kn-stars">{% render 'icon', name: 'star' %} {{ rating.rating | round: 1 }}</span>{%- endif -%}
+    </div>
+    <a class="kn-card__title" href="{{ product.url }}">{{ product.title }}</a>
+
+    {%- if product.available -%}
+      <div class="kn-price">
+        {%- if disp_on_sale -%}<del>{{ disp_compare | money }}</del>{%- endif -%}
+        <span class="kn-price__now">{%- if product.price_varies -%}Desde {% endif -%}{{ disp_price | money }}</span>
+        {%- render 'kn-net', price: disp_price -%}
+      </div>
+      <div class="kn-card__cta">
+        {%- if product.has_only_default_variant -%}
+          {%- form 'product', product, data-ajax-add: '' -%}
+            <input type="hidden" name="id" value="{{ v.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" class="kn-btn kn-btn--primary">{% render 'icon', name: 'bag' %} Agregar</button>
+          {%- endform -%}
+        {%- else -%}
+          <a class="kn-btn kn-btn--outline" href="{{ product.url }}">Ver {{ product.variants.size }} opciones</a>
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      <p class="kn-card__out">Sin stock<small>Avisame cuando vuelva</small></p>
+      <div class="kn-card__cta">
+        {%- if wa != blank -%}
+          {%- assign msg = 'Hola Chester, quiero que me avisen cuando vuelva: ' | append: product.title -%}
+          <a class="kn-btn kn-btn--outline" target="_blank" rel="noopener" href="https://wa.me/{{ wa }}?text={{ msg | url_encode }}">Avisame</a>
+        {%- else -%}
+          <a class="kn-btn kn-btn--outline" href="{{ product.url }}">Ver producto</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>
