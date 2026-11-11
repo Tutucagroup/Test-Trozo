@@ -1,0 +1,25 @@
+{%- comment -%} Tarjeta compacta de recomendación para la bolsa lateral. Parámetro: product {%- endcomment -%}
+{%- assign v0 = product.selected_or_first_available_variant -%}
+<div class="kn-up__card">
+  <a class="kn-up__img" href="{{ product.url }}">{{ product.featured_media | image_url: width: 160 | image_tag: loading: 'lazy', width: 72, height: 72, alt: product.title }}</a>
+  <div class="kn-up__info">
+    <a class="kn-up__name" href="{{ product.url }}">{{ product.title }}</a>
+    <div class="kn-up__price">
+      <del data-up-compare{% unless v0.compare_at_price > v0.price %} hidden{% endunless %}>{% if v0.compare_at_price > v0.price %}{{ v0.compare_at_price | money }}{% endif %}</del>
+      <strong data-up-price>{{ v0.price | money }}</strong>
+    </div>
+    <form class="kn-up__form" action="{{ routes.cart_add_url }}" method="post" data-ajax-add data-img="{% render 'kn-img-url', variant: v0, product: product %}">
+      {%- if product.has_only_default_variant -%}
+        <input type="hidden" name="id" value="{{ v0.id }}">
+      {%- else -%}
+        <select class="kn-up__sel" name="id" data-up-sel aria-label="elige una opción de {{ product.title | escape }}">
+          {%- for v in product.variants -%}
+            <option value="{{ v.id }}" data-img="{% render 'kn-img-url', variant: v, product: product %}" data-price="{{ v.price | money | escape }}" data-compare="{% if v.compare_at_price > v.price %}{{ v.compare_at_price | money | escape }}{% endif %}"{% if v.id == v0.id %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>{{ v.title }}{% unless v.available %} (agotado){% endunless %}</option>
+          {%- endfor -%}
+        </select>
+      {%- endif -%}
+      <input type="hidden" name="quantity" value="1">
+      <button type="submit" class="kn-btn kn-btn--primary kn-up__add">agregar</button>
+    </form>
+  </div>
+</div>

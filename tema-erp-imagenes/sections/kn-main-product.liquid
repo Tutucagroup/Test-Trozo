@@ -1,0 +1,392 @@
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign on_sale = false
+  if v.compare_at_price > v.price
+    assign on_sale = true
+    assign pct = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round
+  endif
+  assign p_alt = product.title | escape
+  assign form_id = 'KnForm-' | append: section.id
+  assign d = product.description
+
+  comment
+    Las descripciones del catálogo siguen un formato fijo (intro, "Por qué te va a gustar" + <ul>,
+    "Modo de uso" + <ol>, "Ideal para:" y "Tip Krika:"). De ahí salen los beneficios destacados y
+    los acordeones. Si un producto no sigue el formato, se muestra la descripción completa.
+  endcomment
+  assign marca_pros = '<strong>Por qué te va a gustar</strong></p>'
+  assign marca_uso = '<strong>Modo de uso</strong></p>'
+  assign tiene_copy = false
+  if d contains marca_pros
+    assign tiene_copy = true
+    assign cabeza = d | split: marca_pros | first
+    assign parrafos = cabeza | split: '<p>'
+    assign intro = parrafos[2] | split: '</p>' | first | strip
+    assign pros_html = d | split: marca_pros | last | split: '<ul>' | last | split: '</ul>' | first
+    assign pros = pros_html | split: '<li>'
+  endif
+  if d contains marca_uso
+    assign uso = d | split: marca_uso | last
+    if uso contains '</ol>'
+      assign uso = uso | split: '</ol>' | first | append: '</ol>'
+    elsif uso contains '</ul>'
+      assign uso = uso | split: '</ul>' | first | append: '</ul>'
+    endif
+  endif
+  if d contains '<strong>Ideal para:</strong>'
+    assign ideal = d | split: '<strong>Ideal para:</strong>' | last | split: '</p>' | first | strip
+  endif
+  if d contains '<strong>Tip Krika:</strong>'
+    assign tip = d | split: '<strong>Tip Krika:</strong>' | last | split: '</p>' | first | strip
+  endif
+
+  comment
+    Beneficios en un metacampo propio (custom.beneficios): Siesa no lo sobrescribe.
+    Si existe, tiene prioridad sobre los bullets que salen de la descripción.
+  endcomment
+  assign bens = product.metafields.custom.beneficios.value
+  assign d_txt = d | strip_html | strip
+  assign t_txt = product.title | strip
+  assign d_es_titulo = false
+  if d_txt == blank or d_txt == t_txt
+    assign d_es_titulo = true
+  endif
+
+  assign umbral = settings.k_free_shipping | times: 100
+  assign falta = umbral | minus: cart.total_price
+  if umbral > 0
+    assign bar = cart.total_price | times: 100 | divided_by: umbral
+    if bar > 100
+      assign bar = 100
+    endif
+  endif
+  assign wa = settings.k_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
+  assign wa_msg = 'Hola, tengo una pregunta sobre: ' | append: product.title
+-%}
+
+<div class="kn-wrap">
+  <nav class="kn-crumbs" aria-label="ruta de navegación">
+    <a href="{{ routes.root_url }}">Inicio</a> ›
+    {%- if collection -%}<a href="{{ collection.url }}">{{ collection.title | capitalize }}</a> ›{%- endif -%}
+    {%- if product.vendor != blank -%}<a href="{{ product.vendor | url_for_vendor }}">{{ product.vendor | capitalize }}</a> ›{%- endif -%}
+    <span aria-current="page">{{ product.title | capitalize | truncate: 60 }}</span>
+  </nav>
+
+  <div class="kn-pdp">
+    {%- comment -%} Galería {%- endcomment -%}
+    <div class="kn-gal" data-gallery>
+      <div class="kn-gal__stage">
+        <div class="kn-gal__track" data-gal-track>
+          {%- for media in product.media -%}
+            {%- assign ld = 'lazy' -%}{%- if forloop.first -%}{%- assign ld = 'eager' -%}{%- endif -%}
+            {%- if media.media_type == 'image' -%}
+              <div class="kn-gal__slide" data-media-id="{{ media.id }}" data-gal-zoom="{{ media | image_url: width: 1800 }}">
+                {{ media | image_url: width: 1100 | image_tag: loading: ld, widths: '550,800,1100', sizes: '(min-width: 990px) 55vw, 100vw', alt: media.alt | default: p_alt }}
+              </div>
+            {%- elsif media.media_type == 'video' or media.media_type == 'external_video' -%}
+              <div class="kn-gal__slide" data-media-id="{{ media.id }}">{{ media | media_tag: image_size: '1100x', playsinline: true, controls: true }}</div>
+            {%- endif -%}
+          {%- else -%}
+            <div class="kn-gal__slide">{{ 'product-1' | placeholder_svg_tag }}</div>
+          {%- endfor -%}
+        </div>
+        {%- if on_sale -%}<span class="kn-stamp" style="background:var(--n-alert)" data-pdp-off>-{{ pct }}%</span>{%- endif -%}
+        {%- if product.media.size > 1 -%}<span class="kn-gal__count" data-gal-count>1 / {{ product.media.size }}</span>{%- endif -%}
+      </div>
+      {%- if product.media.size > 1 -%}
+        <div class="kn-gal__thumbs" role="list">
+          {%- for media in product.media limit: 10 -%}
+            <button type="button" class="kn-gal__thumb" role="listitem" data-gal-thumb="{{ forloop.index0 }}" aria-label="ver imagen {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}>
+              <img src="{{ media.preview_image | image_url: width: 160 }}" alt="" width="78" height="78" loading="lazy">
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Panel de compra {%- endcomment -%}
+    <div class="kn-info">
+      <div class="kn-info__top">
+        {%- if product.vendor != blank -%}<a href="{{ product.vendor | url_for_vendor }}">Ver todo {{ product.vendor | capitalize }}</a>{%- else -%}<span></span>{%- endif -%}
+        <div class="kn-info__acts">
+          <button type="button" class="kn-fav" data-fav="{{ product.handle }}" aria-pressed="false" aria-label="guardar en favoritos">{% render 'icon', name: 'heart' %}</button>
+          <button type="button" class="kn-icon-btn" data-share aria-label="compartir este producto">{% render 'icon', name: 'share' %}</button>
+        </div>
+      </div>
+
+      <h1 class="kn-info__title">{{ product.title }}</h1>
+      <div class="kn-info__meta">
+        {%- if v.sku != blank -%}<span data-pdp-sku>Cód: {{ v.sku }}</span>{%- endif -%}
+        {%- if v.barcode != blank -%}<span>EAN: {{ v.barcode }}</span>{%- endif -%}
+      </div>
+
+      {%- liquid
+        assign chips = ''
+        if product.vendor != blank
+          assign chips = product.vendor | capitalize
+        endif
+        if product.type != blank
+          capture t
+            render 'tipo', texto: product.type
+          endcapture
+          assign chips = chips | append: '|' | append: t | capitalize
+        endif
+        for tg in product.tags limit: 4
+          unless tg contains ':' or tg contains '_'
+            assign chips = chips | append: '|' | append: tg | capitalize
+          endunless
+        endfor
+        assign chips = chips | split: '|' | uniq
+      -%}
+      {%- if chips.size > 0 -%}
+        <div class="kn-info__tags">{%- for c in chips -%}{%- if c != blank -%}<span class="kn-tag">{{ c | capitalize }}</span>{%- endif -%}{%- endfor -%}</div>
+      {%- endif -%}
+
+      {%- if bens != blank -%}
+        <ul class="kn-checks">
+          {%- for b in bens limit: 3 -%}
+            <li>{% render 'icon', name: 'check' %}<span>{{ b }}</span></li>
+          {%- endfor -%}
+        </ul>
+      {%- elsif tiene_copy -%}
+        <ul class="kn-checks">
+          {%- assign n = 0 -%}
+          {%- for pro in pros -%}
+            {%- assign txt = pro | split: '</li>' | first | strip -%}
+            {%- if txt == blank -%}{%- continue -%}{%- endif -%}
+            {%- if n >= 3 -%}{%- break -%}{%- endif -%}
+            <li>{% render 'icon', name: 'check' %}<span>{{ txt }}</span></li>
+            {%- assign n = n | plus: 1 -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- capture kn_img -%}{% render 'kn-img-url', variant: v, product: product %}{%- endcapture -%}
+      {%- form 'product', product, id: form_id, data-ajax-add: '', class: 'kn-form', data-img: kn_img -%}
+        {%- if product.has_only_default_variant -%}
+          <input type="hidden" name="id" value="{{ v.id }}">
+        {%- else -%}
+          {%- liquid
+            assign label = 'Presentación'
+            if product.options_with_values.size == 1
+              assign label = product.options_with_values[0].name | capitalize
+            endif
+          -%}
+          <div class="kn-vp{% if product.variants.size > 12 %} kn-vp--scroll{% endif %}" data-vp>
+            <div class="kn-vp__head">{{ label }}: <strong data-vp-current>{{ v.title }}</strong></div>
+            <div class="kn-vp__grid" role="radiogroup" aria-label="{{ label }}">
+              {%- for x in product.variants -%}
+                {%- assign xi = x.image | default: x.featured_media.preview_image -%}
+                <label class="kn-vp__opt{% if x.id == v.id %} is-active{% endif %}{% unless x.available %} is-out{% endunless %}">
+                  <input type="radio" name="id" value="{{ x.id }}"{% if x.id == v.id %} checked{% endif %}
+                    data-title="{{ x.title | escape }}" data-sku="{{ x.sku | escape }}" data-available="{{ x.available }}"
+                    data-price="{{ x.price | money }}" data-price-raw="{{ x.price }}"
+                    data-compare="{{ x.compare_at_price | money }}" data-compare-raw="{{ x.compare_at_price | default: 0 }}"
+                    data-media="{{ x.featured_media.id }}" data-img="{% render 'kn-img-url', variant: x, product: product %}">
+                  {%- if xi -%}<img src="{{ xi | image_url: width: 80 }}" alt="" width="32" height="32" loading="lazy">{%- else -%}<span class="kn-vp__ph" aria-hidden="true">{{ x.title | slice: 0, 2 | upcase }}</span>{%- endif -%}
+                  <span>{{ x.title }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        <div>
+          <div class="kn-info__price" data-pdp-price>
+            {%- if on_sale -%}<del>{{ v.compare_at_price | money }}</del>{%- endif -%}
+            <strong>{{ v.price | money }}</strong>
+            {%- if on_sale -%}<span class="kn-off">-{{ pct }}%</span>{%- endif -%}
+          </div>
+          <p class="kn-info__tax">Precio con IVA incluido</p>
+        </div>
+
+        {%- if settings.k_coupon_text != blank -%}
+          <div class="kn-coupon">{% render 'icon', name: 'tag' %}<span style="flex:1">{{ settings.k_coupon_text }}</span>{%- if settings.k_coupon_code != blank -%}<strong>{{ settings.k_coupon_code }}</strong>{%- endif -%}</div>
+        {%- endif -%}
+
+        <div class="kn-buyrow">
+          <div class="kn-qty" data-qty>
+            <button type="button" data-step="-1" aria-label="quitar uno">−</button>
+            <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="cantidad">
+            <button type="button" data-step="1" aria-label="agregar uno">+</button>
+          </div>
+          <button type="submit" class="kn-btn kn-btn--primary kn-btn--lg" data-pdp-submit{% unless v.available %} disabled{% endunless %}>
+            {%- if v.available -%}{% render 'icon', name: 'bag' %} Agregar a mi bolsa{%- else -%}Agotado{%- endif -%}
+          </button>
+        </div>
+        {%- unless v.available -%}
+          <a class="kn-btn kn-btn--outline kn-btn--full" data-pdp-notify target="_blank" rel="noopener" href="https://api.whatsapp.com/send/?phone={{ wa }}&text={{ 'Hola, quiero que me avisen cuando llegue: ' | append: product.title | url_encode }}">Avísame cuando llegue</a>
+        {%- endunless -%}
+      {%- endform -%}
+
+      <div class="kn-box">
+        <h3>{% render 'icon', name: 'truck' %} Envíos a todo Colombia</h3>
+        {%- if umbral > 0 -%}
+          <div class="kn-free">
+            <span>Envío gratis a partir de <strong>{{ umbral | money_without_trailing_zeros }}</strong></span>
+            <div class="kn-free__bar"><span style="width:{{ bar | default: 0 }}%"></span></div>
+            {%- if cart.item_count > 0 and falta > 0 -%}<span>Te faltan {{ falta | money }} con lo que ya tienes en tu bolsa</span>{%- elsif cart.item_count > 0 -%}<span>🎉 Tu bolsa ya tiene envío gratis</span>{%- else -%}<span>Agrega productos y gana el envío gratis</span>{%- endif -%}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.ship_note != blank -%}<p class="kn-count">{{ section.settings.ship_note }}</p>{%- endif -%}
+      </div>
+
+      <div>
+        <details class="kn-acc" open>
+          <summary>Descripción{% render 'icon', name: 'chevron-down' %}</summary>
+          <div class="kn-acc__body rte">
+            {%- if tiene_copy -%}
+              {%- if intro != blank -%}<p>{{ intro }}</p>{%- endif -%}
+              <p><strong>Por qué te va a gustar</strong></p><ul>{{ pros_html }}</ul>
+            {%- elsif bens != blank -%}
+              {%- unless d_es_titulo -%}{{ d }}{%- endunless -%}
+              <p><strong>Por qué te va a gustar</strong></p>
+              <ul>{%- for b in bens -%}<li>{{ b }}</li>{%- endfor -%}</ul>
+            {%- else -%}
+              {{ d | default: 'Pronto agregaremos la descripción de este producto.' }}
+            {%- endif -%}
+          </div>
+        </details>
+        {%- if uso != blank -%}
+          <details class="kn-acc"><summary>Cómo usar{% render 'icon', name: 'chevron-down' %}</summary><div class="kn-acc__body rte">{{ uso }}</div></details>
+        {%- endif -%}
+        {%- if ideal != blank or tip != blank -%}
+          <details class="kn-acc"><summary>Ideal para y tips{% render 'icon', name: 'chevron-down' %}</summary><div class="kn-acc__body rte">
+            {%- if ideal != blank -%}<p><strong>Ideal para:</strong> {{ ideal }}</p>{%- endif -%}
+            {%- if tip != blank -%}<p><strong>Tip Krika:</strong> {{ tip }}</p>{%- endif -%}
+          </div></details>
+        {%- endif -%}
+        {%- if product.metafields.custom.ingredientes != blank -%}
+          <details class="kn-acc"><summary>Ingredientes{% render 'icon', name: 'chevron-down' %}</summary><div class="kn-acc__body rte">{{ product.metafields.custom.ingredientes | metafield_tag }}</div></details>
+        {%- endif -%}
+        <details class="kn-acc"><summary>Envíos, cambios y devoluciones{% render 'icon', name: 'chevron-down' %}</summary><div class="kn-acc__body rte">{{ section.settings.policy_text }}</div></details>
+      </div>
+
+      {%- if wa != blank -%}
+        <p class="kn-help">{% render 'icon', name: 'whatsapp' %} ¿Tienes dudas? <a target="_blank" rel="noopener" href="https://api.whatsapp.com/send/?phone={{ wa }}&text={{ wa_msg | url_encode }}">Escríbenos por WhatsApp</a></p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if product.vendor != blank -%}
+    <section class="kn-section" style="padding-top:0" data-lazy-src="{{ routes.collections_url }}/vendors?q={{ product.vendor | url_encode }}&section_id=kn-vendor-products" data-exclude="{{ product.handle }}" hidden></section>
+  {%- endif -%}
+</div>
+
+{%- comment -%} Barra fija de compra (móvil) {%- endcomment -%}
+{%- if v.available -%}
+  <div class="kn-sticky" data-sticky>
+    <div class="kn-sticky__txt"><span>{{ product.title }}</span><strong data-sticky-price>{{ v.price | money }}</strong></div>
+    <button type="submit" form="{{ form_id }}" class="kn-btn kn-btn--primary">Agregar a mi bolsa</button>
+  </div>
+{%- endif -%}
+
+<div class="kn-zoom" data-zoom role="dialog" aria-modal="true" aria-label="imagen ampliada"><img alt="{{ p_alt }}"><button type="button" data-zoom-close aria-label="cerrar">{% render 'icon', name: 'close' %}</button></div>
+<template id="KnBag">{% render 'icon', name: 'bag' %}</template>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "image": [{% if product.featured_image %}{{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }}{% endif %}],
+    "description": {{ product.description | strip_html | truncate: 500 | json }},
+    "sku": {{ v.sku | json }},
+    {%- if v.barcode != blank -%}"gtin13": {{ v.barcode | json }},{%- endif -%}
+    "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+    "offers": {
+      "@type": "Offer",
+      "url": {{ canonical_url | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": {{ v.price | divided_by: 100.0 | json }},
+      "availability": "https://schema.org/{% if v.available %}InStock{% else %}OutOfStock{% endif %}"
+    }
+  }
+</script>
+
+<script>
+(function () {
+  var gal = document.querySelector('[data-gallery]');
+  var track = gal && gal.querySelector('[data-gal-track]');
+  var thumbs = gal ? gal.querySelectorAll('[data-gal-thumb]') : [];
+  var count = gal && gal.querySelector('[data-gal-count]');
+  function goTo(i) { if (!track || !track.children[i]) return; track.scrollTo({ left: track.children[i].offsetLeft, behavior: 'smooth' }); }
+  if (track) {
+    track.addEventListener('scroll', function () {
+      var i = Math.round(track.scrollLeft / track.clientWidth);
+      thumbs.forEach(function (t, k) { t.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+      if (count) count.textContent = (i + 1) + ' / ' + track.children.length;
+    }, { passive: true });
+    thumbs.forEach(function (t) { t.addEventListener('click', function () { goTo(parseInt(t.dataset.galThumb, 10)); }); });
+    var zoom = document.querySelector('[data-zoom]');
+    track.addEventListener('click', function (e) {
+      var s = e.target.closest('[data-gal-zoom]'); if (!s || !zoom) return;
+      zoom.querySelector('img').src = s.dataset.galZoom; zoom.classList.add('is-open'); zoom.querySelector('button').focus();
+    });
+    if (zoom) {
+      zoom.addEventListener('click', function (e) { if (e.target === zoom || e.target.closest('[data-zoom-close]')) zoom.classList.remove('is-open'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') zoom.classList.remove('is-open'); });
+    }
+  }
+
+  var share = document.querySelector('[data-share]');
+  if (share) share.addEventListener('click', function () {
+    var data = { title: document.title, url: location.href.split('?')[0] };
+    if (navigator.share) navigator.share(data).catch(function () {});
+    else if (navigator.clipboard) navigator.clipboard.writeText(data.url).then(function () { window.KN && KN.toast('Enlace copiado'); });
+  });
+
+  var vp = document.querySelector('[data-vp]');
+  if (vp) {
+    var price = document.querySelector('[data-pdp-price]'), sku = document.querySelector('[data-pdp-sku]');
+    var btn = document.querySelector('[data-pdp-submit]'), cur = vp.querySelector('[data-vp-current]');
+    var sp = document.querySelector('[data-sticky-price]'), bag = document.getElementById('KnBag').innerHTML;
+    vp.addEventListener('change', function (e) {
+      var i = e.target.closest('input[name=id]'); if (!i) return;
+      var d = i.dataset, val = +d.priceRaw, cmp = +d.compareRaw;
+      vp.querySelectorAll('.kn-vp__opt').forEach(function (o) { o.classList.toggle('is-active', o.contains(i)); });
+      if (cur) cur.textContent = d.title;
+      var h = '';
+      if (cmp > val) h += '<del>' + d.compare + '</del>';
+      h += '<strong>' + d.price + '</strong>';
+      if (cmp > val) h += '<span class="kn-off">-' + Math.round((cmp - val) * 100 / cmp) + '%</span>';
+      price.innerHTML = h;
+      if (sp) sp.textContent = d.price;
+      if (sku) sku.textContent = d.sku ? 'Cód: ' + d.sku : '';
+      var ok = d.available === 'true';
+      btn.disabled = !ok; btn.innerHTML = ok ? bag + ' Agregar a mi bolsa' : 'Agotado';
+      if (d.media && track) {
+        var slides = track.children;
+        for (var k = 0; k < slides.length; k++) if (slides[k].dataset.mediaId === d.media) { goTo(k); break; }
+      }
+      var u = new URL(location.href); u.searchParams.set('variant', i.value); history.replaceState({}, '', u);
+    });
+  }
+
+  var sticky = document.querySelector('[data-sticky]'), form = document.getElementById('{{ form_id }}');
+  if (sticky && form && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) { sticky.classList.toggle('is-visible', !en[0].isIntersecting && en[0].boundingClientRect.top < 0); }).observe(form);
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Ficha de producto",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ship_note",
+      "label": "Nota de envío",
+      "default": "El costo y el tiempo de entrega se calculan al finalizar la compra según tu ciudad."
+    },
+    {
+      "type": "richtext",
+      "id": "policy_text",
+      "label": "Texto de envíos y cambios",
+      "default": "<p>Enviamos a todo Colombia. Si necesitas cambiar o devolver un producto, revisa nuestra <a href=\"https://www.krika.co/cambios-y-devoluciones\">política de cambios y devoluciones</a>.</p>"
+    }
+  ]
+}
+{% endschema %}

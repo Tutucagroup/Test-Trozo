@@ -1,0 +1,11 @@
+{%- comment -%}
+  Devuelve la URL pública (https) de la imagen de una variante, o de la imagen principal del producto si la variante no tiene.
+  Se usa como propiedad oculta _imagen_url de cada línea del pedido, para que el ERP la reciba en el webhook orders/create.
+  Parámetros: variant, product
+{%- endcomment -%}
+{%- liquid
+  assign kn_i = variant.featured_image | default: product.featured_image
+  if kn_i != blank
+    echo kn_i | image_url: width: 2048 | prepend: 'https:'
+  endif
+-%}
