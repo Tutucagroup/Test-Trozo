@@ -1,0 +1,131 @@
+{%- assign coll = section.settings.collection -%}
+<section class="kn-section kn-reveal" style="{% if section.settings.bg != blank %}background:{{ section.settings.bg }}{% endif %}">
+  <div class="kn-wrap">
+    <div class="kn-head{% if section.settings.center %} kn-head--center{% endif %}">
+      <div>
+        <h2 class="kn-h2">{{ section.settings.title | default: coll.title }}</h2>
+        {%- if section.settings.subtitle != blank -%}<p class="kn-sub">{{ section.settings.subtitle }}</p>{%- endif -%}
+      </div>
+      {%- if coll != blank and section.settings.show_all and section.settings.center == false -%}<a class="kn-head__link" href="{{ coll.url }}">Explorar {% render 'icon', name: 'arrow-right' %}</a>{%- endif -%}
+    </div>
+    {%- if section.settings.layout == 'grid' -%}
+      {%- comment -%} Cuadrícula: todos los productos a la vista (2 columnas en celular, 3–4 en escritorio). {%- endcomment -%}
+      <div class="kn-grid kn-showgrid">
+        {%- assign kn_shown = 0 -%}
+        {%- for product in coll.products -%}
+          {%- if kn_shown >= section.settings.limit -%}{%- break -%}{%- endif -%}
+          {%- if product.featured_media != blank -%}
+            {% render 'kn-card', product: product %}
+            {%- assign kn_shown = kn_shown | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if kn_shown < section.settings.limit -%}
+          {%- for product in coll.products -%}
+            {%- if kn_shown >= section.settings.limit -%}{%- break -%}{%- endif -%}
+            {%- if product.featured_media == blank -%}
+              {% render 'kn-card', product: product %}
+              {%- assign kn_shown = kn_shown | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+      {%- if coll != blank and section.settings.show_all and coll.products_count > kn_shown -%}
+        <div class="kn-showgrid__more"><a class="kn-btn kn-btn--outline" href="{{ coll.url }}">Ver todos ({{ coll.products_count }})</a></div>
+      {%- endif -%}
+      <style>.kn-showgrid__more{display:flex;justify-content:center;margin-top:24px}</style>
+    {%- else -%}
+    <div class="kn-car kn-car--products" data-car>
+      <div class="kn-car__viewport">
+        <div class="kn-car__track" data-car-track>
+          {%- comment -%} Productos con foto primero; los que no tienen foto solo completan al final. {%- endcomment -%}
+          {%- assign kn_shown = 0 -%}
+          {%- for product in coll.products -%}
+            {%- if kn_shown >= section.settings.limit -%}{%- break -%}{%- endif -%}
+            {%- if product.featured_media != blank -%}
+              <div class="kn-car__slide">{% render 'kn-card', product: product %}</div>
+              {%- assign kn_shown = kn_shown | plus: 1 -%}
+            {%- endif -%}
+          {%- else -%}
+            <div class="kn-car__slide"><p class="kn-count">Elige una colección en el editor.</p></div>
+          {%- endfor -%}
+          {%- if kn_shown < section.settings.limit -%}
+            {%- for product in coll.products -%}
+              {%- if kn_shown >= section.settings.limit -%}{%- break -%}{%- endif -%}
+              {%- if product.featured_media == blank -%}
+                <div class="kn-car__slide">{% render 'kn-card', product: product %}</div>
+                {%- assign kn_shown = kn_shown | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+      <button type="button" class="kn-car__arrow kn-car__arrow--prev" data-car-prev aria-label="productos anteriores">{% render 'icon', name: 'arrow-left' %}</button>
+      <button type="button" class="kn-car__arrow kn-car__arrow--next" data-car-next aria-label="productos siguientes">{% render 'icon', name: 'arrow-right' %}</button>
+      <div class="kn-car__dots" data-car-dots></div>
+    </div>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Vitrina de productos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Diseño",
+      "options": [
+        { "value": "carousel", "label": "Carrusel" },
+        { "value": "grid", "label": "Cuadrícula" }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 4,
+      "max": 48,
+      "step": 1,
+      "label": "Productos",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "center",
+      "label": "Título centrado",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all",
+      "label": "Mostrar \"explorar\"",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Fondo"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vitrina de productos"
+    }
+  ]
+}
+{% endschema %}

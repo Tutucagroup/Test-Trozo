@@ -1,0 +1,537 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "kn-hero",
+      "blocks": {
+        "s6": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/BANNER_1_LABIOS_PC.webp",
+            "image_url": "krika-hero-6-desk.png",
+            "image_mobile": "shopify://shop_images/BANNER_1_LABIOS_RESPONSIVE.webp",
+            "image_mobile_url": "",
+            "fit": "contain",
+            "bg": "#fce6f2",
+            "alt": "Raia",
+            "title": "",
+            "text": "",
+            "button": "Comprar",
+            "link": "/collections/capilar"
+          }
+        },
+        "s1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/banner_3_nude-01.webp",
+            "image_url": "krika-hero-1-desk.png",
+            "image_mobile": "shopify://shop_images/banner_3_nude_Mesa_de_trabajo_2.webp",
+            "image_mobile_url": "krika-hero-1-mob.png",
+            "fit": "contain",
+            "bg": "#fce6f2",
+            "alt": "Kit corazón: contorno de ojos y bio-retinol",
+            "title": "",
+            "text": "",
+            "button": "",
+            "link": "/collections/facial"
+          }
+        },
+        "s2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Banner_5_raia-01.webp",
+            "image_url": "krika-hero-2-desk.gif",
+            "image_mobile": "shopify://shop_images/Banner_5_raia_Mesa_de_trabajo_2.webp",
+            "image_mobile_url": "",
+            "fit": "contain",
+            "bg": "#fce6f2",
+            "alt": "Keratin Repair",
+            "title": "",
+            "text": "",
+            "button": "",
+            "link": "/collections/capilar"
+          }
+        },
+        "s3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Banner_2_OLLIE-01.webp",
+            "image_url": "krika-hero-3-desk.gif",
+            "image_mobile": "shopify://shop_images/Banner_2_OLLIE-02.webp",
+            "image_mobile_url": "",
+            "fit": "contain",
+            "bg": "#fce6f2",
+            "alt": "Bio-Oil para manchas en la piel",
+            "title": "",
+            "text": "",
+            "button": "Comprar",
+            "link": "/collections/corporal"
+          }
+        },
+        "s5": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/banner_4_vogue-01.webp",
+            "image_url": "krika-hero-5-desk.png",
+            "image_mobile": "shopify://shop_images/banner_4_vogue_Mesa_de_trabajo_2.webp",
+            "image_mobile_url": "",
+            "fit": "contain",
+            "bg": "#fce6f2",
+            "alt": "Pinza Conair aire frío",
+            "title": "",
+            "text": "",
+            "button": "",
+            "link": "/collections/electricos"
+          }
+        }
+      },
+      "block_order": [
+        "s6",
+        "s1",
+        "s2",
+        "s3",
+        "s5"
+      ],
+      "settings": {
+        "autoplay": 6,
+        "conditions": ""
+      }
+    },
+    "descuentos_imperdibles": {
+      "type": "kn-product-showcase",
+      "settings": {
+        "title": "Descuentos imperdibles",
+        "subtitle": "",
+        "collection": "descuentos",
+        "layout": "grid",
+        "limit": 24,
+        "center": true,
+        "show_all": true,
+        "bg": ""
+      }
+    },
+    "regala": {
+      "type": "kn-tab-showcase",
+      "blocks": {
+        "t1": {
+          "type": "tab",
+          "settings": {
+            "label": "Lo más vendido",
+            "collection": "lo-mas-vendido",
+            "cover": "shopify://shop_images/lo_mas_vendido_banner.webp",
+            "cover_url": "krika-banner-pili.png",
+            "cover_mobile_url": "",
+            "cover_title": ""
+          }
+        },
+        "t2": {
+          "type": "tab",
+          "settings": {
+            "label": "Maquillaje",
+            "collection": "maquillaje",
+            "cover": "shopify://shop_images/maquillaje.webp",
+            "cover_url": "krika-hero-7-desk.png",
+            "cover_mobile_url": "",
+            "cover_title": ""
+          }
+        },
+        "t5": {
+          "type": "tab",
+          "settings": {
+            "label": "Cosméticos",
+            "collection": "facial",
+            "cover": "shopify://shop_images/cosmeticos_banner.webp",
+            "cover_url": "krika-hero-1-desk.png",
+            "cover_mobile_url": "",
+            "cover_title": ""
+          }
+        },
+        "t3": {
+          "type": "tab",
+          "settings": {
+            "label": "Capilar",
+            "collection": "capilar",
+            "cover": "shopify://shop_images/capilar.webp",
+            "cover_url": "krika-banner-anyeluz.png",
+            "cover_mobile_url": "",
+            "cover_title": ""
+          }
+        },
+        "t4": {
+          "type": "tab",
+          "settings": {
+            "label": "El regalo perfecto",
+            "collection": "el-regalo-perfecto",
+            "cover": "shopify://shop_images/regalo.webp",
+            "cover_url": "krika-banner-moco.png",
+            "cover_mobile_url": "",
+            "cover_title": ""
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t5",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "title": "Lo más vendido en Krika",
+        "limit": 20
+      }
+    },
+    "imperdibles": {
+      "type": "kn-multi-banners",
+      "blocks": {
+        "b1": {
+          "type": "banner",
+          "settings": {
+            "image_url": "https://piiv22-sv.myshopify.com/search?type=product&q=samy+skn",
+            "video": "shopify://files/videos/prueba 3.mp4",
+            "image_mobile_url": "",
+            "alt": "Samy Skinlicious",
+            "title": "",
+            "button": "",
+            "link": ""
+          }
+        },
+        "b2": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify://shop_images/masglo.webp",
+            "image_url": "https://piiv22-sv.myshopify.com/search?type=product&q=masglo",
+            "image_mobile_url": "",
+            "alt": "Esmaltes Masglo",
+            "title": "",
+            "button": "",
+            "link": "shopify://collections/unas-esmaltes"
+          }
+        },
+        "b3": {
+          "type": "banner",
+          "settings": {
+            "image_url": "https://piiv22-sv.myshopify.com/search?type=product&q=maybelline",
+            "video": "shopify://files/videos/mabelline.mp4",
+            "image_mobile_url": "",
+            "alt": "Correctores Eraser Maybelline",
+            "title": "",
+            "button": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ],
+      "settings": {
+        "title": "Lo que no te puedes perder"
+      }
+    },
+    "atajos": {
+      "type": "kn-shortcuts",
+      "blocks": {
+        "a0": {
+          "type": "item",
+          "settings": {
+            "label": "Descuentos",
+            "link": "/collections/all?sort_by=best-selling"
+          }
+        },
+        "a1": {
+          "type": "item",
+          "settings": {
+            "label": "Maquillaje",
+            "link": "/collections/maquillaje"
+          }
+        },
+        "a2": {
+          "type": "item",
+          "settings": {
+            "label": "Capilar",
+            "link": "/collections/capilar"
+          }
+        },
+        "a3": {
+          "type": "item",
+          "settings": {
+            "label": "Facial",
+            "link": "/collections/facial"
+          }
+        },
+        "a4": {
+          "type": "item",
+          "settings": {
+            "label": "Corporal",
+            "link": "/collections/corporal"
+          }
+        },
+        "a5": {
+          "type": "item",
+          "settings": {
+            "label": "Uñas",
+            "link": "/collections/manicure-pedicure"
+          }
+        },
+        "a6": {
+          "type": "item",
+          "settings": {
+            "label": "Fragancias",
+            "link": "/collections/fragancias"
+          }
+        },
+        "a7": {
+          "type": "item",
+          "settings": {
+            "label": "Eléctricos",
+            "link": "/collections/electricos"
+          }
+        },
+        "a8": {
+          "type": "item",
+          "settings": {
+            "label": "Barbería",
+            "link": "/collections/barberia"
+          }
+        }
+      },
+      "block_order": [
+        "a0",
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5",
+        "a6",
+        "a7",
+        "a8"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Encuentra lo que estabas buscando"
+      }
+    },
+    "marcas": {
+      "type": "brand-carousel",
+      "settings": {
+        "title": "Nuestras Marcas",
+        "subtitle": "Toca una marca para ver todos sus productos.",
+        "title_dark": true,
+        "source": "automatic",
+        "max_brands": 42,
+        "all_url": "/pages/marcas",
+        "autoplay": 4
+      }
+    },
+    "favoritos": {
+      "type": "kn-product-showcase",
+      "settings": {
+        "title": "Los nuevos en el Universo Fucsia",
+        "subtitle": "",
+        "collection": "",
+        "limit": 12,
+        "center": true,
+        "show_all": true,
+        "bg": ""
+      }
+    },
+    "categorias": {
+      "type": "kn-category-banners",
+      "blocks": {
+        "c1": {
+          "type": "banner",
+          "settings": {
+            "image_url": "https://piiv22-sv.myshopify.com/search?page=1&q=garnier&type=product",
+            "video": "shopify://files/videos/banner garnier.mp4",
+            "image_mobile_url": "",
+            "title": "",
+            "text": "",
+            "button": "Comprar",
+            "link": "/collections/facial"
+          }
+        },
+        "c2": {
+          "type": "banner",
+          "settings": {
+            "image": "shopify://shop_images/bnner-skincare-04.webp",
+            "image_url": "krika-hero-5-desk.png",
+            "image_mobile_url": "",
+            "title": "",
+            "text": "",
+            "button": "Comprar",
+            "link": "/collections/electricos"
+          }
+        },
+        "c3": {
+          "type": "banner",
+          "settings": {
+            "image_url": "ruby rose",
+            "video": "shopify://files/videos/banner ruby rose.mp4",
+            "image_mobile_url": "",
+            "title": "",
+            "text": "",
+            "button": "Comprar",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "autoplay": 0
+      }
+    },
+    "regalo": {
+      "type": "kn-product-showcase",
+      "settings": {
+        "title": "El regalo perfecto 🎁",
+        "subtitle": "",
+        "collection": "el-regalo-perfecto",
+        "limit": 12,
+        "center": true,
+        "show_all": true,
+        "bg": ""
+      }
+    },
+    "estilo": {
+      "type": "kn-product-showcase",
+      "settings": {
+        "title": "Dale poder a tu estilo ✨",
+        "subtitle": "",
+        "collection": "dale-poder-a-tu-estilo",
+        "limit": 12,
+        "center": true,
+        "show_all": true,
+        "bg": ""
+      }
+    },
+    "videos": {
+      "type": "kn-shoppable-videos",
+      "blocks": {
+        "v0": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "product": "estilizador-melux83ml-hb8422-cejas"
+          }
+        },
+        "v1": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "product": "polvo-suelto-melux3-2g-4-tonos-pantera-rosa"
+          }
+        },
+        "v2": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "product": "trata-cejas-espectanasx11ml-oleo-roll-on"
+          }
+        },
+        "v3": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "product": "shamp-salon-inx1000ml-vegan-keratin"
+          }
+        },
+        "v4": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "product": "estilizador-rubyrosex83g-hb-e251-cejas"
+          }
+        },
+        "v5": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "product": "papel-facial-melux100und-antigrasa-pantera-rosa"
+          }
+        }
+      },
+      "block_order": [
+        "v0",
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
+      "settings": {
+        "title": "Tendencias Krika",
+        "subtitle": "Mira el producto en acción y agrégalo a tu bolsa",
+        "link_text": "Síguenos",
+        "link": "https://www.instagram.com/krikacosmetics/"
+      }
+    },
+    "ellos": {
+      "type": "kn-product-showcase",
+      "settings": {
+        "title": "Para ellos 🧔",
+        "subtitle": "",
+        "collection": "para-ellos",
+        "limit": 12,
+        "center": true,
+        "show_all": true,
+        "bg": ""
+      }
+    },
+    "whatsapp": {
+      "type": "kn-mosaic",
+      "settings": {
+        "image": "shopify://shop_images/WHATSAPP_BANNER.webp",
+        "image_url": "krika-hero-6-desk.png",
+        "image_mobile_url": "",
+        "image_right": true,
+        "title": "ASESORIA POR WHATSAPP",
+        "text": "<p>¿No sabes qué producto elegir? Escríbenos y te ayudamos a armar tu rutina de cuidado, maquillaje o cabello.</p>",
+        "button": "Escríbenos",
+        "link": "https://api.whatsapp.com/send/?phone=573336025001"
+      }
+    },
+    "razon": {
+      "type": "kn-mosaic",
+      "settings": {
+        "image": "shopify://shop_images/banner-whatsapp.webp",
+        "image_url": "krika-hero-7-desk.png",
+        "image_mobile_url": "",
+        "image_right": false,
+        "title": "Belleza para todo Colombia",
+        "text": "<p>En Krika reunimos cientos de marcas de maquillaje, cuidado capilar, facial y corporal para que encuentres todo en un mismo pedido, con envíos a todo el país.</p>",
+        "button": "Conoce las marcas",
+        "link": "/pages/marcas"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "descuentos_imperdibles",
+    "regala",
+    "imperdibles",
+    "atajos",
+    "marcas",
+    "favoritos",
+    "categorias",
+    "regalo",
+    "estilo",
+    "videos",
+    "ellos",
+    "whatsapp",
+    "razon"
+  ]
+}
