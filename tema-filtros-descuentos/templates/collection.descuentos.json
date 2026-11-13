@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "kn-collection-descuentos",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

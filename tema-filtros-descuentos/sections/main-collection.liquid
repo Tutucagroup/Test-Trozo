@@ -1,0 +1,217 @@
+{{ 'kn-facets.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+  Colección: ruta, título, subcategorías (desde el menú), filtros (marca, precio, disponibilidad…), orden y grilla.
+  Los filtros se aplican sin recargar la página (kn.js → facets).
+{%- endcomment -%}
+{%- paginate collection.products by section.settings.per_page -%}
+  {%- liquid
+    assign menu = linklists[section.settings.menu]
+    assign lvl1 = blank
+    assign lvl2 = blank
+    assign depth = 0
+    for link in menu.links
+      if link.url == collection.url
+        assign lvl1 = link
+        assign depth = 1
+      endif
+      for child in link.links
+        if child.url == collection.url
+          assign lvl1 = link
+          assign lvl2 = child
+          assign depth = 2
+        endif
+        for g in child.links
+          if g.url == collection.url
+            assign lvl1 = link
+            assign lvl2 = child
+            assign depth = 3
+          endif
+        endfor
+      endfor
+    endfor
+
+    assign pills = blank
+    assign pills_parent = blank
+    if depth == 1
+      assign pills = lvl1.links
+    elsif depth == 2
+      if lvl2.links.size > 0
+        assign pills = lvl2.links
+      else
+        assign pills = lvl1.links
+        assign pills_parent = lvl1
+      endif
+    elsif depth == 3
+      assign pills = lvl2.links
+      assign pills_parent = lvl2
+    endif
+
+    assign show_filters = false
+    if section.settings.enable_filters and collection.filters.size > 0
+      assign show_filters = true
+    endif
+    assign sort_by = collection.sort_by | default: collection.default_sort_by
+    assign clear_url = collection.url
+    if collection.handle == 'vendors' or collection.handle == 'types'
+      assign q_enc = collection.title | url_encode
+      assign clear_url = collection.url | append: '?q=' | append: q_enc
+    endif
+  -%}
+  <div class="kn-wrap">
+    <nav class="kn-crumbs" aria-label="Ruta de navegación">
+      <a href="{{ routes.root_url }}">Inicio</a> ›
+      {%- if depth >= 2 -%}<a href="{{ lvl1.url }}">{{ lvl1.title }}</a> ›{%- endif -%}
+      {%- if depth == 3 -%}<a href="{{ lvl2.url }}">{{ lvl2.title }}</a> ›{%- endif -%}
+      <span aria-current="page">{{ collection.title }}</span>
+    </nav>
+    <div class="kn-coll__head">
+      <h1>{{ collection.title }}</h1>
+      {%- if section.settings.show_desc and collection.description != blank -%}<div class="kn-coll__desc rte">{{ collection.description }}</div>{%- endif -%}
+    </div>
+
+    {%- if pills != blank and pills.size > 0 -%}
+      <nav class="kn-subs" aria-label="Subcategorías">
+        {%- if pills_parent != blank -%}<a class="kn-pill" href="{{ pills_parent.url }}">Todo {{ pills_parent.title }}</a>{%- endif -%}
+        {%- for l in pills -%}
+          <a class="kn-pill"{% if l.url == collection.url %} aria-current="page"{% endif %} href="{{ l.url }}">{{ l.title }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+
+    <div class="kn-plp{% if show_filters %} kn-plp--side{% endif %}" data-plp data-section="{{ section.id }}">
+      {%- if show_filters -%}
+        {% render 'kn-facets', results: collection, clear_url: clear_url, is_search: false %}
+      {%- endif -%}
+
+      <div class="kn-results" data-results>
+        <div class="kn-toolbar">
+          <div class="kn-toolbar__l">
+            {%- if show_filters -%}
+              <button type="button" class="kn-btn kn-btn--outline kn-filter-btn" data-open-panel="KnFilters"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg> Filtrar</button>
+            {%- endif -%}
+            <span class="kn-count">{{ collection.products_count }} producto{% if collection.products_count != 1 %}s{% endif %}</span>
+          </div>
+          {%- unless show_filters -%}<form method="get" action="{{ collection.url }}" id="KnSortForm">{%- if collection.handle == 'vendors' or collection.handle == 'types' -%}<input type="hidden" name="q" value="{{ collection.title | escape }}">{%- endif -%}</form>{%- endunless -%}
+          <label class="kn-sr" for="KnSort-{{ section.id }}">Ordenar por</label>
+          <select id="KnSort-{{ section.id }}" name="sort_by" form="{% if show_filters %}KnFacetsForm{% else %}KnSortForm{% endif %}" data-sort data-default="{{ collection.default_sort_by }}">
+            {%- for option in collection.sort_options -%}
+              {%- liquid
+                assign oname = option.name
+                case option.value
+                  when 'manual'
+                    assign oname = 'Destacados'
+                  when 'best-selling'
+                    assign oname = 'Más vendidos'
+                  when 'title-ascending'
+                    assign oname = 'Nombre: A-Z'
+                  when 'title-descending'
+                    assign oname = 'Nombre: Z-A'
+                  when 'price-ascending'
+                    assign oname = 'Precio: menor a mayor'
+                  when 'price-descending'
+                    assign oname = 'Precio: mayor a menor'
+                  when 'created-ascending'
+                    assign oname = 'Más antiguos'
+                  when 'created-descending'
+                    assign oname = 'Más nuevos'
+                endcase
+              -%}
+              <option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>{{ oname }}</option>
+            {%- endfor -%}
+          </select>
+        </div>
+
+        {%- if show_filters -%}
+          {%- capture chips -%}
+            {%- for filter in collection.filters -%}
+              {%- if filter.type == 'price_range' -%}
+                {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+                  <a href="{{ filter.url_to_remove }}" data-facet-link>
+                    {%- if filter.min_value.value != nil -%}Desde {{ filter.min_value.value | money_without_trailing_zeros }}{%- endif -%}
+                    {%- if filter.max_value.value != nil %} hasta {{ filter.max_value.value | money_without_trailing_zeros }}{%- endif -%}
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></a>
+                {%- endif -%}
+              {%- else -%}
+                {%- for v in filter.active_values -%}
+                  {%- liquid
+                    assign vl = v.label
+                    if filter.param_name == 'filter.v.availability'
+                      if v.value == '1'
+                        assign vl = 'Con stock'
+                      else
+                        assign vl = 'Sin stock'
+                      endif
+                    endif
+                  -%}
+                  <a href="{{ v.url_to_remove }}" data-facet-link>{{ vl | escape }} <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></a>
+                {%- endfor -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+          {%- if chips != blank -%}
+            <div class="kn-active">{{ chips }}<a class="kn-active__clear" href="{{ clear_url }}" data-facet-link>Limpiar filtros</a></div>
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- if collection.products.size > 0 -%}
+          <div class="kn-grid">
+            {%- comment -%} Dentro de cada página: primero los productos con foto, al final los que no tienen foto. {%- endcomment -%}
+            {%- assign kn_i = 0 -%}
+            {%- for product in collection.products -%}
+              {%- if product.featured_media != blank -%}
+                {%- liquid
+                  assign kn_i = kn_i | plus: 1
+                  assign eager = false
+                  if kn_i <= 4 and paginate.current_page == 1
+                    assign eager = true
+                  endif
+                -%}
+                {% render 'kn-card', product: product, eager: eager %}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- for product in collection.products -%}
+              {%- if product.featured_media == blank -%}
+                {% render 'kn-card', product: product, eager: false %}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <div class="kn-empty">
+            {%- if collection.all_products_count > 0 -%}
+              <h2>No encontramos productos con esos filtros</h2>
+              <p>Prueba quitando alguno o elige otra marca.</p>
+              <a class="kn-btn kn-btn--primary" href="{{ clear_url }}" data-facet-link>Ver todos</a>
+            {%- else -%}
+              <h2>Pronto encontrarás productos aquí</h2>
+              <a class="kn-btn kn-btn--primary" href="{{ routes.all_products_collection_url }}">Ver todo el catálogo</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="kn-pag" aria-label="Paginación">
+            {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" aria-label="Página anterior">‹</a>{%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- else -%}<span{% if part.title == paginate.current_page %} class="is-current" aria-current="page"{% endif %}>{{ part.title }}</span>{%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}<a href="{{ paginate.next.url }}" aria-label="Página siguiente">›</a>{%- endif -%}
+          </nav>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endpaginate -%}
+<script src="{{ 'kn-facets.js' | asset_url }}" defer></script>
+{% schema %}
+{
+  "name": "Colección",
+  "tag": "section",
+  "class": "kn-plp-section",
+  "settings": [
+    { "type": "range", "id": "per_page", "min": 12, "max": 48, "step": 4, "label": "Productos por página", "default": 24 },
+    { "type": "link_list", "id": "menu", "label": "Menú para la ruta y las subcategorías", "default": "main-menu", "info": "Usa el mismo menú de la cabecera." },
+    { "type": "checkbox", "id": "enable_filters", "label": "Mostrar filtros", "info": "Marca, precio y disponibilidad. Se administran en la app Search & Discovery.", "default": true },
+    { "type": "checkbox", "id": "show_desc", "label": "Mostrar la descripción de la colección", "default": true }
+  ]
+}
+{% endschema %}
