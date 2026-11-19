@@ -1,0 +1,198 @@
+{%- comment -%}
+  Carrusel de marcas.
+  Modo "combinado" (recomendado): muestra las marcas automáticas de snippets/brand-order.liquid
+  y además los bloques "Marca" del editor:
+    - Un bloque con el MISMO nombre que una marca automática la reemplaza en su lugar
+      (permite cambiarle el logo y/o el enlace) o la oculta si se marca "Ocultar".
+    - Un bloque con una marca nueva se agrega al carrusel (al inicio o al final, según el ajuste).
+  Modo "automatico": solo las marcas de snippets/brand-order.liquid.
+  Modo "manual": solo los bloques configurados en el editor.
+{%- endcomment -%}
+{%- capture brand_list -%}{%- render 'brand-order' -%}{%- endcapture -%}
+{%- liquid
+  assign mode = section.settings.source
+  assign vendors = brand_list | strip | split: '|'
+  assign limit = section.settings.max_brands
+
+  comment
+    Nombres (en formato handle) de las marcas automáticas visibles y de los bloques.
+  endcomment
+  assign auto_keys = '|'
+  if mode != 'manual'
+    for vendor in vendors
+      if shop.vendors contains vendor
+        assign k = vendor | handle
+        assign auto_keys = auto_keys | append: k | append: '|'
+      endif
+    endfor
+  endif
+
+  assign block_keys = '|'
+  for block in section.blocks
+    if block.settings.name != blank
+      assign k = block.settings.name | handle
+      assign block_keys = block_keys | append: k | append: '|'
+    endif
+  endfor
+
+  assign show_section = false
+  if mode == 'manual'
+    if section.blocks.size > 0
+      assign show_section = true
+    endif
+  elsif auto_keys != '|' or section.blocks.size > 0
+    assign show_section = true
+  endif
+-%}
+
+{%- if show_section -%}
+  <section class="k-section k-brands">
+    <div class="k-wrap">
+      <div class="k-section__head">
+        <div>
+          {%- if section.settings.title != blank -%}
+            <h2 class="k-section__title{% if section.settings.title_dark %} k-section__title--ink{% endif %}">{{ section.settings.title }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subtitle != blank -%}
+            <p class="k-section__sub">{{ section.settings.subtitle }}</p>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.all_url != blank -%}
+          <a class="k-section__link" href="{{ section.settings.all_url }}">Ver todas las marcas &rsaquo;</a>
+        {%- endif -%}
+      </div>
+
+      <div class="k-carousel" data-carousel data-loop="true" data-autoplay="{{ section.settings.autoplay | times: 1000 }}">
+        <div class="k-carousel__viewport">
+          <div class="k-carousel__track" data-carousel-track>
+            {%- assign shown = 0 -%}
+
+            {%- comment -%} 1) Marcas nuevas al inicio (o todas, en modo manual) {%- endcomment -%}
+            {%- if mode == 'manual' or section.settings.new_position == 'start' -%}
+              {%- for block in section.blocks -%}
+                {%- if block.settings.name == blank or block.settings.hide -%}{%- continue -%}{%- endif -%}
+                {%- if mode != 'manual' -%}
+                  {%- assign k = block.settings.name | handle | prepend: '|' | append: '|' -%}
+                  {%- if auto_keys contains k -%}{%- continue -%}{%- endif -%}
+                {%- endif -%}
+                {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+                {%- assign shown = shown | plus: 1 -%}
+                <div class="k-carousel__slide" {{ block.shopify_attributes }}>
+                  {% render 'brand-tile',
+                      brand_name: block.settings.name,
+                      brand_image: block.settings.image,
+                      brand_image_url: block.settings.image_url,
+                      brand_link: block.settings.link %}
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- comment -%} 2) Marcas automáticas (con reemplazos/ocultas desde los bloques) {%- endcomment -%}
+            {%- if mode != 'manual' -%}
+              {%- for vendor in vendors -%}
+                {%- unless shop.vendors contains vendor -%}{%- continue -%}{%- endunless -%}
+                {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+                {%- assign vkey = vendor | handle -%}
+                {%- assign vkey_wrapped = vkey | prepend: '|' | append: '|' -%}
+                {%- assign ov = nil -%}
+                {%- if block_keys contains vkey_wrapped -%}
+                  {%- for block in section.blocks -%}
+                    {%- assign bk = block.settings.name | handle -%}
+                    {%- if bk == vkey -%}{%- assign ov = block -%}{%- break -%}{%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+                {%- if ov -%}
+                  {%- if ov.settings.hide -%}{%- continue -%}{%- endif -%}
+                  {%- assign shown = shown | plus: 1 -%}
+                  <div class="k-carousel__slide" {{ ov.shopify_attributes }}>
+                    {% render 'brand-tile',
+                        brand_name: ov.settings.name,
+                        brand_image: ov.settings.image,
+                        brand_image_url: ov.settings.image_url,
+                        brand_link: ov.settings.link %}
+                  </div>
+                {%- else -%}
+                  {%- assign shown = shown | plus: 1 -%}
+                  <div class="k-carousel__slide">
+                    {% render 'brand-tile', brand_name: vendor %}
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- comment -%} 3) Marcas nuevas al final {%- endcomment -%}
+            {%- if mode != 'manual' and section.settings.new_position == 'end' -%}
+              {%- for block in section.blocks -%}
+                {%- if block.settings.name == blank or block.settings.hide -%}{%- continue -%}{%- endif -%}
+                {%- assign k = block.settings.name | handle | prepend: '|' | append: '|' -%}
+                {%- if auto_keys contains k -%}{%- continue -%}{%- endif -%}
+                {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+                {%- assign shown = shown | plus: 1 -%}
+                <div class="k-carousel__slide" {{ block.shopify_attributes }}>
+                  {% render 'brand-tile',
+                      brand_name: block.settings.name,
+                      brand_image: block.settings.image,
+                      brand_image_url: block.settings.image_url,
+                      brand_link: block.settings.link %}
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
+        <button class="k-carousel__arrow k-carousel__arrow--prev" type="button" data-carousel-prev aria-label="Anterior">
+          {% render 'icon', name: 'arrow-left' %}
+        </button>
+        <button class="k-carousel__arrow k-carousel__arrow--next" type="button" data-carousel-next aria-label="Siguiente">
+          {% render 'icon', name: 'arrow-right' %}
+        </button>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Carrusel de marcas",
+  "tag": "section",
+  "class": "k-brands-section",
+  "max_blocks": 50,
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Nuestras marcas" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo" },
+    { "type": "checkbox", "id": "title_dark", "label": "Título en color oscuro", "default": true },
+    {
+      "type": "select", "id": "source", "label": "Origen de las marcas", "default": "mixed",
+      "info": "Combinado: muestra las marcas automáticas y los bloques. Un bloque con el mismo nombre que una marca automática le cambia el logo/enlace o la oculta.",
+      "options": [
+        { "value": "mixed", "label": "Combinado (automáticas + bloques)" },
+        { "value": "automatic", "label": "Solo automático (marcas con logo)" },
+        { "value": "manual", "label": "Solo manual (bloques)" }
+      ]
+    },
+    {
+      "type": "select", "id": "new_position", "label": "Marcas nuevas (bloques) se muestran", "default": "start",
+      "options": [
+        { "value": "start", "label": "Al inicio del carrusel" },
+        { "value": "end", "label": "Al final del carrusel" }
+      ]
+    },
+    { "type": "range", "id": "max_brands", "min": 6, "max": 90, "step": 2, "label": "Máx. marcas en el carrusel", "default": 40 },
+    { "type": "url", "id": "all_url", "label": "Enlace \"Ver todas las marcas\"" },
+    { "type": "range", "id": "autoplay", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Cambiar cada", "default": 4 }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Marca",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Nombre de la marca", "info": "Si coincide con una marca que ya aparece en el carrusel (ej. L'OREAL PROFESSIONNEL), este bloque la reemplaza." },
+        { "type": "image_picker", "id": "image", "label": "Logo" },
+        { "type": "text", "id": "image_url", "label": "URL o nombre de archivo del logo (opcional)" },
+        { "type": "url", "id": "link", "label": "Enlace al hacer clic", "info": "Colección, búsqueda o cualquier URL. Si se deja vacío enlaza a todos los productos de la marca." },
+        { "type": "checkbox", "id": "hide", "label": "Ocultar esta marca del carrusel", "default": false }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Carrusel de marcas" }]
+}
+{% endschema %}
