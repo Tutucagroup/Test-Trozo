@@ -400,13 +400,436 @@
     },
     "marcas": {
       "type": "brand-carousel",
+      "blocks": {
+        "marca_01": {
+          "type": "brand",
+          "settings": {
+            "name": "LOREAL",
+            "image": "shopify://shop_images/krika-marca-loreal.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=LOREAL",
+            "hide": false
+          }
+        },
+        "marca_02": {
+          "type": "brand",
+          "settings": {
+            "name": "MAYBELLINE",
+            "image": "shopify://shop_images/krika-marca-maybelline.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=MAYBELLINE",
+            "hide": false
+          }
+        },
+        "marca_03": {
+          "type": "brand",
+          "settings": {
+            "name": "GARNIER",
+            "image": "shopify://shop_images/krika-marca-garnier.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=GARNIER",
+            "hide": false
+          }
+        },
+        "marca_04": {
+          "type": "brand",
+          "settings": {
+            "name": "REVLON",
+            "image": "shopify://shop_images/krika-marca-revlon.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=REVLON",
+            "hide": false
+          }
+        },
+        "marca_05": {
+          "type": "brand",
+          "settings": {
+            "name": "SCHWARZKOPF",
+            "image": "shopify://shop_images/krika-marca-schwarzkopf.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=SCHWARZKOPF",
+            "hide": false
+          }
+        },
+        "marca_06": {
+          "type": "brand",
+          "settings": {
+            "name": "WELLA",
+            "image": "shopify://shop_images/krika-marca-wella.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=WELLA",
+            "hide": false
+          }
+        },
+        "marca_07": {
+          "type": "brand",
+          "settings": {
+            "name": "PHILIPS",
+            "image": "shopify://shop_images/krika-marca-philips.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=PHILIPS",
+            "hide": false
+          }
+        },
+        "marca_08": {
+          "type": "brand",
+          "settings": {
+            "name": "REMINGTON",
+            "image": "shopify://shop_images/krika-marca-remington.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=REMINGTON",
+            "hide": false
+          }
+        },
+        "marca_09": {
+          "type": "brand",
+          "settings": {
+            "name": "LOREAL PROFESIONAL",
+            "image": "shopify://shop_images/krika-marca-loreal-profesional.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=LOREAL+PROFESIONAL",
+            "hide": false
+          }
+        },
+        "marca_10": {
+          "type": "brand",
+          "settings": {
+            "name": "MAX FACTOR",
+            "image": "shopify://shop_images/krika-marca-max-factor.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=MAX+FACTOR",
+            "hide": false
+          }
+        },
+        "marca_11": {
+          "type": "brand",
+          "settings": {
+            "name": "ELVIVE",
+            "image": "shopify://shop_images/krika-marca-elvive.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=ELVIVE",
+            "hide": false
+          }
+        },
+        "marca_12": {
+          "type": "brand",
+          "settings": {
+            "name": "BIO OIL",
+            "image": "shopify://shop_images/krika-marca-bio-oil.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=BIO+OIL",
+            "hide": false
+          }
+        },
+        "marca_13": {
+          "type": "brand",
+          "settings": {
+            "name": "ESSENCE",
+            "image": "shopify://shop_images/krika-marca-essence.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=ESSENCE",
+            "hide": false
+          }
+        },
+        "marca_14": {
+          "type": "brand",
+          "settings": {
+            "name": "CATRICE",
+            "image": "shopify://shop_images/krika-marca-catrice.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=CATRICE",
+            "hide": false
+          }
+        },
+        "marca_15": {
+          "type": "brand",
+          "settings": {
+            "name": "WAHL",
+            "image": "shopify://shop_images/krika-marca-wahl.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=WAHL",
+            "hide": false
+          }
+        },
+        "marca_16": {
+          "type": "brand",
+          "settings": {
+            "name": "BABYLISS PRO",
+            "image": "shopify://shop_images/krika-marca-babyliss-pro.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=BABYLISS+PRO",
+            "hide": false
+          }
+        },
+        "marca_17": {
+          "type": "brand",
+          "settings": {
+            "name": "COSRX",
+            "image": "shopify://shop_images/krika-marca-cosrx.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=COSRX",
+            "hide": false
+          }
+        },
+        "marca_18": {
+          "type": "brand",
+          "settings": {
+            "name": "CANTU",
+            "image": "shopify://shop_images/krika-marca-cantu.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=CANTU",
+            "hide": false
+          }
+        },
+        "marca_19": {
+          "type": "brand",
+          "settings": {
+            "name": "GLISS",
+            "image": "shopify://shop_images/krika-marca-gliss.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=GLISS",
+            "hide": false
+          }
+        },
+        "marca_20": {
+          "type": "brand",
+          "settings": {
+            "name": "GOT2B",
+            "image": "shopify://shop_images/krika-marca-got2b.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=GOT2B",
+            "hide": false
+          }
+        },
+        "marca_21": {
+          "type": "brand",
+          "settings": {
+            "name": "ALFAPARF",
+            "image": "shopify://shop_images/krika-marca-alfaparf.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=ALFAPARF",
+            "hide": false
+          }
+        },
+        "marca_22": {
+          "type": "brand",
+          "settings": {
+            "name": "DR TEALS",
+            "image": "shopify://shop_images/krika-marca-dr-teals.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=DR+TEALS",
+            "hide": false
+          }
+        },
+        "marca_23": {
+          "type": "brand",
+          "settings": {
+            "name": "AUSTRALIAN GOLD",
+            "image": "shopify://shop_images/krika-marca-australian-gold.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=AUSTRALIAN+GOLD",
+            "hide": false
+          }
+        },
+        "marca_24": {
+          "type": "brand",
+          "settings": {
+            "name": "MILANI",
+            "image": "shopify://shop_images/krika-marca-milani.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=MILANI",
+            "hide": false
+          }
+        },
+        "marca_25": {
+          "type": "brand",
+          "settings": {
+            "name": "SHEGLAM",
+            "image": "shopify://shop_images/krika-marca-sheglam.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=SHEGLAM",
+            "hide": false
+          }
+        },
+        "marca_26": {
+          "type": "brand",
+          "settings": {
+            "name": "ANDIS",
+            "image": "shopify://shop_images/krika-marca-andis.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=ANDIS",
+            "hide": false
+          }
+        },
+        "marca_27": {
+          "type": "brand",
+          "settings": {
+            "name": "ARDELL",
+            "image": "shopify://shop_images/krika-marca-ardell.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=ARDELL",
+            "hide": false
+          }
+        },
+        "marca_28": {
+          "type": "brand",
+          "settings": {
+            "name": "L A GIRL",
+            "image": "shopify://shop_images/krika-marca-l-a-girl.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=L+A+GIRL",
+            "hide": false
+          }
+        },
+        "marca_29": {
+          "type": "brand",
+          "settings": {
+            "name": "LA COLORS",
+            "image": "shopify://shop_images/krika-marca-la-colors.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=LA+COLORS",
+            "hide": false
+          }
+        },
+        "marca_30": {
+          "type": "brand",
+          "settings": {
+            "name": "RUBY ROSE",
+            "image": "shopify://shop_images/krika-marca-ruby-rose.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=RUBY+ROSE",
+            "hide": false
+          }
+        },
+        "marca_31": {
+          "type": "brand",
+          "settings": {
+            "name": "CREME OF NATURE",
+            "image": "shopify://shop_images/krika-marca-creme-of-nature.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=CREME+OF+NATURE",
+            "hide": false
+          }
+        },
+        "marca_32": {
+          "type": "brand",
+          "settings": {
+            "name": "INOA",
+            "image": "shopify://shop_images/krika-marca-inoa.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=INOA",
+            "hide": false
+          }
+        },
+        "marca_33": {
+          "type": "brand",
+          "settings": {
+            "name": "MAJIREL",
+            "image": "shopify://shop_images/krika-marca-majirel.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=MAJIREL",
+            "hide": false
+          }
+        },
+        "marca_34": {
+          "type": "brand",
+          "settings": {
+            "name": "SALERM",
+            "image": "shopify://shop_images/krika-marca-salerm.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=SALERM",
+            "hide": false
+          }
+        },
+        "marca_35": {
+          "type": "brand",
+          "settings": {
+            "name": "BYPHASSE",
+            "image": "shopify://shop_images/krika-marca-byphasse.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=BYPHASSE",
+            "hide": false
+          }
+        },
+        "marca_36": {
+          "type": "brand",
+          "settings": {
+            "name": "BABARIA",
+            "image": "shopify://shop_images/krika-marca-babaria.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=BABARIA",
+            "hide": false
+          }
+        },
+        "marca_37": {
+          "type": "brand",
+          "settings": {
+            "name": "OLIVIA GARDEN",
+            "image": "shopify://shop_images/krika-marca-olivia-garden.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=OLIVIA+GARDEN",
+            "hide": false
+          }
+        },
+        "marca_38": {
+          "type": "brand",
+          "settings": {
+            "name": "REVOX",
+            "image": "shopify://shop_images/krika-marca-revox.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=REVOX",
+            "hide": false
+          }
+        },
+        "marca_39": {
+          "type": "brand",
+          "settings": {
+            "name": "TOCOBO",
+            "image": "shopify://shop_images/krika-marca-tocobo.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=TOCOBO",
+            "hide": false
+          }
+        },
+        "marca_40": {
+          "type": "brand",
+          "settings": {
+            "name": "PALETTE",
+            "image": "shopify://shop_images/krika-marca-palette.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=PALETTE",
+            "hide": false
+          }
+        },
+        "marca_41": {
+          "type": "brand",
+          "settings": {
+            "name": "VOGUE",
+            "image": "shopify://shop_images/krika-marca-vogue.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=VOGUE",
+            "hide": false
+          }
+        },
+        "marca_42": {
+          "type": "brand",
+          "settings": {
+            "name": "SAMY",
+            "image": "shopify://shop_images/krika-marca-samy.png",
+            "image_url": "",
+            "link": "/collections/vendors?q=SAMY",
+            "hide": false
+          }
+        }
+      },
+      "block_order": ["marca_01", "marca_02", "marca_03", "marca_04", "marca_05", "marca_06", "marca_07", "marca_08", "marca_09", "marca_10", "marca_11", "marca_12", "marca_13", "marca_14", "marca_15", "marca_16", "marca_17", "marca_18", "marca_19", "marca_20", "marca_21", "marca_22", "marca_23", "marca_24", "marca_25", "marca_26", "marca_27", "marca_28", "marca_29", "marca_30", "marca_31", "marca_32", "marca_33", "marca_34", "marca_35", "marca_36", "marca_37", "marca_38", "marca_39", "marca_40", "marca_41", "marca_42"],
       "settings": {
         "title": "Nuestras Marcas",
         "subtitle": "Toca una marca para ver todos sus productos.",
         "title_dark": true,
-        "source": "mixed",
+        "source": "manual",
         "new_position": "start",
-        "max_brands": 42,
+        "max_brands": 50,
         "all_url": "/pages/marcas",
         "autoplay": 4
       }
